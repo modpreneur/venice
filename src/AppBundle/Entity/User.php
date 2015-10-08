@@ -15,17 +15,17 @@ use APY\DataGridBundle\Grid\Mapping\Column;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Trinity\FrameworkBundle\Entity\BaseUser;
+use Trinity\FrameworkBundle\Entity\BaseUser as TrinityUser;
 
 /**
  * Class User
  *
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="AppBundle\Entity\Repositories\UserRepository")
  * @ORM\Table(name="user")
  *
  * @package AppBundle\Entity
  */
-class User extends BaseUser
+class User extends TrinityUser
 {
     const PREFERRED_UNITS_IMPERIAL = "imperial";
     const PREFERRED_UNITS_METRIC = "metric";
@@ -33,11 +33,18 @@ class User extends BaseUser
     const DEFAULT_PREFERRED_METRICS = self::PREFERRED_UNITS_IMPERIAL;
 
     /**
-     * ORM\@Column(name="necktie_id", type="integer", unique=true)
+     * ORM\@Column(name="necktie_id", type="integer", unique=true, nullable=true)
      *
      * @var integer
      */
     protected $necktieId;
+
+    /**
+     * ORM\@Column(name="amember_id", type="integer", unique=true, nullable=true)
+     *
+     * @var integer
+     */
+    protected $amemberId;
 
     /**
      * @ORM\Column(name="preferred_units", type="string", length=10)
@@ -47,7 +54,7 @@ class User extends BaseUser
     protected $preferredUnits;
 
     /**
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Product\Product", cascade={"remove"})
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Product\BaseProduct", cascade={"remove"})
      * @ORM\JoinTable(name="user_products",
      *   joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id",onDelete="CASCADE")},
      *   inverseJoinColumns={@ORM\JoinColumn(name="product_id", referencedColumnName="id")})
@@ -57,7 +64,7 @@ class User extends BaseUser
     protected $products;
 
     /**
-     * @ORM\Column(name="dateOfBirth", type="date")
+     * @ORM\Column(name="date_of_birth", type="date")
      *
      * @var DateTime
      */
@@ -66,10 +73,20 @@ class User extends BaseUser
 
     /**
      * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Immersion", cascade={"remove"})
+     * @ORM\JoinTable(name="users_immersions")
      *
      * @var ArrayCollection<Immersion>
      */
     protected $immersions;
+
+    public function __construct()
+    {
+        parent::__construct();
+
+        $this->products = new ArrayCollection();
+        $this->preferredUnits = self::DEFAULT_PREFERRED_METRICS;
+        $this->birthDate = new DateTime();
+    }
 
 
     /**
