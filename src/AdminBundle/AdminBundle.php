@@ -15,6 +15,6 @@ class AdminBundle extends Bundle
 {
     public function getParent()
     {
-        return "TrinityAdminBundle";
+        //return "TrinityAdminBundle";
     }
 }

@@ -10,10 +10,8 @@ namespace AppBundle\Entity;
 
 use \DateTime;
 use \InvalidArgumentException;
-use AppBundle\Entity\Product\Product;
 use APY\DataGridBundle\Grid\Mapping\Column;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Trinity\FrameworkBundle\Entity\BaseUser as TrinityUser;
 
@@ -54,14 +52,11 @@ class User extends TrinityUser
     protected $preferredUnits;
 
     /**
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Product\BaseProduct", cascade={"remove"})
-     * @ORM\JoinTable(name="user_products",
-     *   joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id",onDelete="CASCADE")},
-     *   inverseJoinColumns={@ORM\JoinColumn(name="product_id", referencedColumnName="id")})
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\ProductAccess", mappedBy="user", cascade={"REMOVE"})
      *
-     * @var ArrayCollection<Product>
+     * @var ArrayCollection<ProductAccess>
      */
-    protected $products;
+    protected $productAccesses;
 
     /**
      * @ORM\Column(name="date_of_birth", type="date")
@@ -71,19 +66,13 @@ class User extends TrinityUser
     protected $birthDate;
 
 
-    /**
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Immersion", cascade={"remove"})
-     * @ORM\JoinTable(name="users_immersions")
-     *
-     * @var ArrayCollection<Immersion>
-     */
-    protected $immersions;
-
     public function __construct()
     {
         parent::__construct();
 
-        $this->products = new ArrayCollection();
+        $this->password = "";
+        $this->salt = "";
+        $this->productAccesses = new ArrayCollection();
         $this->preferredUnits = self::DEFAULT_PREFERRED_METRICS;
         $this->birthDate = new DateTime();
     }
@@ -129,26 +118,24 @@ class User extends TrinityUser
         return $this;
     }
 
-
     /**
-     * @return ArrayCollection<Product>
+     * @return ArrayCollection<ProductAccess>
      */
-    public function getProducts()
+    public function getProductAccesses()
     {
-        return $this->products;
+        return $this->productAccesses;
     }
 
 
     /**
-     * @param Product $product
-     *
-     * @return User
+     * @param ProductAccess $productAccess
+     * @return $this
      */
-    public function addProduct($product)
+    public function addProductAccess(ProductAccess $productAccess)
     {
-        if(!$this->products->contains($product))
+        if(!$this->productAccesses->contains($productAccess))
         {
-            $this->products->add($product);
+            $this->productAccesses->add($productAccess);
         }
 
         return $this;
@@ -156,41 +143,16 @@ class User extends TrinityUser
 
 
     /**
-     * @param array|Collection $products
-     *
-     * @return User
+     * @param ProductAccess $productAccess
+     * @return $this
      */
-    public function addProducts($products)
+    public function removeProductAccess(ProductAccess $productAccess)
     {
-        foreach($products as $product)
-        {
-            $this->addProduct($product);
-        }
+        $this->productAccesses->remove($productAccess);
 
         return $this;
     }
 
-
-    public function getImmersions()
-    {
-        return $this->immersions;
-    }
-
-
-    /**
-     * @param Immersion $immersion
-     *
-     * @return User
-     */
-    public function addImmersion($immersion)
-    {
-        if(!$this->immersions->contains($immersion))
-        {
-            $this->immersions->add($immersion);
-        }
-
-        return $this;
-    }
 
 
     /**
@@ -213,6 +175,34 @@ class User extends TrinityUser
 
         return $this;
     }
+
+
+    /**
+     * @param int $amemberId
+     *
+     * @return User
+     */
+    public function setAmemberId($amemberId)
+    {
+        $this->amemberId = $amemberId;
+
+        return $this;
+    }
+
+
+    /**
+     * @param int $necktieId
+     *
+     * @return User
+     */
+    public function setNecktieId($necktieId)
+    {
+        $this->necktieId = $necktieId;
+
+        return $this;
+    }
+
+
 
 
 

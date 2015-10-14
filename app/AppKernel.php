@@ -17,12 +17,15 @@ class AppKernel extends Kernel
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new FOS\UserBundle\FOSUserBundle(),
+            new Anchovy\CURLBundle\AnchovyCURLBundle(),
+            new RaulFraile\Bundle\LadybugBundle\RaulFraileLadybugBundle(),
 
             new \Knp\Bundle\MenuBundle\KnpMenuBundle(),
 
             new AppBundle\AppBundle(),
             new AdminBundle\AdminBundle(),
 
+            new WhiteOctober\BreadcrumbsBundle\WhiteOctoberBreadcrumbsBundle(),
 
             // Trinity
             new Trinity\FrameworkBundle\TrinityFrameworkBundle(),

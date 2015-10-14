@@ -8,7 +8,7 @@
         }
     },
     "require": {
-        "php": ">=5.3.9",
+        "php": ">=5.6.9",
         "symfony/symfony": "2.7.*",
         "doctrine/orm": "^2.4.8",
         "doctrine/doctrine-bundle": "~1.4",
@@ -26,10 +26,14 @@
         "trinity/framework": "*",
         "trinity/admin": "*",
         "cocur/slugify": "^1.4",
-        "anchovy/curl-bundle": "dev-master"
+        "anchovy/curl-bundle": "dev-master",
+        "symfony/yaml": "^2.7",
+        "whiteoctober/breadcrumbs-bundle": "^1.2",
+        "phpunit/phpunit": "^5.0"
     },
     "require-dev": {
-        "sensio/generator-bundle": "~2.3"
+        "sensio/generator-bundle": "~2.3",
+        "raulfraile/ladybug-bundle": "~1.0"
     },
     "scripts": {
         "post-install-cmd": [

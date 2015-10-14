@@ -1,5 +1,5 @@
 app:
-    resource: "@AppBundle/Controller/"
+    resource: "@AppBundle/Controller"
     type:     annotation
 
 admin:
@@ -7,5 +7,12 @@ admin:
     type:     annotation
 
 fos_user:
-    resource: "@FOSUserBundle/Resources/config/routing/all.xml"
+    resource: "@FOSUserBundle/Resources/config/routing/security.xml"
+
+fos_user_security_login:
+    path: /login
+    defaults:
+        _controller: FrameworkBundle:Redirect:redirect
+        path: core_login
+        permanent: true
 

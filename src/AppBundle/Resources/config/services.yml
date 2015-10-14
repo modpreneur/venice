@@ -1,0 +1,18 @@
+services:
+    app.services.necktie_gateway:
+        class: AppBundle\Services\NecktieGateway
+        arguments:
+            - @service_container
+            - @doctrine.orm.entity_manager
+            - @app.services.connector
+            - @app.services.product_access_manager
+            - @security.token_storage
+            - @router
+
+    app.services.connector:
+        class: AppBundle\Services\Connector
+        arguments:  [@anchovy.curl ]
+
+    app.services.product_access_manager:
+        class: AppBundle\Services\ProductAccessManager
+        arguments: [ @doctrine.orm.entity_manager ]

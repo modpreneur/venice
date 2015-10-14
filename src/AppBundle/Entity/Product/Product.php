@@ -46,6 +46,14 @@ class Product extends BaseProduct
 
 
     /**
+     * @var
+     *
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\ProductAccess", mappedBy="product", cascade={"remove"})
+     */
+    protected $productAccesses;
+
+
+    /**
      * @return mixed
      */
     public function getEnabled()

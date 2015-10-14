@@ -21,26 +21,20 @@ security:
             id: fos_user.user_provider.username_email
 
     firewalls:
-        login:
-            pattern: ^/login
-            anonymous: true
-        login_check:
-            pattern: ^/login_check
-            anonymous: true
-        main:
+       main:
             pattern: ^/
             form_login:
                 provider: fos_userbundle
                 csrf_provider: security.csrf.token_manager # Use form.csrf_provider instead for Symfony <2.4
                 login_path: /login
                 check_path: /login_check
-            anonymous:    false
+            anonymous:    true
             logout:
-                target: /login
+                target: homepage
 
 
     access_control:
         - { path: ^/login, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
-#        - { path: ^/*, role: [IS_AUTHENTICATED, IS_AUTHENTICATED_REMEMBERED, IS_AUTHENTICATED_FULLY ]} #todo: find out, how to remove this
+        - { path: ^/login-response, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/*, role: [IS_AUTHENTICATED, IS_AUTHENTICATED_REMEMBERED, IS_AUTHENTICATED_FULLY ]}
 
