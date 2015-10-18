@@ -33,12 +33,14 @@ abstract class BaseContent
      */
     protected $id;
 
+
     /**
      * @var
      *
      * @ORM\Column(name="name", type="string", length=255)
      */
     protected $name;
+
 
     /**
      * @var
@@ -47,6 +49,13 @@ abstract class BaseContent
      */
     protected $contentProducts;
 
+
+    /**
+     * @var
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
+     */
+    protected $author;
 
     /**
      * Return Content's content no matter what concrete implementation is.

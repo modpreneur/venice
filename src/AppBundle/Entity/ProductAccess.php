@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  * ProductAccess
  *
  * @ORM\Table(name="product_access")
- * @ORM\Entity
+ * @ORM\Entity()
  */
 class ProductAccess
 {
