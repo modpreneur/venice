@@ -20,4 +20,9 @@ parameters:
     secret:            ThisTokenIsNotSoSecretChangeIt
     app_version: 2.0.0
 
+    #values for customer management services
+    login_route: necktie_login
+    login_response_route: necktie_login_response
+    gateway_class: AppBundle\Services\NecktieGateway
+
 

@@ -10,6 +10,7 @@ namespace AppBundle\Tests\Services;
 
 
 use AppBundle\Services\NecktieGateway;
+use AppBundle\Services\NecktieGatewayHelper;
 
 class NecktieGatewayTest extends \PHPUnit_Framework_TestCase
 {
@@ -36,6 +37,8 @@ class NecktieGatewayTest extends \PHPUnit_Framework_TestCase
 
     /** @var  \PHPUnit_Framework_MockObject_MockObject */
     protected $userMock;
+
+    protected $necktieGatewayHelper;
 
     public function setUp()
     {
@@ -78,19 +81,21 @@ class NecktieGatewayTest extends \PHPUnit_Framework_TestCase
             ->getMockBuilder("AppBundle\\Entity\\User")
             ->disableOriginalConstructor()
             ->getMock();
+
+        $this->necktieGatewayHelper = new NecktieGatewayHelper();
     }
 
     public function testGetRedirectUrlToNecktieLogin()
     {
         $this->containerMock
-            ->expects($this->exactly(3))
+            ->expects($this->exactly(4))
             ->method("getParameter")
-            ->willReturn("www.necktie.com", "client_id_value", "client_secret_value");
+            ->willReturn("www.necktie.com", "client_id_value", "client_secret_value", "necktie_login_response");
 
         $this->routerMock
             ->expects($this->once())
             ->method("generate")
-            ->with("core_login_response")
+            ->with("necktie_login_response")
             ->willReturn("www.venice.com");
 
         $necktieGateway = new NecktieGateway(
@@ -99,7 +104,8 @@ class NecktieGatewayTest extends \PHPUnit_Framework_TestCase
             $this->connectorMock,
             $this->productAccessManagerMock,
             $this->tokenStorageMock,
-            $this->routerMock
+            $this->routerMock,
+            $this->necktieGatewayHelper
         );
 
         $uri = $necktieGateway->getRedirectUrlToNecktieLogin();
@@ -168,7 +174,8 @@ class NecktieGatewayTest extends \PHPUnit_Framework_TestCase
             $this->connectorMock,
             $this->productAccessManagerMock,
             $this->tokenStorageMock,
-            $this->routerMock
+            $this->routerMock,
+            $this->necktieGatewayHelper
         );
 
         $user = $necktieGateway->getUserByAccessToken("accessTokenString", true);
@@ -224,7 +231,8 @@ class NecktieGatewayTest extends \PHPUnit_Framework_TestCase
             $this->connectorMock,
             $this->productAccessManagerMock,
             $this->tokenStorageMock,
-            $this->routerMock
+            $this->routerMock,
+            $this->necktieGatewayHelper
         );
 
         $user = $necktieGateway->getUserByAccessToken("accessTokenString", true);
@@ -248,15 +256,6 @@ class NecktieGatewayTest extends \PHPUnit_Framework_TestCase
             ->getMockBuilder("AppBundle\\Entity\\Product\\Product")
             ->disableOriginalConstructor()
             ->getMock();
-
-        $tokenMock->expects($this->once())
-            ->method("getUser")
-            ->willReturn($this->userMock);
-
-        $this->tokenStorageMock
-            ->expects($this->once())
-            ->method("getToken")
-            ->willReturn($tokenMock);
 
         $this->connectorMock
             ->expects($this->once())
@@ -287,15 +286,57 @@ class NecktieGatewayTest extends \PHPUnit_Framework_TestCase
             ->expects($this->atLeastOnce())
             ->method("giveAccessToProduct");
 
+        $this->userMock
+            ->expects($this->once())
+            ->method("getLastAccessToken")
+            ->will($this->returnValue("accessTokenString"));
+
         $necktieGateway = new NecktieGateway(
             $this->containerMock,
             $this->entityManagerMock,
             $this->connectorMock,
             $this->productAccessManagerMock,
             $this->tokenStorageMock,
-            $this->routerMock
+            $this->routerMock,
+            $this->necktieGatewayHelper
         );
 
-        $necktieGateway->updateProductAccesses("accessTokenString");
+        $necktieGateway->updateProductAccesses($this->userMock);
+    }
+
+    public function testGetInvoices()
+    {
+        $this->containerMock
+            ->expects($this->once())
+            ->method("getParameter")
+            ->willReturn("www.necktie.com");
+
+        $this->userMock
+            ->expects($this->once())
+            ->method("getLastAccessToken")
+            ->willReturn("accessTokenString");
+
+        $this->connectorMock
+            ->expects($this->once())
+            ->method("get")
+            ->with(
+                "www.necktie.com/api/v1/invoices",
+                "accessTokenString"
+            )
+            ->willReturn('{"invoices":[{"id":1,"pay_system":{"id":1,"name":"Clickbank","vendor":[{"id":1,"name":"metest","secretKey":"C38BBALA90A9AF4C","apiKey":"API-NAG1OMPUO3EELVUHNOHA310NOGTD6U8N","devApiKey":"DEV-LC2U7HN8FEVC4USNERCM3N0D013A9DU2"}],"postback":true},"pay_system_vendor":{"id":1,"pay_system":{"id":1,"name":"Clickbank","vendor":[],"postback":true},"name":"metest","secretKey":"C38BBALA90A9AF4C","apiKey":"API-NAG1OMPUO3EELVUHNOHA310NOGTD6U8N","devApiKey":"DEV-LC2U7HN8FEVC4USNERCM3N0D013A9DU2"},"price_total":86,"transaction_type":"sale","receipt":"neco?","transaction_time":"2015-10-05T15:59:34+0200","created_at":"2015-10-05T15:59:34+0200","updated_at":"2015-10-21T09:20:24+0200"}]}');
+
+        $necktieGateway = new NecktieGateway(
+            $this->containerMock,
+            $this->entityManagerMock,
+            $this->connectorMock,
+            $this->productAccessManagerMock,
+            $this->tokenStorageMock,
+            $this->routerMock,
+            $this->necktieGatewayHelper
+        );
+
+        $invociesArray = $necktieGateway->getInvoices($this->userMock);
+
+        $this->assertContainsOnlyInstancesOf("AppBundle\\Entity\\Invoice", $invociesArray);
     }
 }

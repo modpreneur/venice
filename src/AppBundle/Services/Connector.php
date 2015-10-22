@@ -43,7 +43,7 @@ class Connector
         }
 
         $response = $this->curl->setMethod("POST",$parameters)->setURL($url)->execute();
-
+ladybug_dump($response);
         return json_decode($response, true);
     }
 

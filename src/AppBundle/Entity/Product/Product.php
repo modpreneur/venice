@@ -75,7 +75,6 @@ class Product extends TrinityProduct
     public function __construct()
     {
         $this->users = new ArrayCollection();
-        $this->tags = new ArrayCollection();
         $this->enabled = true;
         $this->productAccesses = new ArrayCollection();
     }
@@ -136,41 +135,6 @@ class Product extends TrinityProduct
     {
         $this->name = $name;
         $this->createHandle($name);
-    }
-
-    /**
-     * @return ArrayCollection<Tag>
-     */
-    public function getTags()
-    {
-        return $this->tags;
-    }
-
-
-    /**
-     * @param Tag $tag
-     * @return $this
-     */
-    public function addTag(Tag $tag)
-    {
-        if(!$this->tags->contains($tag))
-        {
-            $this->tags->add($tag);
-        }
-
-        return $this;
-    }
-
-
-    /**
-     * @param Tag $tag
-     * @return $this
-     */
-    public function removeTag(Tag $tag)
-    {
-        $this->tags->remove($tag);
-
-        return $this;
     }
 
 

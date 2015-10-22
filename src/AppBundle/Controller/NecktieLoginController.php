@@ -9,6 +9,9 @@
 namespace AppBundle\Controller;
 
 
+use AppBundle\Entity\NecktieToken;
+use AppBundle\Exceptions\UnsuccessfulNecktieResponse;
+use AppBundle\Exceptions\UnsuccessfulNecktieResponseException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,7 +26,7 @@ use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 class NecktieLoginController extends Controller
 {
     /**
-     * @Route("/login", name="core_login")
+     * @Route("/login", name="necktie_login")
      *
      * @param Request $request
      *
@@ -44,14 +47,16 @@ class NecktieLoginController extends Controller
 
 
     /**
-     * @Route("/login-response", name="core_login_response")
+     * @Route("/login-response", name="necktie_login_response")
      * @param Request $request
      *
      * @return Response
+     * @throws UnsuccessfulNecktieResponseException
      */
     public function processNecktieLoginResponseAction(Request $request)
     {
         $necktieGateway = $this->get("app.services.necktie_gateway");
+        $entityManager = $this->getDoctrine()->getManager();
         $cookieValue = $request->cookies->get($necktieGateway::STATE_COOKIE_NAME);
 
         if(!is_string($cookieValue))
@@ -64,15 +69,59 @@ class NecktieLoginController extends Controller
             throw new AccessDeniedHttpException();
         }
 
-        if($request->query->get("access_token"))
+        $necktieToken = $necktieGateway->getHelper()->createAccessTokenFromArray($request->query->all());
+
+        if($necktieToken)
         {
-            $user = $necktieGateway->getUserByAccessToken($request->query->get("access_token"), true);
-            $this->get("fos_user.security.login_manager")->logInUser("main", $user);
+            $user = null;
+
+            try
+            {
+                $user = $this->getAndLoginUser($necktieGateway, $request, $necktieToken);
+            }
+            catch(UnsuccessfulNecktieResponseException $e)
+            {
+                throw new UnsuccessfulNecktieResponseException("Could not get user from necktie.");
+            }
+
+            try
+            {
+                $this->performNecktieCalls($necktieGateway, $user);
+            }
+            catch(UnsuccessfulNecktieResponseException $e)
+            {
+                //necktie requests failed
+                //try to refresh access token and perform requests again
+                $necktieGateway->refreshAccessToken($user);
+
+                $this->performNecktieCalls($necktieGateway, $user);
+            }
+
+            $entityManager->persist($user);
+            $entityManager->flush();
+        }
+        else
+        {
+            return new Response("An error occurred. Please report it to the support.");
         }
 
-        $necktieGateway->updateProductAccesses($request->query->get("access_token"));
-
         return $this->redirectToRoute("homepage");
+    }
+
+    protected function performNecktieCalls($necktieGateway, $user)
+    {
+        $necktieGateway->updateProductAccesses($user);
+        $necktieGateway->getInvoices($user);
+    }
+
+    public function getAndLoginUser($necktieGateway, $request, $necktieToken)
+    {
+        $user = $necktieGateway->getUserByAccessToken($request->query->get("access_token"));
+        $this->get("fos_user.security.login_manager")->logInUser("main", $user);
+        $necktieToken->setUser($user);
+        $user->addNecktieToken($necktieToken);
+
+        return $user;
     }
 
 

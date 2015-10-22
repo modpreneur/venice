@@ -13,6 +13,6 @@ fos_user_security_login:
     path: /login
     defaults:
         _controller: FrameworkBundle:Redirect:redirect
-        path: core_login
+        path: %login_route% # route name from parameters
         permanent: true
 

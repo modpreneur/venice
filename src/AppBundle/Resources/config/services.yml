@@ -8,10 +8,14 @@ services:
             - @app.services.product_access_manager
             - @security.token_storage
             - @router
+            - @app.services.necktie_gateway_helper
+
+    app.services.necktie_gateway_helper:
+        class: AppBundle\Services\NecktieGatewayHelper
 
     app.services.connector:
         class: AppBundle\Services\Connector
-        arguments:  [@anchovy.curl ]
+        arguments:  [@anchovy.curl]
 
     app.services.product_access_manager:
         class: AppBundle\Services\ProductAccessManager

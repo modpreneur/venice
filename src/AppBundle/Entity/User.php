@@ -66,6 +66,14 @@ class User extends TrinityUser
     protected $birthDate;
 
 
+    /**
+     * @var ArrayCollection<NecktieToken>
+     *
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\NecktieToken", mappedBy="user", cascade={"remove", "persist"})
+     */
+    protected $necktieTokens;
+
+
     public function __construct()
     {
         parent::__construct();
@@ -73,6 +81,7 @@ class User extends TrinityUser
         $this->password = "";
         $this->salt = "";
         $this->productAccesses = new ArrayCollection();
+        $this->necktieTokens = new ArrayCollection();
         $this->preferredUnits = self::DEFAULT_PREFERRED_METRICS;
         $this->birthDate = new DateTime();
     }
@@ -202,6 +211,59 @@ class User extends TrinityUser
         return $this;
     }
 
+
+    /**
+     * @return string
+     */
+    public function getLastAccessToken()
+    {
+        return $this->necktieTokens->last()->getAccessToken();
+    }
+
+
+    /**
+     * @return string
+     */
+    public function getLastRefreshToken()
+    {
+        return $this->necktieTokens->last()->getRefreshToken();
+    }
+
+
+    /**
+     * @return ArrayCollection<NecktieToken>
+     */
+    public function getNecktieTokens()
+    {
+        return $this->necktieTokens;
+    }
+
+
+    /**
+     * @param NecktieToken $necktieToken
+     * @return $this
+     */
+    public function addNecktieToken(NecktieToken $necktieToken)
+    {
+        if(!$this->necktieTokens->contains($necktieToken))
+        {
+            $this->necktieTokens->add($necktieToken);
+        }
+
+        return $this;
+    }
+
+
+    /**
+     * @param NecktieToken $necktieToken
+     * @return $this
+     */
+    public function removeNecktieToken(NecktieToken $necktieToken)
+    {
+        $this->necktieTokens->remove($necktieToken);
+
+        return $this;
+    }
 
 
 
