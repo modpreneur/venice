@@ -9,8 +9,6 @@
 namespace AppBundle\Controller;
 
 
-use AppBundle\Entity\NecktieToken;
-use AppBundle\Exceptions\UnsuccessfulNecktieResponse;
 use AppBundle\Exceptions\UnsuccessfulNecktieResponseException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
