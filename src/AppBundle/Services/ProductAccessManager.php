@@ -68,13 +68,6 @@ class ProductAccessManager implements ProductAccessManagerInterface
      */
     public function giveAccessToProduct(User $user, Product $product, \DateTime $dateFrom, \DateTime $dateTo = null)
     {
-        //$productAccess = $this
-        //    ->entityManager
-        //    ->getRepository("AppBundle:ProductAccess")
-        //    ->findOneBy(
-        //        ["user" => $user, "product" => $product]
-        //    );
-
         if(!$this->hasAccessToProduct($user, $product))
         {
             $productAccess = new ProductAccess();

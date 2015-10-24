@@ -324,7 +324,7 @@ class NecktieGateway
 
     public function refreshAccessTokenIfNeeded(User $user)
     {
-        if(!$user->getLastToken()->isAccessTokenValid())
+        if(!$user->isLastAccessTokenValid())
         {
             $this->refreshAccessToken($user);
         }

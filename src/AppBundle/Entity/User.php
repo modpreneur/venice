@@ -212,6 +212,8 @@ class User extends TrinityUser
 
 
     /**
+     * Get the last refresh token string.
+     *
      * @return string
      */
     public function getLastAccessToken()
@@ -221,6 +223,19 @@ class User extends TrinityUser
 
 
     /**
+     * Check if the last OAuth access token is valid based on stored lifetime.
+     *
+     * @return bool
+     */
+    public function isLastAccessTokenValid()
+    {
+        return $this->getLastToken()->isAccessTokenValid();
+    }
+
+
+    /**
+     * Get the last refresh token string.
+     *
      * @return string
      */
     public function getLastRefreshToken()
@@ -230,6 +245,8 @@ class User extends TrinityUser
 
 
     /**
+     * Get the last OAuthToken object.
+     *
      * @return OAuthToken|null
      */
     public function getLastToken()
@@ -239,6 +256,8 @@ class User extends TrinityUser
 
 
     /**
+     * Get all OAuthTokens.
+     *
      * @return ArrayCollection<OAuthToken>
      */
     public function getOAuthTokens()
