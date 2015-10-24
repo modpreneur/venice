@@ -13,13 +13,14 @@ use AppBundle\Entity\Invoice;
 use AppBundle\Entity\User;
 use AppBundle\Exceptions\ExpiredRefreshTokenException;
 use AppBundle\Exceptions\UnsuccessfulNecktieResponseException;
+use AppBundle\Interfaces\NecktieGatewayInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
-class NecktieGateway
+class NecktieGateway implements NecktieGatewayInterface
 {
     const NECKTIE_OAUTH_AUTH_URI = "/oauth/v2/auth";
     const NECKTIE_OATH_TOKEN_URI = "/oauth/v2/token";
@@ -88,6 +89,12 @@ class NecktieGateway
         $this->necktieUrl = $this->container->getParameter("necktie_url");
     }
 
+
+    /**
+     * Do not use for redirecting to login form! Redirect to "login_route" route instead!
+     *
+     * @return string
+     */
     public function getRedirectUrlToNecktieLogin()
     {
         $necktieUrl = $this->necktieUrl . self::NECKTIE_OAUTH_AUTH_URI;
