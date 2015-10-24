@@ -9,7 +9,7 @@
 namespace AppBundle\Services;
 
 
-use AppBundle\Entity\NecktieToken;
+use AppBundle\Entity\OAuthToken;
 use AppBundle\Interfaces\NecktieGatewayHelperInterface;
 
 class NecktieGatewayHelper implements NecktieGatewayHelperInterface
@@ -60,7 +60,7 @@ class NecktieGatewayHelper implements NecktieGatewayHelperInterface
            && array_key_exists("scope", $array)
            && array_key_exists("expires_in", $array))
         {
-            $necktieToken = new NecktieToken();
+            $necktieToken = new OAuthToken();
             $necktieToken->setAccessToken($array["access_token"]);
             $necktieToken->setRefreshToken($array["refresh_token"]);
             $necktieToken->setScope($array["scope"]);

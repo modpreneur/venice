@@ -117,7 +117,7 @@ class NecktieLoginController extends Controller
         $user = $necktieGateway->getUserByAccessToken($request->query->get("access_token"));
         $this->get("fos_user.security.login_manager")->logInUser("main", $user);
         $necktieToken->setUser($user);
-        $user->addNecktieToken($necktieToken);
+        $user->addOAuthToken($necktieToken);
 
         return $user;
     }

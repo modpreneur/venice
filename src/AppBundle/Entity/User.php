@@ -67,11 +67,11 @@ class User extends TrinityUser
 
 
     /**
-     * @var ArrayCollection<NecktieToken>
+     * @var ArrayCollection<OAuthToken>
      *
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\NecktieToken", mappedBy="user", cascade={"remove", "persist"})
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\OAuthToken", mappedBy="user", cascade={"remove", "persist"})
      */
-    protected $necktieTokens;
+    protected $OAuthTokens;
 
 
     public function __construct()
@@ -81,7 +81,7 @@ class User extends TrinityUser
         $this->password = "";
         $this->salt = "";
         $this->productAccesses = new ArrayCollection();
-        $this->necktieTokens = new ArrayCollection();
+        $this->OAuthTokens = new ArrayCollection();
         $this->preferredUnits = self::DEFAULT_PREFERRED_METRICS;
         $this->birthDate = new DateTime();
     }
@@ -163,7 +163,6 @@ class User extends TrinityUser
     }
 
 
-
     /**
      * @return DateTime
      */
@@ -217,7 +216,7 @@ class User extends TrinityUser
      */
     public function getLastAccessToken()
     {
-        return $this->necktieTokens->last()->getAccessToken();
+        return $this->OAuthTokens->last()->getAccessToken();
     }
 
 
@@ -226,28 +225,37 @@ class User extends TrinityUser
      */
     public function getLastRefreshToken()
     {
-        return $this->necktieTokens->last()->getRefreshToken();
+        return $this->OAuthTokens->last()->getRefreshToken();
     }
 
 
     /**
-     * @return ArrayCollection<NecktieToken>
+     * @return OAuthToken|null
      */
-    public function getNecktieTokens()
+    public function getLastToken()
     {
-        return $this->necktieTokens;
+        return $this->OAuthTokens->last();
     }
 
 
     /**
-     * @param NecktieToken $necktieToken
+     * @return ArrayCollection<OAuthToken>
+     */
+    public function getOAuthTokens()
+    {
+        return $this->OAuthTokens;
+    }
+
+
+    /**
+     * @param OAuthToken $OAuthToken
      * @return $this
      */
-    public function addNecktieToken(NecktieToken $necktieToken)
+    public function addOAuthToken(OAuthToken $OAuthToken)
     {
-        if(!$this->necktieTokens->contains($necktieToken))
+        if(!$this->OAuthTokens->contains($OAuthToken))
         {
-            $this->necktieTokens->add($necktieToken);
+            $this->OAuthTokens->add($OAuthToken);
         }
 
         return $this;
@@ -255,17 +263,15 @@ class User extends TrinityUser
 
 
     /**
-     * @param NecktieToken $necktieToken
+     * @param OAuthToken $OAuthToken
      * @return $this
      */
-    public function removeNecktieToken(NecktieToken $necktieToken)
+    public function removeOAuthToken(OAuthToken $OAuthToken)
     {
-        $this->necktieTokens->remove($necktieToken);
+        $this->OAuthTokens->remove($OAuthToken);
 
         return $this;
     }
-
-
 
 
 }

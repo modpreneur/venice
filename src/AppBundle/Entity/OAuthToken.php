@@ -14,12 +14,12 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  *
  * @ORM\Entity()
- * @ORM\Table(name="necktie_token")
+ * @ORM\Table(name="oauth_token")
  *
- * Class NecktieToken
+ * Class OAuthToken
  * @package AppBundle\Entity
  */
-class NecktieToken
+class OAuthToken
 {
     /**
      * @var int
@@ -94,7 +94,7 @@ class NecktieToken
     /**
      * @param string $accessToken
      *
-     * @return NecktieToken
+     * @return OAuthToken
      */
     public function setAccessToken($accessToken)
     {
@@ -116,7 +116,7 @@ class NecktieToken
     /**
      * @param string $refreshToken
      *
-     * @return NecktieToken
+     * @return OAuthToken
      */
     public function setRefreshToken($refreshToken)
     {
@@ -147,7 +147,7 @@ class NecktieToken
     /**
      * @param \DateTime $validTo
      *
-     * @return NecktieToken
+     * @return OAuthToken
      */
     public function setValidTo(\DateTime $validTo)
     {
@@ -162,7 +162,7 @@ class NecktieToken
      *
      * @param $lifetime
      *
-     * @return NecktieToken
+     * @return OAuthToken
      *
      */
     public function setValidToByLifetime($lifetime)
@@ -188,7 +188,7 @@ class NecktieToken
     /**
      * @param string $scope
      *
-     * @return NecktieToken
+     * @return OAuthToken
      */
     public function setScope($scope)
     {
@@ -210,7 +210,7 @@ class NecktieToken
     /**
      * @param mixed $user
      *
-     * @return NecktieToken
+     * @return OAuthToken
      */
     public function setUser($user)
     {

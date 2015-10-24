@@ -309,7 +309,7 @@ class NecktieGateway
         {
             $token = $this->helper->createAccessTokenFromArray($response);
 
-            $user->addNecktieToken($token);
+            $user->addOAuthToken($token);
         }
         else
         {
@@ -324,7 +324,7 @@ class NecktieGateway
 
     public function refreshAccessTokenIfNeeded(User $user)
     {
-        if(!$user->getNecktieTokens()->last()->isAccessTokenValid())
+        if(!$user->getLastToken()->isAccessTokenValid())
         {
             $this->refreshAccessToken($user);
         }
