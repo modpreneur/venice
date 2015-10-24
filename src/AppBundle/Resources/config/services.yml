@@ -1,4 +1,7 @@
 services:
+
+    # SERVICES #
+
     app.services.necktie_gateway:
         class: AppBundle\Services\NecktieGateway
         arguments:
@@ -20,3 +23,21 @@ services:
     app.services.product_access_manager:
         class: AppBundle\Services\ProductAccessManager
         arguments: [ @doctrine.orm.entity_manager ]
+
+    app.services.connection_manager:
+        class: AppBundle\Services\ConnectionManager
+        arguments:
+            - @app.services.necktie_gateway
+
+
+    # EVENT LISTENERS #
+
+    app.event_listener.kernel_excetpion:
+        class: AppBundle\EventListener\KernelExceptionListener
+        arguments:
+            - @router
+            - @service_container
+        tags:
+            - {name: "kernel.event_listener", event: "kernel.exception", method: "onKernelException"}
+
+
