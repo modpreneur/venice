@@ -11,6 +11,7 @@ namespace AppBundle\Services;
 
 use AppBundle\Entity\Invoice;
 use AppBundle\Entity\User;
+use AppBundle\Exceptions\ExpiredRefreshTokenException;
 use AppBundle\Exceptions\UnsuccessfulNecktieResponseException;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -170,6 +171,12 @@ class NecktieGateway
         return null;
     }
 
+
+    /**
+     * @param User $user
+     *
+     * @throws UnsuccessfulNecktieResponseException
+     */
     public function updateProductAccesses(User $user)
     {
         $this->refreshAccessTokenIfNeeded($user);
@@ -210,6 +217,13 @@ class NecktieGateway
         }
     }
 
+
+    /**
+     * @param User $user
+     *
+     * @return array
+     * @throws UnsuccessfulNecktieResponseException
+     */
     public function getInvoices(User $user)
     {
         $this->refreshAccessTokenIfNeeded($user);
@@ -271,6 +285,14 @@ class NecktieGateway
     }
 
 
+    /**
+     * @param User  $user
+     * @param       $uri
+     * @param array $queryParameters
+     *
+     * @return mixed|null
+     * @throws UnsuccessfulNecktieResponseException
+     */
     protected function getParsedResponse(User $user, $uri, $queryParameters = [])
     {
         $accessToken = $user->getLastAccessToken();
@@ -293,6 +315,11 @@ class NecktieGateway
     }
 
 
+    /**
+     * @param User $user
+     *
+     * @throws ExpiredRefreshTokenException
+     */
     public function refreshAccessToken(User $user)
     {
         $response = $this->connector->postAndGetJson(
@@ -313,15 +340,25 @@ class NecktieGateway
         }
         else
         {
-            throw new UnsuccessfulNecktieResponseException("Necktie refresh token has expired.");
+            throw new ExpiredRefreshTokenException("Necktie refresh token has expired.");
         }
     }
 
+
+    /**
+     * @return NecktieGatewayHelper
+     */
     public function getHelper()
     {
         return $this->helper;
     }
 
+
+    /**
+     * @param User $user
+     *
+     * @throws ExpiredRefreshTokenException
+     */
     public function refreshAccessTokenIfNeeded(User $user)
     {
         if(!$user->isLastAccessTokenValid())
