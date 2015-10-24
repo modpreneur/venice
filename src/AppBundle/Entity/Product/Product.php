@@ -9,6 +9,7 @@
 namespace AppBundle\Entity\Product;
 
 
+use AppBundle\Entity\ProductAccess;
 use AppBundle\Entity\User;
 use Cocur\Slugify\Slugify;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -21,9 +22,12 @@ use Trinity\FrameworkBundle\Entity\BaseProduct as TrinityProduct;
  * @ORM\Table(name="product")
  * @ORM\Entity()
  *
+ * @ORM\InheritanceType("JOINED")
+ * @ORM\DiscriminatorColumn(name="type", type="string")
+ *
  * @package AppBundle\Entity\Product
  */
-class Product extends TrinityProduct
+abstract class Product extends TrinityProduct
 {
     /**
      * @ORM\Column(name="handle", type="string", unique=true)
@@ -211,6 +215,42 @@ class Product extends TrinityProduct
     public function setOrderNumber($orderNumber)
     {
         $this->orderNumber = $orderNumber;
+
+        return $this;
+    }
+
+
+    /**
+     * @return ArrayCollection<ProductAccess>
+     */
+    public function getProductAccesss()
+    {
+        return $this->productAccesses;
+    }
+
+
+    /**
+     * @param ProductAccess $productAccess
+     * @return $this
+     */
+    public function addProductAccess(ProductAccess $productAccess)
+    {
+        if(!$this->productAccesses->contains($productAccess))
+        {
+            $this->productAccesses->add($productAccess);
+        }
+
+        return $this;
+    }
+
+
+    /**
+     * @param ProductAccess $productAccess
+     * @return $this
+     */
+    public function removeProductAccess(ProductAccess $productAccess)
+    {
+        $this->productAccesses->remove($productAccess);
 
         return $this;
     }

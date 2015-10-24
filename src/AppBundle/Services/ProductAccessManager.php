@@ -9,6 +9,7 @@
 namespace AppBundle\Services;
 
 
+use AppBundle\Entity\Product\FreeProduct;
 use AppBundle\Entity\Product\Product;
 use AppBundle\Entity\ProductAccess;
 use AppBundle\Entity\User;
@@ -36,6 +37,11 @@ class ProductAccessManager implements ProductAccessManagerInterface
      */
     public function hasAccessToProduct(User $user, Product $product)
     {
+        if($product instanceof FreeProduct)
+        {
+            return true;
+        }
+
         $productAccess = $this
             ->entityManager
             ->getRepository("AppBundle:ProductAccess")
@@ -43,7 +49,12 @@ class ProductAccessManager implements ProductAccessManagerInterface
                 ["user" => $user, "product" => $product]
             );
 
-        return ($productAccess instanceof ProductAccess);
+        if($productAccess instanceof ProductAccess)
+        {
+            return true;
+        }
+
+        return false;
     }
 
 
@@ -57,14 +68,14 @@ class ProductAccessManager implements ProductAccessManagerInterface
      */
     public function giveAccessToProduct(User $user, Product $product, \DateTime $dateFrom, \DateTime $dateTo = null)
     {
-        $productAccess = $this
-            ->entityManager
-            ->getRepository("AppBundle:ProductAccess")
-            ->findOneBy(
-                ["user" => $user, "product" => $product]
-            );
+        //$productAccess = $this
+        //    ->entityManager
+        //    ->getRepository("AppBundle:ProductAccess")
+        //    ->findOneBy(
+        //        ["user" => $user, "product" => $product]
+        //    );
 
-        if(!$productAccess)
+        if(!$this->hasAccessToProduct($user, $product))
         {
             $productAccess = new ProductAccess();
             $productAccess
