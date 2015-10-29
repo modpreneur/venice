@@ -98,7 +98,7 @@ class NecktieGatewayTest extends \PHPUnit_Framework_TestCase
 
     }
 
-    public function testgetRedirectUrlToLogin()
+    public function testGetRedirectUrlToLogin()
     {
         $this->containerMock
             ->expects($this->exactly(4))
