@@ -34,7 +34,7 @@ class NecktieLoginController extends Controller
     {
         $necktieGateway = $this->get("app.services.necktie_gateway");
 
-        $url = $necktieGateway->getRedirectUrlToNecktieLogin();
+        $url = $necktieGateway->getRedirectUrlToLogin();
         $cookie = $necktieGateway->getStateCookie();
 
         $response = $this->redirect($url);

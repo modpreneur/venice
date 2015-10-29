@@ -15,6 +15,7 @@ use AppBundle\Exceptions\ExpiredRefreshTokenException;
 use AppBundle\Exceptions\UnsuccessfulNecktieResponseException;
 use AppBundle\Interfaces\NecktieGatewayInterface;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\Routing\RouterInterface;
@@ -95,7 +96,7 @@ class NecktieGateway implements NecktieGatewayInterface
      *
      * @return string
      */
-    public function getRedirectUrlToNecktieLogin()
+    public function getRedirectUrlToLogin()
     {
         $necktieUrl = $this->necktieUrl . self::NECKTIE_OAUTH_AUTH_URI;
         $this->stateCookie = new Cookie(self::STATE_COOKIE_NAME, hash("sha256", rand() + time()));
@@ -338,6 +339,11 @@ class NecktieGateway implements NecktieGatewayInterface
                 "refresh_token" => $user->getLastRefreshToken()
             ]
         );
+
+        if(!$response)
+        {
+            throw new Exception("Necktie response error");
+        }
 
         if(!$this->helper->isRefreshTokenExpiredResponse($response))
         {

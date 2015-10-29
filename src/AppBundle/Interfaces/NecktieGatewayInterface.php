@@ -21,7 +21,7 @@ interface NecktieGatewayInterface
      *
      * @return string
      */
-    public function getRedirectUrlToNecktieLogin();
+    public function getRedirectUrlToLogin();
 
 
     /**
