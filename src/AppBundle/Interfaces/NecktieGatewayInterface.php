@@ -12,18 +12,10 @@ namespace AppBundle\Interfaces;
 use AppBundle\Entity\User;
 use AppBundle\Exceptions\ExpiredRefreshTokenException;
 use AppBundle\Exceptions\UnsuccessfulNecktieResponseException;
+use Symfony\Component\HttpFoundation\Cookie;
 
-interface NecktieGatewayInterface
+interface NecktieGatewayInterface extends GatewayInterface
 {
-
-    /**
-     * Do not use for redirecting to login form! Redirect to "login_route" route instead!
-     *
-     * @return string
-     */
-    public function getRedirectUrlToLogin();
-
-
     /**
      * Call necktie and get User entity.
      * This method should be typically called only in the login process.
@@ -40,31 +32,7 @@ interface NecktieGatewayInterface
 
 
     /**
-     * @param User $user
-     *
-     * @throws UnsuccessfulNecktieResponseException
-     */
-    public function updateProductAccesses(User $user);
-
-
-    /**
-     * @param User $user
-     *
-     * @return array
-     * @throws UnsuccessfulNecktieResponseException
-     */
-    public function getInvoices(User $user);
-
-
-    /** todo
-     * @param User $user
-     *
-     * @return mixed
-     */
-    public function getNewsletters(User $user);
-
-    /**
-     * @return mixed
+     * @return Cookie
      */
     public function getStateCookie();
 
@@ -83,4 +51,5 @@ interface NecktieGatewayInterface
      * @throws ExpiredRefreshTokenException
      */
     public function refreshAccessTokenIfNeeded(User $user);
+
 }

@@ -96,7 +96,7 @@ class NecktieGateway implements NecktieGatewayInterface
      *
      * @return string
      */
-    public function getRedirectUrlToLogin()
+    public function getLoginUrl()
     {
         $necktieUrl = $this->necktieUrl . self::NECKTIE_OAUTH_AUTH_URI;
         $this->stateCookie = new Cookie(self::STATE_COOKIE_NAME, hash("sha256", rand() + time()));
@@ -184,10 +184,13 @@ class NecktieGateway implements NecktieGatewayInterface
      * @param User $user
      *
      * @throws UnsuccessfulNecktieResponseException
+     *
+     * @return \AppBundle\Entity\ProductAccess[]|void
      */
     public function updateProductAccesses(User $user)
     {
         $this->refreshAccessTokenIfNeeded($user);
+        $givenProductAccesses = [];
 
         $response = $this->getParsedResponse($user, self::NECKTIE_PRODUCT_ACCESSES_URI);
 
@@ -220,9 +223,11 @@ class NecktieGateway implements NecktieGatewayInterface
                 if(!$dateTo instanceof \DateTime)
                     $dateTo = null;
 
-                $this->productAccessManager->giveAccessToProduct($user, $product, $dateFrom, $dateTo);
+                $givenProductAccesses[] = $this->productAccessManager->giveAccessToProduct($user, $product, $dateFrom, $dateTo);
             }
         }
+
+        return $givenProductAccesses;
     }
 
 

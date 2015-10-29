@@ -13,6 +13,9 @@ services:
             - @router
             - @app.services.necktie_gateway_helper
 
+    necktie:
+        alias: app.services.necktie_gateway
+
     app.services.necktie_gateway_helper:
         class: AppBundle\Services\NecktieGatewayHelper
 
@@ -27,7 +30,9 @@ services:
     app.services.connection_manager:
         class: AppBundle\Services\ConnectionManager
         arguments:
-            - @app.services.necktie_gateway
+            - @service_container
+            - %primary_gateway_service%
+            - %secondary_gateway_service%
 
 
     # EVENT LISTENERS #
@@ -39,5 +44,3 @@ services:
             - @service_container
         tags:
             - {name: "kernel.event_listener", event: "kernel.exception", method: "onKernelException"}
-
-

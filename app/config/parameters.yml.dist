@@ -23,6 +23,7 @@ parameters:
     #values for customer management services
     login_route: necktie_login
     login_response_route: necktie_login_response
-    gateway_class: AppBundle\Services\NecktieGateway
+    primary_gateway_service: necktie
+    secondary_gateway_service:
 
 

@@ -64,7 +64,7 @@ class ProductAccessManager implements ProductAccessManagerInterface
      * @param \DateTime      $dateFrom Starting datetime
      * @param \DateTime|null $dateTo   Ending datetime or null if it is lifetime access
      *
-     * @return void
+     * @return ProductAccess|null
      */
     public function giveAccessToProduct(User $user, Product $product, \DateTime $dateFrom, \DateTime $dateTo = null)
     {
@@ -79,6 +79,11 @@ class ProductAccessManager implements ProductAccessManagerInterface
 
             $this->entityManager->persist($productAccess);
             $this->entityManager->flush();
+
+            return $productAccess;
         }
+
+        return null;
+
     }
 }

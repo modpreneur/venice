@@ -12,19 +12,31 @@ namespace AppBundle\Services;
 use AppBundle\Entity\User;
 use AppBundle\Exceptions\ExpiredRefreshTokenException;
 use AppBundle\Interfaces\ConnectionManagerInterface;
-use AppBundle\Interfaces\NecktieGatewayInterface;
+use AppBundle\Interfaces\GatewayInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class ConnectionManager implements ConnectionManagerInterface
 {
-    protected $necktieGateway;
+    /**
+     * @var GatewayInterface
+     */
+    protected $primaryGateway;
+
+    /**
+     * @var GatewayInterface
+     */
+    protected $secondaryGateway;
 
 
     /**
-     * @param NecktieGatewayInterface $necktieGateway
+     * @param ContainerInterface $container
+     * @param string             $primaryGatewayService
+     * @param string             $secondaryGatewayService
      */
-    public function __construct(NecktieGatewayInterface $necktieGateway)
+    public function __construct(ContainerInterface $container, $primaryGatewayService = "", $secondaryGatewayService = "")
     {
-        $this->necktieGateway = $necktieGateway;
+        $this->primaryGateway = $container->get($primaryGatewayService);
+        $this->secondaryGateway = $container->get($secondaryGatewayService, $container::NULL_ON_INVALID_REFERENCE);
     }
 
 
@@ -36,8 +48,9 @@ class ConnectionManager implements ConnectionManagerInterface
      */
     public function getLoginUrl()
     {
-        //return router->generate("login_route");
+        $this->primaryGateway->getLoginUrl();
     }
+
 
 
     /**
@@ -51,7 +64,7 @@ class ConnectionManager implements ConnectionManagerInterface
      */
     public function updateProductAccesses(User $user)
     {
-        // TODO: Implement updateProductAccesses() method.
+        $this->primaryGateway->updateProductAccesses($user);
     }
 
 
@@ -66,6 +79,15 @@ class ConnectionManager implements ConnectionManagerInterface
      */
     public function getInvoices(User $user)
     {
-        // TODO: Implement getInvoices() method.
+        return $this->primaryGateway->getInvoices($user);
+    }
+
+
+    /**
+     * @return bool
+     */
+    protected function hasSecondaryGateway()
+    {
+        return !($this->secondaryGateway == null);
     }
 }
