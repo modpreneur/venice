@@ -8,7 +8,10 @@
 
 namespace AppBundle\Exceptions;
 
-
+/**
+ * Class ExpiredRefreshTokenException
+ * @package AppBundle\Exceptions
+ */
 class ExpiredRefreshTokenException extends \Exception
 {
 

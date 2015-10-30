@@ -10,6 +10,7 @@ namespace AppBundle\Controller;
 
 
 use AppBundle\Exceptions\UnsuccessfulNecktieResponseException;
+use AppBundle\Services\NecktieGateway;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -53,6 +54,7 @@ class NecktieLoginController extends Controller
      */
     public function processNecktieLoginResponseAction(Request $request)
     {
+        /** @var NecktieGateway $necktieGateway */
         $necktieGateway = $this->get("app.services.necktie_gateway");
         $entityManager = $this->getDoctrine()->getManager();
         $cookieValue = $request->cookies->get($necktieGateway::STATE_COOKIE_NAME);
@@ -112,7 +114,7 @@ class NecktieLoginController extends Controller
         $necktieGateway->getInvoices($user);
     }
 
-    public function getAndLoginUser($necktieGateway, $request, $necktieToken)
+    protected function getAndLoginUser($necktieGateway, $request, $necktieToken)
     {
         $user = $necktieGateway->getUserByAccessToken($request->query->get("access_token"));
         $this->get("fos_user.security.login_manager")->logInUser("main", $user);

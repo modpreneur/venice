@@ -11,13 +11,10 @@ namespace AppBundle\Interfaces;
 
 use AppBundle\Entity\ProductAccess;
 use AppBundle\Entity\User;
-use AppBundle\Exceptions\UnsuccessfulNecktieResponseException;
 
 interface GatewayInterface
 {
     /**
-     * Do not use for redirecting to login form! Redirect to "login_route" route instead!
-     *
      * @return string
      */
     public function getLoginUrl();
@@ -25,8 +22,6 @@ interface GatewayInterface
 
     /**
      * @param User $user
-     *
-     * @throws UnsuccessfulNecktieResponseException
      *
      * @return ProductAccess[]
      */
@@ -37,7 +32,6 @@ interface GatewayInterface
      * @param User $user
      *
      * @return array
-     * @throws UnsuccessfulNecktieResponseException
      */
     public function getInvoices(User $user);
 

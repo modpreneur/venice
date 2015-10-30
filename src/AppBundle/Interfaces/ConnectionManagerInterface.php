@@ -11,7 +11,6 @@ namespace AppBundle\Interfaces;
 
 use AppBundle\Entity\User;
 use AppBundle\Exceptions\ExpiredRefreshTokenException;
-use AppBundle\Exceptions\UnsuccessfulNecktieResponseException;
 
 interface ConnectionManagerInterface
 {
@@ -29,8 +28,7 @@ interface ConnectionManagerInterface
      *
      * @param User $user
      *
-     * @throws ExpiredRefreshTokenException
-     * @throws UnsuccessfulNecktieResponseException
+     * @throws ExpiredRefreshTokenException Should be catched in a event listener listening kernel.exception.
      *
      * @return null
      */
@@ -42,8 +40,7 @@ interface ConnectionManagerInterface
      *
      * @param User $user
      *
-     * @throws ExpiredRefreshTokenException
-     * @throws UnsuccessfulNecktieResponseException
+     * @throws ExpiredRefreshTokenException Should be catched in a event listener listening kernel.exception.
      *
      * @return \AppBundle\Entity\Invoice[]
      */
