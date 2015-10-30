@@ -94,6 +94,8 @@ class NecktieGateway implements NecktieGatewayInterface
     /**
      * Do not use for redirecting to login form! Redirect to "login_route" route instead!
      *
+     * @internal
+     *
      * @return string
      */
     public function getLoginUrl()
