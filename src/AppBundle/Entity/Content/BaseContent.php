@@ -9,6 +9,9 @@
 namespace AppBundle\Entity\Content;
 
 
+use AppBundle\Entity\ContentProduct;
+use AppBundle\Entity\User;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -57,6 +60,7 @@ abstract class BaseContent
      */
     protected $author;
 
+
     /**
      * Return Content's content no matter what concrete implementation is.
      *
@@ -82,4 +86,73 @@ abstract class BaseContent
     {
         $this->name = $name;
     }
+
+
+    /**
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+
+    /**
+     * @return User
+     */
+    public function getAuthor()
+    {
+        return $this->author;
+    }
+
+
+    /**
+     * @param User $author
+     *
+     * @return BaseContent
+     */
+    public function setAuthor($author)
+    {
+        $this->author = $author;
+
+        return $this;
+    }
+
+
+    /**
+     * @return ArrayCollection<ContentProduct>
+     */
+    public function getContentProducts()
+    {
+        return $this->contentProducts;
+    }
+
+
+    /**
+     * @param ContentProduct $contentProduct
+     * @return $this
+     */
+    public function addContentProduct(ContentProduct $contentProduct)
+    {
+        if(!$this->contentProducts->contains($contentProduct))
+        {
+            $this->contentProducts->add($contentProduct);
+        }
+
+        return $this;
+    }
+
+
+    /**
+     * @param ContentProduct $contentProduct
+     * @return $this
+     */
+    public function removeContentProduct(ContentProduct $contentProduct)
+    {
+        $this->contentProducts->remove($contentProduct);
+
+        return $this;
+    }
+
+
 }
