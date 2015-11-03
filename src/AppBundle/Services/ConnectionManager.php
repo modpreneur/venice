@@ -9,6 +9,8 @@
 namespace AppBundle\Services;
 
 
+use AppBundle\Entity\Invoice;
+use AppBundle\Entity\ProductAccess;
 use AppBundle\Entity\User;
 use AppBundle\Exceptions\ExpiredRefreshTokenException;
 use AppBundle\Interfaces\ConnectionManagerInterface;
@@ -60,11 +62,11 @@ class ConnectionManager implements ConnectionManagerInterface
      *
      * @throws ExpiredRefreshTokenException
      *
-     * @return null
+     * @return ProductAccess[]
      */
     public function updateProductAccesses(User $user)
     {
-        $this->primaryGateway->updateProductAccesses($user);
+        return $this->primaryGateway->updateProductAccesses($user);
     }
 
 
@@ -75,7 +77,7 @@ class ConnectionManager implements ConnectionManagerInterface
      *
      * @throws ExpiredRefreshTokenException
      *
-     * @return \AppBundle\Entity\Invoice[]
+     * @return Invoice[]
      */
     public function getInvoices(User $user)
     {
