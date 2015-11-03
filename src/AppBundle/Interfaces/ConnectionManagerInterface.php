@@ -9,6 +9,8 @@
 namespace AppBundle\Interfaces;
 
 
+use AppBundle\Entity\Invoice;
+use AppBundle\Entity\ProductAccess;
 use AppBundle\Entity\User;
 use AppBundle\Exceptions\ExpiredRefreshTokenException;
 
@@ -30,7 +32,7 @@ interface ConnectionManagerInterface
      *
      * @throws ExpiredRefreshTokenException Should be catched in a event listener listening kernel.exception.
      *
-     * @return null
+     * @return ProductAccess[]
      */
     public function updateProductAccesses(User $user);
 
@@ -42,7 +44,7 @@ interface ConnectionManagerInterface
      *
      * @throws ExpiredRefreshTokenException Should be catched in a event listener listening kernel.exception.
      *
-     * @return \AppBundle\Entity\Invoice[]
+     * @return Invoice[]
      */
     public function getInvoices(User $user);
 }
