@@ -25,7 +25,7 @@ class ProductAccess
     /**
      * @var User
      *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="productAccesses")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="productAccesses", cascade={"PERSIST"})
      */
     private $user;
 

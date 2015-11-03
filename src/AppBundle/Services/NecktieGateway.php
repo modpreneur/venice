@@ -47,11 +47,6 @@ class NecktieGateway implements NecktieGatewayInterface
     protected $container;
 
     /**
-     * @var ProductAccessManager
-     */
-    protected $productAccessManager;
-
-    /**
      * @var TokenStorageInterface
      */
     protected $tokenStorage;
@@ -73,7 +68,6 @@ class NecktieGateway implements NecktieGatewayInterface
         $container,
         $entityManager,
         $connector,
-        $productAccessManager,
         $tokenStorage,
         $router,
         $helper
@@ -82,7 +76,6 @@ class NecktieGateway implements NecktieGatewayInterface
         $this->entityManager = $entityManager;
         $this->connector = $connector;
         $this->container = $container;
-        $this->productAccessManager = $productAccessManager;
         $this->tokenStorage = $tokenStorage;
         $this->router = $router;
         $this->helper = $helper;
@@ -225,7 +218,7 @@ class NecktieGateway implements NecktieGatewayInterface
                 if(!$dateTo instanceof \DateTime)
                     $dateTo = null;
 
-                $givenProductAccesses[] = $this->productAccessManager->giveAccessToProduct($user, $product, $dateFrom, $dateTo);
+                $givenProductAccesses[] = $user->giveAccessToProduct($product, $dateFrom, $dateTo);
             }
         }
 

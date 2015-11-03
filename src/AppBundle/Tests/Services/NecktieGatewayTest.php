@@ -23,9 +23,6 @@ class NecktieGatewayTest extends \PHPUnit_Framework_TestCase
     protected $connectorMock;
 
     /** @var  \PHPUnit_Framework_MockObject_MockObject */
-    protected $productAccessManagerMock;
-
-    /** @var  \PHPUnit_Framework_MockObject_MockObject */
     protected $tokenStorageMock;
 
     /** @var  \PHPUnit_Framework_MockObject_MockObject */
@@ -54,11 +51,6 @@ class NecktieGatewayTest extends \PHPUnit_Framework_TestCase
 
         $this->connectorMock = $this
             ->getMockBuilder("\\AppBundle\\Services\\Connector")
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $this->productAccessManagerMock = $this
-            ->getMockBuilder("\\AppBundle\\Services\\ProductAccessManager")
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -115,7 +107,6 @@ class NecktieGatewayTest extends \PHPUnit_Framework_TestCase
             $this->containerMock,
             $this->entityManagerMock,
             $this->connectorMock,
-            $this->productAccessManagerMock,
             $this->tokenStorageMock,
             $this->routerMock,
             $this->necktieGatewayHelperMock
@@ -196,7 +187,6 @@ class NecktieGatewayTest extends \PHPUnit_Framework_TestCase
             $this->containerMock,
             $this->entityManagerMock,
             $this->connectorMock,
-            $this->productAccessManagerMock,
             $this->tokenStorageMock,
             $this->routerMock,
             $this->necktieGatewayHelperMock
@@ -263,7 +253,6 @@ class NecktieGatewayTest extends \PHPUnit_Framework_TestCase
             $this->containerMock,
             $this->entityManagerMock,
             $this->connectorMock,
-            $this->productAccessManagerMock,
             $this->tokenStorageMock,
             $this->routerMock,
             $this->necktieGatewayHelperMock
@@ -311,11 +300,11 @@ class NecktieGatewayTest extends \PHPUnit_Framework_TestCase
             )
             ->willReturn($productMock);
 
-        $this->productAccessManagerMock
-            ->expects($this->atLeastOnce())
-            ->method("giveAccessToProduct");
+       $this->userMock
+           ->expects($this->exactly(3))
+           ->method("giveAccessToProduct");
 
-        $this->userMock
+       $this->userMock
             ->expects($this->once())
             ->method("getLastAccessToken")
             ->will($this->returnValue("accessTokenString"));
@@ -324,7 +313,6 @@ class NecktieGatewayTest extends \PHPUnit_Framework_TestCase
             $this->containerMock,
             $this->entityManagerMock,
             $this->connectorMock,
-            $this->productAccessManagerMock,
             $this->tokenStorageMock,
             $this->routerMock,
             $this->necktieGatewayHelperMock
@@ -358,7 +346,6 @@ class NecktieGatewayTest extends \PHPUnit_Framework_TestCase
             $this->containerMock,
             $this->entityManagerMock,
             $this->connectorMock,
-            $this->productAccessManagerMock,
             $this->tokenStorageMock,
             $this->routerMock,
             $this->necktieGatewayHelperMock

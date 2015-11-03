@@ -8,6 +8,8 @@
 
 namespace AppBundle\Entity;
 
+use AppBundle\Entity\Product\FreeProduct;
+use AppBundle\Entity\Product\Product;
 use \DateTime;
 use \InvalidArgumentException;
 use APY\DataGridBundle\Grid\Mapping\Column;
@@ -52,7 +54,7 @@ class User extends TrinityUser
     protected $preferredUnits;
 
     /**
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\ProductAccess", mappedBy="user", cascade={"REMOVE"})
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\ProductAccess", mappedBy="user", cascade={"REMOVE", "PERSIST"})
      *
      * @var ArrayCollection<ProductAccess>
      */
@@ -292,5 +294,86 @@ class User extends TrinityUser
         return $this;
     }
 
+
+    /**
+     * @param Product $product
+     *
+     * @return bool
+     */
+    public function hasAccessToProduct(Product $product)
+    {
+        if($product instanceof FreeProduct)
+        {
+            return true;
+        }
+
+        $today = new \DateTime();
+
+        /** @var ProductAccess $productAccess */
+        foreach($this->getProductAccesses() as $productAccess)
+        {
+            if($productAccess->getProduct() == $product && $productAccess->getDateFrom() < $today)
+            {
+                if($productAccess->getDateTo() == null)
+                {
+                    return true;
+                }
+                else if($productAccess->getDateTo() > $today)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
+
+        return false;
+    }
+
+
+    /**
+     * @param Product       $product
+     * @param DateTime      $dateFrom
+     * @param DateTime|null $dateTo
+     *
+     * @return ProductAccess|null
+     */
+    public function giveAccessToProduct(Product $product, \DateTime $dateFrom, \DateTime $dateTo = null)
+    {
+
+        //create a new ProductAccess record
+        if(!$this->hasAccessToProduct($product))
+        {
+            $productAccess = new ProductAccess();
+            $productAccess
+                ->setProduct($product)
+                ->setUser($this)
+                ->setDateFrom($dateFrom)
+                ->setDateTo($dateTo);
+
+            $this->addProductAccess($productAccess);
+
+            return $productAccess;
+        }
+        //edit existing product access record
+        else
+        {
+            /** @var ProductAccess $productAccess */
+            foreach($this->getProductAccesses() as $productAccess)
+            {
+                if($productAccess->getProduct() == $product)
+                {
+                    $productAccess->setDateFrom($dateFrom);
+                    $productAccess->setDateTo($dateTo);
+
+                    return $productAccess;
+                }
+            }
+        }
+
+        return null;
+    }
 
 }
