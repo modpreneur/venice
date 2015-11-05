@@ -53,6 +53,7 @@ class IFrameContent extends BaseContent
      * @param string $html
      *
      * @return IFrameContent
+     *
      */
     public function setHtml($html)
     {
