@@ -22,6 +22,14 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class VideoContent extends AbstractPlayable
 {
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="preview_image", type="string", length=255, nullable=true)
+     */
+    protected $previewImage;
+
     /**
      * @var string
      *
