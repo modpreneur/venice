@@ -9,6 +9,7 @@
 namespace AppBundle\Entity\Product;
 
 
+use AppBundle\Entity\BillingPlan;
 use Doctrine\ORM\Mapping as ORM;
 
 
@@ -23,44 +24,11 @@ class StandardProduct extends Product
 {
 
     /**
-     * Price which will be paid at the start.
+     * @var BillingPlan
      *
-     * @var float
-     *
-     * @ORM\Column(name="initial_price", type="float", nullable=false)
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\BillingPlan")
      */
-    protected $initialPrice;
-
-
-    /**
-     * Price which will be paid periodically in case of recurring.
-     *
-     * @var float
-     *
-     * @ORM\Column(name="rebill_price", type="float", nullable=false)
-     */
-    protected $rebillPrice;
-
-
-    /**
-     * Time between payments(rebillPrice).
-     *
-     * @var int
-     *
-     * @ORM\Column(name="frequency", type="integer", nullable=false)
-     */
-    protected $frequency;
-
-
-    /**
-     * Count of all payments for this product(including initial price)
-     *
-     * @var int
-     *
-     * @ORM\Column(name="rebill_times", type="integer", nullable=false)
-     */
-    protected $rebilTimes;
-
+    protected $billingPlan;
 
     public function __construct()
     {
@@ -74,91 +42,24 @@ class StandardProduct extends Product
 
 
     /**
-     * @return float
+     * @return BillingPlan
      */
-    public function getInitialPrice()
+    public function getBillingPlan()
     {
-        return $this->initialPrice;
+        return $this->billingPlan;
     }
 
 
     /**
-     * @param float $initialPrice
+     * @param BillingPlan $billingPlan
      *
-     * @return StandardProduct
+     * @return $this
      */
-    public function setInitialPrice($initialPrice)
+    public function setBillingPlan($billingPlan)
     {
-        $this->initialPrice = $initialPrice;
+        $this->billingPlan = $billingPlan;
 
         return $this;
     }
-
-
-    /**
-     * @return float
-     */
-    public function getRebillPrice()
-    {
-        return $this->rebillPrice;
-    }
-
-
-    /**
-     * @param float $rebillPrice
-     *
-     * @return StandardProduct
-     */
-    public function setRebillPrice($rebillPrice)
-    {
-        $this->rebillPrice = $rebillPrice;
-
-        return $this;
-    }
-
-
-    /**
-     * @return int
-     */
-    public function getFrequency()
-    {
-        return $this->frequency;
-    }
-
-
-    /**
-     * @param int $frequency
-     *
-     * @return StandardProduct
-     */
-    public function setFrequency($frequency)
-    {
-        $this->frequency = $frequency;
-
-        return $this;
-    }
-
-
-    /**
-     * @return int
-     */
-    public function getRebilTimes()
-    {
-        return $this->rebilTimes;
-    }
-
-
-    /**
-     * @param int $rebilTimes
-     *
-     * @return StandardProduct
-     */
-    public function setRebilTimes($rebilTimes)
-    {
-        $this->rebilTimes = $rebilTimes;
-
-        return $this;
-    }
-
 
 }
