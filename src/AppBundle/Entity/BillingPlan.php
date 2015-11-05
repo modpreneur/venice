@@ -21,8 +21,8 @@ use Doctrine\ORM\Mapping as ORM;
 class BillingPlan
 {
     /**
-     * @ORM\Column(name="id)
-     * @ORM\Id()
+     * @ORM\Column(name="id")
+     * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      *
      * @var int
@@ -66,8 +66,16 @@ class BillingPlan
      *
      * @ORM\Column(name="rebill_times", type="integer", nullable=false)
      */
-    protected $rebilTimes;
+    protected $rebillTimes;
 
+
+    public function __construct()
+    {
+        $this->initialPrice = 0;
+        $this->rebillPrice = 0;
+        $this->frequency = 0;
+        $this->rebillTimes = 0;
+    }
 
     /**
      * @return int
@@ -149,7 +157,7 @@ class BillingPlan
      */
     public function getRebilTimes()
     {
-        return $this->rebilTimes;
+        return $this->rebillTimes;
     }
 
 
@@ -158,9 +166,9 @@ class BillingPlan
      *
      * @return BillingPlan
      */
-    public function setRebilTimes($rebilTimes)
+    public function setRebillTimes($rebilTimes)
     {
-        $this->rebilTimes = $rebilTimes;
+        $this->rebillTimes = $rebilTimes;
 
         return $this;
     }
