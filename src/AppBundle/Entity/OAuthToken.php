@@ -34,7 +34,7 @@ class OAuthToken
     /**
      * @var
      *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="necktieTokens")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="OAuthTokens")
      */
     protected $user;
 
