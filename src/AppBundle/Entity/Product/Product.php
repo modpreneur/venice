@@ -255,4 +255,53 @@ abstract class Product extends TrinityProduct
         return $this;
     }
 
+    /**
+     * Creates new instance of product from type (first part of entity name ends with Product)
+     *
+     * @param string $type Could be formatted like StandardProduct, FreeProduct, AppBundle\\Entity\\Product\\StandardProduct, ...
+     * @param array  $args
+     *
+     * @return Product
+     */
+    public static function createProductByType($type, $args = [])
+    {
+        $type = ucfirst($type);
+
+        if(!strpos($type,"Product"))
+            $type .= "Product";
+
+        if(!strpos($type,"AppBundle\\Entity\\Product\\"))
+            $type = "AppBundle\\Entity\\Product\\" . $type;
+
+        $class = new \ReflectionClass($type);
+
+        return $class->newInstanceArgs($args);
+    }
+
+
+    /**
+     * Get the product type string
+     *
+     * @return string
+     */
+    abstract public function getType();
+
+
+    /**
+     * Get form type of product
+     *
+     * @param array|null $arguments
+     *
+     * @return StandardProduct|FreeProduct
+     */
+    public function getFormType($arguments = [])
+    {
+        $name = get_class($this) . "Type";
+        $name = str_replace('AppBundle', 'AdminBundle', $name);
+        $name = str_replace('Entity', 'Form', $name);
+
+        $class = new \ReflectionClass($name);
+        return $class->newInstanceArgs($arguments);
+    }
+
 }

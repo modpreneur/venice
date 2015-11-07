@@ -29,6 +29,15 @@ services:
             - %primary_gateway_service%
             - %secondary_gateway_service%
 
+    app.services.cms_problem_helper:
+        class: AppBundle\Services\CMSProblemHelper
+        arguments:
+            - @service_container
+            - %primary_gateway_service%
+
+    form_error_serializer:
+        class: AppBundle\Services\FormErrorSerializer
+
 
     # EVENT LISTENERS #
 

@@ -9,7 +9,9 @@
 namespace AppBundle\Services;
 
 
+use AppBundle\Entity\BillingPlan;
 use AppBundle\Entity\Invoice;
+use AppBundle\Entity\Product\StandardProduct;
 use AppBundle\Entity\User;
 use AppBundle\Exceptions\ExpiredRefreshTokenException;
 use AppBundle\Exceptions\UnsuccessfulNecktieResponseException;
@@ -28,6 +30,8 @@ class NecktieGateway implements NecktieGatewayInterface
     const NECKTIE_USER_PROFILE_URI = "/api/v1/profile";
     const NECKTIE_USER_INVOICES_URI = "/api/v1/invoices";
     const NECKTIE_PRODUCT_ACCESSES_URI = "/api/v1/product-accesses";
+    const NECKTIE_BILLING_PLAN_URI = "/api/v1/billing-plan/{id}";
+    const NECKTIE_PRODUCT_BILLING_PLANS_URI = "/api/v1/product/{productId}/billing-plans";
 
     const STATE_COOKIE_NAME = "state";
 
@@ -380,4 +384,105 @@ class NecktieGateway implements NecktieGatewayInterface
         }
     }
 
+
+    /**
+     * Get billing plan by id
+     *
+     * @param User $user
+     * @param      $id
+     *
+     * @return BillingPlan
+     */
+    public function getBillingPlan(User $user, $id)
+    {
+        $this->refreshAccessTokenIfNeeded($user);
+
+        $necktieUrl = str_replace("{id}", $id, self::NECKTIE_BILLING_PLAN_URI);
+
+        $response = $this->getParsedResponse($user, $necktieUrl);
+
+        if(array_key_exists("billing plan", $response))
+        {
+            return $this->getBillingPlanFromResponse($response["billing plan"]);
+        }
+
+        return null;
+    }
+
+
+    /**
+     * Get billing all billing plans for given product.
+     *
+     * @param User            $user
+     * @param StandardProduct $product
+     *
+     * @return BillingPlan[]
+     * @throws UnsuccessfulNecktieResponseException
+     */
+    public function getBillingPlans(User $user, StandardProduct $product)
+    {
+        $this->refreshAccessTokenIfNeeded($user);
+
+        $necktieUrl = str_replace("{productId}", $product->getNecktieId(), self::NECKTIE_PRODUCT_BILLING_PLANS_URI);
+        $response = $this->getParsedResponse($user, $necktieUrl);
+        $billingPlans = [];
+
+        if(array_key_exists("billing plans", $response))
+        {
+            foreach($response["billing plans"] as $billingPlanArray)
+            {
+                $billingPlans[] = $this->getBillingPlanFromResponse($billingPlanArray);
+            }
+
+            return $billingPlans;
+        }
+
+        return null;
+    }
+
+
+    /**
+     * @param $response
+     *
+     * @return BillingPlan|null
+     */
+    public function getBillingPlanFromResponse($response)
+    {
+        $billingPlan = new BillingPlan();
+
+        if(array_key_exists("initial_price", $response))
+        {
+            $billingPlan->setInitialPrice($response["initial_price"]);
+        }
+
+        if(array_key_exists("id", $response))
+        {
+            $billingPlan->setNecktieId($response["id"]);
+        }
+
+        if(array_key_exists("id", $response))
+        {
+            $billingPlan->setId($response["id"]);
+        }
+
+        if(array_key_exists("type", $response) && $response["type"] == "recurring")
+        {
+            if(array_key_exists("rebill_price", $response))
+            {
+                $billingPlan->setRebillPrice($response["rebill_price"]);
+            }
+
+            if(array_key_exists("frequency", $response))
+            {
+                $billingPlan->setFrequency($response["frequency"]);
+            }
+
+            if(array_key_exists("rebill_times", $response))
+            {
+                $billingPlan->setRebillTimes($response["rebill_times"]);
+            }
+        }
+
+        return $billingPlan;
+    }
 }

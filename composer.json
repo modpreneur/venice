@@ -29,7 +29,10 @@
         "anchovy/curl-bundle": "dev-master",
         "symfony/yaml": "^2.7",
         "whiteoctober/breadcrumbs-bundle": "^1.2",
-        "phpunit/phpunit": "^5.0"
+        "phpunit/phpunit": "^5.0",
+        "friendsofsymfony/rest-bundle": "~1.7",
+        "jms/serializer-bundle": "*"
+
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3",

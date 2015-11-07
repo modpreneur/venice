@@ -21,5 +21,10 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class FreeProduct extends Product
 {
+    const TYPE = "free";
 
+    public function getType()
+    {
+        return self::TYPE;
+    }
 }

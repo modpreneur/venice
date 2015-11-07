@@ -22,22 +22,35 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class StandardProduct extends Product
 {
+    const TYPE = "standard";
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="necktie_id", type="integer", nullable=true, unique=true)
+     */
+    protected $necktieId;
+
+
+    /**
+    * @var integer
+    *
+    * @ORM\Column(name="amember_id", type="integer", nullable=true, unique=true)
+    */
+    protected $amemberId;
+
 
     /**
      * @var BillingPlan
      *
-     * @ORM\OneToOne(targetEntity="AppBundle\Entity\BillingPlan")
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\BillingPlan", cascade={"PERSIST", "REFRESH"})
      */
     protected $billingPlan;
+
 
     public function __construct()
     {
         parent::__construct();
-
-        $this->initialPrice = 0;
-        $this->rebillPrice = 0;
-        $this->frequency = 0;
-        $this->rebilTimes = 0;
     }
 
 
@@ -61,5 +74,56 @@ class StandardProduct extends Product
 
         return $this;
     }
+
+    public function getType()
+    {
+        return self::TYPE;
+    }
+
+
+    /**
+     * @return int
+     */
+    public function getAmemberId()
+    {
+        return $this->amemberId;
+    }
+
+
+    /**
+     * @param int $amemberId
+     *
+     * @return StandardProduct
+     */
+    public function setAmemberId($amemberId)
+    {
+        $this->amemberId = $amemberId;
+
+        return $this;
+    }
+
+
+    /**
+     * @return int
+     */
+    public function getNecktieId()
+    {
+        return $this->necktieId;
+    }
+
+
+    /**
+     * @param int $necktieId
+     *
+     * @return StandardProduct
+     */
+    public function setNecktieId($necktieId)
+    {
+        $this->necktieId = $necktieId;
+
+        return $this;
+    }
+
+
 
 }

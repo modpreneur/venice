@@ -3,8 +3,6 @@ imports:
     - { resource: security.yml }
     - { resource: services.yml }
 
-# Put parameters here that don't need to change on each machine where the app is deployed
-# http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: en
 
@@ -91,3 +89,18 @@ swiftmailer:
     username:  "%mailer_user%"
     password:  "%mailer_password%"
     spool:     { type: memory }
+
+fos_rest:
+    param_fetcher_listener: true
+    format_listener: true
+    body_listener: true
+    view:
+        exception_wrapper_handler:  null
+        view_response_listener: force
+        failed_validation: HTTP_BAD_REQUEST
+    routing_loader:
+        default_format: json
+        include_format: false
+
+sensio_framework_extra:
+    view:    { annotations: false }

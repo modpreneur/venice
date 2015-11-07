@@ -9,12 +9,16 @@
 namespace AppBundle\Services;
 
 
+use AppBundle\Entity\BillingPlan;
 use AppBundle\Entity\Invoice;
+use AppBundle\Entity\Product\StandardProduct;
 use AppBundle\Entity\ProductAccess;
 use AppBundle\Entity\User;
 use AppBundle\Exceptions\ExpiredRefreshTokenException;
+use AppBundle\Exceptions\UnsuccessfulNecktieResponseException;
 use AppBundle\Interfaces\ConnectionManagerInterface;
 use AppBundle\Interfaces\GatewayInterface;
+use AppBundle\Interfaces\NecktieGatewayInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class ConnectionManager implements ConnectionManagerInterface
@@ -54,7 +58,6 @@ class ConnectionManager implements ConnectionManagerInterface
     }
 
 
-
     /**
      * Update product accesses for given user.
      *
@@ -86,10 +89,52 @@ class ConnectionManager implements ConnectionManagerInterface
 
 
     /**
+     * Get billing plan by id
+     *
+     * @param User $user
+     * @param      $id
+     *
+     * @return BillingPlan
+     */
+    public function getBillingPlan(User $user, $id)
+    {
+        return $this->primaryGateway->getBillingPlan($user, $id);
+    }
+
+
+    /**
      * @return bool
      */
     protected function hasSecondaryGateway()
     {
         return !($this->secondaryGateway == null);
+    }
+
+
+    /**
+     * Get all billing plans for given product.
+     *
+     * @param User            $user
+     *
+     * @param StandardProduct $product
+     *
+     * @return \AppBundle\Entity\BillingPlan[]
+     */
+    public function getBillingPlans(User $user, StandardProduct $product)
+    {
+        return $this->primaryGateway->getBillingPlans($user, $product);
+
+
+        //try
+        //{
+        //}
+        //catch(UnsuccessfulNecktieResponseException $e)
+        //{
+        //    /** @var NecktieGatewayInterface $necktieGateway */
+        //    $necktieGateway = $this->primaryGateway;
+        //    $necktieGateway->refreshAccessToken($user);
+        //
+        //    return $this->primaryGateway->getBillingPlans($user, $product);
+        //}
     }
 }

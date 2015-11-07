@@ -21,13 +21,30 @@ use Doctrine\ORM\Mapping as ORM;
 class BillingPlan
 {
     /**
-     * @ORM\Column(name="id")
+     * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      *
      * @var int
      */
     protected $id;
+
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="necktie_id", type="integer", nullable=true, unique=true)
+     */
+    protected $necktieId;
+
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="amember_id", type="integer", nullable=true, unique=true)
+     */
+    protected $amemberId;
+
 
     /**
      * Price which will be paid at the start.
@@ -76,6 +93,20 @@ class BillingPlan
         $this->frequency = 0;
         $this->rebillTimes = 0;
     }
+
+
+    /**
+     * @param int $id
+     *
+     * @return BillingPlan
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
 
     /**
      * @return int
@@ -181,5 +212,49 @@ class BillingPlan
     {
         return $this->frequency === 0;
 
+    }
+
+
+    /**
+     * @return int
+     */
+    public function getNecktieId()
+    {
+        return $this->necktieId;
+    }
+
+
+    /**
+     * @param int $necktieId
+     *
+     * @return BillingPlan
+     */
+    public function setNecktieId($necktieId)
+    {
+        $this->necktieId = $necktieId;
+
+        return $this;
+    }
+
+
+    /**
+     * @return int
+     */
+    public function getAmemberId()
+    {
+        return $this->amemberId;
+    }
+
+
+    /**
+     * @param int $amemberId
+     *
+     * @return BillingPlan
+     */
+    public function setAmemberId($amemberId)
+    {
+        $this->amemberId = $amemberId;
+
+        return $this;
     }
 }
