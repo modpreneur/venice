@@ -15,13 +15,11 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 class StandardProductType extends ProductType
 {
-    protected $product;
-    protected $CMSProblemHelper;
-
     function __construct(StandardProduct $product = null, CMSProblemHelper $CMSProblemHelper)
     {
+        parent::__construct($product, $CMSProblemHelper);
+
         $this->product = $product;
-        $this->CMSProblemHelper = $CMSProblemHelper;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)

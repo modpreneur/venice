@@ -10,10 +10,21 @@ namespace AdminBundle\Form\Product;
 
 
 use AdminBundle\Form\AdminBaseType;
+use AppBundle\Entity\Product\Product;
+use AppBundle\Services\CMSProblemHelper;
 use Symfony\Component\Form\FormBuilderInterface;
 
 class ProductType extends AdminBaseType
 {
+    protected $product;
+    protected $CMSProblemHelper;
+
+    function __construct(Product $product = null, CMSProblemHelper $CMSProblemHelper)
+    {
+        $this->product = $product;
+        $this->CMSProblemHelper = $CMSProblemHelper;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
