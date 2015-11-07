@@ -316,11 +316,12 @@ class NecktieGateway implements NecktieGatewayInterface
 
         $necktieUrl = $this->necktieUrl . $uri;
 
-        $response = json_decode($this->connector->get($necktieUrl, $accessToken, $queryParameters), true);
+        $rawResponse = $this->connector->get($necktieUrl, $accessToken, $queryParameters);
+        $response = json_decode($rawResponse, true);
 
         if(!$response || !$this->helper->isResponseOk($response))
         {
-            throw new UnsuccessfulNecktieResponseException("Necktie access token has expired or is invalid.");
+            throw new UnsuccessfulNecktieResponseException($rawResponse);
         }
 
         return $response;

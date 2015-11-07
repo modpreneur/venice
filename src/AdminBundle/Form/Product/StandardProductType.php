@@ -34,11 +34,6 @@ class StandardProductType extends ProductType
         {
             $billingPlan = $this->product->getBillingPlan();
             $billingPlanId = $this->CMSProblemHelper->getBillingPlanId($billingPlan);
-            //ldd($billingPlanId);
-        }
-        else
-        {
-           //ldd($this->product,$this->product->getBillingPlan());
         }
 
         $builder
