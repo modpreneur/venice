@@ -20,7 +20,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @package AppBundle\Entity\Content
  */
-class Mp3Content extends AbstractPlayable
+class Mp3Content extends AbstractPlayableContent
 {
     /**
      * @var string Url address to the file.

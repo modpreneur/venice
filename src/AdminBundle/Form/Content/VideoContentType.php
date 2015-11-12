@@ -18,7 +18,7 @@ class VideoContentType extends ContentType
         parent::buildForm($builder, $options);
 
         $builder
-            ->add("length", "text", [
+            ->add("duration", "number", [
                     "required" => true
                 ]
             )
@@ -43,7 +43,7 @@ class VideoContentType extends ContentType
                     "required" => false
                 ]
             )
-        ;
+            ->add("Submit", "submit");
     }
 
 }

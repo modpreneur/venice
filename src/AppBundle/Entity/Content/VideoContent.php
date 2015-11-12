@@ -20,7 +20,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @package AppBundle\Entity\Content
  */
-class VideoContent extends AbstractPlayable
+class VideoContent extends AbstractPlayableContent
 {
 
     /**
@@ -184,4 +184,24 @@ class VideoContent extends AbstractPlayable
     }
 
 
+    /**
+     * @return string
+     */
+    public function getPreviewImage()
+    {
+        return $this->previewImage;
+    }
+
+
+    /**
+     * @param string $previewImage
+     *
+     * @return VideoContent
+     */
+    public function setPreviewImage($previewImage)
+    {
+        $this->previewImage = $previewImage;
+
+        return $this;
+    }
 }

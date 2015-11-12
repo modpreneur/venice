@@ -12,13 +12,13 @@ use Doctrine\ORM\Mapping as ORM;
 
 
 /**
- * Class IFrameContent
+ * Class IframeContent
  * @package AppBundle\Entity\Content
  *
  * @ORM\Entity()
  * @ORM\Table(name="content_iframe")
  */
-class IFrameContent extends Content
+class IframeContent extends Content
 {
     /**
      * @var string
@@ -52,7 +52,7 @@ class IFrameContent extends Content
     /**
      * @param string $html
      *
-     * @return IFrameContent
+     * @return IframeContent
      *
      */
     public function setHtml($html)

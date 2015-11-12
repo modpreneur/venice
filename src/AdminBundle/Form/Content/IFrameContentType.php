@@ -11,14 +11,15 @@ namespace AdminBundle\Form\Content;
 
 use Symfony\Component\Form\FormBuilderInterface;
 
-class IFrameContentType extends ContentType
+class IframeContentType extends ContentType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         parent::buildForm($builder, $options);
 
         $builder
-            ->add("html", "textarea");
+            ->add("html", "textarea")
+            ->add("Submit", "submit");
     }
 
 }

@@ -15,7 +15,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Class AbstractPlayable
  * @package AppBundle\Entity\Abstracts
  */
-abstract class AbstractPlayable extends Content
+abstract class AbstractPlayableContent extends Content
 {
     /**
      * @var int Duration(length) in seconds.

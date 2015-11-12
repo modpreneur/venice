@@ -18,7 +18,9 @@ class Mp3ContentType extends ContentType
         parent::buildForm($builder, $options);
 
         $builder
-            ->add("mp3", "text");
+            ->add("link", "text")
+            ->add("duration", "number")
+            ->add("Submit", "submit");
     }
 
 }

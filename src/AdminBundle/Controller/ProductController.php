@@ -36,7 +36,7 @@ class ProductController extends BaseAdminController
     public function indexAction(Request $request)
     {
         $entityManager = $this->getEntityManager();
-        $products = $entityManager->getRepository("AppBundle:Product\\StandardProduct")->findAll();
+        $products = $entityManager->getRepository("AppBundle:Product\\Product")->findAll();
 
         return $this->render(
             ":AdminBundle/Product:index.html.twig",

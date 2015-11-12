@@ -24,7 +24,7 @@ class ContentProduct
      * @var
      *
      * @ORM\Id()
-     * @ORM\ManyToOne(targetEntity="Content.php", inversedBy="contentProducts")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Content\Content", inversedBy="contentProducts")
      * @ORM\JoinColumn(name="content_id", referencedColumnName="id")
      */
     protected $content;

@@ -2,9 +2,9 @@
 
 {% block pageBody %}
     <ul>
-        {% for product in products %}
+        {% for content in contents %}
             <li>
-                <a href="{{ path('admin_product_edit', {'id': product.id})}}"> {{ product.name }}</a>
+                {{ content.type }} <a href="{{ path('admin_content_edit', {'id': content.id})}}"> {{ content.name}}</a>
             </li>
         {% endfor %}
     </ul>
