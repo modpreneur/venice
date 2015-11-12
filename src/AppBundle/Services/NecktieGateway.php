@@ -247,9 +247,14 @@ class NecktieGateway implements NecktieGatewayInterface
         {
             $invoiceObject = new Invoice();
 
-            if(array_key_exists("price_total", $invoice))
+            if(array_key_exists("id", $invoice))
             {
-                $invoiceObject->setTotalPrice($invoice["price_total"]);
+                $invoiceObject->setId($invoice["id"]);
+            }
+
+            if(array_key_exists("total_customer_price", $invoice))
+            {
+                $invoiceObject->setTotalPrice($invoice["total_customer_price"]);
             }
 
             if(array_key_exists("transaction_type", $invoice))
@@ -260,7 +265,7 @@ class NecktieGateway implements NecktieGatewayInterface
             if(array_key_exists("transaction_time", $invoice))
             {
                 $date = \DateTime::createFromFormat(\DateTime::W3C, $invoice["transaction_time"]);
-                $invoiceObject->setTransactionType($date);
+                $invoiceObject->setTransactionTime($date);
             }
 
             if(array_key_exists("items", $invoice))
@@ -272,7 +277,6 @@ class NecktieGateway implements NecktieGatewayInterface
                         $invoiceObject->addItem($invoiceItem["product"]["name"]);
                     }
                 }
-
             }
 
             $invoices[] = $invoiceObject;
@@ -379,10 +383,12 @@ class NecktieGateway implements NecktieGatewayInterface
      */
     public function refreshAccessTokenIfNeeded(User $user)
     {
-        if(!$user->isLastAccessTokenValid())
-        {
-            $this->refreshAccessToken($user);
-        }
+        $this->refreshAccessToken($user);
+
+        //if(!$user->isLastAccessTokenValid())
+        //{
+        //    $this->refreshAccessToken($user);
+        //}
     }
 
 
