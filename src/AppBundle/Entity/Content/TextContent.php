@@ -19,7 +19,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @package AppBundle\Entity\Content
  */
-class TextContent extends BaseContent
+class TextContent extends Content
 {
     /**
      * @var
@@ -57,5 +57,14 @@ class TextContent extends BaseContent
     public function getContent()
     {
         return $this->text;
+    }
+
+
+    /**
+     * @inheritdoc
+     */
+    public function getType()
+    {
+        return "text";
     }
 }

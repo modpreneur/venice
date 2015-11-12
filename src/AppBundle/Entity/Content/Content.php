@@ -9,6 +9,7 @@
 namespace AppBundle\Entity\Content;
 
 
+use AdminBundle\Form\Content\ContentType;
 use AppBundle\Entity\ContentProduct;
 use AppBundle\Entity\User;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -24,7 +25,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @package AppBundle\Entity\Content
  */
-abstract class BaseContent
+abstract class Content
 {
     /**
      * @var
@@ -46,7 +47,7 @@ abstract class BaseContent
 
 
     /**
-     * @var
+     * @var ArrayCollection
      *
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\ContentProduct", mappedBy="content")
      */
@@ -109,7 +110,7 @@ abstract class BaseContent
     /**
      * @param User $author
      *
-     * @return BaseContent
+     * @return Content
      */
     public function setAuthor($author)
     {
@@ -152,6 +153,56 @@ abstract class BaseContent
         $this->contentProducts->remove($contentProduct);
 
         return $this;
+    }
+
+
+    /**
+     * Creates new instance of content from type (first part of entity name ends with Content)
+     *
+     * @param string $type Could be formatted like IFrameContent, Mp3Content, AppBundle\\Entity\\Content\\PdfContent, ...
+     * @param array  $args
+     *
+     * @return Content
+     */
+    public static function createContentByType($type, $args = [])
+    {
+        $type = ucfirst($type);
+
+        if(!strpos($type,"Content"))
+            $type .= "Content";
+
+        if(!strpos($type,"AppBundle\\Entity\\Content\\"))
+            $type = "AppBundle\\Entity\\Content\\" . $type;
+
+        $class = new \ReflectionClass($type);
+
+        return $class->newInstanceArgs($args);
+    }
+
+
+    /**
+     * Get the content type string
+     *
+     * @return string
+     */
+    abstract public function getType();
+
+
+    /**
+     * Get form type of content
+     *
+     * @param array|null $arguments
+     *
+     * @return ContentType
+     */
+    public function getFormType($arguments = [])
+    {
+        $name = get_class($this) . "Type";
+        $name = str_replace('AppBundle', 'AdminBundle', $name);
+        $name = str_replace('Entity', 'Form', $name);
+
+        $class = new \ReflectionClass($name);
+        return $class->newInstanceArgs($arguments);
     }
 
 

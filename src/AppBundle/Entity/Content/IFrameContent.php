@@ -18,7 +18,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity()
  * @ORM\Table(name="content_iframe")
  */
-class IFrameContent extends BaseContent
+class IFrameContent extends Content
 {
     /**
      * @var string
@@ -60,5 +60,14 @@ class IFrameContent extends BaseContent
         $this->html = $html;
 
         return $this;
+    }
+
+
+    /**
+     * @inheritdoc
+     */
+    public function getType()
+    {
+        return "iframe";
     }
 }

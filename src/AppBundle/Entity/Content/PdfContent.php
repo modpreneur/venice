@@ -20,7 +20,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @package AppBundle\Entity\Content
  */
-class PdfContent extends BaseContent
+class PdfContent extends Content
 {
     /**
      * @var string Url address to the file.
@@ -54,6 +54,15 @@ class PdfContent extends BaseContent
     public function getContent()
     {
         return $this->link;
+    }
+
+
+    /**
+     * @inheritdoc
+     */
+    public function getType()
+    {
+        return "pdf";
     }
 
 }

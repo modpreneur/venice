@@ -76,4 +76,13 @@ class Mp3Content extends AbstractPlayable
         return $this->link;
     }
 
+
+    /**
+     * @inheritdoc
+     */
+    public function getType()
+    {
+        return "mp3";
+    }
+
 }

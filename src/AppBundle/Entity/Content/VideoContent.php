@@ -175,4 +175,13 @@ class VideoContent extends AbstractPlayable
     }
 
 
+    /**
+     * @inheritdoc
+     */
+    public function getType()
+    {
+        return "video";
+    }
+
+
 }
