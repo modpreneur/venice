@@ -9,9 +9,9 @@
 namespace AdminBundle\Services;
 
 
-use AppBundle\Event\MenuEvent;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Trinity\AdminBundle\Event\MenuEvent;
 
 class MenuListener
 {
@@ -41,21 +41,18 @@ class MenuListener
         $menu = $event->getMenu('sidebar');
 
         $menu
-            ->addChild('Homepage', array('route' => 'homepage'))
-            //->setAttribute('icon', 'tiecons tiecons-display')
+            ->addChild('Dashboard', array('route' => 'admin_dashboard'))
+            ->setAttribute('icon', 'trinity trinity-home')
             ->setExtra('orderNumber', 0);
 
-        //$menu
-        //    ->addChild('Products', array('route' => 'product'))
-        //    ->setAttribute('icon', 'tiecons tiecons-page-list')
-        //    ->setExtra('orderNumber', 1)
-        //    ->setExtra('roles', ['ROLE_ADMIN_PRODUCT_VIEW']);
-        //
-        //$menu
-        //    ->addChild('Projects', array('route' => 'client'))
-        //    ->setAttribute('icon', 'tiecons tiecons-bookmark-3')
-        //    ->setExtra('orderNumber', 2)
-        //    ->setExtra('roles', ['ROLE_ADMIN_PROJECT_VIEW']);
+        $menu
+            ->addChild('Products', array('route' => 'admin_product_index'))
+            ->setAttribute('icon', 'trinity trinity-products')
+            ->setExtra('orderNumber', 1);
+        $menu
+            ->addChild('Contents', array('route' => 'admin_content_index'))
+            ->setAttribute('icon', 'tiecons tiecons-bookmark-3')
+            ->setExtra('orderNumber', 2);
         //
         //$menu
         //    ->addChild('Users', array('route' => 'user'))

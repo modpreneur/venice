@@ -1,8 +1,0 @@
-#core.event.menu.config:
-#    class: AppBundle\EventListener\MenuListener
-#    arguments: ["@doctrine.orm.entity_manager", "@service_container"]
-#
-#    tags:
-#      - { name: kernel.event_listener, event: app.main_menu.configure, method: onMenuConfigure }
-#      - { name: kernel.event_listener, event: app.quick_menu.configure, method: onQuickMenuConfigure }
-#      - { name: kernel.event_listener, event: app.user_menu.configure, method: onUserMenuConfigure }

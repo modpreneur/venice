@@ -1,0 +1,14 @@
+services:
+
+    admin.listener.menu.config:
+        class: AdminBundle\Services\MenuListener
+        arguments: ["@doctrine.orm.entity_manager", "@service_container"]
+        tags:
+            - { name: kernel.event_listener, event: trinity.main_menu.configure, method: onMenuConfigure }
+
+    knp.main_menu:
+        class: Knp\Menu\MenuItem
+        factory: ["@trinity.admin.menu_builder", createMainMenu]
+        arguments: ["@request_stack"]
+        tags:
+            - { name: knp_menu.menu, alias: sidebar }

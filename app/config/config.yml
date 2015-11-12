@@ -45,7 +45,7 @@ twig:
         - 'TrinityAdminBundle:Form:bowtie_form_layout.html.twig'
     globals:
       root_path: %kernel.root_dir%
-      admin_manager: @trinity.admin.service.adminmanager
+      admin_manager: @trinity.admin.service.admin_manager
 
 # Assetic Configuration
 assetic:
@@ -87,6 +87,23 @@ assetic:
             inputs:
                 - %kernel.root_dir%/../vendor/trinity/admin/AdminBundle/Resources/Public/fonts/trinity.svg
             output: "fonts/trinity.svg"
+
+        ticones_eot:
+            inputs:
+                - %kernel.root_dir%/../vendor/modpreneur/bowtie/src/fonts/tiecons/tiecons.eot
+            outpoutput: "fonts/tiecons/tiecons.eot"
+        ticones_svg:
+            inputs:
+                - %kernel.root_dir%/../vendor/modpreneur/bowtie/src/fonts/tiecons/tiecons.svg
+            output: "fonts/tiecons/tiecons.svg"
+        ticones_ttf:
+            inputs:
+                - %kernel.root_dir%/../vendor/modpreneur/bowtie/src/fonts/tiecons/tiecons.ttf
+            output: "fonts/tiecons/tiecons.ttf"
+        ticones_woff:
+            inputs:
+                - %kernel.root_dir%/../vendor/modpreneur/bowtie/src/fonts/tiecons/tiecons.woff
+            output: "fonts/tiecons/tiecons.woff"
 
 # Doctrine Configuration
 doctrine:
@@ -132,3 +149,9 @@ fos_rest:
 
 sensio_framework_extra:
     view:    { annotations: false }
+
+knp_menu:
+    twig:
+        template: knp_menu.html.twig
+    templating: false
+    default_renderer: twig

@@ -13,17 +13,17 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
-class AdminController extends Controller
+class DashboardController extends Controller
 {
     /**
      *
-     * @Route("/admin", name="admin")
+     * @Route("/admin", name="admin_dashboard")
      *
      * @param Request $request
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function index(Request $request)
+    public function indexAction(Request $request)
     {
         return $this->render("TrinityAdminBundle::layout.html.twig");
     }
