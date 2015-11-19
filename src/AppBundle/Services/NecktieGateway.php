@@ -222,7 +222,7 @@ class NecktieGateway implements NecktieGatewayInterface
                 if(!$dateTo instanceof \DateTime)
                     $dateTo = null;
 
-                $givenProductAccesses[] = $user->giveAccessToProduct($product, $dateFrom, $dateTo);
+                $givenProductAccesses[] = $user->giveAccessToProduct($product, $dateFrom, $dateTo, $productAccess["id"]);
             }
         }
 
@@ -241,6 +241,11 @@ class NecktieGateway implements NecktieGatewayInterface
         $this->refreshAccessTokenIfNeeded($user);
 
         $response = $this->getParsedResponse($user, self::NECKTIE_USER_INVOICES_URI, ["withItems" => true]);
+
+        if(!array_key_exists("invoices", $response))
+        {
+            return [];
+        }
 
         $invoices = [];
         foreach($response["invoices"] as $invoice)
@@ -383,12 +388,15 @@ class NecktieGateway implements NecktieGatewayInterface
      */
     public function refreshAccessTokenIfNeeded(User $user)
     {
-        $this->refreshAccessToken($user);
+        //$this->refreshAccessToken($user);
 
-        //if(!$user->isLastAccessTokenValid())
-        //{
-        //    $this->refreshAccessToken($user);
-        //}
+        $dateDiff = $user->getLastToken()->getValidTo()->diff(new \DateTime());
+
+        // if the access token is expired or will expire in 10 minutes
+        if(!$user->isLastAccessTokenValid() || ($dateDiff->h < 0 && $dateDiff->m < 10))
+        {
+            $this->refreshAccessToken($user);
+        }
     }
 
 

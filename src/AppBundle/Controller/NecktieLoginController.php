@@ -10,6 +10,7 @@ namespace AppBundle\Controller;
 
 
 use AppBundle\Exceptions\UnsuccessfulNecktieResponseException;
+use AppBundle\Interfaces\NecktieGatewayInterface;
 use AppBundle\Services\NecktieGateway;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -108,15 +109,14 @@ class NecktieLoginController extends Controller
         return $this->redirectToRoute("homepage");
     }
 
-    protected function performNecktieCalls($necktieGateway, $user)
+    protected function performNecktieCalls(NecktieGatewayInterface $necktieGateway, $user)
     {
         $necktieGateway->updateProductAccesses($user);
-        $necktieGateway->getInvoices($user);
     }
 
-    protected function getAndLoginUser($necktieGateway, $request, $necktieToken)
+    protected function getAndLoginUser(NecktieGatewayInterface $necktieGateway, $request, $necktieToken)
     {
-        $user = $necktieGateway->getUserByAccessToken($request->query->get("access_token"));
+        $user = $necktieGateway->getUserByAccessToken($request->query->get("access_token"), true);
         $this->get("fos_user.security.login_manager")->logInUser("main", $user);
         $necktieToken->setUser($user);
         $user->addOAuthToken($necktieToken);
