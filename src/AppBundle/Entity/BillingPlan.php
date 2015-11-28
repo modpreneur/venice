@@ -8,6 +8,7 @@
 
 namespace AppBundle\Entity;
 
+use AppBundle\Entity\Product\StandardProduct;
 use Doctrine\ORM\Mapping as ORM;
 
 
@@ -86,12 +87,29 @@ class BillingPlan
     protected $rebillTimes;
 
 
+    /**
+     * @var StandardProduct
+     *
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Product\StandardProduct", cascade={"PERSIST", "REFRESH"}, mappedBy="billingPlan")
+     */
+    protected $product;
+
+
+    /**
+     * @var
+     *
+     * @ORM\Column(name="price", type="string", length=50)
+     */
+    protected $price;
+
+
     public function __construct()
     {
         $this->initialPrice = 0;
         $this->rebillPrice = 0;
         $this->frequency = 0;
         $this->rebillTimes = 0;
+        $this->price = "";
     }
 
 
@@ -257,4 +275,49 @@ class BillingPlan
 
         return $this;
     }
+
+
+    /**
+     * @return StandardProduct
+     */
+    public function getProduct()
+    {
+        return $this->product;
+    }
+
+
+    /**
+     * @param StandardProduct $product
+     *
+     * @return BillingPlan
+     */
+    public function setProduct(StandardProduct $product)
+    {
+        $this->product = $product;
+
+        return $this;
+    }
+
+
+    /**
+     * @return string
+     */
+    public function getPrice()
+    {
+        return $this->price;
+    }
+
+
+    /**
+     * @param string $price
+     *
+     * @return BillingPlan
+     */
+    public function setPrice($price)
+    {
+        $this->price = $price;
+
+        return $this;
+    }
+
 }

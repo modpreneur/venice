@@ -31,6 +31,7 @@ class AppKernel extends Kernel
 
             // Trinity
             new Trinity\FrameworkBundle\TrinityFrameworkBundle(),
+            new Trinity\NotificationBundle\TrinityNotificationBundle(),
             new Trinity\AdminBundle\TrinityAdminBundle(),
         );
 

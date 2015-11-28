@@ -7,6 +7,13 @@ parameters:
     locale: en
     bowtie_path: "%kernel.root_dir%/../vendor/modpreneur/bowtie/src/less"
 
+trinity_notification:
+    drivers: ["trinity.notification.driver.client_api"]
+    entity_id_field: necktieId
+    necktie_notify_url: %necktie_notify_url%
+    necktie_oauth_url: %necktie_oauth_url%
+    necktie_client_id: %necktie_client_id%
+    necktie_client_secret: %necktie_client_secret%
 
 fos_user:
     db_driver: orm

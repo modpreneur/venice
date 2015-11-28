@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use AppBundle\Entity\Product\Product;
+use AppBundle\Entity\Product\StandardProduct;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -21,6 +22,15 @@ class ProductAccess
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
+
+
+    /**
+     * @ORM\Column(name="necktie_id", type="integer", unique=true, nullable=true)
+     *
+     * @var integer
+     */
+    protected $necktieId;
+
 
     /**
      * @var User
@@ -97,11 +107,11 @@ class ProductAccess
     /**
      * Set product
      *
-     * @param Product $product
+     * @param StandardProduct $product
      *
      * @return ProductAccess
      */
-    public function setProduct($product)
+    public function setProduct(StandardProduct $product)
     {
         $this->product = $product;
 
@@ -136,6 +146,19 @@ class ProductAccess
 
 
     /**
+     * Method to maintain compatibility with necktie.
+     *
+     * @param \DateTime $fromDate
+     *
+     * @return ProductAccess
+     */
+    public function setFromDate(\DateTime $fromDate)
+    {
+        return $this->setDateFrom($fromDate);
+    }
+
+
+    /**
      * Get dateFrom
      *
      * @return \DateTime
@@ -161,6 +184,12 @@ class ProductAccess
     }
 
 
+    public function setToDate(\DateTime $dateTo = null)
+    {
+        return $this->setDateTo($dateTo);
+    }
+
+
     /**
      * Get dateTo
      *
@@ -169,6 +198,28 @@ class ProductAccess
     public function getDateTo()
     {
         return $this->dateTo;
+    }
+
+
+    /**
+     * @return int
+     */
+    public function getNecktieId()
+    {
+        return $this->necktieId;
+    }
+
+
+    /**
+     * @param int $necktieId
+     *
+     * @return ProductAccess
+     */
+    public function setNecktieId($necktieId)
+    {
+        $this->necktieId = $necktieId;
+
+        return $this;
     }
 
 }

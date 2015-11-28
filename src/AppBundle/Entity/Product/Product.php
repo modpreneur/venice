@@ -81,6 +81,7 @@ abstract class Product extends TrinityProduct
         $this->users = new ArrayCollection();
         $this->enabled = true;
         $this->productAccesses = new ArrayCollection();
+        $this->orderNumber = 0;
     }
 
 

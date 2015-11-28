@@ -21,11 +21,15 @@ security:
             id: fos_user.user_provider.username_email
 
     firewalls:
-       main:
+        notify_api:
+            pattern: ^/notify/^
+            anonymous: true
+
+        main:
             pattern: ^/
             form_login:
                 provider: fos_userbundle
-                csrf_provider: security.csrf.token_manager # Use form.csrf_provider instead for Symfony <2.4
+                csrf_provider: security.csrf.token_manager
                 login_path: /login
                 check_path: /login_check
             anonymous:    true
@@ -36,5 +40,6 @@ security:
     access_control:
         - { path: ^/login, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/login-response, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/notify, role: [IS_AUTHENTICATED_ANONYMOUSLY]}
         - { path: ^/*, role: [IS_AUTHENTICATED, IS_AUTHENTICATED_REMEMBERED, IS_AUTHENTICATED_FULLY ]}
 

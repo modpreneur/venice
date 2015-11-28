@@ -10,18 +10,25 @@ namespace AppBundle\Entity;
 
 use AppBundle\Entity\Product\FreeProduct;
 use AppBundle\Entity\Product\Product;
+use AppBundle\Entity\Product\StandardProduct;
 use \DateTime;
 use \InvalidArgumentException;
-use APY\DataGridBundle\Grid\Mapping\Column;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation\SerializedName;
 use Trinity\FrameworkBundle\Entity\BaseUser as TrinityUser;
+use Trinity\NotificationBundle\Annotations as N;
 
 /**
  * Class User
  *
  * @ORM\Entity(repositoryClass="AppBundle\Entity\Repositories\UserRepository")
  * @ORM\Table(name="user")
+ *
+ * @ORM\HasLifecycleCallbacks()
+ *
+ * @N\Source(columns="necktieId, username, email, firstName, lastName, avatar, locked")
+ * @N\Methods(types={"put", "delete"})
  *
  * @package AppBundle\Entity
  */
@@ -30,17 +37,18 @@ class User extends TrinityUser
     const PREFERRED_UNITS_IMPERIAL = "imperial";
     const PREFERRED_UNITS_METRIC = "metric";
 
-    const DEFAULT_PREFERRED_METRICS = self::PREFERRED_UNITS_IMPERIAL;
+    const DEFAULT_PREFERRED_METRICS = "imperial";
 
     /**
-     * ORM\@Column(name="necktie_id", type="integer", unique=true, nullable=true)
+     * @ORM\Column(name="necktie_id", type="integer", unique=true, nullable=true)
+     * @SerializedName("id")
      *
      * @var integer
      */
     protected $necktieId;
 
     /**
-     * ORM\@Column(name="amember_id", type="integer", unique=true, nullable=true)
+     * @ORM\Column(name="amember_id", type="integer", unique=true, nullable=true)
      *
      * @var integer
      */
@@ -334,20 +342,21 @@ class User extends TrinityUser
 
 
     /**
-     * @param Product       $product
-     * @param DateTime      $dateFrom
-     * @param DateTime|null $dateTo
+     * @param Product|StandardProduct $product
+     * @param DateTime                $dateFrom
+     * @param DateTime|null           $dateTo
+     * @param int|null                $necktieId
      *
      * @return ProductAccess|null
      */
-    public function giveAccessToProduct(Product $product, \DateTime $dateFrom, \DateTime $dateTo = null)
+    public function giveAccessToProduct(StandardProduct $product, \DateTime $dateFrom, \DateTime $dateTo = null, $necktieId = null)
     {
-
         //create a new ProductAccess record
         if(!$this->hasAccessToProduct($product))
         {
             $productAccess = new ProductAccess();
             $productAccess
+                ->setNecktieId($necktieId)
                 ->setProduct($product)
                 ->setUser($this)
                 ->setDateFrom($dateFrom)
@@ -363,13 +372,29 @@ class User extends TrinityUser
             /** @var ProductAccess $productAccess */
             foreach($this->getProductAccesses() as $productAccess)
             {
-                if($productAccess->getProduct() == $product)
+                if($necktieId)
                 {
-                    $productAccess->setDateFrom($dateFrom);
-                    $productAccess->setDateTo($dateTo);
-
-                    return $productAccess;
+                    if($productAccess->getNecktieId() == $necktieId)
+                    {
+                        $productAccess->setProduct($product);
+                        $productAccess->setUser($this);
+                        $productAccess->setDateFrom($dateFrom);
+                        $productAccess->setDateTo($dateTo);
+                    }
                 }
+                else
+                {
+                    if($productAccess->getProduct() == $product)
+                    {
+                        $productAccess->setProduct($product);
+                        $productAccess->setUser($this);
+                        $productAccess->setDateFrom($dateFrom);
+                        $productAccess->setDateTo($dateTo);
+
+                        return $productAccess;
+                    }
+                }
+
             }
         }
 

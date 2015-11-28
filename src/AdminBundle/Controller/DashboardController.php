@@ -25,6 +25,6 @@ class DashboardController extends Controller
      */
     public function indexAction(Request $request)
     {
-        return $this->render("TrinityAdminBundle::layout.html.twig");
+        return $this->render(":AdminBundle:adminBase.html.twig");
     }
 }
