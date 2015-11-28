@@ -11,6 +11,7 @@ parameters:
     necktie_client_secret: ~
     necktie_url: ~
     necktie_notify_url: ~
+    necktie_oauth_url: ~
 
     mailer_transport:  smtp
     mailer_host:       127.0.0.1

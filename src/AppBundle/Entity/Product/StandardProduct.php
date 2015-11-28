@@ -11,11 +11,19 @@ namespace AppBundle\Entity\Product;
 
 use AppBundle\Entity\BillingPlan;
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation\SerializedName;
+use Trinity\NotificationBundle\Annotations as N;
 
 
 /**
  * @ORM\Entity()
  * @ORM\Table(name="product_standard")
+ *
+ * @ORM\HasLifecycleCallbacks
+ *
+ * @N\Source(columns="necktieId, name, description")
+ * @N\Methods(types={"put", "post", "delete"})
+ * @N\Url(postfix="product")
  *
  * Class StandardProduct
  * @package AppBundle\Entity\Product
@@ -28,6 +36,7 @@ class StandardProduct extends Product
      * @var integer
      *
      * @ORM\Column(name="necktie_id", type="integer", nullable=true, unique=true)
+     * @SerializedName("id")
      */
     protected $necktieId;
 
