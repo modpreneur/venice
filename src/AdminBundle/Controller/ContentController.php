@@ -168,7 +168,6 @@ class ContentController extends BaseAdminController
                 "entity" => $content,
                 "form" => $contentForm->createView()
             ]
-
         );
     }
 
@@ -211,5 +210,35 @@ class ContentController extends BaseAdminController
         {
             return $this->returnFormErrorsJsonResponse($contentForm);
         }
+    }
+
+
+    /**
+     * @Route("/{id}/delete", name="admin_content_delete")
+     *
+     * @param Request $request
+     * @param Content $content
+     *
+     * @return JsonResponse
+     */
+    public function deleteAction(Request $request, Content $content)
+    {
+        try
+        {
+            $em = $this->getEntityManager();
+            $em->remove($content);
+            $em->flush();
+        }
+        catch(DBALException $e)
+        {
+            return new JsonResponse(
+                [
+                    "errors" => ["db" => $e->getMessage()],
+                    "message" => "Could not delete."
+                ]
+            );
+        }
+
+        return new JsonResponse(["message" => "Content successfully deleted."]);
     }
 }

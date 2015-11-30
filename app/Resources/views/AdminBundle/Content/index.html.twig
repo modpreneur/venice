@@ -1,6 +1,17 @@
 {% extends(':AdminBundle:adminBase.html.twig') %}
 
 {% block pageBody %}
+    <a href="{{ path('admin_content_product_index') }}">Associations</a>
+    <ul>
+        <li><a href="{{ path("admin_content_new", {"contentType":"pdf"}) }}">New pdf</a></li>
+        <li><a href="{{ path("admin_content_new", {"contentType":"text"}) }}">New text</a></li>
+        <li><a href="{{ path("admin_content_new", {"contentType":"video"}) }}">New video</a></li>
+        <li><a href="{{ path("admin_content_new", {"contentType":"mp3"}) }}">New mp3</a></li>
+        <li><a href="{{ path("admin_content_new", {"contentType":"iframe"}) }}">New iframe</a></li>
+        <li><a href="{{ path("admin_content_new", {"contentType":"group"}) }}">New group</a></li>
+        <li><a href="{{ path("admin_content_new", {"contentType":"group"}) }}">New group</a></li>
+    </ul>
+
     <ul>
         {% for content in contents %}
             <li>

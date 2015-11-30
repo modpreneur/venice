@@ -1,6 +1,6 @@
 {% extends(':AdminBundle:adminBase.html.twig') %}
 
 {% block pageBody %}
-    <a href="{{ path('admin_content_delete', {'id': entity.id}) }}">Delete</a>
+    <a href="{{ path('admin_content_product_delete', {'id': entity.id}) }}">Delete</a>
     {{ form(form) }}
 {% endblock %}

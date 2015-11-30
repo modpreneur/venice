@@ -52,7 +52,7 @@ class StandardProduct extends Product
     /**
      * @var BillingPlan
      *
-     * @ORM\OneToOne(targetEntity="AppBundle\Entity\BillingPlan", cascade={"PERSIST", "REFRESH"})
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\BillingPlan", cascade={"PERSIST", "REFRESH"}, inversedBy="product")
      */
     protected $billingPlan;
 
