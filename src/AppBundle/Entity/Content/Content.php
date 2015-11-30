@@ -61,6 +61,13 @@ abstract class Content
      */
     protected $author;
 
+    /**
+     * @var
+     *
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\ContentInGroup", mappedBy="content")
+     */
+    protected $contentsInGroup;
+
 
     /**
      * Return Content's content no matter what concrete implementation is.
