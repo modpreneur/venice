@@ -49,10 +49,16 @@ class MenuListener
             ->addChild('Products', array('route' => 'admin_product_index'))
             ->setAttribute('icon', 'trinity trinity-products')
             ->setExtra('orderNumber', 1);
+
         $menu
             ->addChild('Contents', array('route' => 'admin_content_index'))
             ->setAttribute('icon', 'tiecons tiecons-bookmark-3')
             ->setExtra('orderNumber', 2);
+
+        $menu
+            ->addChild('Blog articles', array('route' => 'admin_blog_article_index'))
+            ->setAttribute('icon', 'tiecons tiecons-book-text')
+            ->setExtra('orderNumber', 3);
         //
         //$menu
         //    ->addChild('Users', array('route' => 'user'))

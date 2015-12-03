@@ -1,0 +1,15 @@
+{% extends(':AdminBundle:adminBase.html.twig') %}
+
+{% block pageBody %}
+    <ul>
+        <li><a href="{{ path("admin_blog_article_new")}}">New article</a></li>
+    </ul>
+
+    <ul>
+        {% for blogArticle in blogArticles %}
+            <li>
+                 <a href="{{ path('admin_blog_article_edit', {'id': blogArticle.id})}}">{{ blogArticle.title }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

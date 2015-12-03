@@ -13,6 +13,13 @@ use Cocur\Slugify\Slugify;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
+/**
+ * @ORM\Entity()
+ * @ORM\Table(name="blog_article")
+ *
+ * Class BlogArticle
+ * @package AppBundle\Entity
+ */
 class BlogArticle
 {
     /**
@@ -110,7 +117,10 @@ class BlogArticle
      */
     public function setHandle($handle)
     {
-        $this->handle = $handle;
+        if($handle !== null)
+        {
+            $this->handle = $handle;
+        }
     }
 
 
@@ -221,7 +231,7 @@ class BlogArticle
     {
         $this->title = $title;
 
-        $this->handle = $this->createHandle($title);
+        $this->createHandle($title);
 
         return $this;
     }
