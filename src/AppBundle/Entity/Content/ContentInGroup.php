@@ -6,7 +6,7 @@
  * Time: 16:09
  */
 
-namespace AppBundle\Entity;
+namespace AppBundle\Entity\Content;
 
 use AppBundle\Entity\Content\Content;
 use AppBundle\Entity\Content\GroupContent;
@@ -19,7 +19,7 @@ use Doctrine\ORM\Mapping\JoinColumn;
  * @ORM\Table(name = "content_in_group")
  *
  * Class ContentInGroup
- * @package AppBundle\Entity
+ * @package AppBundle\Entity\Content
  */
 class ContentInGroup
 {
@@ -37,7 +37,7 @@ class ContentInGroup
     /**
      * @var GroupContent
      *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Content\GroupContent", inversedBy="contentsInGroup")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Content\GroupContent", inversedBy="items")
      * @JoinColumn(name="group_id", referencedColumnName="id")
      */
     protected $group;

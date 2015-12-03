@@ -10,6 +10,8 @@ namespace AdminBundle\Controller;
 
 
 use AppBundle\Entity\Content\Content;
+use AppBundle\Entity\Content\GroupContent;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\DBAL\DBALException;
 use FOS\RestBundle\Controller\Annotations\Route;
 use ReflectionException;
@@ -163,7 +165,10 @@ class ContentController extends BaseAdminController
         );
 
         return $this->render(
-            ":AdminBundle/Content:edit.html.twig",
+            ($content instanceof GroupContent)?
+                ":AdminBundle/Content/Group:edit.html.twig"
+                : ":AdminBundle/Content/:edit.html.twig"
+            ,
             [
                 "entity" => $content,
                 "form" => $contentForm->createView()
@@ -185,6 +190,25 @@ class ContentController extends BaseAdminController
      */
     public function updateAction(Request $request, Content $content)
     {
+        if($content instanceof GroupContent)
+        {
+            return $this->updateGroupContentAction($request, $content);
+        }
+        else
+        {
+            return $this->updateNonGroupContentAction($request, $content);
+        }
+    }
+
+
+    /**
+     * @param Request $request
+     * @param Content $content
+     *
+     * @return JsonResponse
+     */
+    protected function updateNonGroupContentAction(Request $request, Content $content)
+    {
         $contentType = $content->getFormType();
         $contentForm = $this->createForm($contentType, $content);
         $em = $this->getEntityManager();
@@ -193,6 +217,51 @@ class ContentController extends BaseAdminController
 
         if($contentForm->isValid())
         {
+            $em->persist($content);
+
+            try
+            {
+                $em->flush();
+            }
+            catch (DBALException $e)
+            {
+                return new JsonResponse(["errors" => ["db" => $e->getMessage()]]);
+            }
+
+            return new JsonResponse(["message" => "Content successfully updated"]);
+        }
+        else
+        {
+            return $this->returnFormErrorsJsonResponse($contentForm);
+        }
+    }
+
+    protected function updateGroupContentAction(Request $request, GroupContent $content)
+    {
+        $contentType = $content->getFormType();
+        $contentForm = $this->createForm($contentType, $content);
+        $em = $this->getEntityManager();
+
+        //Copy original items
+        $originalItems = new ArrayCollection();
+        foreach ($content->getItems() as $item)
+        {
+            $originalItems->add($item);
+        }
+
+        $contentForm->handleRequest($request);
+
+        if($contentForm->isValid())
+        {
+            foreach ($originalItems as $originalItem)
+            {
+                // If the item is not in the field data it was removed. So remove it from collection.
+                if(!$content->getItems()->contains($originalItem))
+                {
+                    $em->remove($originalItem);
+                }
+            }
+
             $em->persist($content);
 
             try

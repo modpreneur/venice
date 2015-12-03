@@ -8,7 +8,6 @@
 
 namespace AppBundle\Entity\Content;
 
-use AppBundle\Entity\ContentInGroup;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -25,34 +24,40 @@ class GroupContent extends Content
     /**
      * @var ArrayCollection<ContentInGroup>
      *
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\ContentInGroup", mappedBy="group")
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Content\ContentInGroup", mappedBy="group", cascade={"PERSIST"})
      */
-    protected $contentsInGroup;
+    protected $items;
 
 
     public function __construct()
     {
-        $this->contentsInGroup = new ArrayCollection();
+        $this->items = new ArrayCollection();
     }
 
     /**
      * @return ArrayCollection<ContentInGroup>
      */
-    public function getContentsInGroup()
+    public function getItems()
     {
-        return $this->contentsInGroup;
+        return $this->items;
+    }
+
+
+    public function setItems($items)
+    {
+        $this->items = $items;
     }
 
 
     /**
-     * @param ContentInGroup $contentInGroup
+     * @param ContentInGroup $item
      * @return $this
      */
-    public function addContentInGroup(ContentInGroup $contentInGroup)
+    public function addItem(ContentInGroup $item)
     {
-        if(!$this->contentsInGroup->contains($contentInGroup))
+        if(!$this->items->contains($item))
         {
-            $this->contentsInGroup->add($contentInGroup);
+            $this->items->add($item);
         }
 
         return $this;
@@ -60,12 +65,15 @@ class GroupContent extends Content
 
 
     /**
-     * @param ContentInGroup $contentInGroup
+     * @param ContentInGroup $item
      * @return $this
      */
-    public function removeContentInGroup(ContentInGroup $contentInGroup)
+    public function removeItem(ContentInGroup $item)
     {
-        $this->contentsInGroup->remove($contentInGroup);
+        if(!$this->items->contains($item))
+        {
+            $this->items->remove($item);
+        }
 
         return $this;
     }
@@ -80,7 +88,7 @@ class GroupContent extends Content
     public function getContent()
     {
         $names = "";
-        foreach ($this->contentsInGroup as $item)
+        foreach ($this->items as $item)
         {
             $names .= $item->getContent()->getName() . ", ";
         }

@@ -61,10 +61,11 @@ abstract class Content
      */
     protected $author;
 
+
     /**
      * @var
      *
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\ContentInGroup", mappedBy="content")
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Content\ContentInGroup", mappedBy="content")
      */
     protected $contentsInGroup;
 
