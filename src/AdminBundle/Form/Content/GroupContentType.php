@@ -14,6 +14,14 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class GroupContentType extends ContentType
 {
+    protected $groupContent;
+
+
+    public function __construct($groupContent)
+    {
+        $this->groupContent = $groupContent;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         parent::buildForm($builder, $options);
@@ -23,7 +31,7 @@ class GroupContentType extends ContentType
                 "items",
                 "collection",
                 [
-                    "type" => new ContentInGroupType(),
+                    "type" => new ContentInGroupType($this->groupContent),
                     "label" => "Collection?",
                     "allow_add" => true,
                     'allow_delete' => true

@@ -150,7 +150,7 @@ class ContentController extends BaseAdminController
      */
     public function editAction(Request $request, Content $content)
     {
-        $contentType = $content->getFormType();
+        $contentType = $content->getFormType(($content instanceof GroupContent)? [$content] : null);
         $contentForm = $this->createForm(
             $contentType,
             $content,
