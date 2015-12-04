@@ -10,7 +10,6 @@ namespace AppBundle\Services;
 
 
 use AppBundle\Entity\BillingPlan;
-use AppBundle\Entity\Invoice;
 use AppBundle\Entity\Product\StandardProduct;
 use AppBundle\Entity\User;
 use AppBundle\Exceptions\ExpiredRefreshTokenException;
@@ -118,8 +117,6 @@ class NecktieGateway implements NecktieGatewayInterface
      * Call necktie and get User entity.
      * This method should be typically called only in the login process.
      *
-     *
-     *
      * @param string     $accessToken
      * @param bool|false $createNewUser
      * @param bool|true  $persistNewUser
@@ -135,7 +132,6 @@ class NecktieGateway implements NecktieGatewayInterface
         }
 
         $necktieUrl = $this->necktieUrl . self::NECKTIE_USER_PROFILE_URI;
-
         $response = $this->connector->get($necktieUrl, $accessToken);
 
         if(!$this->helper->isResponseOk($response))
@@ -160,18 +156,7 @@ class NecktieGateway implements NecktieGatewayInterface
             }
             else if($createNewUser)
             {
-                $user = new User();
-                $user->setUsername($userInfo["username"])
-                     ->setEmail($userInfo["email"])
-                     ->setNecktieId($userInfo["id"]);
-
-                if($persistNewUser)
-                {
-                    $this->entityManager->persist($user);
-                    $this->entityManager->flush();
-                }
-
-                return $user;
+                return $this->createANewUser($userInfo, $persistNewUser);
             }
         }
 
@@ -180,6 +165,8 @@ class NecktieGateway implements NecktieGatewayInterface
 
 
     /**
+     * Update product accesses for given user.
+     *
      * @param User $user
      *
      * @throws UnsuccessfulNecktieResponseException
@@ -247,45 +234,7 @@ class NecktieGateway implements NecktieGatewayInterface
             return [];
         }
 
-        $invoices = [];
-        foreach($response["invoices"] as $invoice)
-        {
-            $invoiceObject = new Invoice();
-
-            if(array_key_exists("id", $invoice))
-            {
-                $invoiceObject->setId($invoice["id"]);
-            }
-
-            if(array_key_exists("total_customer_price", $invoice))
-            {
-                $invoiceObject->setTotalPrice($invoice["total_customer_price"]);
-            }
-
-            if(array_key_exists("transaction_type", $invoice))
-            {
-                $invoiceObject->setTransactionType($invoice["transaction_type"]);
-            }
-
-            if(array_key_exists("transaction_time", $invoice))
-            {
-                $date = \DateTime::createFromFormat(\DateTime::W3C, $invoice["transaction_time"]);
-                $invoiceObject->setTransactionTime($date);
-            }
-
-            if(array_key_exists("items", $invoice))
-            {
-                foreach($invoice["items"] as $invoiceItem)
-                {
-                    if(array_key_exists("product", $invoiceItem) && array_key_exists("name", $invoiceItem["product"]))
-                    {
-                        $invoiceObject->addItem($invoiceItem["product"]["name"]);
-                    }
-                }
-            }
-
-            $invoices[] = $invoiceObject;
-        }
+        $invoices = $this->helper->getInvoicesFromNecktieResponse($response);
 
         return $invoices;
     }
@@ -303,37 +252,6 @@ class NecktieGateway implements NecktieGatewayInterface
     public function getStateCookie()
     {
         return $this->stateCookie;
-    }
-
-
-    /**
-     * @param User  $user
-     * @param       $uri
-     * @param array $queryParameters
-     *
-     * @return mixed|null
-     * @throws UnsuccessfulNecktieResponseException
-     */
-    protected function getParsedResponse(User $user, $uri, $queryParameters = [])
-    {
-        $accessToken = $user->getLastAccessToken();
-
-        if(!$accessToken)
-        {
-            return null;
-        }
-
-        $necktieUrl = $this->necktieUrl . $uri;
-
-        $rawResponse = $this->connector->get($necktieUrl, $accessToken, $queryParameters);
-        $response = json_decode($rawResponse, true);
-
-        if(!$response || !$this->helper->isResponseOk($response))
-        {
-            throw new UnsuccessfulNecktieResponseException($rawResponse);
-        }
-
-        return $response;
     }
 
 
@@ -388,8 +306,6 @@ class NecktieGateway implements NecktieGatewayInterface
      */
     public function refreshAccessTokenIfNeeded(User $user)
     {
-        //$this->refreshAccessToken($user);
-
         $dateDiff = $user->getLastToken()->getValidTo()->diff(new \DateTime());
 
         // if the access token is expired or will expire in 10 minutes
@@ -499,5 +415,59 @@ class NecktieGateway implements NecktieGatewayInterface
         }
 
         return $billingPlan;
+    }
+
+
+    /**
+     * @param $userInfo
+     * @param $persist
+     *
+     * @return User
+     */
+    protected function createANewUser($userInfo, $persist)
+    {
+        $user = new User();
+        $user->setUsername($userInfo["username"])
+             ->setEmail($userInfo["email"])
+             ->setNecktieId($userInfo["id"]);
+
+        if($persist)
+        {
+            $this->entityManager->persist($user);
+            $this->entityManager->flush();
+        }
+
+        return $user;
+    }
+
+
+    /**
+     * @param User  $user
+     * @param       $uri
+     * @param array $queryParameters
+     *
+     * @return mixed|null
+     * @throws UnsuccessfulNecktieResponseException
+     */
+    protected function getParsedResponse(User $user, $uri, $queryParameters = [])
+    {
+        $accessToken = $user->getLastAccessToken();
+
+        if(!$accessToken)
+        {
+            return null;
+        }
+
+        $necktieUrl = $this->necktieUrl . $uri;
+
+        $rawResponse = $this->connector->get($necktieUrl, $accessToken, $queryParameters);
+        $response = json_decode($rawResponse, true);
+
+        if(!$response || !$this->helper->isResponseOk($response))
+        {
+            throw new UnsuccessfulNecktieResponseException($rawResponse);
+        }
+
+        return $response;
     }
 }

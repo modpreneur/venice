@@ -9,6 +9,7 @@
 namespace AppBundle\Services;
 
 
+use AppBundle\Entity\Invoice;
 use AppBundle\Entity\OAuthToken;
 use AppBundle\Interfaces\NecktieGatewayHelperInterface;
 
@@ -72,6 +73,58 @@ class NecktieGatewayHelper implements NecktieGatewayHelperInterface
         {
             return null;
         }
+    }
+
+
+    /**
+     * @param $response array
+     *
+     * @return array
+     */
+    public function getInvoicesFromNecktieResponse($response)
+    {
+        $invoices = [];
+
+        foreach($response["invoices"] as $invoice)
+        {
+            $invoiceObject = new Invoice();
+
+            if(array_key_exists("id", $invoice))
+            {
+                $invoiceObject->setId($invoice["id"]);
+            }
+
+            if(array_key_exists("total_customer_price", $invoice))
+            {
+                $invoiceObject->setTotalPrice($invoice["total_customer_price"]);
+            }
+
+            if(array_key_exists("transaction_type", $invoice))
+            {
+                $invoiceObject->setTransactionType($invoice["transaction_type"]);
+            }
+
+            if(array_key_exists("transaction_time", $invoice))
+            {
+                $date = \DateTime::createFromFormat(\DateTime::W3C, $invoice["transaction_time"]);
+                $invoiceObject->setTransactionTime($date);
+            }
+
+            if(array_key_exists("items", $invoice))
+            {
+                foreach($invoice["items"] as $invoiceItem)
+                {
+                    if(array_key_exists("product", $invoiceItem) && array_key_exists("name", $invoiceItem["product"]))
+                    {
+                        $invoiceObject->addItem($invoiceItem["product"]["name"]);
+                    }
+                }
+            }
+
+            $invoices[] = $invoiceObject;
+        }
+
+        return $invoices;
     }
 
 
