@@ -18,6 +18,7 @@ class DashboardController extends Controller
     /**
      *
      * @Route("/admin", name="admin_dashboard")
+     * @Route("/admin/")
      *
      * @param Request $request
      *
