@@ -12,7 +12,6 @@
 !app/logs/.gitkeep
 /build/
 /vendor/
-/bin/
 /composer.phar
 app/sessions/*
 web/bundles/**
