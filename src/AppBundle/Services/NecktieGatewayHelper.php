@@ -19,6 +19,7 @@ class NecktieGatewayHelper implements NecktieGatewayHelperInterface
     const NECKTIE_INVALID_ACCESS_TOKEN_ERROR = '{"error":"invalid_grant","error_description":"The access token provided is invalid."}';
     //this message is the same for expired as well as invalid refresh token
     const NECKTIE_EXPIRED_REFRESH_TOKEN_ERROR = '{"error":"invalid_grant","error_description":"Invalid refresh token"}';
+    const NECKTIE_INVALID_CLIENT_ERROR = '{"error":"invalid_token","error_description":"The client credentials are invalid"}';
 
 
     /**
@@ -136,6 +137,7 @@ class NecktieGatewayHelper implements NecktieGatewayHelperInterface
         return !($this->isAccessTokenExpiredResponse($response)
                  || $this->isAccessTokenInvalidResponse($response)
                  || $this->isRefreshTokenExpiredResponse($response)
+                 || $this->isInvalidClientResponse($response)
         );
     }
 
@@ -188,6 +190,24 @@ class NecktieGatewayHelper implements NecktieGatewayHelperInterface
     {
         if((is_string($response) && $response == self::NECKTIE_EXPIRED_REFRESH_TOKEN_ERROR)
            || (is_array($response) && $response == json_decode(self::NECKTIE_EXPIRED_REFRESH_TOKEN_ERROR, true))
+        )
+        {
+            return true;
+        } else
+        {
+            return false;
+        }
+    }
+
+    /**
+     * @param string|array $response
+     *
+     * @return bool
+     */
+    public function isInvalidClientResponse($response)
+    {
+        if((is_string($response) && $response == self::NECKTIE_INVALID_CLIENT_ERROR)
+           || (is_array($response) && $response == json_decode(self::NECKTIE_INVALID_CLIENT_ERROR, true))
         )
         {
             return true;

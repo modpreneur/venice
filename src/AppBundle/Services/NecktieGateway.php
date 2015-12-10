@@ -259,6 +259,7 @@ class NecktieGateway implements NecktieGatewayInterface
      * @param User $user
      *
      * @throws ExpiredRefreshTokenException
+     * @throws \Exception
      */
     public function refreshAccessToken(User $user)
     {
@@ -277,11 +278,20 @@ class NecktieGateway implements NecktieGatewayInterface
             throw new Exception("Necktie response error");
         }
 
+        if($this->helper->isInvalidClientResponse($response))
+        {
+            throw new \Exception("Invalid oauth client id and secret!");
+        }
+
         if(!$this->helper->isRefreshTokenExpiredResponse($response))
         {
             $token = $this->helper->createAccessTokenFromArray($response);
 
-            $user->addOAuthToken($token);
+            if($token)
+                $user->addOAuthToken($token);
+            else
+                throw new \Exception("Could not get token from response. Have you configured necktie client id and secret?");
+
         }
         else
         {

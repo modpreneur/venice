@@ -47,12 +47,14 @@ class User extends TrinityUser
      */
     protected $necktieId;
 
+
     /**
      * @ORM\Column(name="amember_id", type="integer", unique=true, nullable=true)
      *
      * @var integer
      */
     protected $amemberId;
+
 
     /**
      * @ORM\Column(name="preferred_units", type="string", length=10)
@@ -61,12 +63,14 @@ class User extends TrinityUser
      */
     protected $preferredUnits;
 
+
     /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\ProductAccess", mappedBy="user", cascade={"REMOVE", "PERSIST"})
      *
      * @var ArrayCollection<ProductAccess>
      */
     protected $productAccesses;
+
 
     /**
      * @ORM\Column(name="date_of_birth", type="date")
