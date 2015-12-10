@@ -25,8 +25,9 @@ use Trinity\NotificationBundle\Notification\NotificationParser;
 class NotificationController extends Controller
 {
     /**
-     * @Route("/notify/product")
-     * @Route("/notify/product/")
+     * @Route("/notify/product", defaults={"_format": "json"})
+     * @Route("/notify/product/", defaults={"_format": "json"})
+     *
      * @param Request $request
      *
      * @return JsonResponse
@@ -46,8 +47,8 @@ class NotificationController extends Controller
     }
 
     /**
-     * @Route("/notify/user")
-     * @Route("/notify/user/")
+     * @Route("/notify/user", defaults={"_format": "json"})
+     * @Route("/notify/user/", defaults={"_format": "json"})
      * @param Request $request
      *
      * @return JsonResponse
@@ -67,8 +68,8 @@ class NotificationController extends Controller
     }
 
     /**
-     * @Route("/notify/billing-plan")
-     * @Route("/notify/billing-plan/")
+     * @Route("/notify/billing-plan", defaults={"_format": "json"})
+     * @Route("/notify/billing-plan/", defaults={"_format": "json"})
      * @param Request $request
      *
      * @return JsonResponse
@@ -96,8 +97,8 @@ class NotificationController extends Controller
     }
 
     /**
-     * @Route("/notify/product-access")
-     * @Route("/notify/product-access/")
+     * @Route("/notify/product-access", defaults={"_format": "json"})
+     * @Route("/notify/product-access/", defaults={"_format": "json"})
      * @param Request $request
      *
      * @return JsonResponse
