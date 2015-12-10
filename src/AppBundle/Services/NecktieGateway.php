@@ -102,7 +102,7 @@ class NecktieGateway implements NecktieGatewayInterface
         $queryParameters = [
             "client_id" => $this->container->getParameter("necktie_client_id"),
             "client_secret" => $this->container->getParameter("necktie_client_secret"),
-            "redirect_uri" => $this->router->generate($this->container->getParameter("login_response_route")),
+            "redirect_uri" => $this->router->generate($this->container->getParameter("login_response_route"), [], $this->router::ABSOLUTE_URL),
             "grant_type" => "trusted_authorization",
             "state" => $this->stateCookie->getValue()
         ];
