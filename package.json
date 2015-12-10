@@ -1,0 +1,9 @@
+{
+  "name": "Venice",
+  "description":"Created just for update script",
+  "scripts": {
+    "update": "cd web/js && jspm update && nodejs ./scripts/buildBundles.js",
+    "update-jspm": "cd web/js && jspm update && nodejs ./scripts/buildBundles.js"
+  },
+  "private": true
+}

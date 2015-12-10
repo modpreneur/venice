@@ -71,11 +71,11 @@ RUN a2ensite 000-default.conf \
 RUN composer install --no-scripts --optimize-autoloader
 
 #install js
-#RUN npm install -g jspm \
-#    && cd web/js \
-#    && jspm config registries.github.auth "dmxjZWs6NjgwOGM3MzVkZDkwMDZjNjBiOWRmM2RjYjc5MTI5OGUwMjkxNjgzZg==" \
-#    && jspm install \
-#    && nodejs ./scripts/buildBundles.js
+RUN npm install -g jspm \
+    && cd web/js \
+    && jspm config registries.github.auth "dmxjZWs6NjgwOGM3MzVkZDkwMDZjNjBiOWRmM2RjYjc5MTI5OGUwMjkxNjgzZg==" \
+    && jspm install \
+    && nodejs ./scripts/buildBundles.js
 
 EXPOSE 80
 
