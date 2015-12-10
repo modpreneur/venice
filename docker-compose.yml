@@ -1,0 +1,23 @@
+web:
+  build: .
+  links:
+    - mysql:database
+  ports:
+    - "8888:80"
+  expose:
+    - "8888"
+  volumes:
+    - .:/var/app
+
+mysql:
+  image: mysql/mysql-server:5
+  ports:
+    - 3306:3306
+  environment:
+    - MYSQL_ROOT_PASSWORD=my-secret-pw -d
+    - MYSQL_DATABASE=venice
+    - MYSQL_USER=user
+    - MYSQL_PASSWORD=pass
+
+
+
