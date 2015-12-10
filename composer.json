@@ -24,7 +24,7 @@
         "knplabs/knp-menu": "~2.1",
         "knplabs/knp-menu-bundle": "~2.1",
         "trinity/framework": "*",
-        "trinity/notification": "dev-feature-client-notifications",
+        "trinity/notification": "dev-master",
         "trinity/admin": "dev-master",
         "modpreneur/bowtie": "dev-master",
         "cocur/slugify": "^1.4",
