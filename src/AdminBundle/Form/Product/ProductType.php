@@ -17,12 +17,10 @@ use Symfony\Component\Form\FormBuilderInterface;
 class ProductType extends AdminBaseType
 {
     protected $product;
-    protected $CMSProblemHelper;
 
-    function __construct(Product $product = null, CMSProblemHelper $CMSProblemHelper)
+    function __construct(Product $product = null)
     {
         $this->product = $product;
-        $this->CMSProblemHelper = $CMSProblemHelper;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)

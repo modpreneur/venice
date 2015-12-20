@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "e4aaf3f7f2e95ed96bf6d2b4de7fb045",
-    "content-hash": "37eca9d0974e85f5718a7bc32b162324",
+    "hash": "ee9fc87ab2fba6a58bd516f81235541c",
+    "content-hash": "5acccd57939a0a1089a56fea773b560b",
     "packages": [
         {
             "name": "anchovy/curl-bundle",
@@ -65,12 +65,12 @@
             "version": "2.2.16",
             "source": {
                 "type": "git",
-                "url": "https://github.com/Abhoryo/APYDataGridBundle.git",
+                "url": "https://github.com/APY/APYDataGridBundle.git",
                 "reference": "08f109cd25acaec99d3b700653dd33e77012b61f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Abhoryo/APYDataGridBundle/zipball/08f109cd25acaec99d3b700653dd33e77012b61f",
+                "url": "https://api.github.com/repos/APY/APYDataGridBundle/zipball/08f109cd25acaec99d3b700653dd33e77012b61f",
                 "reference": "08f109cd25acaec99d3b700653dd33e77012b61f",
                 "shasum": ""
             },
@@ -230,12 +230,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/dmishh/SettingsBundle.git",
-                "reference": "25280a62b279cffb1afbe7179a458670dc748d54"
+                "reference": "a1747348665f69213cd962de27cbcd1ab29b1c4d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dmishh/SettingsBundle/zipball/25280a62b279cffb1afbe7179a458670dc748d54",
-                "reference": "25280a62b279cffb1afbe7179a458670dc748d54",
+                "url": "https://api.github.com/repos/dmishh/SettingsBundle/zipball/a1747348665f69213cd962de27cbcd1ab29b1c4d",
+                "reference": "a1747348665f69213cd962de27cbcd1ab29b1c4d",
                 "shasum": ""
             },
             "require": {
@@ -293,7 +293,7 @@
                 "config",
                 "configuration"
             ],
-            "time": "2015-11-14 13:51:41"
+            "time": "2015-12-13 01:40:27"
         },
         {
             "name": "doctrine/annotations",
@@ -365,16 +365,16 @@
         },
         {
             "name": "doctrine/cache",
-            "version": "v1.5.2",
+            "version": "v1.5.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/cache.git",
-                "reference": "47c7128262da274f590ae6f86eb137a7a64e82af"
+                "reference": "47cdc76ceb95cc591d9c79a36dc3794975b5d136"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/cache/zipball/47c7128262da274f590ae6f86eb137a7a64e82af",
-                "reference": "47c7128262da274f590ae6f86eb137a7a64e82af",
+                "url": "https://api.github.com/repos/doctrine/cache/zipball/47cdc76ceb95cc591d9c79a36dc3794975b5d136",
+                "reference": "47cdc76ceb95cc591d9c79a36dc3794975b5d136",
                 "shasum": ""
             },
             "require": {
@@ -431,7 +431,7 @@
                 "cache",
                 "caching"
             ],
-            "time": "2015-12-03 10:50:37"
+            "time": "2015-12-19 05:03:47"
         },
         {
             "name": "doctrine/collections",
@@ -2006,25 +2006,25 @@
         },
         {
             "name": "knplabs/knp-menu-bundle",
-            "version": "v2.1.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/KnpLabs/KnpMenuBundle.git",
-                "reference": "2246a70109bdd313a105d2a7ef464a763aacf0cd"
+                "reference": "92e969ce3d577997f191839b5540502796216966"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/KnpLabs/KnpMenuBundle/zipball/2246a70109bdd313a105d2a7ef464a763aacf0cd",
-                "reference": "2246a70109bdd313a105d2a7ef464a763aacf0cd",
+                "url": "https://api.github.com/repos/KnpLabs/KnpMenuBundle/zipball/92e969ce3d577997f191839b5540502796216966",
+                "reference": "92e969ce3d577997f191839b5540502796216966",
                 "shasum": ""
             },
             "require": {
                 "knplabs/knp-menu": "~2.1",
-                "symfony/framework-bundle": "~2.3"
+                "symfony/framework-bundle": "~2.3|~3.0"
             },
             "require-dev": {
-                "symfony/expression-language": "~2.4",
-                "symfony/phpunit-bridge": "~2.7"
+                "symfony/expression-language": "~2.4|~3.0",
+                "symfony/phpunit-bridge": "~2.7|~3.0"
             },
             "type": "symfony-bundle",
             "extra": {
@@ -2059,7 +2059,7 @@
             "keywords": [
                 "menu"
             ],
-            "time": "2015-09-28 15:23:54"
+            "time": "2015-12-18 16:16:01"
         },
         {
             "name": "kriswallsmith/assetic",
@@ -3524,16 +3524,16 @@
         },
         {
             "name": "sensio/distribution-bundle",
-            "version": "v5.0.2",
+            "version": "v5.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sensiolabs/SensioDistributionBundle.git",
-                "reference": "37bdfaa164396bec6ae00e37c23a6e187ad01bcc"
+                "reference": "419c1824af940e2be0f833aca2327e1181a6b503"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sensiolabs/SensioDistributionBundle/zipball/37bdfaa164396bec6ae00e37c23a6e187ad01bcc",
-                "reference": "37bdfaa164396bec6ae00e37c23a6e187ad01bcc",
+                "url": "https://api.github.com/repos/sensiolabs/SensioDistributionBundle/zipball/419c1824af940e2be0f833aca2327e1181a6b503",
+                "reference": "419c1824af940e2be0f833aca2327e1181a6b503",
                 "shasum": ""
             },
             "require": {
@@ -3572,20 +3572,20 @@
                 "configuration",
                 "distribution"
             ],
-            "time": "2015-11-26 18:10:40"
+            "time": "2015-12-18 17:44:11"
         },
         {
             "name": "sensio/framework-extra-bundle",
-            "version": "v3.0.11",
+            "version": "v3.0.12",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sensiolabs/SensioFrameworkExtraBundle.git",
-                "reference": "a79e205737b58d557c05caef6dfa8f94d8084bca"
+                "reference": "3e8936fe13aa4086644977d334d8fcd275f50357"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sensiolabs/SensioFrameworkExtraBundle/zipball/a79e205737b58d557c05caef6dfa8f94d8084bca",
-                "reference": "a79e205737b58d557c05caef6dfa8f94d8084bca",
+                "url": "https://api.github.com/repos/sensiolabs/SensioFrameworkExtraBundle/zipball/3e8936fe13aa4086644977d334d8fcd275f50357",
+                "reference": "3e8936fe13aa4086644977d334d8fcd275f50357",
                 "shasum": ""
             },
             "require": {
@@ -3627,7 +3627,7 @@
                 "annotations",
                 "controllers"
             ],
-            "time": "2015-10-28 15:47:04"
+            "time": "2015-12-18 17:39:27"
         },
         {
             "name": "sensiolabs/security-checker",
@@ -4503,12 +4503,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/modpreneur/trinity-admin.git",
-                "reference": "e8b6b31f18aae7d88360364b0da78277a84bc032"
+                "reference": "6b263f47124349b97e647c0c239185554c9f8eb3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/modpreneur/trinity-admin/zipball/e8b6b31f18aae7d88360364b0da78277a84bc032",
-                "reference": "e8b6b31f18aae7d88360364b0da78277a84bc032",
+                "url": "https://api.github.com/repos/modpreneur/trinity-admin/zipball/6b263f47124349b97e647c0c239185554c9f8eb3",
+                "reference": "6b263f47124349b97e647c0c239185554c9f8eb3",
                 "shasum": ""
             },
             "require": {
@@ -4550,7 +4550,7 @@
                 }
             ],
             "description": "Trinity Admin bundle",
-            "time": "2015-12-10 14:40:03"
+            "time": "2015-12-18 14:33:29"
         },
         {
             "name": "trinity/framework",
@@ -4558,12 +4558,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/modpreneur/trinity.git",
-                "reference": "25481b76b998f3033a9154312a1358e70b125b0f"
+                "reference": "8c9b6b1233404b604f91e2253420a5081c825852"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/modpreneur/trinity/zipball/25481b76b998f3033a9154312a1358e70b125b0f",
-                "reference": "25481b76b998f3033a9154312a1358e70b125b0f",
+                "url": "https://api.github.com/repos/modpreneur/trinity/zipball/8c9b6b1233404b604f91e2253420a5081c825852",
+                "reference": "8c9b6b1233404b604f91e2253420a5081c825852",
                 "shasum": ""
             },
             "require": {
@@ -4606,21 +4606,21 @@
                 }
             ],
             "description": "Trinity Framework",
-            "time": "2015-12-10 15:04:00"
+            "time": "2015-12-15 11:38:04"
         },
         {
             "name": "trinity/notification",
-            "version": "dev-master",
+            "version": "dev-feature-client-notifications",
             "target-dir": "NotificationBundle",
             "source": {
                 "type": "git",
                 "url": "https://github.com/modpreneur/trinity-notifications.git",
-                "reference": "16c2d0b6b74f3bc81e64ea9668af7838e9fbd440"
+                "reference": "df158c2b14fc69ac080530640bf45fb45711b18d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/modpreneur/trinity-notifications/zipball/16c2d0b6b74f3bc81e64ea9668af7838e9fbd440",
-                "reference": "16c2d0b6b74f3bc81e64ea9668af7838e9fbd440",
+                "url": "https://api.github.com/repos/modpreneur/trinity-notifications/zipball/df158c2b14fc69ac080530640bf45fb45711b18d",
+                "reference": "df158c2b14fc69ac080530640bf45fb45711b18d",
                 "shasum": ""
             },
             "require": {
@@ -4628,14 +4628,17 @@
                 "nette/utils": "~2.3",
                 "php": ">=5.6",
                 "sensio/framework-extra-bundle": "~3.0",
-                "symfony/symfony": ">=2.8"
+                "symfony/symfony": ">=2.8",
+                "trinity/framework": "dev-master"
             },
             "require-dev": {
+                "braincrafted/testing-bundle": "@stable",
                 "dmishh/settings-bundle": "2.0.*@dev",
                 "friendsofsymfony/user-bundle": "dev-master",
                 "jms/serializer-bundle": "~1.1",
                 "phpunit/phpunit": "~5.0",
                 "sensio/generator-bundle": "~3.0",
+                "symfony/monolog-bundle": "~2.8",
                 "trinity/framework": "dev-master"
             },
             "type": "symfony-bundle",
@@ -4660,7 +4663,7 @@
                 }
             ],
             "description": "Trinity Notification bundle",
-            "time": "2015-12-10 11:38:34"
+            "time": "2015-12-10 21:03:07"
         },
         {
             "name": "twig/extensions",
@@ -5249,16 +5252,16 @@
         },
         {
             "name": "sensio/generator-bundle",
-            "version": "v3.0.1",
+            "version": "v3.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sensiolabs/SensioGeneratorBundle.git",
-                "reference": "ca4d3a13387111acff157112ed88360d84831430"
+                "reference": "9a7d4550844b665b61c54dc72bc236d4c9b2d30d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sensiolabs/SensioGeneratorBundle/zipball/ca4d3a13387111acff157112ed88360d84831430",
-                "reference": "ca4d3a13387111acff157112ed88360d84831430",
+                "url": "https://api.github.com/repos/sensiolabs/SensioGeneratorBundle/zipball/9a7d4550844b665b61c54dc72bc236d4c9b2d30d",
+                "reference": "9a7d4550844b665b61c54dc72bc236d4c9b2d30d",
                 "shasum": ""
             },
             "require": {
@@ -5297,7 +5300,7 @@
                 }
             ],
             "description": "This bundle generates code for you",
-            "time": "2015-12-08 18:08:03"
+            "time": "2015-12-18 17:36:42"
         }
     ],
     "aliases": [],
@@ -5306,6 +5309,7 @@
         "symfony/monolog-bundle": 20,
         "dmishh/settings-bundle": 20,
         "friendsofsymfony/user-bundle": 20,
+        "knplabs/knp-menu-bundle": 20,
         "trinity/framework": 20,
         "trinity/notification": 20,
         "trinity/admin": 20,

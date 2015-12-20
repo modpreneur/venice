@@ -10,14 +10,13 @@ namespace AdminBundle\Form\Product;
 
 
 use AppBundle\Entity\Product\FreeProduct;
-use AppBundle\Services\CMSProblemHelper;
 use Symfony\Component\Form\FormBuilderInterface;
 
 class FreeProductType extends ProductType
 {
-    function __construct(FreeProduct $product = null, CMSProblemHelper $CMSProblemHelper)
+    function __construct(FreeProduct $product = null)
     {
-        parent::__construct($product, $CMSProblemHelper);
+        parent::__construct($product);
 
         $this->product = $product;
     }
@@ -27,7 +26,7 @@ class FreeProductType extends ProductType
         parent::buildForm($builder, $options);
 
         $builder
-            ->add("Submit", "submit");
+            ->add("submit", "submit", ["label" => "Create"]);
     }
 
 }

@@ -72,7 +72,7 @@ class ProductController extends BaseAdminController
         }
 
         $form = $this->createForm(
-            $product->getFormType([$product, $this->getCMSProblemHelper()]),
+            $product->getFormType([$product]),
             $product,
             [
                 'action' => $this->generateUrl(
@@ -87,8 +87,9 @@ class ProductController extends BaseAdminController
         return $this->render(
             ':AdminBundle/Product:new.html.twig',
             [
-                'entity'     => $product,
-                'form'       => $form->createView()
+                'product'     => $product,
+                'form'        => $form->createView(),
+                'productType' => $productType
             ]
         );
     }
@@ -119,26 +120,11 @@ class ProductController extends BaseAdminController
 
         $em = $this->getEntityManager();
 
-        $productForm = $this->createForm($product->getFormType([$product, $this->getCMSProblemHelper()]), $product);
+        $productForm = $this->createForm($product->getFormType([$product]), $product);
         $productForm->handleRequest($request);
 
         if($productForm->isValid())
         {
-            $billingPlanId = $productForm->get("billingPlanId")->getData();
-
-            if($product instanceof StandardProduct)
-            {
-                $billingPlan = $this->get("app.services.connection_manager")->getBillingPlan($this->getUser(), $billingPlanId);
-
-                if(!$billingPlan)
-                {
-                    return new JsonResponse(["errors" => ["No billing plan found"]]);
-                }
-
-                $product->setBillingPlan($billingPlan);
-                $em->persist($billingPlan);
-            }
-
             $em->persist($product);
 
             try
@@ -150,7 +136,11 @@ class ProductController extends BaseAdminController
                 return new JsonResponse(['errors' => ['db' => $e->getMessage()]]);
             }
 
-            return new JsonResponse(["message" => "Product successfully created"]);
+            return new JsonResponse(
+                [
+                    "message" => "Product successfully created",
+                    "location" => $this->generateUrl("admin_product_index")
+                ], 302);
         }
         else
         {
@@ -172,7 +162,7 @@ class ProductController extends BaseAdminController
      */
     public function editAction(Request $request, Product $product)
     {
-        $productType = $product->getFormType([$product, $this->getCMSProblemHelper()]);
+        $productType = $product->getFormType([$product]);
         $productForm = $this->createForm(
             $productType,
             $product,
@@ -210,7 +200,7 @@ class ProductController extends BaseAdminController
      */
     public function updateAction(Request $request, Product $product)
     {
-        $productType = $product->getFormType([$product, $this->getCMSProblemHelper()]);
+        $productType = $product->getFormType([$product]);
         $productForm = $this->createForm($productType, $product);
         $em = $this->getEntityManager();
 
@@ -218,26 +208,6 @@ class ProductController extends BaseAdminController
 
         if($productForm->isValid())
         {
-            //if the updated product is StandardProduct edit it's billing plan
-            if($product instanceof StandardProduct)
-            {
-                $billingPlanId = $productForm->get("billingPlanId")->getData();
-                $newBillingPlan = $this->get("app.services.connection_manager")->getBillingPlan($this->getUser(), $billingPlanId);
-
-                if(!$newBillingPlan)
-                {
-                    return new JsonResponse(["errors" => ["No billing plan found"]]);
-                }
-
-                //remove odl billing plan and persist a new one
-                $oldBillingPlan = $product->getBillingPlan();
-                $em->remove($oldBillingPlan);
-                $product->setBillingPlan(null);
-                $em->flush();
-                $product->setBillingPlan($newBillingPlan);
-                $em->persist($newBillingPlan);
-            }
-
             $em->persist($product);
 
             try

@@ -5,6 +5,10 @@
     <script src="{{ asset('js/lib/abbreviations.js') }}"></script>
 {% endblock %}
 
+{% block stylesheets %}
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,300,100,500italic,700,900,400italic&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+{% endblock %}
+
 
 {% block trinity_admin_script_footer %}
 
@@ -36,7 +40,7 @@
             </script>
         {% else %}
             {#Compiled#}
-            <script src="{{ asset('js/necktie.bundle.min.js') }}"></script>
+            <script src="{{ asset('js/venice.bundle.min.js') }}"></script>
         {% endif %}
 
         {#@todo Fisa delete#}

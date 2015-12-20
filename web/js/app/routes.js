@@ -3,6 +3,13 @@
  */
 
 export default [
-
+    {
+        path: '/admin/product/new/free(/)',
+        action: 'Product.newFree'
+    },
+    {
+        path: '/admin/product/new/standard(/)',
+        action: 'Product.newStandard'
+    }
 ];
 

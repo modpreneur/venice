@@ -10,14 +10,14 @@ namespace AdminBundle\Form\Product;
 
 
 use AppBundle\Entity\Product\StandardProduct;
-use AppBundle\Services\CMSProblemHelper;
+use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\FormBuilderInterface;
 
 class StandardProductType extends ProductType
 {
-    function __construct(StandardProduct $product = null, CMSProblemHelper $CMSProblemHelper)
+    function __construct(StandardProduct $product = null)
     {
-        parent::__construct($product, $CMSProblemHelper);
+        parent::__construct($product);
 
         $this->product = $product;
     }
@@ -26,17 +26,26 @@ class StandardProductType extends ProductType
     {
         parent::buildForm($builder, $options);
 
-        $billingPlanId = null;
-
-        if($this->product && $this->product->getBillingPlan())
-        {
-            $billingPlan = $this->product->getBillingPlan();
-            $billingPlanId = $this->CMSProblemHelper->getBillingPlanId($billingPlan);
-        }
-
         $builder
-            ->add("billingPlanId", "integer", ["mapped" => false, "data" => $billingPlanId])
-            ->add("Submit", "submit")
+            //todo: how to work with billing plans?
+//            ->add(
+//                "billingPlan",
+//                "entity",
+//                [
+//                    "class" => "AppBundle\\Entity\\BillingPlan",
+//                    "choice_label" => "price",
+//                    "multiple" => "false",
+//                    "required" => "true",
+//                    "empty_data" => "no billing plan"
+//                ]
+//            )
+            ->add(
+                "submit",
+                "submit",
+                [
+                    "label" => "Create"
+                ]
+            )
         ;
     }
 
