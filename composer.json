@@ -22,7 +22,7 @@
         "friendsofsymfony/user-bundle": "dev-master",
         "knplabs/knp-menu-bundle": "dev-master",
         "trinity/framework": "dev-master",
-        "trinity/notification": "dev-master",
+        "trinity/notification": "dev-feature-client-notifications",
         "trinity/admin": "dev-master",
         "modpreneur/bowtie": "dev-master",
         "cocur/slugify": "~1.4",
@@ -54,7 +54,8 @@
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::prepareDeploymentTarget"
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::prepareDeploymentTarget",
+            "npm run update"
         ]
     },
     "config": {

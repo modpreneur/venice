@@ -10,10 +10,11 @@ parameters:
 trinity_notification:
     drivers: ["trinity.notification.driver.client_api"]
     entity_id_field: necktieId
-    necktie_notify_url: %necktie_notify_url%
-    necktie_oauth_url: %necktie_oauth_url%
-    necktie_client_id: %necktie_client_id%
-    necktie_client_secret: %necktie_client_secret%
+    master_notify_url: %necktie_notify_url%
+    master_oauth_url: %necktie_oauth_url%
+    master_client_id: %necktie_client_id%
+    master_client_secret: %necktie_client_secret%
+    create_new_entity: %create_new_entity_on_necktie_notification%
 
 fos_user:
     db_driver: orm
@@ -33,6 +34,10 @@ framework:
     #serializer:      { enable_annotations: true }
     templating:
         engines: ['twig']
+        form:
+            resources:
+                - 'TrinityAdminBundle:Form:bowtie_form_layout.html.twig'
+
         #assets_version: SomeVersionScheme
     default_locale:  "%locale%"
     trusted_hosts:   ~

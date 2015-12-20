@@ -57,7 +57,7 @@ class NotificationController extends Controller
     {
         $this->get("trinity.notification.services.notification_parser")
             ->parseNotification(
-                $request->request->all(),
+                json_decode($request->getContent(), true),
                 "AppBundle\\Entity\\User",
                 $request->getMethod(),
                 $this->getParameter("necktie_client_secret")
