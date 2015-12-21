@@ -4,6 +4,10 @@
     <i class="trinity trinity-page-list"></i>
 {% endblock %}
 
+{% block pageTitle %}
+    Blog articles
+{% endblock %}
+
 {% block pageAction %}
     <div class="navigation-box row margin-top-20">
         <a class="new-entry" id="newEntryIcon" href="{{ path('admin_blog_article_new') }}">
