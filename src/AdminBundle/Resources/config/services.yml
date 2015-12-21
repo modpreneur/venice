@@ -12,3 +12,6 @@ services:
         arguments: ["@request_stack"]
         tags:
             - { name: knp_menu.menu, alias: sidebar }
+
+    admin.form_factory:
+        class: AdminBundle\Services\FormFactory

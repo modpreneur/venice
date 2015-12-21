@@ -18,6 +18,8 @@ class BlogArticleType extends AdminBaseType
     {
         parent::buildForm($builder, $options);
 
+        $currentYear = (new \DateTime())->format("Y");
+
         $builder
             ->add(
                 "title",
@@ -38,6 +40,7 @@ class BlogArticleType extends AdminBaseType
                 "datetime",
                 [
                     "required" => true,
+                    "years" => [$currentYear, $currentYear+1, $currentYear+2, $currentYear+3]
                 ]
             )
 
@@ -48,7 +51,6 @@ class BlogArticleType extends AdminBaseType
                     "required" => true
                 ]
             )
-            ->add("Submit", "submit");
         ;
 
     }

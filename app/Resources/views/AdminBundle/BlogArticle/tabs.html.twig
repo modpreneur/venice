@@ -1,0 +1,34 @@
+{% extends ":AdminBundle:adminBase.html.twig" %}
+
+{% block pageTitle %}
+    Blog article {{ article.title }}
+{% endblock %}
+
+{% block pageIcon %}
+    {#<i class="trinity trinity-articles"></i>#}
+{% endblock %}
+
+
+{% block pageBody -%}
+
+    <div class="page-actions">
+        <div class="item">
+            <a href="{{ path('admin_blog_article_new') }}"><i class="tiecons tiecons-plus-radius-large"></i> Create new blog article</a>
+        </div>
+    </div>
+
+    <div class="tabs-wrapper margin-top-20">
+
+        <input type="radio" name="tab" id="tab1" class="tab-head" checked />
+        <label for="tab1">Edit</label>
+
+        <input type="radio" name="tab" id="tab2" class="tab-head" />
+        <label for="tab2">Danger zone</label>
+
+        <div class="tab-body-wrapper">
+            <div id="tab-body-1" class="tab-body" data-source="{{ path('admin_blog_article_edit', {'id': article.id}) }}"></div>
+            <div id="tab-body-2" class="tab-body" data-source="{{ path("admin_blog_article_delete_tab", {'id': article.id}) }}"></div>
+        </div>
+    </div>
+
+{% endblock %}

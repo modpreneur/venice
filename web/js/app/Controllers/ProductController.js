@@ -1,5 +1,5 @@
 /**
- * Created by Jakub on 10.12.15.
+ * Created by Jakub Fajkus on 10.12.15.
  */
 
 
@@ -14,7 +14,6 @@ export default class ProductController extends Controller {
      * @param $scope
      */
     newFreeAction($scope) {
-        console.log("hi");
         //Attach TrinityForm
         $scope.form = new TrinityForm(q('form[name="freeproducttype"]'), TrinityForm.formType.NEW);
     }

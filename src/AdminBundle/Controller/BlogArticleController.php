@@ -11,11 +11,13 @@ namespace AdminBundle\Controller;
 
 use AdminBundle\Form\BlogArticleType;
 use AppBundle\Entity\BlogArticle;
+use AppBundle\Entity\Product\Product;
 use Doctrine\DBAL\DBALException;
 use FOS\RestBundle\Controller\Annotations\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @Route("/admin/blogArticle")
@@ -46,6 +48,27 @@ class BlogArticleController extends BaseAdminController
 
 
     /**
+     * Render page for blog article tabs
+     *
+     * @Route("/tabs/{id}", name="admin_blog_article_tabs")
+     *
+     * @param BlogArticle $article
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function tabsAction(BlogArticle $article)
+    {
+        if (!$article) {
+            throw $this->createNotFoundException('Unable to find BlogArticle entity.');
+        }
+
+        return $this->render(':AdminBundle/BlogArticle:tabs.html.twig', [
+            'article' => $article
+        ]);
+    }
+
+
+    /**
      * Display a form to create a new BlogArticle entity.
      *
      * @Route("/new", name="admin_blog_article_new")
@@ -57,21 +80,11 @@ class BlogArticleController extends BaseAdminController
      */
     public function newAction(Request $request)
     {
-        $blogArticle = new BlogArticle();
-        $form = $this->createForm(
-            new BlogArticleType(),
-            $blogArticle,
-            [
-                'action' => $this->generateUrl(
-                    'admin_blog_article_create'
-                ),
-            ]
-        );
+        $form = $this->get("admin.form_factory")->createCreateForm($this, new BlogArticle(), new BlogArticleType(), "admin_blog_article");
 
         return $this->render(
             ':AdminBundle/BlogArticle:new.html.twig',
             [
-                'entity'     => $blogArticle,
                 'form'       => $form->createView()
             ]
         );
@@ -94,19 +107,29 @@ class BlogArticleController extends BaseAdminController
         $em = $this->getEntityManager();
         $blogArticle = new BlogArticle();
 
-        $blogArticleForm = $this->createForm(new BlogArticleType(), $blogArticle);
-        $blogArticleForm->handleRequest($request);
+        $form = $this->get("admin.form_factory")->createCreateForm($this, $blogArticle, new BlogArticleType(), "admin_blog_article");
+        $form->handleRequest($request);
 
-        if($blogArticleForm->isValid())
+        if($form->isValid())
         {
             $em->persist($blogArticle);
             $em->flush();
 
-            return new JsonResponse(["message" => "BlogArticle successfully created"]);
+            return new JsonResponse(
+                [
+                    "message" => "BlogArticle successfully created",
+                    "location" => $this->generateUrl(
+                        "admin_blog_article_tabs",
+                        [
+                            "id" => $blogArticle->getId()
+                        ]
+                    )
+                ]
+            , 302);
         }
         else
         {
-            return $this->returnFormErrorsJsonResponse($blogArticleForm);
+            return $this->returnFormErrorsJsonResponse($form);
         }
     }
 
@@ -124,24 +147,14 @@ class BlogArticleController extends BaseAdminController
      */
     public function editAction(Request $request, BlogArticle $blogArticle)
     {
-        $blogArticleForm = $this->createForm(
-            new BlogArticleType(),
-            $blogArticle,
-            [
-                "action" => $this->generateUrl(
-                    "admin_blog_article_update",
-                    [
-                        "id" => $blogArticle->getId()
-                    ]
-                )
-            ]
-        );
+        $factory = $this->get("admin.form_factory");
+        $form = $factory->createEditForm($this, $blogArticle, new BlogArticleType(), 'admin_blog_article', ["id"]);
 
         return $this->render(
             "AdminBundle/BlogArticle/edit.html.twig",
             [
                 "entity" => $blogArticle,
-                "form" => $blogArticleForm->createView()
+                "form" => $form->createView()
             ]
         );
     }
@@ -151,7 +164,7 @@ class BlogArticleController extends BaseAdminController
      * Process a request to update a BlogArticle entity.
      *
      * @Route("/{id}/update", requirements={"id": "\d+"}, name="admin_blog_article_update")
-     * @Method("POST")
+     * @Method("PUT")
      *
      * @param Request $request
      * @param BlogArticle $blogArticle
@@ -160,7 +173,8 @@ class BlogArticleController extends BaseAdminController
      */
     public function updateAction(Request $request, BlogArticle $blogArticle)
     {
-        $blogArticleForm = $this->createForm(new BlogArticleType(), $blogArticle);
+        $formFactory = $this->get("admin.form_factory");
+        $blogArticleForm = $formFactory->createEditForm($this, $blogArticle, new BlogArticleType(), "admin_blog_article");
         $em = $this->getEntityManager();
 
         $blogArticleForm->handleRequest($request);
@@ -175,7 +189,7 @@ class BlogArticleController extends BaseAdminController
             }
             catch (DBALException $e)
             {
-                return new JsonResponse(["errors" => ["db" => $e->getMessage()]]);
+                return new JsonResponse(["errors" => ["db" => $e->getMessage()], "message" => "Could not update"]);
             }
 
             return new JsonResponse(["message" => "BlogArticle successfully updated"]);
@@ -186,7 +200,26 @@ class BlogArticleController extends BaseAdminController
         }
     }
 
+    /**
+     * @Route("/tab/blogArticle/{id}/delete", name="admin_blog_article_delete_tab")
+     *
+     * @param BlogArticle $blogArticle
+     *
+     * @return Response
+     */
+    public function deleteTabAction(BlogArticle $blogArticle)
+    {
+        $formFactory = $this->get("admin.form_factory");
+        $form = $formFactory->createDeleteForm($this, "admin_blog_article", $blogArticle->getId());
 
+        return $this
+            ->render(
+                ":AdminBundle/BlogArticle:tabDelete.html.twig",
+                [
+                    "form" => $form->createView()
+                ]
+            );
+    }
 
     /**
      * @Route("/{id}/delete", name="admin_blog_article_delete")
@@ -214,6 +247,11 @@ class BlogArticleController extends BaseAdminController
             );
         }
 
-        return new JsonResponse(["message" => "BlogArticle successfully deleted."]);
+        return new JsonResponse(
+            [
+                "message" => "BlogArticle successfully deleted.",
+                "location" => $this->generateUrl("admin_blog_article_index")
+            ]
+        , 302);
     }
 }
