@@ -28,6 +28,8 @@ use Symfony\Component\HttpFoundation\Response;
 class BlogArticleController extends BaseAdminController
 {
     /**
+     * Display list of blog articles.
+     *
      * @Route("", name="admin_blog_article_index")
      * @Route("/")
      * @param Request $request
@@ -48,7 +50,7 @@ class BlogArticleController extends BaseAdminController
 
 
     /**
-     * Render page for blog article tabs
+     * Render page for blog article tabs.
      *
      * @Route("/tabs/{id}", name="admin_blog_article_tabs")
      *
@@ -80,7 +82,9 @@ class BlogArticleController extends BaseAdminController
      */
     public function newAction(Request $request)
     {
-        $form = $this->get("admin.form_factory")->createCreateForm($this, new BlogArticle(), new BlogArticleType(), "admin_blog_article");
+        $form = $this
+            ->get("admin.form_factory")
+            ->createCreateForm($this, new BlogArticle(), new BlogArticleType(), "admin_blog_article");
 
         return $this->render(
             ':AdminBundle/BlogArticle:new.html.twig',
@@ -107,7 +111,10 @@ class BlogArticleController extends BaseAdminController
         $em = $this->getEntityManager();
         $blogArticle = new BlogArticle();
 
-        $form = $this->get("admin.form_factory")->createCreateForm($this, $blogArticle, new BlogArticleType(), "admin_blog_article");
+        $form = $this
+            ->get("admin.form_factory")
+            ->createCreateForm($this, $blogArticle, new BlogArticleType(), "admin_blog_article");
+
         $form->handleRequest($request);
 
         if($form->isValid())
@@ -117,7 +124,7 @@ class BlogArticleController extends BaseAdminController
 
             return new JsonResponse(
                 [
-                    "message" => "BlogArticle successfully created",
+                    "message" => "Blog article successfully created",
                     "location" => $this->generateUrl(
                         "admin_blog_article_tabs",
                         [
@@ -147,8 +154,8 @@ class BlogArticleController extends BaseAdminController
      */
     public function editAction(Request $request, BlogArticle $blogArticle)
     {
-        $factory = $this->get("admin.form_factory");
-        $form = $factory->createEditForm($this, $blogArticle, new BlogArticleType(), 'admin_blog_article', ["id"]);
+        $form = $this->get("admin.form_factory")
+            ->createEditForm($this, $blogArticle, new BlogArticleType(), 'admin_blog_article', ["id"]);
 
         return $this->render(
             "AdminBundle/BlogArticle/edit.html.twig",
@@ -173,8 +180,9 @@ class BlogArticleController extends BaseAdminController
      */
     public function updateAction(Request $request, BlogArticle $blogArticle)
     {
-        $formFactory = $this->get("admin.form_factory");
-        $blogArticleForm = $formFactory->createEditForm($this, $blogArticle, new BlogArticleType(), "admin_blog_article");
+        $blogArticleForm = $this->get("admin.form_factory")
+            ->createEditForm($this, $blogArticle, new BlogArticleType(), "admin_blog_article");
+
         $em = $this->getEntityManager();
 
         $blogArticleForm->handleRequest($request);
@@ -189,10 +197,21 @@ class BlogArticleController extends BaseAdminController
             }
             catch (DBALException $e)
             {
-                return new JsonResponse(["errors" => ["db" => $e->getMessage()], "message" => "Could not update"]);
+                return new JsonResponse(
+                    [
+                        "errors" => [
+                            "db" => $e->getMessage()
+                        ],
+                        "message" => "Could not update"
+                    ]
+                );
             }
 
-            return new JsonResponse(["message" => "BlogArticle successfully updated"]);
+            return new JsonResponse(
+                [
+                    "message" => "Blog article successfully updated"
+                ]
+            );
         }
         else
         {
@@ -249,7 +268,7 @@ class BlogArticleController extends BaseAdminController
 
         return new JsonResponse(
             [
-                "message" => "BlogArticle successfully deleted.",
+                "message" => "Blog article successfully deleted.",
                 "location" => $this->generateUrl("admin_blog_article_index")
             ]
         , 302);
