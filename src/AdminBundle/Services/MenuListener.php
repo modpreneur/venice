@@ -51,7 +51,7 @@ class MenuListener
             ->setExtra('orderNumber', 1);
 
         $menu
-            ->addChild('Contents', array('route' => 'admin_content_index'))
+            ->addChild('Contents', array('route' => 'admin_content_tabs'))
             ->setAttribute('icon', 'tiecons tiecons-bookmark-3')
             ->setExtra('orderNumber', 2);
 

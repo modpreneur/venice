@@ -18,8 +18,7 @@ class PdfContentType extends ContentType
         parent::buildForm($builder, $options);
 
         $builder
-            ->add("link", "text")
-            ->add("Submit", "submit");
+            ->add("link", "text");
     }
 
 }

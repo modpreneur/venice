@@ -19,8 +19,7 @@ class Mp3ContentType extends ContentType
 
         $builder
             ->add("link", "text")
-            ->add("duration", "number")
-            ->add("Submit", "submit");
+            ->add("duration", "number");
     }
 
 }

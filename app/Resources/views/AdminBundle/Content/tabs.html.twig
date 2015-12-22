@@ -1,0 +1,27 @@
+{% extends ":AdminBundle:adminBase.html.twig" %}
+
+{% block pageTitle %}
+    Contents
+{% endblock %}
+
+{% block pageIcon %}
+    <i class="trinity trinity-page-list"></i>
+{% endblock %}
+
+{% block pageBody -%}
+
+    <div class="tabs-wrapper margin-top-20">
+
+        <input type="radio" name="tab" id="tab1" class="tab-head" checked />
+        <label for="tab1">Contents</label>
+
+        <input type="radio" name="tab" id="tab2" class="tab-head" />
+        <label for="tab2">Associations</label>
+
+        <div class="tab-body-wrapper">
+            <div id="tab-body-1" class="tab-body" data-source="{{ path('admin_content_index') }}"></div>
+            <div id="tab-body-2" class="tab-body" data-source="{{ path("admin_content_product_index") }}"></div>
+        </div>
+    </div>
+
+{% endblock %}

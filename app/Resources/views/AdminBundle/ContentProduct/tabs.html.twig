@@ -1,0 +1,27 @@
+{% extends ":AdminBundle:adminBase.html.twig" %}
+
+{% block pageTitle %}
+    Associations
+{% endblock %}
+
+{% block pageIcon %}
+    <i class="trinity trinity-folder"></i>
+{% endblock %}
+
+{% block pageBody -%}
+
+    <div class="tabs-wrapper margin-top-20">
+
+        <input type="radio" name="tab" id="tab1" class="tab-head" checked />
+        <label for="tab1">Edit</label>
+
+        <input type="radio" name="tab" id="tab2" class="tab-head" />
+        <label for="tab2">Danger zone</label>
+
+        <div class="tab-body-wrapper">
+            <div id="tab-body-1" class="tab-body" data-source="{{ path('admin_content_product_edit', {'id': contentProduct.id}) }}"></div>
+            <div id="tab-body-2" class="tab-body" data-source="{{ path("admin_content_product_delete_tab", {'id': contentProduct.id})}}"></div>
+        </div>
+    </div>
+
+{% endblock %}

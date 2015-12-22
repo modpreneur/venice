@@ -1,20 +1,24 @@
-{% extends(':AdminBundle:adminBase.html.twig') %}
+{#{% block pageIcon %}#}
+    {#<i class="trinity trinity-info"></i>#}
+{#{% endblock %}#}
+
+{#{% block pageTitle %}#}
+    {#Contents#}
+{#{% endblock %}#}
+
 
 {% block pageBody %}
-    <a href="{{ path('admin_content_product_index') }}">Associations</a>
-    <ul>
-        <li><a href="{{ path("admin_content_new", {"contentType":"pdf"}) }}">New pdf</a></li>
-        <li><a href="{{ path("admin_content_new", {"contentType":"text"}) }}">New text</a></li>
-        <li><a href="{{ path("admin_content_new", {"contentType":"video"}) }}">New video</a></li>
-        <li><a href="{{ path("admin_content_new", {"contentType":"mp3"}) }}">New mp3</a></li>
-        <li><a href="{{ path("admin_content_new", {"contentType":"iframe"}) }}">New iframe</a></li>
-        <li><a href="{{ path("admin_content_new", {"contentType":"group"}) }}">New group</a></li>
-    </ul>
+    <a href="{{ path("admin_content_new", {"contentType":"pdf"}) }}" class="button">New pdf</a>
+    <a href="{{ path("admin_content_new", {"contentType":"text"}) }}" class="button">New text</a>
+    <a href="{{ path("admin_content_new", {"contentType":"video"}) }}" class="button">New video</a>
+    <a href="{{ path("admin_content_new", {"contentType":"mp3"}) }}" class="button">New mp3</a>
+    <a href="{{ path("admin_content_new", {"contentType":"iframe"}) }}" class="button">New iframe</a>
+    <a href="{{ path("admin_content_new", {"contentType":"group"}) }}" class="button">New group</a>
 
     <ul>
         {% for content in contents %}
             <li>
-                {{ content.type }} <a href="{{ path('admin_content_edit', {'id': content.id})}}"> {{ content.name}}</a>
+                {{ content.type }} <a href="{{ path('admin_content_tab', {'id': content.id})}}"> {{ content.name}}</a>
             </li>
         {% endfor %}
     </ul>

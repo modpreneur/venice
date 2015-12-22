@@ -1,6 +1,9 @@
-{% extends(':AdminBundle:adminBase.html.twig') %}
+<div class="box box-new-form">
+    <div class="row">
+        {{ form_start(form, {'attr': {'class': 'edit-form'}} ) }}
+        {{ form_errors(form) }}
 
-{% block pageBody %}
-    <a href="{{ path('admin_content_delete', {'id': entity.id}) }}">Delete</a>
-    {{ form(form) }}
-{% endblock %}
+        {{ form_row(form.submit, {'attr': {'class': 'button edit'}} ) }}
+        {{ form_end(form) }}
+    </div>
+</div>

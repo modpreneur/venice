@@ -1,14 +1,10 @@
-{% extends(":AdminBundle:adminBase.html.twig") %}
-
-{% block pageBody %}
-    <a href="{{ path('admin_content_product_new') }}">New association</a>
-    <ul>
-        {% for contentProduct in contentProducts %}
-            <li>
-                <a href="{{ path('admin_content_product_edit', {'id': contentProduct.id})}}">
-                    Content: {{ contentProduct.content.name}} associated with product: {{ contentProduct.product.name }}
-                </a>
-            </li>
-        {% endfor %}
-    </ul>
-{% endblock %}
+<a href="{{ path('admin_content_product_new') }}" class="button">New association</a>
+<ul>
+    {% for contentProduct in contentProducts %}
+        <li>
+            <a href="{{ path('admin_content_product_tabs', {'id': contentProduct.id})}}">
+                Content: {{ contentProduct.content.name}} associated with product: {{ contentProduct.product.name }}
+            </a>
+        </li>
+    {% endfor %}
+</ul>

@@ -18,6 +18,7 @@ use ReflectionException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
@@ -48,6 +49,31 @@ class ContentController extends BaseAdminController
         );
     }
 
+    /**
+     * @Route("/tabs", name="admin_content_tabs")
+     *
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function tabsAction(Request $request)
+    {
+        return $this->render(":AdminBundle/Content:tabs.html.twig");
+    }
+
+
+    /**
+     * @Route("/tab/{id}", name="admin_content_tab")
+     *
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function tabAction(Request $request, Content $content)
+    {
+        return $this->render(":AdminBundle/Content:tab.html.twig", ["content" => $content]);
+    }
+
 
     /**
      * Display a form to create a new Content entity.
@@ -71,18 +97,8 @@ class ContentController extends BaseAdminController
             throw new NotFoundHttpException("Content type: " . $contentType . " not found.");
         }
 
-        $form = $this->createForm(
-            $content->getFormType(),
-            $content,
-            [
-                'action' => $this->generateUrl(
-                    'admin_content_create',
-                    [
-                        "contentType" => $contentType
-                    ]
-                ),
-            ]
-        );
+        $form = $this->get("admin.form_factory")
+            ->createCreateForm($this, $content, $content->getFormType(), "admin_content", ["contentType" => $contentType]);
 
         return $this->render(
             ':AdminBundle/Content:new.html.twig',
@@ -120,19 +136,27 @@ class ContentController extends BaseAdminController
 
         $em = $this->getEntityManager();
 
-        $contentForm = $this->createForm($content->getFormType(), $content);
-        $contentForm->handleRequest($request);
+        $form = $this->get("admin.form_factory")
+            ->createCreateForm($this, $content, $content->getFormType(), "admin_content", ["contentType" => $contentType]);
 
-        if($contentForm->isValid())
+        $form->handleRequest($request);
+
+        if($form->isValid())
         {
             $em->persist($content);
             $em->flush();
 
-            return new JsonResponse(["message" => "Content successfully created"]);
+            return new JsonResponse(
+                [
+                    "message" => "Content successfully created",
+                    "location" => $this->generateUrl("admin_content_tab", ["id" => $content->getId()])
+                ]
+            , 302);
+
         }
         else
         {
-            return $this->returnFormErrorsJsonResponse($contentForm);
+            return $this->returnFormErrorsJsonResponse($form);
         }
     }
 
@@ -150,19 +174,10 @@ class ContentController extends BaseAdminController
      */
     public function editAction(Request $request, Content $content)
     {
-        $contentType = $content->getFormType(($content instanceof GroupContent)? [$content] : null);
-        $contentForm = $this->createForm(
-            $contentType,
-            $content,
-            [
-                "action" => $this->generateUrl(
-                    "admin_content_update",
-                    [
-                        "id" => $content->getId()
-                    ]
-                )
-            ]
-        );
+        $contentType = $content->getFormType(($content instanceof GroupContent)? [$content] : []);
+
+        $form = $this->get("admin.form_factory")
+            ->createEditForm($this, $content, $content->getFormType(), "admin_content", ["contentType" => $contentType]);
 
         return $this->render(
             ($content instanceof GroupContent)?
@@ -171,7 +186,7 @@ class ContentController extends BaseAdminController
             ,
             [
                 "entity" => $content,
-                "form" => $contentForm->createView()
+                "form" => $form->createView()
             ]
         );
     }
@@ -181,7 +196,7 @@ class ContentController extends BaseAdminController
      * Process a request to update a Content entity.
      *
      * @Route("/{id}/update", requirements={"id": "\d+"}, name="admin_content_update")
-     * @Method("POST")
+     * @Method("PUT")
      *
      * @param Request $request
      * @param Content $content
@@ -209,13 +224,14 @@ class ContentController extends BaseAdminController
      */
     protected function updateNonGroupContentAction(Request $request, Content $content)
     {
-        $contentType = $content->getFormType();
-        $contentForm = $this->createForm($contentType, $content);
         $em = $this->getEntityManager();
 
-        $contentForm->handleRequest($request);
+        $form = $this->get("admin.form_factory")
+            ->createEditForm($this, $content, $content->getFormType(), "admin_content", ["contentType" => $content->getType()]);
 
-        if($contentForm->isValid())
+        $form->handleRequest($request);
+
+        if($form->isValid())
         {
             $em->persist($content);
 
@@ -228,11 +244,16 @@ class ContentController extends BaseAdminController
                 return new JsonResponse(["errors" => ["db" => $e->getMessage()]]);
             }
 
-            return new JsonResponse(["message" => "Content successfully updated"]);
+            return new JsonResponse(
+                [
+                    "message" => "Content successfully updated",
+                    "location" => $this->generateUrl("admin_content_tabs")
+                ]
+            , 302);
         }
         else
         {
-            return $this->returnFormErrorsJsonResponse($contentForm);
+            return $this->returnFormErrorsJsonResponse($form);
         }
     }
 
@@ -283,6 +304,29 @@ class ContentController extends BaseAdminController
 
 
     /**
+     * @Route("/tab/{id}/delete", name="admin_content_delete_tab")
+     *
+     * @param Content $content
+     *
+     * @return Response
+     *
+     */
+    public function deleteTabAction(Content $content)
+    {
+        $form = $this->get("admin.form_factory")
+            ->createDeleteForm($this, "admin_content", $content->getId());
+
+        return $this
+            ->render(
+                ":AdminBundle/Content:tabDelete.html.twig",
+                [
+                    "form" => $form->createView()
+                ]
+            );
+    }
+
+
+    /**
      * @Route("/{id}/delete", name="admin_content_delete")
      *
      * @param Request $request
@@ -308,6 +352,11 @@ class ContentController extends BaseAdminController
             );
         }
 
-        return new JsonResponse(["message" => "Content successfully deleted."]);
+        return new JsonResponse(
+            [
+                "message" => "Content successfully deleted.",
+                "location" => $this->generateUrl("admin_content_tabs")
+            ]
+        , 302);
     }
 }

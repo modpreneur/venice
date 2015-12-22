@@ -42,8 +42,7 @@ class VideoContentType extends ContentType
             ->add("videoHd", "text", [
                     "required" => false
                 ]
-            )
-            ->add("Submit", "submit");
+            );
     }
 
 }

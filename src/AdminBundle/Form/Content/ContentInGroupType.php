@@ -71,8 +71,7 @@ class ContentInGroupType extends AdminBaseType
                 [
                     "empty_data" => 0,
                 ]
-            )
-        ;
+            );
 
     }
 

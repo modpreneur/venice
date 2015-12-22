@@ -18,8 +18,7 @@ class IframeContentType extends ContentType
         parent::buildForm($builder, $options);
 
         $builder
-            ->add("html", "textarea")
-            ->add("Submit", "submit");
+            ->add("html", "textarea");
     }
 
 }

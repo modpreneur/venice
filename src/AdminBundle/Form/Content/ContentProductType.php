@@ -52,12 +52,7 @@ class ContentProductType extends AdminBaseType
                     "required" => true,
                     "data" => 0
                 ]
-            )
-            ->add(
-                "Submit",
-                "submit"
-            )
-        ;
+            );
 
     }
 

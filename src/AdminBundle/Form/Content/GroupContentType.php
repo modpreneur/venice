@@ -38,10 +38,7 @@ class GroupContentType extends ContentType
 
                 ]
 
-            )
-            ->add("Submit", "submit");
-        ;
-
+            );
     }
 
     public function configureOptions(OptionsResolver $resolver)

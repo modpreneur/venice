@@ -18,9 +18,7 @@ class TextContentType extends ContentType
         parent::buildForm($builder, $options);
 
         $builder
-            ->add("text", "text")
-            ->add("Submit", "submit")
-        ;
+            ->add("text", "text");
     }
 
 }
