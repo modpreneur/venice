@@ -1,12 +1,3 @@
-{#{% block pageIcon %}#}
-    {#<i class="trinity trinity-info"></i>#}
-{#{% endblock %}#}
-
-{#{% block pageTitle %}#}
-    {#Contents#}
-{#{% endblock %}#}
-
-
 {% block pageBody %}
     <a href="{{ path("admin_content_new", {"contentType":"pdf"}) }}" class="button">New pdf</a>
     <a href="{{ path("admin_content_new", {"contentType":"text"}) }}" class="button">New text</a>
