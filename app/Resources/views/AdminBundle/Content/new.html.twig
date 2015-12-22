@@ -3,10 +3,15 @@
 {% block pageBody %}
     <div class="box box-new-form">
         <div class="row">
-            {{ form_start(form, {'attr': {'class': 'edit-form'}} ) }}
+            {{ form_start(form, {'attr': {'class': 'new-form'}} ) }}
             {{ form_errors(form) }}
 
-            {{ form_row(form.submit, {'attr': {'class': 'button edit'}} ) }}
+            {# Render all form rows except the submit input #}
+            {% for key, item in form.children if key != "submit"%}
+                {{ form_row(form[key]) }}
+            {% endfor %}
+
+            {{ form_row(form.submit, {'attr': {'class': 'button new'}} ) }}
             {{ form_end(form) }}
         </div>
     </div>
