@@ -1,11 +1,32 @@
 {% extends(':AdminBundle:adminBase.html.twig') %}
 
+{% block pageTitle %}
+    Products
+{% endblock %}
+
+{% block pageIcon %}
+    <i class="trinity trinity-products"></i>
+{% endblock %}
+
+{% block pageAction %}
+    {#todo: button to create 2 product types?#}
+    <div class="navigation-box row margin-top-20">
+        <a class="new-entry" id="newEntryIcon" href="{{ path('admin_product_new', {'productType': 'standard'}) }}">
+            <i class="trinity trinity-plus"></i>
+            <span class="hover-text">Create a new product</span>
+        </a>
+    </div>
+{% endblock %}
+
+
 {% block pageBody %}
-    <ul>
-        {% for product in products %}
-            <li>
-                <a href="{{ path('admin_product_edit', {'id': product.id})}}"> {{ product.name }}</a>
-            </li>
-        {% endfor %}
-    </ul>
+    <div class="wrapper-grid">
+        <ul>
+            {% for product in products %}
+                <li>
+                    <h4><a href="{{ path('admin_product_edit', {'id': product.id})}}"> {{ product.name }}</a></h4>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
 {% endblock %}

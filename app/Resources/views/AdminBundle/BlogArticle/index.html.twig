@@ -18,11 +18,13 @@
 {% endblock %}
 
 {% block pageBody %}
-    <ul>
-        {% for blogArticle in blogArticles %}
-            <li>
-                 <a href="{{ path('admin_blog_article_tabs', {'id': blogArticle.id})}}">{{ blogArticle.title }}</a>
-            </li>
-        {% endfor %}
-    </ul>
+    <div class="wrapper-grid">
+        <ul>
+            {% for blogArticle in blogArticles %}
+                <li>
+                    <h4><a href="{{ path('admin_blog_article_tabs', {'id': blogArticle.id}) }}">{{ blogArticle.title }}</a></h4>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
 {% endblock %}

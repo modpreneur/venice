@@ -241,6 +241,12 @@ class ContentController extends BaseAdminController
         }
     }
 
+    /**
+     * @param Request $request
+     * @param GroupContent $content
+     *
+     * @return JsonResponse
+     */
     protected function updateGroupContentAction(Request $request, GroupContent $content)
     {
         $contentType = $content->getFormType();
