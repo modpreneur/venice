@@ -27,6 +27,17 @@ export default class ContetntController extends Controller {
     tabAction($scope) {
         //Tell trinity there is tab to be loaded
         $scope.trinityTab = new TrinityTab();
+
+        // Listen changes on the div with id "content-edit"
+        $scope.trinityTab.listen('content-edit', function (e) {
+            let $scope = this.getScope();
+
+            // Collection
+            $scope.collection = _.map(qAll('[data-prototype]'), function (node) {
+                return new Collection(node);
+            });
+        }, false, this);
+
     }
 
     /**

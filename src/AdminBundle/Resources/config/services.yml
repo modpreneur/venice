@@ -15,3 +15,8 @@ services:
 
     admin.form_factory:
         class: AdminBundle\Services\FormFactory
+
+    admin.form.custom_collection:
+          class: AdminBundle\Form\Collection\CollectionType
+          tags:
+            - { name: form.type, alias: collection }

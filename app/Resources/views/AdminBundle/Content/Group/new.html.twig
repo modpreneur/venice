@@ -1,15 +1,11 @@
 {% extends(":AdminBundle:adminBase.html.twig") %}
 
 {% block pageBody %}
-    {{ form_start(form) }}
-        {{ form_row(form.name) }}
+    {{ form_start(form, {'attr': {'class': 'new-form'}} ) }}
+    {{ form_row(form.name) }}
 
-        <h2>Contents:</h2>
-        <ul class="items" data-prototype="{{ form_widget(form.items.vars.prototype)|e }}">
-            {% for item in form.items %}
-                <li>{{ form_row(item)}}</li>
-            {% endfor %}
-        </ul>
+    <h2>Contents:</h2>
+    {{ form_row(form.items) }}
 
     {{ form_end(form) }}
 {% endblock %}

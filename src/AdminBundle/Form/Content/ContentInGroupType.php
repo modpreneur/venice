@@ -29,23 +29,31 @@ class ContentInGroupType extends AdminBaseType
     {
         parent::buildForm($builder, $options);
 
+        $groupId = $this->groupContent->getId();
+
+        // The contentGroup entity contains data
+        if ($groupId) {
+            $queryBuilderFunction = function (EntityRepository $er) use ($groupId) {
+                return $er
+                    ->createQueryBuilder('c')
+                    ->andWhere('c.id != :id')
+                    ->setParameter("id", $groupId);
+            };
+        } else {
+            $queryBuilderFunction = function (EntityRepository $er) {
+                return $er->createQueryBuilder("c");
+            };
+        }
+
         $builder
             ->add(
                 "content",
                 "entity",
                 [
                     "class" => "AppBundle\\Entity\\Content\\Content",
-                    'query_builder' => function (EntityRepository $er)
-                    {
-                        return $er
-                            ->createQueryBuilder('c')
-                            ->andWhere('c.id != :id')
-                            ->setParameter("id", $this->groupContent->getId());
-                    },
+                    'query_builder' => $queryBuilderFunction,
                     "choice_label" => "name",
                     "label" => "Content"
-
-
                 ]
             )
             ->add(

@@ -10,6 +10,7 @@ namespace AdminBundle\Controller;
 
 
 use AppBundle\Entity\Content\Content;
+use AppBundle\Entity\Content\ContentInGroup;
 use AppBundle\Entity\Content\GroupContent;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\DBAL\DBALException;
@@ -133,7 +134,7 @@ class ContentController extends BaseAdminController
         $em = $this->getEntityManager();
 
         $form = $this->get("admin.form_factory")
-            ->createCreateForm($this, $content, $content->getFormType(), "admin_content", ["contentType" => $contentType]);
+            ->createCreateForm($this, $content, $content->getFormType([$content]), "admin_content", ["contentType" => $contentType]);
 
         $form->handleRequest($request);
 
@@ -167,16 +168,11 @@ class ContentController extends BaseAdminController
      */
     public function editAction(Request $request, Content $content)
     {
-        $contentType = $content->getFormType(($content instanceof GroupContent) ? [$content] : []);
-
         $form = $this->get("admin.form_factory")
-            ->createEditForm($this, $content, $content->getFormType([$content]), "admin_content", ["contentType" => $contentType]);
+            ->createEditForm($this, $content, $content->getFormType([$content]), "admin_content");
 
         return $this->render(
-            ($content instanceof GroupContent) ?
-                ":AdminBundle/Content/Group:edit.html.twig"
-                : ":AdminBundle/Content/:edit.html.twig"
-            ,
+            ":AdminBundle/Content:edit.html.twig",
             [
                 "entity" => $content,
                 "form" => $form->createView()
@@ -249,8 +245,8 @@ class ContentController extends BaseAdminController
      */
     protected function updateGroupContentAction(Request $request, GroupContent $content)
     {
-        $contentType = $content->getFormType();
-        $contentForm = $this->createForm($contentType, $content);
+        $contentForm = $this->get("admin.form_factory")
+            ->createEditForm($this, $content, $content->getFormType([$content]), "admin_content");
         $em = $this->getEntityManager();
 
         //Copy original items
@@ -277,7 +273,13 @@ class ContentController extends BaseAdminController
                 return new JsonResponse(["errors" => ["db" => $e->getMessage()]]);
             }
 
-            return new JsonResponse(["message" => "Content successfully updated"]);
+            return new JsonResponse(
+                [
+                    "message" => "Content successfully updated",
+                    "location" => $this->generateUrl("admin_content_tabs")
+                ],
+                302
+            );
         } else {
             return $this->returnFormErrorsJsonResponse($contentForm);
         }
@@ -317,15 +319,26 @@ class ContentController extends BaseAdminController
      */
     public function deleteAction(Request $request, Content $content)
     {
+        $em = $this->getEntityManager();
+
         try {
-            $em = $this->getEntityManager();
+            // First, remove all associations of the group
+            if ($content instanceof GroupContent) {
+                /** @var ContentInGroup $item */
+                foreach ($content->getItems() as $item) {
+                    $em->remove($item);
+                }
+            }
+
             $em->remove($content);
             $em->flush();
         } catch (DBALException $e) {
             return new JsonResponse(
                 [
-                    "errors" => ["db" => $e->getMessage()],
-                    "message" => "Could not delete."
+                    "errors" => [
+                        "db" => $e->getMessage()
+                    ],
+                    "message" => "Could not delete.",
                 ]
             );
         }
@@ -333,8 +346,9 @@ class ContentController extends BaseAdminController
         return new JsonResponse(
             [
                 "message" => "Content successfully deleted.",
-                "location" => $this->generateUrl("admin_content_tabs")
-            ]
-            , 302);
+                "location" => $this->generateUrl("admin_content_tabs"),
+            ],
+            302
+        );
     }
 }
