@@ -12,6 +12,10 @@ export default [
         action: 'Product.newStandard'
     },
     {
+        path: '/admin/product/tabs/:id(/)',
+        action: 'Product.tabs'
+    },
+    {
         path: '/admin/blogArticle/tabs/:id(/)',
         action: 'BlogArticle.tabs'
     },

@@ -10,13 +10,13 @@ namespace AdminBundle\Controller;
 
 
 use AppBundle\Entity\Product\Product;
-use AppBundle\Entity\Product\StandardProduct;
 use Doctrine\DBAL\DBALException;
 use ReflectionException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
@@ -48,6 +48,24 @@ class ProductController extends BaseAdminController
 
 
     /**
+     * @Route("/tabs/{id}", name="admin_product_tabs")
+     * @param Request $request
+     * @param Product $product
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function tabsAction(Request $request, Product $product)
+    {
+        return $this->render(
+            ":AdminBundle/Product:tabs.html.twig",
+            [
+                "product" => $product
+            ]
+        );
+    }
+
+
+    /**
      * Display a form to create a new Product entity.
      *
      * @Route("/new/{productType}",requirements={"productType": "\w+"}, name="admin_product_new")
@@ -71,18 +89,16 @@ class ProductController extends BaseAdminController
             throw new NotFoundHttpException("Product type: " . $productType . " not found.");
         }
 
-        $form = $this->createForm(
-            $product->getFormType([$product]),
-            $product,
-            [
-                'action' => $this->generateUrl(
-                    'admin_product_create',
-                    [
-                        "productType" => $productType
-                    ]
-                ),
-            ]
-        );
+        $form = $this->get("admin.form_factory")
+            ->createCreateForm(
+                $this,
+                $product,
+                $product->getFormType(),
+                "admin_product",
+                [
+                    "productType" => $productType
+                ]
+            );
 
         return $this->render(
             ':AdminBundle/Product:new.html.twig',
@@ -120,7 +136,17 @@ class ProductController extends BaseAdminController
 
         $em = $this->getEntityManager();
 
-        $productForm = $this->createForm($product->getFormType([$product]), $product);
+        $productForm = $this->get("admin.form_factory")
+            ->createCreateForm(
+                $this,
+                $product,
+                $product->getFormType(),
+                "admin_product",
+                [
+                    "productType" => $productType
+                ]
+            );
+
         $productForm->handleRequest($request);
 
         if($productForm->isValid())
@@ -162,19 +188,10 @@ class ProductController extends BaseAdminController
      */
     public function editAction(Request $request, Product $product)
     {
-        $productType = $product->getFormType([$product]);
-        $productForm = $this->createForm(
-            $productType,
-            $product,
-            [
-                "action" => $this->generateUrl(
-                    "admin_product_update",
-                    [
-                        "id" => $product->getId()
-                    ]
-                )
-            ]
-        );
+//        $productType = $product->getFormType([$product]);
+        $productForm = $this->get("admin.form_factory")
+            ->createEditForm($this, $product, $product->getFormType(), "admin_product", ["id" => $product->getId()]);
+
 
         return $this->render(
             ":AdminBundle/Product:edit.html.twig",
@@ -188,10 +205,33 @@ class ProductController extends BaseAdminController
 
 
     /**
+     * @Route("/tab/{id}/delete", name="admin_product_delete_tab")
+     *
+     * @param Product $product
+     *
+     * @return Response
+     *
+     */
+    public function deleteTabAction(Product $product)
+    {
+        $form = $this->get("admin.form_factory")
+            ->createDeleteForm($this, "admin_product", $product->getId());
+
+        return $this
+            ->render(
+                ":AdminBundle/Product:tabDelete.html.twig",
+                [
+                    "form" => $form->createView()
+                ]
+            );
+    }
+
+
+    /**
      * Process a request to update a Product entity.
      *
      * @Route("/{id}/update", requirements={"id": "\d+"}, name="admin_product_update")
-     * @Method("POST")
+     * @Method("PUT")
      *
      * @param Request $request
      * @param Product $product
@@ -200,8 +240,9 @@ class ProductController extends BaseAdminController
      */
     public function updateAction(Request $request, Product $product)
     {
-        $productType = $product->getFormType([$product]);
-        $productForm = $this->createForm($productType, $product);
+        $productForm = $this->get("admin.form_factory")
+            ->createEditForm($this, $product, $product->getFormType(), "admin_product", ["id" => $product->getId()]);
+
         $em = $this->getEntityManager();
 
         $productForm->handleRequest($request);
@@ -219,11 +260,49 @@ class ProductController extends BaseAdminController
                 return new JsonResponse(["errors" => ["db" => $e->getMessage()]]);
             }
 
-            return new JsonResponse(["message" => "Product successfully updated"]);
+            return new JsonResponse(
+                [
+                    "message" => "Product successfully updated",
+                    "location" => $this->generateUrl("admin_product_index")
+                ],
+                302
+            );
         }
         else
         {
             return $this->returnFormErrorsJsonResponse($productForm);
         }
+    }
+
+
+    /**
+     * @Route("/{id}/delete", name="admin_product_delete")
+     *
+     * @param Request $request
+     * @param Product $product
+     *
+     * @return JsonResponse
+     */
+    public function deleteAction(Request $request, Product $product)
+    {
+        try {
+            $em = $this->getEntityManager();
+            $em->remove($product);
+            $em->flush();
+        } catch (DBALException $e) {
+            return new JsonResponse(
+                [
+                    "errors" => ["db" => $e->getMessage()],
+                    "message" => "Could not delete."
+                ]
+            );
+        }
+
+        return new JsonResponse(
+            [
+                "message" => "Product successfully deleted.",
+                "location" => $this->generateUrl("admin_product_index")
+            ]
+            , 302);
     }
 }

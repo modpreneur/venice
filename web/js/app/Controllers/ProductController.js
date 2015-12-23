@@ -26,4 +26,8 @@ export default class ProductController extends Controller {
         //Attach TrinityForm
         $scope.form = new TrinityForm(q('form[name="standardproducttype"]'), TrinityForm.formType.NEW);
     }
+
+    tabsAction($scope) {
+        $scope.trinityTab = new TrinityTab();
+    }
 }

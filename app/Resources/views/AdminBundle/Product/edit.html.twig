@@ -1,24 +1,16 @@
-{% extends(":AdminBundle/Product:new.html.twig") %}
 
-{% block formTitle %}
-    Edit {{ entity.name }}
-{% endblock %}
 
-{% block formRow %}
-    {{ form_start(form, {'attr': {'class': 'edit-form'}} ) }}
-    {{ form_errors(form) }}
+<div class="box box-new-form">
+    <div class="row">
+        {{ form_start(form, {'attr': {'class': 'edit-form'}} ) }}
+        {{ form_errors(form) }}
 
-    {{ form_row(form.name) }}
-    {{ form_row(form.description) }}
-    {{ form_row(form.image) }}
-    {{ form_row(form.enabled) }}
-    {{ form_row(form.orderNumber) }}
+        {# Render all form rows except the submit input #}
+        {% for key, item in form.children if key != "submit"%}
+            {{ form_row(form[key]) }}
+        {% endfor %}
 
-    {#{% if entity.type == "standard" %}#}
-        {#{{ form_row(form.billingPlan) }}#}
-    {#{% endif %}#}
-
-    {{ form_row(form.submit, {'attr': {'class': 'button edit'}} ) }}
-
-    {{ form_end(form) }}
-{% endblock %}
+        {{ form_row(form.submit, {'attr': {'class': 'button edit'}} ) }}
+        {{ form_end(form) }}
+    </div>
+</div>

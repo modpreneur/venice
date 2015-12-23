@@ -9,6 +9,8 @@
 namespace AppBundle\Entity\Product;
 
 
+use AdminBundle\Form\Product\FreeProductType;
+use AdminBundle\Form\Product\StandardProductType;
 use AppBundle\Entity\ProductAccess;
 use AppBundle\Entity\User;
 use Cocur\Slugify\Slugify;
@@ -293,7 +295,7 @@ abstract class Product extends TrinityProduct
      *
      * @param array|null $arguments
      *
-     * @return StandardProduct|FreeProduct
+     * @return StandardProductType|FreeProductType
      */
     public function getFormType($arguments = [])
     {
