@@ -88,23 +88,22 @@ class ContentController extends BaseAdminController
      */
     public function newAction(Request $request, $contentType)
     {
-        try
-        {
+        try {
             $content = Content::createContentByType($contentType);
-        }
-        catch(ReflectionException $e)
-        {
-            throw new NotFoundHttpException("Content type: " . $contentType . " not found.");
+        } catch (ReflectionException $e) {
+            throw new NotFoundHttpException("Content type: ".$contentType." not found.");
         }
 
         $form = $this->get("admin.form_factory")
-            ->createCreateForm($this, $content, $content->getFormType(), "admin_content", ["contentType" => $contentType]);
+            ->createCreateForm($this, $content, $content->getFormType([$content]), "admin_content", ["contentType" => $contentType]);
 
         return $this->render(
-            ':AdminBundle/Content:new.html.twig',
+            ($content instanceof GroupContent) ?
+                ":AdminBundle/Content/Group:new.html.twig"
+                : ':AdminBundle/Content:new.html.twig',
             [
-                'entity'     => $content,
-                'form'       => $form->createView()
+                'entity' => $content,
+                'form' => $form->createView()
             ]
         );
     }
@@ -125,13 +124,10 @@ class ContentController extends BaseAdminController
      */
     public function createAction(Request $request, $contentType)
     {
-        try
-        {
+        try {
             $content = Content::createContentByType($contentType);
-        }
-        catch(ReflectionException $e)
-        {
-            throw new NotFoundHttpException("Content type: " . $contentType . " not found.");
+        } catch (ReflectionException $e) {
+            throw new NotFoundHttpException("Content type: ".$contentType." not found.");
         }
 
         $em = $this->getEntityManager();
@@ -141,8 +137,7 @@ class ContentController extends BaseAdminController
 
         $form->handleRequest($request);
 
-        if($form->isValid())
-        {
+        if ($form->isValid()) {
             $em->persist($content);
             $em->flush();
 
@@ -151,11 +146,9 @@ class ContentController extends BaseAdminController
                     "message" => "Content successfully created",
                     "location" => $this->generateUrl("admin_content_tab", ["id" => $content->getId()])
                 ]
-            , 302);
+                , 302);
 
-        }
-        else
-        {
+        } else {
             return $this->returnFormErrorsJsonResponse($form);
         }
     }
@@ -174,13 +167,13 @@ class ContentController extends BaseAdminController
      */
     public function editAction(Request $request, Content $content)
     {
-        $contentType = $content->getFormType(($content instanceof GroupContent)? [$content] : []);
+        $contentType = $content->getFormType(($content instanceof GroupContent) ? [$content] : []);
 
         $form = $this->get("admin.form_factory")
-            ->createEditForm($this, $content, $content->getFormType(), "admin_content", ["contentType" => $contentType]);
+            ->createEditForm($this, $content, $content->getFormType([$content]), "admin_content", ["contentType" => $contentType]);
 
         return $this->render(
-            ($content instanceof GroupContent)?
+            ($content instanceof GroupContent) ?
                 ":AdminBundle/Content/Group:edit.html.twig"
                 : ":AdminBundle/Content/:edit.html.twig"
             ,
@@ -205,12 +198,9 @@ class ContentController extends BaseAdminController
      */
     public function updateAction(Request $request, Content $content)
     {
-        if($content instanceof GroupContent)
-        {
+        if ($content instanceof GroupContent) {
             return $this->updateGroupContentAction($request, $content);
-        }
-        else
-        {
+        } else {
             return $this->updateNonGroupContentAction($request, $content);
         }
     }
@@ -231,16 +221,12 @@ class ContentController extends BaseAdminController
 
         $form->handleRequest($request);
 
-        if($form->isValid())
-        {
+        if ($form->isValid()) {
             $em->persist($content);
 
-            try
-            {
+            try {
                 $em->flush();
-            }
-            catch (DBALException $e)
-            {
+            } catch (DBALException $e) {
                 return new JsonResponse(["errors" => ["db" => $e->getMessage()]]);
             }
 
@@ -249,10 +235,8 @@ class ContentController extends BaseAdminController
                     "message" => "Content successfully updated",
                     "location" => $this->generateUrl("admin_content_tabs")
                 ]
-            , 302);
-        }
-        else
-        {
+                , 302);
+        } else {
             return $this->returnFormErrorsJsonResponse($form);
         }
     }
@@ -265,39 +249,30 @@ class ContentController extends BaseAdminController
 
         //Copy original items
         $originalItems = new ArrayCollection();
-        foreach ($content->getItems() as $item)
-        {
+        foreach ($content->getItems() as $item) {
             $originalItems->add($item);
         }
 
         $contentForm->handleRequest($request);
 
-        if($contentForm->isValid())
-        {
-            foreach ($originalItems as $originalItem)
-            {
+        if ($contentForm->isValid()) {
+            foreach ($originalItems as $originalItem) {
                 // If the item is not in the field data it was removed. So remove it from collection.
-                if(!$content->getItems()->contains($originalItem))
-                {
+                if (!$content->getItems()->contains($originalItem)) {
                     $em->remove($originalItem);
                 }
             }
 
             $em->persist($content);
 
-            try
-            {
+            try {
                 $em->flush();
-            }
-            catch (DBALException $e)
-            {
+            } catch (DBALException $e) {
                 return new JsonResponse(["errors" => ["db" => $e->getMessage()]]);
             }
 
             return new JsonResponse(["message" => "Content successfully updated"]);
-        }
-        else
-        {
+        } else {
             return $this->returnFormErrorsJsonResponse($contentForm);
         }
     }
@@ -336,14 +311,11 @@ class ContentController extends BaseAdminController
      */
     public function deleteAction(Request $request, Content $content)
     {
-        try
-        {
+        try {
             $em = $this->getEntityManager();
             $em->remove($content);
             $em->flush();
-        }
-        catch(DBALException $e)
-        {
+        } catch (DBALException $e) {
             return new JsonResponse(
                 [
                     "errors" => ["db" => $e->getMessage()],
@@ -357,6 +329,6 @@ class ContentController extends BaseAdminController
                 "message" => "Content successfully deleted.",
                 "location" => $this->generateUrl("admin_content_tabs")
             ]
-        , 302);
+            , 302);
     }
 }

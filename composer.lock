@@ -1176,17 +1176,17 @@
         },
         {
             "name": "friendsofsymfony/rest-bundle",
-            "version": "1.7.4",
+            "version": "1.7.6",
             "target-dir": "FOS/RestBundle",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfSymfony/FOSRestBundle.git",
-                "reference": "64ba918b1eb47acb5aa7fef1ce95623235b53775"
+                "reference": "f95b2f141748e9a5e2ddae833f60c38417aee8c3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSRestBundle/zipball/64ba918b1eb47acb5aa7fef1ce95623235b53775",
-                "reference": "64ba918b1eb47acb5aa7fef1ce95623235b53775",
+                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSRestBundle/zipball/f95b2f141748e9a5e2ddae833f60c38417aee8c3",
+                "reference": "f95b2f141748e9a5e2ddae833f60c38417aee8c3",
                 "shasum": ""
             },
             "require": {
@@ -1253,12 +1253,12 @@
                     "email": "ever.zet@gmail.com"
                 }
             ],
-            "description": "This Bundle provides various tools to rapidly develop RESTful API's with Symfony2",
+            "description": "This Bundle provides various tools to rapidly develop RESTful API's with Symfony",
             "homepage": "http://friendsofsymfony.github.com",
             "keywords": [
                 "rest"
             ],
-            "time": "2015-12-05 14:55:07"
+            "time": "2015-12-20 13:45:30"
         },
         {
             "name": "friendsofsymfony/user-bundle",
@@ -4503,12 +4503,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/modpreneur/trinity-admin.git",
-                "reference": "6b263f47124349b97e647c0c239185554c9f8eb3"
+                "reference": "ed72053ee34a195f8b17b05a334fadfe99cf71ca"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/modpreneur/trinity-admin/zipball/6b263f47124349b97e647c0c239185554c9f8eb3",
-                "reference": "6b263f47124349b97e647c0c239185554c9f8eb3",
+                "url": "https://api.github.com/repos/modpreneur/trinity-admin/zipball/ed72053ee34a195f8b17b05a334fadfe99cf71ca",
+                "reference": "ed72053ee34a195f8b17b05a334fadfe99cf71ca",
                 "shasum": ""
             },
             "require": {
@@ -4550,7 +4550,7 @@
                 }
             ],
             "description": "Trinity Admin bundle",
-            "time": "2015-12-18 14:33:29"
+            "time": "2015-12-22 10:34:35"
         },
         {
             "name": "trinity/framework",
@@ -4955,16 +4955,16 @@
         },
         {
             "name": "raulfraile/ladybug",
-            "version": "v1.0.11",
+            "version": "v1.0.12",
             "source": {
                 "type": "git",
                 "url": "https://github.com/raulfraile/ladybug.git",
-                "reference": "1fb36821c3e91bd9a030335df452b264811449bf"
+                "reference": "c0d6d66fe901950d242797bfed4bc2a7846acbfa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/raulfraile/ladybug/zipball/1fb36821c3e91bd9a030335df452b264811449bf",
-                "reference": "1fb36821c3e91bd9a030335df452b264811449bf",
+                "url": "https://api.github.com/repos/raulfraile/ladybug/zipball/c0d6d66fe901950d242797bfed4bc2a7846acbfa",
+                "reference": "c0d6d66fe901950d242797bfed4bc2a7846acbfa",
                 "shasum": ""
             },
             "require": {
@@ -5025,7 +5025,7 @@
                 "print_r",
                 "var_dump"
             ],
-            "time": "2014-08-23 19:43:25"
+            "time": "2015-12-21 09:07:40"
         },
         {
             "name": "raulfraile/ladybug-bundle",
@@ -5252,16 +5252,16 @@
         },
         {
             "name": "sensio/generator-bundle",
-            "version": "v3.0.2",
+            "version": "v3.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sensiolabs/SensioGeneratorBundle.git",
-                "reference": "9a7d4550844b665b61c54dc72bc236d4c9b2d30d"
+                "reference": "525e078ff7d5e9f19b0ef912bb6d6753673b3c66"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sensiolabs/SensioGeneratorBundle/zipball/9a7d4550844b665b61c54dc72bc236d4c9b2d30d",
-                "reference": "9a7d4550844b665b61c54dc72bc236d4c9b2d30d",
+                "url": "https://api.github.com/repos/sensiolabs/SensioGeneratorBundle/zipball/525e078ff7d5e9f19b0ef912bb6d6753673b3c66",
+                "reference": "525e078ff7d5e9f19b0ef912bb6d6753673b3c66",
                 "shasum": ""
             },
             "require": {
@@ -5300,7 +5300,7 @@
                 }
             ],
             "description": "This bundle generates code for you",
-            "time": "2015-12-18 17:36:42"
+            "time": "2015-12-20 20:01:41"
         }
     ],
     "aliases": [],

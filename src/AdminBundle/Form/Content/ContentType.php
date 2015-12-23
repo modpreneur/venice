@@ -14,6 +14,11 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 class ContentType extends AdminBaseType
 {
+    public function __construct()
+    {
+
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         parent::buildForm($builder, $options);

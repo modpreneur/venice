@@ -1,4 +1,6 @@
-    {#todo#}
+{% extends(":AdminBundle:adminBase.html.twig") %}
+
+{% block pageBody %}
     {{ form_start(form) }}
         {{ form_row(form.name) }}
 
@@ -8,4 +10,6 @@
                 <li>{{ form_row(item)}}</li>
             {% endfor %}
         </ul>
+
     {{ form_end(form) }}
+{% endblock %}

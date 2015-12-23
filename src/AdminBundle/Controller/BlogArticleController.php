@@ -89,7 +89,7 @@ class BlogArticleController extends BaseAdminController
         return $this->render(
             ':AdminBundle/BlogArticle:new.html.twig',
             [
-                'form'       => $form->createView()
+                'form' => $form->createView()
             ]
         );
     }
@@ -117,8 +117,7 @@ class BlogArticleController extends BaseAdminController
 
         $form->handleRequest($request);
 
-        if($form->isValid())
-        {
+        if ($form->isValid()) {
             $em->persist($blogArticle);
             $em->flush();
 
@@ -132,10 +131,8 @@ class BlogArticleController extends BaseAdminController
                         ]
                     )
                 ]
-            , 302);
-        }
-        else
-        {
+                , 302);
+        } else {
             return $this->returnFormErrorsJsonResponse($form);
         }
     }
@@ -187,16 +184,12 @@ class BlogArticleController extends BaseAdminController
 
         $blogArticleForm->handleRequest($request);
 
-        if($blogArticleForm->isValid())
-        {
+        if ($blogArticleForm->isValid()) {
             $em->persist($blogArticle);
 
-            try
-            {
+            try {
                 $em->flush();
-            }
-            catch (DBALException $e)
-            {
+            } catch (DBALException $e) {
                 return new JsonResponse(
                     [
                         "errors" => [
@@ -212,9 +205,7 @@ class BlogArticleController extends BaseAdminController
                     "message" => "Blog article successfully updated"
                 ]
             );
-        }
-        else
-        {
+        } else {
             return $this->returnFormErrorsJsonResponse($blogArticleForm);
         }
     }
@@ -250,14 +241,11 @@ class BlogArticleController extends BaseAdminController
      */
     public function deleteAction(Request $request, BlogArticle $blogArticle)
     {
-        try
-        {
+        try {
             $em = $this->getEntityManager();
             $em->remove($blogArticle);
             $em->flush();
-        }
-        catch(DBALException $e)
-        {
+        } catch (DBALException $e) {
             return new JsonResponse(
                 [
                     "errors" => ["db" => $e->getMessage()],
@@ -271,6 +259,6 @@ class BlogArticleController extends BaseAdminController
                 "message" => "Blog article successfully deleted.",
                 "location" => $this->generateUrl("admin_blog_article_index")
             ]
-        , 302);
+            , 302);
     }
 }

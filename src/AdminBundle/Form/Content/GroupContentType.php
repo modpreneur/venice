@@ -27,6 +27,18 @@ class GroupContentType extends ContentType
         parent::buildForm($builder, $options);
 
         $builder
+//            ->add(
+//                "items",
+//                "collection",
+//                [
+//                    "type" => new ContentInGroupType($this->groupContent),
+//                    "label" => "Collection?",
+//                    "allow_add" => true,
+//                    'allow_delete' => true
+//
+//                ]
+//
+//            );
             ->add(
                 "items",
                 "collection",

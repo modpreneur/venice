@@ -4,8 +4,10 @@
 
 import events from 'trinity/utils/closureEvents';
 import Controller from 'trinity/Controller';
-import TrinityForm from 'trinity/TrinityForm';
 import TrinityTab from 'trinity/TrinityTab';
+import Collection from 'trinity/Collection';
+import _ from 'lodash';
+import TrinityForm from 'trinity/TrinityForm';
 
 export default class ContetntController extends Controller {
 
@@ -72,6 +74,10 @@ export default class ContetntController extends Controller {
      * @param $scope
      */
     newGroupAction($scope) {
+        $scope.collection = _.map(qAll('[data-prototype]'), function (node) {
+            return new Collection(node);
+        });
+
         $scope.form = new TrinityForm(q('form[name="groupcontenttype"]'), TrinityForm.formType.NEW);
     }
 }
