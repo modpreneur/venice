@@ -20,6 +20,8 @@
 
 
 {% block pageBody %}
+    <a href="{{ path("admin_product_new", {"productType":"free"}) }}" class="button">New free</a>
+    <a href="{{ path("admin_product_new", {"productType":"standard"}) }}" class="button">New standard</a>
     <div class="wrapper-grid">
         <ul>
             {% for product in products %}
