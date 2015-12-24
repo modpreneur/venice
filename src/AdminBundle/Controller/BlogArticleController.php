@@ -130,8 +130,9 @@ class BlogArticleController extends BaseAdminController
                             "id" => $blogArticle->getId()
                         ]
                     )
-                ]
-                , 302);
+                ],
+                302
+            );
         } else {
             return $this->returnFormErrorsJsonResponse($form);
         }
@@ -258,7 +259,8 @@ class BlogArticleController extends BaseAdminController
             [
                 "message" => "Blog article successfully deleted.",
                 "location" => $this->generateUrl("admin_blog_article_index")
-            ]
-            , 302);
+            ],
+            302
+        );
     }
 }

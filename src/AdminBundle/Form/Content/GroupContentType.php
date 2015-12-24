@@ -9,17 +9,28 @@
 namespace AdminBundle\Form\Content;
 
 
+use AppBundle\Entity\Content\GroupContent;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class GroupContentType extends ContentType
 {
+    /** @var  GroupContent */
     protected $groupContent;
 
+    /** @var  EntityManagerInterface */
+    protected $entityManager;
 
-    public function __construct($groupContent)
+    /**
+     * GroupContentType constructor.
+     * @param GroupContent $groupContent
+     * @param EntityManagerInterface $entityManager
+     */
+    public function __construct(GroupContent $groupContent, EntityManagerInterface $entityManager)
     {
         $this->groupContent = $groupContent;
+        $this->entityManager = $entityManager;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -31,7 +42,8 @@ class GroupContentType extends ContentType
                 "items",
                 "collection",
                 [
-                    "type" => new ContentInGroupType($this->groupContent),
+                    "type" => new ContentInGroupType($this->groupContent, $this->entityManager),
+                    "required" => false,
                     "label" => " ",
                     "allow_add" => true,
                     "allow_delete" => true,

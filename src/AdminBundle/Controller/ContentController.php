@@ -96,12 +96,10 @@ class ContentController extends BaseAdminController
         }
 
         $form = $this->get("admin.form_factory")
-            ->createCreateForm($this, $content, $content->getFormType([$content]), "admin_content", ["contentType" => $contentType]);
+            ->createCreateForm($this, $content, $content->getFormType([$content, $this->getEntityManager()]), "admin_content", ["contentType" => $contentType]);
 
         return $this->render(
-            ($content instanceof GroupContent) ?
-                ":AdminBundle/Content/Group:new.html.twig"
-                : ':AdminBundle/Content:new.html.twig',
+            ':AdminBundle/Content:new.html.twig',
             [
                 'entity' => $content,
                 'form' => $form->createView()
@@ -134,7 +132,7 @@ class ContentController extends BaseAdminController
         $em = $this->getEntityManager();
 
         $form = $this->get("admin.form_factory")
-            ->createCreateForm($this, $content, $content->getFormType([$content]), "admin_content", ["contentType" => $contentType]);
+            ->createCreateForm($this, $content, $content->getFormType([$content, $this->getEntityManager()]), "admin_content", ["contentType" => $contentType]);
 
         $form->handleRequest($request);
 
@@ -169,7 +167,7 @@ class ContentController extends BaseAdminController
     public function editAction(Request $request, Content $content)
     {
         $form = $this->get("admin.form_factory")
-            ->createEditForm($this, $content, $content->getFormType([$content]), "admin_content");
+            ->createEditForm($this, $content, $content->getFormType([$content, $this->getEntityManager()]), "admin_content");
 
         return $this->render(
             ":AdminBundle/Content:edit.html.twig",
@@ -229,9 +227,8 @@ class ContentController extends BaseAdminController
             return new JsonResponse(
                 [
                     "message" => "Content successfully updated",
-                    "location" => $this->generateUrl("admin_content_tabs")
                 ]
-                , 302);
+            );
         } else {
             return $this->returnFormErrorsJsonResponse($form);
         }
@@ -246,7 +243,7 @@ class ContentController extends BaseAdminController
     protected function updateGroupContentAction(Request $request, GroupContent $content)
     {
         $contentForm = $this->get("admin.form_factory")
-            ->createEditForm($this, $content, $content->getFormType([$content]), "admin_content");
+            ->createEditForm($this, $content, $content->getFormType([$content, $this->getEntityManager()]), "admin_content");
         $em = $this->getEntityManager();
 
         //Copy original items
@@ -276,9 +273,7 @@ class ContentController extends BaseAdminController
             return new JsonResponse(
                 [
                     "message" => "Content successfully updated",
-                    "location" => $this->generateUrl("admin_content_tabs")
-                ],
-                302
+                ]
             );
         } else {
             return $this->returnFormErrorsJsonResponse($contentForm);

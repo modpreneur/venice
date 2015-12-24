@@ -10,40 +10,40 @@ namespace AdminBundle\Form\Content;
 
 
 use AdminBundle\Form\AdminBaseType;
-use AppBundle\Entity\Content\ContentInGroup;
+use AdminBundle\Form\DataTransformer\EntityToNumberTransformer;
+use AppBundle\Entity\Content\GroupContent;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ContentInGroupType extends AdminBaseType
 {
-    /** @var  ContentInGroup */
+    /** @var  GroupContent */
     protected $groupContent;
 
-    public function __construct($groupContent)
+    /** @var  EntityManagerInterface */
+    protected $entityManager;
+
+    /**
+     * ContentInGroupType constructor.
+     *
+     * @param GroupContent $groupContent
+     * @param EntityManagerInterface $entityManager
+     */
+    public function __construct(GroupContent $groupContent, EntityManagerInterface $entityManager)
     {
         $this->groupContent = $groupContent;
+        $this->entityManager = $entityManager;
     }
 
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         parent::buildForm($builder, $options);
-
-        $groupId = $this->groupContent->getId();
-
-        // The contentGroup entity contains data
-        if ($groupId) {
-            $queryBuilderFunction = function (EntityRepository $er) use ($groupId) {
-                return $er
-                    ->createQueryBuilder('c')
-                    ->andWhere('c.id != :id')
-                    ->setParameter("id", $groupId);
-            };
-        } else {
-            $queryBuilderFunction = function (EntityRepository $er) {
-                return $er->createQueryBuilder("c");
-            };
-        }
 
         $builder
             ->add(
@@ -51,19 +51,19 @@ class ContentInGroupType extends AdminBaseType
                 "entity",
                 [
                     "class" => "AppBundle\\Entity\\Content\\Content",
-                    'query_builder' => $queryBuilderFunction,
+                    'query_builder' => $this->getQueryBuilderFunction(),
                     "choice_label" => "name",
-                    "label" => "Content"
+                    "label" => "Content",
+                    "empty_value" => " "
                 ]
             )
             ->add(
                 "group",
-                "entity",
+                "hidden",
                 [
-                    "class" => "AppBundle\\Entity\\Content\\GroupContent",
-                    "choice_label" => "name",
-                    "label" => "Group",
-                    "attr" => ["class" => "hidden"] //todo: remove?
+                    // Uses model transformer
+                    "data" => $this->groupContent,
+                    "data_class" => null
                 ]
             )
             ->add(
@@ -81,6 +81,13 @@ class ContentInGroupType extends AdminBaseType
                 ]
             );
 
+        $builder->get("group")
+            ->addModelTransformer(
+                new EntityToNumberTransformer(
+                    $this->entityManager,
+                    "AppBundle:Content\\GroupContent"
+                )
+            );
     }
 
     public function configureOptions(OptionsResolver $resolver)
@@ -91,5 +98,29 @@ class ContentInGroupType extends AdminBaseType
                 "label" => " "
             ]
         );
+    }
+
+
+    /**
+     * Get query builder function to query entities from database
+     *
+     * @return \Closure
+     */
+    protected function getQueryBuilderFunction()
+    {
+        // The contentGroup entity contains data
+        if ($this->groupContent && $this->groupContent->getId()) {
+            $groupId = $this->groupContent->getId();
+            return function (EntityRepository $er) use ($groupId) {
+                return $er
+                    ->createQueryBuilder('c')
+                    ->andWhere('c.id != :id')
+                    ->setParameter("id", $groupId);
+            };
+        } else {
+            return function (EntityRepository $er) {
+                return $er->createQueryBuilder("c");
+            };
+        }
     }
 }
