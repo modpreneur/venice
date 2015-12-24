@@ -85,10 +85,6 @@ export default class ContetntController extends Controller {
      * @param $scope
      */
     newGroupAction($scope) {
-        $scope.collection = _.map(qAll('[data-prototype]'), function (node) {
-            return new Collection(node, {addFirst:false});
-        });
-
         $scope.form = new TrinityForm(q('form[name="groupcontenttype"]'), TrinityForm.formType.NEW);
     }
 }

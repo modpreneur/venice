@@ -97,6 +97,11 @@ class ContentController extends BaseAdminController
 
         $form = $this->get("admin.form_factory")
             ->createCreateForm($this, $content, $content->getFormType([$content, $this->getEntityManager()]), "admin_content", ["contentType" => $contentType]);
+        // Remove items field for now. todo: remove it in future?
+        // Explanation:
+        // The ContentInGroupType requires group id to fill it in the hidden field. But when the group is creating, there is no id.
+        // This could be solved by saving the group first, getting it's id and then saving it's content.
+        $form->remove("items");
 
         return $this->render(
             ':AdminBundle/Content:new.html.twig',
@@ -211,7 +216,7 @@ class ContentController extends BaseAdminController
         $em = $this->getEntityManager();
 
         $form = $this->get("admin.form_factory")
-            ->createEditForm($this, $content, $content->getFormType(), "admin_content", ["contentType" => $content->getType()]);
+            ->createEditForm($this, $content, $content->getFormType(), "admin_content");
 
         $form->handleRequest($request);
 

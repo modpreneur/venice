@@ -57,9 +57,10 @@ class BaseAdminController extends FOSRestController
 
         return new JsonResponse(
             [
-                "errors" => $errors,
+                "error" => $errors,
                 "message" => $message
-            ]
+            ],
+            400
         );
     }
 

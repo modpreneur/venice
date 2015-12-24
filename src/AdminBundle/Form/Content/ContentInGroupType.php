@@ -54,7 +54,7 @@ class ContentInGroupType extends AdminBaseType
                     'query_builder' => $this->getQueryBuilderFunction(),
                     "choice_label" => "name",
                     "label" => "Content",
-                    "empty_value" => " "
+                    "empty_value" => " ",
                 ]
             )
             ->add(
@@ -63,7 +63,7 @@ class ContentInGroupType extends AdminBaseType
                 [
                     // Uses model transformer
                     "data" => $this->groupContent,
-                    "data_class" => null
+                    "data_class" => null,
                 ]
             )
             ->add(
@@ -71,6 +71,7 @@ class ContentInGroupType extends AdminBaseType
                 "integer",
                 [
                     "empty_data" => 0,
+                    "required" => false,
                 ]
             )
             ->add(
@@ -78,6 +79,7 @@ class ContentInGroupType extends AdminBaseType
                 "integer",
                 [
                     "empty_data" => 0,
+                    "required" => false,
                 ]
             );
 
