@@ -1,24 +1,9 @@
-<div id="product-delete">
-    <h2 class="header-h2">
-        Danger Zone
-    </h2>
+{% extends ":AdminBundle/Common:tabDelete.html.twig" %}
 
-    <div class="row">
-        <div class="span-none-padding-xlarge-24 margin-auto">
-            <div class="span-none-xlarge-10">
-                <div class="delete-form">
-                    <div class="row"><i class="trinity-warning"></i></div>
-                    <div class="row"><h2 class="warning">WARNING</h2></div>
-                    <div class="row span-none-xlarge-10">
-                        <p>This will delete the content and all it's associations for ever. Please be certain.</p>
-                    </div>
-                    <div class="row span-none-xlarge-5">
-                        {{ form_start(form) }}
-                        {{ form_row(form.submit, {'attr': {'class': 'button delete'}}) }}
-                        {{ form_end(form) }}
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+{% block divId %}
+    content-delete
+{% endblock %}
+
+{% block message %}
+    This will delete the content and all it's associations for ever. Please be certain.
+{% endblock %}
