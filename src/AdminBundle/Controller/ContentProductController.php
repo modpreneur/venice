@@ -39,14 +39,11 @@ class ContentProductController extends BaseAdminController
         $contentProducts = $this
             ->getEntityManager()
             ->getRepository("AppBundle:ContentProduct")
-            ->findAll()
-        ;
+            ->findAll();
 
         return $this->render(
             ":AdminBundle/ContentProduct:index.html.twig",
-            [
-                "contentProducts" => $contentProducts
-            ]
+            ["contentProducts" => $contentProducts,]
         );
     }
 
@@ -60,7 +57,10 @@ class ContentProductController extends BaseAdminController
      */
     public function tabsAction(Request $request, ContentProduct $contentProduct)
     {
-        return $this->render(":AdminBundle/ContentProduct:tabs.html.twig", ["contentProduct" => $contentProduct]);
+        return $this->render(
+            ":AdminBundle/ContentProduct:tabs.html.twig",
+            ["contentProduct" => $contentProduct,]
+        );
     }
 
 
@@ -76,12 +76,14 @@ class ContentProductController extends BaseAdminController
     public function newAction(Request $request)
     {
         $form = $this->get("admin.form_factory")
-            ->createCreateForm($this, new ContentProduct(), new ContentProductType(), "admin_content_product");
+            ->createCreateForm($this,
+                new ContentProduct(),
+                new ContentProductType(),
+                "admin_content_product"
+            );
 
         return $this->render(":AdminBundle/ContentProduct:new.html.twig",
-            [
-                "form" => $form->createView()
-            ]
+            ["form" => $form->createView(),]
         );
     }
 
@@ -99,33 +101,38 @@ class ContentProductController extends BaseAdminController
     {
         $contentProduct = new ContentProduct();
         $form = $this->get("admin.form_factory")
-            ->createCreateForm($this, $contentProduct, new ContentProductType(), "admin_content_product");
+            ->createCreateForm(
+                $this,
+                $contentProduct,
+                new ContentProductType(),
+                "admin_content_product"
+            );
 
         $form->handleRequest($request);
 
-        if($form->isValid())
-        {
+        if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($contentProduct);
 
-            try
-            {
+            try {
                 $em->flush();
-            }
-            catch(DBALException $e)
-            {
-                return new JsonResponse(["errors" => ["db" => $e->getMessage()]]);
+            } catch (DBALException $e) {
+                return new JsonResponse(
+                    [
+                        "errors" => [
+                            "db" => $e->getMessage(),],
+                    ]
+                );
             }
 
             return new JsonResponse(
                 [
                     "message" => "Association successfully created",
-                    "location" => $this->generateUrl("admin_content_tabs") . "#tab2"
-                ]
-            , 302);
-        }
-        else
-        {
+                    "location" => $this->generateUrl("admin_content_tabs")."#tab2"
+                ],
+                302
+            );
+        } else {
             return $this->returnFormErrorsJsonResponse($form);
         }
     }
@@ -150,16 +157,14 @@ class ContentProductController extends BaseAdminController
                 $contentProduct,
                 new ContentProductType(),
                 "admin_content_product",
-                [
-                    "id" => $contentProduct->getId()
-                ]
+                ["id" => $contentProduct->getId(),]
             );
 
         return $this->render(
             ":AdminBundle/ContentProduct:edit.html.twig",
             [
                 "entity" => $contentProduct,
-                "form" => $contentForm->createView()
+                "form" => $contentForm->createView(),
             ]
         );
     }
@@ -171,7 +176,7 @@ class ContentProductController extends BaseAdminController
      * @Route("/{id}/update", requirements={"id": "\d+"}, name="admin_content_product_update")
      * @Method("PUT")
      *
-     * @param Request        $request
+     * @param Request $request
      * @param ContentProduct $contentProduct
      *
      * @return JsonResponse
@@ -185,37 +190,33 @@ class ContentProductController extends BaseAdminController
                 $contentProduct,
                 new ContentProductType(),
                 "admin_content_product",
-                [
-                    "id" => $contentProduct->getId()
-                ]
+                ["id" => $contentProduct->getId(),]
             );
 
         $em = $this->getEntityManager();
 
         $form->handleRequest($request);
 
-        if($form->isValid())
-        {
+        if ($form->isValid()) {
             $em->persist($contentProduct);
 
-            try
-            {
+            try {
                 $em->flush();
-            }
-            catch (DBALException $e)
-            {
-                return new JsonResponse(["errors" => ["db" => $e->getMessage()]]);
+            } catch (DBALException $e) {
+                return new JsonResponse(
+                    [
+                        "errors" => ["db" => $e->getMessage(),],
+                    ]
+                );
             }
 
             return new JsonResponse(
                 [
                     "message" => "Association successfully updated",
-                    "location" => $this->generateUrl("admin_content_product_tabs", ["id" => $contentProduct->getId()])
-                ]
-            , 302);
-        }
-        else
-        {
+                    "location" => $this->generateUrl("admin_content_product_tabs", ["id" => $contentProduct->getId(),])
+                ],
+                302);
+        } else {
             return $this->returnFormErrorsJsonResponse($form);
         }
     }
@@ -246,25 +247,22 @@ class ContentProductController extends BaseAdminController
     /**
      * @Route("/{id}/delete", name="admin_content_product_delete")
      *
-     * @param Request        $request
+     * @param Request $request
      * @param ContentProduct $contentProduct
      *
      * @return JsonResponse
      */
     public function deleteAction(Request $request, ContentProduct $contentProduct)
     {
-        try
-        {
+        try {
             $em = $this->getEntityManager();
             $em->remove($contentProduct);
             $em->flush();
-        }
-        catch(DBALException $e)
-        {
+        } catch (DBALException $e) {
             return new JsonResponse(
                 [
-                    "errors" => ["db" => $e->getMessage()],
-                    "message" => "Could not delete."
+                    "errors" => ["db" => $e->getMessage(),],
+                    "message" => "Could not delete.",
                 ]
             );
         }
@@ -272,8 +270,8 @@ class ContentProductController extends BaseAdminController
         return new JsonResponse(
             [
                 "message" => "Association successfully deleted.",
-                "location" => $this->generateUrl("admin_content_tabs") . "#tab2"
-            ]
-        , 302);
+                "location" => $this->generateUrl("admin_content_tabs")."#tab2",
+            ],
+            302);
     }
 }

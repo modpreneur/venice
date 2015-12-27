@@ -44,9 +44,7 @@ class ContentController extends BaseAdminController
 
         return $this->render(
             ":AdminBundle/Content:index.html.twig",
-            [
-                "contents" => $contents
-            ]
+            ["contents" => $contents,]
         );
     }
 
@@ -72,7 +70,7 @@ class ContentController extends BaseAdminController
      */
     public function tabAction(Request $request, Content $content)
     {
-        return $this->render(":AdminBundle/Content:tab.html.twig", ["content" => $content]);
+        return $this->render(":AdminBundle/Content:tab.html.twig", ["content" => $content,]);
     }
 
 
@@ -96,7 +94,18 @@ class ContentController extends BaseAdminController
         }
 
         $form = $this->get("admin.form_factory")
-            ->createCreateForm($this, $content, $content->getFormType([$content, $this->getEntityManager()]), "admin_content", ["contentType" => $contentType]);
+            ->createCreateForm(
+                $this,
+                $content,
+                $content->getFormType(
+                    [
+                        $content,
+                        $this->getEntityManager(),
+                    ]
+                ),
+                "admin_content",
+                ["contentType" => $contentType,]
+            );
         // Remove items field for now. todo: remove it in future?
         // Explanation:
         // The ContentInGroupType requires group id to fill it in the hidden field. But when the group is creating, there is no id.
@@ -137,7 +146,18 @@ class ContentController extends BaseAdminController
         $em = $this->getEntityManager();
 
         $form = $this->get("admin.form_factory")
-            ->createCreateForm($this, $content, $content->getFormType([$content, $this->getEntityManager()]), "admin_content", ["contentType" => $contentType]);
+            ->createCreateForm(
+                $this,
+                $content,
+                $content->getFormType(
+                    [
+                        $content,
+                        $this->getEntityManager()
+                    ]
+                ),
+                "admin_content",
+                ["contentType" => $contentType]
+            );
 
         $form->handleRequest($request);
 
@@ -148,9 +168,14 @@ class ContentController extends BaseAdminController
             return new JsonResponse(
                 [
                     "message" => "Content successfully created",
-                    "location" => $this->generateUrl("admin_content_tab", ["id" => $content->getId()])
+                    "location" => $this->generateUrl(
+                        "admin_content_tab",
+                        ["id" => $content->getId(),]
+                    )
                 ]
-                , 302);
+                ,
+                302
+            );
 
         } else {
             return $this->returnFormErrorsJsonResponse($form);
@@ -172,13 +197,23 @@ class ContentController extends BaseAdminController
     public function editAction(Request $request, Content $content)
     {
         $form = $this->get("admin.form_factory")
-            ->createEditForm($this, $content, $content->getFormType([$content, $this->getEntityManager()]), "admin_content");
+            ->createEditForm(
+                $this,
+                $content,
+                $content->getFormType(
+                    [
+                        $content,
+                        $this->getEntityManager(),
+                    ]
+                ),
+                "admin_content"
+            );
 
         return $this->render(
             ":AdminBundle/Content:edit.html.twig",
             [
                 "entity" => $content,
-                "form" => $form->createView()
+                "form" => $form->createView(),
             ]
         );
     }
@@ -216,7 +251,12 @@ class ContentController extends BaseAdminController
         $em = $this->getEntityManager();
 
         $form = $this->get("admin.form_factory")
-            ->createEditForm($this, $content, $content->getFormType(), "admin_content");
+            ->createEditForm(
+                $this,
+                $content,
+                $content->getFormType(),
+                "admin_content"
+            );
 
         $form->handleRequest($request);
 
@@ -226,13 +266,15 @@ class ContentController extends BaseAdminController
             try {
                 $em->flush();
             } catch (DBALException $e) {
-                return new JsonResponse(["errors" => ["db" => $e->getMessage()]]);
+                return new JsonResponse(
+                    [
+                        "errors" => ["db" => $e->getMessage(),]
+                    ]
+                );
             }
 
             return new JsonResponse(
-                [
-                    "message" => "Content successfully updated",
-                ]
+                ["message" => "Content successfully updated",]
             );
         } else {
             return $this->returnFormErrorsJsonResponse($form);
@@ -248,7 +290,18 @@ class ContentController extends BaseAdminController
     protected function updateGroupContentAction(Request $request, GroupContent $content)
     {
         $contentForm = $this->get("admin.form_factory")
-            ->createEditForm($this, $content, $content->getFormType([$content, $this->getEntityManager()]), "admin_content");
+            ->createEditForm(
+                $this,
+                $content,
+                $content->getFormType(
+                    [
+                        $content,
+                        $this->getEntityManager()
+                    ]
+                ),
+                "admin_content"
+            );
+
         $em = $this->getEntityManager();
 
         //Copy original items
@@ -272,13 +325,15 @@ class ContentController extends BaseAdminController
             try {
                 $em->flush();
             } catch (DBALException $e) {
-                return new JsonResponse(["errors" => ["db" => $e->getMessage()]]);
+                return new JsonResponse(
+                    [
+                        "errors" => ["db" => $e->getMessage(),]
+                    ]
+                );
             }
 
             return new JsonResponse(
-                [
-                    "message" => "Content successfully updated",
-                ]
+                ["message" => "Content successfully updated",]
             );
         } else {
             return $this->returnFormErrorsJsonResponse($contentForm);
