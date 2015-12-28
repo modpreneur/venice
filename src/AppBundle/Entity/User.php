@@ -306,6 +306,23 @@ class User extends TrinityUser
         return $this;
     }
 
+    /**
+     * Get the full name of the user if set. Return username otherwise.
+     *
+     * @return string
+     */
+    public function getFullNameOrUsername()
+    {
+        if($this->getFullName())
+        {
+            return $this->getFullName();
+        }
+        else
+        {
+            return $this->getUsername();
+        }
+    }
+
 
     /**
      * @param Product $product

@@ -60,11 +60,10 @@ class MenuListener
             ->setAttribute('icon', 'tiecons tiecons-book-text')
             ->setExtra('orderNumber', 3);
         //
-        //$menu
-        //    ->addChild('Users', array('route' => 'user'))
-        //    ->setAttribute('icon', 'tiecons tiecons-user-negative')
-        //    ->setExtra('orderNumber', 1)
-        //    ->setExtra('roles', ['ROLE_ADMIN_USER_VIEW']);
+        $menu
+            ->addChild('Users', array('route' => 'admin_user_index'))
+            ->setAttribute('icon', 'tiecons tiecons-user-negative')
+            ->setExtra('orderNumber', 4);
         //
         //$menu
         //    ->addChild('Newsletters', array('route' => 'newsletter'))

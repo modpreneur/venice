@@ -62,6 +62,14 @@ export default [
     {
         path: '/admin/contentProduct/new(/)',
         action: 'ContentProduct.new'
+    },
+    {
+        path: '/admin/user/new(/)',
+        action: 'User.new'
+    },
+    {
+        path: '/admin/user/tabs/:id(/)',
+        action: 'User.tabs'
     }
 ];
 
