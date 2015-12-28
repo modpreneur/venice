@@ -40,9 +40,7 @@ class ProductController extends BaseAdminController
 
         return $this->render(
             ":AdminBundle/Product:index.html.twig",
-            [
-                "products" => $products
-            ]
+            ["products" => $products,]
         );
     }
 
@@ -58,9 +56,7 @@ class ProductController extends BaseAdminController
     {
         return $this->render(
             ":AdminBundle/Product:tabs.html.twig",
-            [
-                "product" => $product
-            ]
+            ["product" => $product,]
         );
     }
 
@@ -80,13 +76,10 @@ class ProductController extends BaseAdminController
      */
     public function newAction(Request $request, $productType)
     {
-        try
-        {
+        try {
             $product = Product::createProductByType($productType);
-        }
-        catch(ReflectionException $e)
-        {
-            throw new NotFoundHttpException("Product type: " . $productType . " not found.");
+        } catch (ReflectionException $e) {
+            throw new NotFoundHttpException("Product type: ".$productType." not found.");
         }
 
         $form = $this->get("admin.form_factory")
@@ -95,17 +88,15 @@ class ProductController extends BaseAdminController
                 $product,
                 $product->getFormType(),
                 "admin_product",
-                [
-                    "productType" => $productType
-                ]
+                ["productType" => $productType,]
             );
 
         return $this->render(
             ':AdminBundle/Product:new.html.twig',
             [
-                'product'     => $product,
-                'form'        => $form->createView(),
-                'productType' => $productType
+                'product' => $product,
+                'form' => $form->createView(),
+                'productType' => $productType,
             ]
         );
     }
@@ -119,19 +110,16 @@ class ProductController extends BaseAdminController
      *
      * @param Request $request
      *
-     * @param string  $productType
+     * @param string $productType
      *
      * @return JsonResponse
      */
     public function createAction(Request $request, $productType)
     {
-        try
-        {
+        try {
             $product = Product::createProductByType($productType);
-        }
-        catch(ReflectionException $e)
-        {
-            throw new NotFoundHttpException("Product type: " . $productType . " not found.");
+        } catch (ReflectionException $e) {
+            throw new NotFoundHttpException("Product type: ".$productType." not found.");
         }
 
         $em = $this->getEntityManager();
@@ -142,34 +130,32 @@ class ProductController extends BaseAdminController
                 $product,
                 $product->getFormType(),
                 "admin_product",
-                [
-                    "productType" => $productType
-                ]
+                ["productType" => $productType,]
             );
 
         $productForm->handleRequest($request);
 
-        if($productForm->isValid())
-        {
+        if ($productForm->isValid()) {
             $em->persist($product);
 
-            try
-            {
+            try {
                 $em->flush();
-            }
-            catch (DBALException $e)
-            {
-                return new JsonResponse(['errors' => ['db' => $e->getMessage()]]);
+            } catch (DBALException $e) {
+                return new JsonResponse(
+                    [
+                        'errors' => ['db' => $e->getMessage(),]
+                    ]
+                );
             }
 
             return new JsonResponse(
                 [
                     "message" => "Product successfully created",
-                    "location" => $this->generateUrl("admin_product_index")
-                ], 302);
-        }
-        else
-        {
+                    "location" => $this->generateUrl("admin_product_edit", ["id" => $product->getId()]),
+                ],
+                302
+            );
+        } else {
             return $this->returnFormErrorsJsonResponse($productForm);
         }
     }
@@ -190,14 +176,19 @@ class ProductController extends BaseAdminController
     {
 //        $productType = $product->getFormType([$product]);
         $productForm = $this->get("admin.form_factory")
-            ->createEditForm($this, $product, $product->getFormType(), "admin_product", ["id" => $product->getId()]);
+            ->createEditForm($this,
+                $product,
+                $product->getFormType(),
+                "admin_product",
+                ["id" => $product->getId(),]
+            );
 
 
         return $this->render(
             ":AdminBundle/Product:edit.html.twig",
             [
                 "entity" => $product,
-                "form" => $productForm->createView()
+                "form" => $productForm->createView(),
             ]
 
         );
@@ -220,9 +211,7 @@ class ProductController extends BaseAdminController
         return $this
             ->render(
                 ":AdminBundle/Product:tabDelete.html.twig",
-                [
-                    "form" => $form->createView()
-                ]
+                ["form" => $form->createView(),]
             );
     }
 
@@ -247,29 +236,25 @@ class ProductController extends BaseAdminController
 
         $productForm->handleRequest($request);
 
-        if($productForm->isValid())
-        {
+        if ($productForm->isValid()) {
             $em->persist($product);
 
-            try
-            {
+            try {
                 $em->flush();
-            }
-            catch (DBALException $e)
-            {
-                return new JsonResponse(["errors" => ["db" => $e->getMessage()]]);
+            } catch (DBALException $e) {
+                return new JsonResponse(
+                    [
+                        "errors" => ["db" => $e->getMessage(),]
+                    ]
+                );
             }
 
             return new JsonResponse(
                 [
                     "message" => "Product successfully updated",
-                    "location" => $this->generateUrl("admin_product_index")
-                ],
-                302
+                ]
             );
-        }
-        else
-        {
+        } else {
             return $this->returnFormErrorsJsonResponse($productForm);
         }
     }
@@ -293,7 +278,7 @@ class ProductController extends BaseAdminController
             return new JsonResponse(
                 [
                     "errors" => ["db" => $e->getMessage()],
-                    "message" => "Could not delete."
+                    "message" => "Could not delete.",
                 ]
             );
         }
@@ -301,8 +286,9 @@ class ProductController extends BaseAdminController
         return new JsonResponse(
             [
                 "message" => "Product successfully deleted.",
-                "location" => $this->generateUrl("admin_product_index")
-            ]
-            , 302);
+                "location" => $this->generateUrl("admin_product_index"),
+            ],
+            302
+        );
     }
 }
