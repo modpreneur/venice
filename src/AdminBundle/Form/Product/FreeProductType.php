@@ -10,6 +10,7 @@ namespace AdminBundle\Form\Product;
 
 
 use AppBundle\Entity\Product\FreeProduct;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 class FreeProductType extends ProductType
@@ -26,7 +27,7 @@ class FreeProductType extends ProductType
         parent::buildForm($builder, $options);
 
         $builder
-            ->add("submit", "submit", ["label" => "Create"]);
+            ->add("submit", SubmitType::class, ["label" => "Create"]);
     }
 
 }

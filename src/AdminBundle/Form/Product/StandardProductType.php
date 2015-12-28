@@ -11,6 +11,7 @@ namespace AdminBundle\Form\Product;
 
 use AppBundle\Entity\Product\StandardProduct;
 use Doctrine\ORM\EntityRepository;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 class StandardProductType extends ProductType
@@ -41,7 +42,7 @@ class StandardProductType extends ProductType
 //            )
             ->add(
                 "submit",
-                "submit",
+                SubmitType::class,
                 [
                     "label" => "Create"
                 ]

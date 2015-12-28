@@ -9,6 +9,8 @@
 namespace AdminBundle\Form\Content;
 
 
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 class VideoContentType extends ContentType
@@ -18,28 +20,28 @@ class VideoContentType extends ContentType
         parent::buildForm($builder, $options);
 
         $builder
-            ->add("duration", "number", [
+            ->add("duration", NumberType::class, [
                     "required" => true
                 ]
             )
-            ->add("previewImage", "text", [
+            ->add("previewImage", TextType::class, [
                     "required" => true,
                     "label" => "Preview image link"
                 ]
             )
-            ->add("videoMobile", "text", [
+            ->add("videoMobile", TextType::class, [
                     "required" => false
                 ]
             )
-            ->add("videoLq", "text", [
+            ->add("videoLq", TextType::class, [
                     "required" => false
                 ]
             )
-            ->add("videoHq", "text", [
+            ->add("videoHq", TextType::class, [
                     "required" => false
                 ]
             )
-            ->add("videoHd", "text", [
+            ->add("videoHd", TextType::class, [
                     "required" => false
                 ]
             );

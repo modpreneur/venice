@@ -9,6 +9,9 @@
 namespace AdminBundle\Form;
 
 
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -23,21 +26,21 @@ class BlogArticleType extends AdminBaseType
         $builder
             ->add(
                 "title",
-                "text",
+                TextType::class,
                 [
                     "required" => true
                 ]
             )
             ->add(
                 "handle",
-                "text",
+                TextType::class,
                 [
                     "required" => false
                 ]
             )
             ->add(
                 "dateToPublish",
-                "datetime",
+                DateTimeType::class,
                 [
                     "required" => true,
                     "years" => [$currentYear, $currentYear+1, $currentYear+2, $currentYear+3]
@@ -46,7 +49,7 @@ class BlogArticleType extends AdminBaseType
 
             ->add(
                 "content",
-                "textarea",
+                TextareaType::class,
                 [
                     "required" => true
                 ]

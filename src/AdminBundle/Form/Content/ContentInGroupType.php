@@ -14,6 +14,9 @@ use AdminBundle\Form\DataTransformer\EntityToNumberTransformer;
 use AppBundle\Entity\Content\GroupContent;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -48,7 +51,7 @@ class ContentInGroupType extends AdminBaseType
         $builder
             ->add(
                 "content",
-                "entity",
+                EntityType::class,
                 [
                     "class" => "AppBundle\\Entity\\Content\\Content",
                     'query_builder' => $this->getQueryBuilderFunction(),
@@ -59,7 +62,7 @@ class ContentInGroupType extends AdminBaseType
             )
             ->add(
                 "group",
-                "hidden",
+                HiddenType::class,
                 [
                     // Uses model transformer
                     "data" => $this->groupContent,
@@ -68,7 +71,7 @@ class ContentInGroupType extends AdminBaseType
             )
             ->add(
                 "delay",
-                "integer",
+                IntegerType::class,
                 [
                     "empty_data" => 0,
                     "required" => false,
@@ -76,7 +79,7 @@ class ContentInGroupType extends AdminBaseType
             )
             ->add(
                 "orderNumber",
-                "integer",
+                IntegerType::class,
                 [
                     "empty_data" => 0,
                     "required" => false,

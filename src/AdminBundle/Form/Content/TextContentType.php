@@ -9,6 +9,7 @@
 namespace AdminBundle\Form\Content;
 
 
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 class TextContentType extends ContentType
@@ -18,7 +19,7 @@ class TextContentType extends ContentType
         parent::buildForm($builder, $options);
 
         $builder
-            ->add("text", "text");
+            ->add("text", TextType::class);
     }
 
 }

@@ -10,6 +10,10 @@ namespace AdminBundle\Form\User;
 
 
 use AdminBundle\Form\AdminBaseType;
+use Symfony\Component\Form\Extension\Core\Type\CountryType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -24,8 +28,8 @@ class UserType extends AdminBaseType
     {
         $builder
             ->add("username")
-            ->add("email", "email")
-            ->add("plainPassword", "repeated", [
+            ->add("email", EmailType::class)
+            ->add("plainPassword", RepeatedType::class, [
                 "type" => "password",
                 "options" => ["translation_domain" => "FOSUserBundle"],
                 "first_options" => ["label" => "Password"],
@@ -38,8 +42,8 @@ class UserType extends AdminBaseType
             ->add("firstName")
             ->add("lastName")
             ->add("phoneNumber")
-            ->add("website", "url", ["required" => false])
-            ->add("country", "country", [
+            ->add("website", UrlType::class, ["required" => false])
+            ->add("country", CountryType::class, [
                 "empty_value" => "Choose an option",
                 "preferred_choices" => ["US", "CZ"],
                 "required" => false,

@@ -10,6 +10,7 @@ namespace AdminBundle\Form\Content;
 
 
 use AdminBundle\Form\AdminBaseType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 class ContentType extends AdminBaseType
@@ -24,7 +25,7 @@ class ContentType extends AdminBaseType
         parent::buildForm($builder, $options);
 
         $builder
-            ->add("name", "text");
+            ->add("name", TextType::class);
     }
 
 }

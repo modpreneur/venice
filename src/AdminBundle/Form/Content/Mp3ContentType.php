@@ -9,6 +9,8 @@
 namespace AdminBundle\Form\Content;
 
 
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 class Mp3ContentType extends ContentType
@@ -18,8 +20,8 @@ class Mp3ContentType extends ContentType
         parent::buildForm($builder, $options);
 
         $builder
-            ->add("link", "text")
-            ->add("duration", "number");
+            ->add("link", TextType::class)
+            ->add("duration", NumberType::class);
     }
 
 }

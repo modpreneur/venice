@@ -9,6 +9,7 @@
 namespace AdminBundle\Form\Content;
 
 
+use AdminBundle\Form\Collection\CollectionType;
 use AppBundle\Entity\Content\GroupContent;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -44,7 +45,7 @@ class GroupContentType extends ContentType
         $builder
             ->add(
                 "items",
-                "collection",
+                CollectionType::class,
                 [
                     "type" => new ContentInGroupType($this->groupContent, $this->entityManager),
                     "required" => false,
