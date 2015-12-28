@@ -4,6 +4,7 @@ namespace AdminBundle\Services;
 
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormTypeInterface;
 
 class FormFactory
@@ -24,22 +25,22 @@ class FormFactory
     {
         $params['id'] = $entity->getId();
         $form = $controller->createForm(
-            $entityType,
+            get_class($entityType),
             $entity,
-            array(
+            [
                 'action' => $controller->generateUrl($urlPrefix.'_update', $params),
                 'method' => 'PUT',
                 'attr' => ['class' => 'edit-form'],
-            )
+            ]
         );
 
         $form->add(
             'submit',
-            'submit',
-            array(
+            SubmitType::class,
+            [
                 'label' => 'Edit',
                 'attr' => ['class' => 'button edit']
-            )
+            ]
 
         );
 
@@ -60,7 +61,7 @@ class FormFactory
     public function createCreateForm(Controller $controller, $entity, FormTypeInterface $entityType, $urlPrefix, $params = [])
     {
         $form = $controller->createForm(
-            $entityType,
+            get_class($entityType),
             $entity,
             [
                 'action' => $controller->generateUrl($urlPrefix.'_create', $params),
@@ -71,7 +72,7 @@ class FormFactory
 
         $form->add(
             'submit',
-            'submit',
+            SubmitType::class,
             [
                 'label' => 'Create',
                 'attr' => ['class' => 'button create']
@@ -105,7 +106,7 @@ class FormFactory
             )
             ->add(
                 'submit',
-                'submit',
+                SubmitType::class,
                 [
                     'label' => 'Delete',
                     'attr' => [
