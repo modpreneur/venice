@@ -18,6 +18,3 @@ mysql:
     - MYSQL_DATABASE=venice
     - MYSQL_USER=user
     - MYSQL_PASSWORD=pass
-
-
-

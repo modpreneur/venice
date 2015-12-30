@@ -19,7 +19,6 @@ class AppKernel extends Kernel
             new FOS\UserBundle\FOSUserBundle(),
             new FOS\RestBundle\FOSRestBundle(),
             new Anchovy\CURLBundle\AnchovyCURLBundle(),
-            new RaulFraile\Bundle\LadybugBundle\RaulFraileLadybugBundle(),
             new JMS\SerializerBundle\JMSSerializerBundle(),
 
             new \Knp\Bundle\MenuBundle\KnpMenuBundle(),

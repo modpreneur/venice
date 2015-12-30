@@ -11,11 +11,10 @@ RUN apt-get -y install \
     libpq-dev \
     libpq5 \
     zlib1g-dev \
-    wget\
-    libmcrypt-dev
+    wget
 
 
-RUN docker-php-ext-install curl json mbstring opcache pdo_mysql zip mcrypt
+RUN docker-php-ext-install curl json mbstring opcache pdo_mysql zip
 
 # Install apcu
 RUN pecl install -o -f apcu-5.1.2 apcu_bc-beta \
