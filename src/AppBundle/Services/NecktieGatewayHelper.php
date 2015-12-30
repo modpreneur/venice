@@ -31,6 +31,11 @@ class NecktieGatewayHelper implements NecktieGatewayHelperInterface
         $userInfo = [];
         $responseContent = json_decode($response, true);
 
+        if(!$responseContent) {
+            throw new \Exception("The response body is not valid json. The response was: ".$responseContent);
+        }
+
+
         if(array_key_exists("user", $responseContent))
         {
             $responseContent = $responseContent["user"];
@@ -55,7 +60,7 @@ class NecktieGatewayHelper implements NecktieGatewayHelperInterface
     /**
      * @inheritdoc
      */
-    public function createAccessTokenFromArray($array)
+    public function createAccessTokenFromArray(array $array)
     {
         if(array_key_exists("access_token", $array)
            && array_key_exists("refresh_token", $array)
@@ -82,7 +87,7 @@ class NecktieGatewayHelper implements NecktieGatewayHelperInterface
      *
      * @return array
      */
-    public function getInvoicesFromNecktieResponse($response)
+    public function getInvoicesFromNecktieResponse(array $response)
     {
         $invoices = [];
 

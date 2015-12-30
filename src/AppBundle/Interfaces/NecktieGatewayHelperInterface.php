@@ -10,11 +10,12 @@ namespace AppBundle\Interfaces;
 
 
 use AppBundle\Entity\NecktieToken;
+use AppBundle\Entity\OAuthToken;
 
 interface NecktieGatewayHelperInterface
 {
     /**
-     * @param $response
+     * @param $response string
      *
      * @return array|null
      */
@@ -24,11 +25,11 @@ interface NecktieGatewayHelperInterface
     /**
      * Create a NecktieToken object from oauth server response converted to array.
      *
-     * @param $array
+     * @param $array array
      *
-     * @return NecktieToken|null
+     * @return OAuthToken|null
      */
-    public function createAccessTokenFromArray($array);
+    public function createAccessTokenFromArray(array $array);
 
 
     /**
