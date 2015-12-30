@@ -25,7 +25,7 @@ class FormFactory
     {
         $params['id'] = $entity->getId();
         $form = $controller->createForm(
-            get_class($entityType),
+            $entityType,
             $entity,
             [
                 'action' => $controller->generateUrl($urlPrefix.'_update', $params),
@@ -61,7 +61,7 @@ class FormFactory
     public function createCreateForm(Controller $controller, $entity, FormTypeInterface $entityType, $urlPrefix, $params = [])
     {
         $form = $controller->createForm(
-            get_class($entityType),
+            $entityType,
             $entity,
             [
                 'action' => $controller->generateUrl($urlPrefix.'_create', $params),
