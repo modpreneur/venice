@@ -73,7 +73,7 @@ RUN composer install --no-scripts --optimize-autoloader
 RUN npm install -g jspm \
     && cd web/js \
     && jspm config registries.github.auth "dmxjZWs6NjgwOGM3MzVkZDkwMDZjNjBiOWRmM2RjYjc5MTI5OGUwMjkxNjgzZg==" \
-    && jspm install \
+    && jspm install -y \
     && nodejs ./scripts/buildBundles.js
 
 EXPOSE 80
