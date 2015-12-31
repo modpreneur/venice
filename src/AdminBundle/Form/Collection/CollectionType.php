@@ -94,14 +94,4 @@ class CollectionType extends AbstractType
 
         $resolver->setNormalizer('options', $optionsNormalizer);
     }
-
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getName()
-    {
-        return 'collection';
-    }
-
 }
