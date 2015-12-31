@@ -57,7 +57,7 @@ class ContentInGroupType extends AdminBaseType
                     'query_builder' => $this->getQueryBuilderFunction(),
                     "choice_label" => "name",
                     "label" => "Content",
-                    "empty_value" => " ",
+                    "placeholder" => "Choose content",
                 ]
             )
             ->add(
@@ -103,7 +103,6 @@ class ContentInGroupType extends AdminBaseType
         $resolver->setDefaults(
             [
                 "data_class" => "AppBundle\\Entity\\Content\\ContentInGroup",
-                "label" => " "
             ]
         );
     }

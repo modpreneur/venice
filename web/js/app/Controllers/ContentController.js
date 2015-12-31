@@ -25,7 +25,7 @@ export default class ContetntController extends Controller {
 
             // Collection
             $scope.collection = _.map(qAll('[data-prototype]'), function (node) {
-                return new Collection(node, {addFirst:false});
+                return new Collection(node, {addFirst:false, label:true});
             });
         }, false, this);
 

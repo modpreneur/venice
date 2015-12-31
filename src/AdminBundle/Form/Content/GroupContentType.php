@@ -49,7 +49,7 @@ class GroupContentType extends ContentType
                 [
                     "type" => new ContentInGroupType($this->groupContent, $this->entityManager),
                     "required" => false,
-                    "label" => " ",
+                    "label" => "Contents",
                     "allow_add" => true,
                     "allow_delete" => true,
                 ]
