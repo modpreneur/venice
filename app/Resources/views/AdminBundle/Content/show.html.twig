@@ -1,0 +1,18 @@
+<div class="content-show">
+    <table class="record_properties grid">
+        <tbody>
+        <tr>
+            <th>Id</th>
+            <td>{{ content.id }}</td>
+        </tr>
+        <tr>
+            <th>Name</th>
+            <td>{{ content.name }}</td>
+        </tr>
+
+        {% block tableContent %}
+
+        {% endblock %}
+        </tbody>
+    </table>
+</div>

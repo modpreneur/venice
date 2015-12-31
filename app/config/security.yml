@@ -7,14 +7,34 @@ security:
 
     role_hierarchy:
         ROLE_USER: ROLE_USER
+        ROLE_PAID_USER: ROLE_USER
+        ROLE_ADMIN: ROLE_PAID_USER
 
-        ROLE_ADMIN_CONTENT_EDIT: [ROLE_USER, ROLE_ADMIN]
+        ROLE_ADMIN_PRODUCT_VIEW: ROLE_ADMIN
+        ROLE_ADMIN_PRODUCT_EDIT: ROLE_ADMIN_PRODUCT_VIEW
 
-        ROLE_ADMIN_USERS_EDIT: [ROLE_USER, ROLE_ADMIN, ROLE_ADMIN_CONTENT_EDIT]
+        ROLE_ADMIN_CONTENT_VIEW: ROLE_ADMIN
+        ROLE_ADMIN_CONTENT_EDIT: ROLE_ADMIN_CONTENT_VIEW
 
-        ROLE_ADMIN_PRODUCTS_EDIT: [ROLE_USER, ROLE_ADMIN, ROLE_ADMIN_CONTENT_EDIT, ROLE_ADMIN_USERS_EDIT]
+        ROLE_ADMIN_CONTENT_PRODUCT_VIEW: ROLE_ADMIN
+        ROLE_ADMIN_CONTENT_PRODUCT_EDIT: ROLE_ADMIN_CONTENT_PRODUCT_VIEW
 
-        ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_ADMIN, ROLE_ADMIN_CONTENT_EDIT, ROLE_ADMIN_USERS_EDIT, ROLE_ADMIN_PRODUCTS_EDIT]
+        ROLE_ADMIN_USER_VIEW: ROLE_ADMIN
+        ROLE_ADMIN_USER_EDIT: ROLE_ADMIN_USER_VIEW
+
+        ROLE_ADMIN_BLOG_VIEW: ROLE_ADMIN
+        ROLE_ADMIN_BLOG_EDIT: ROLE_ADMIN_BLOG_VIEW
+
+#       see: http://symfony.com/doc/current/cookbook/security/impersonating_user.html
+        ROLE_USER_SWITCHER: [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
+
+        ROLE_SUPER_ADMIN:
+            - ROLE_ADMIN_PRODUCT_EDIT
+            - ROLE_ADMIN_CONTENT_EDIT
+            - ROLE_ADMIN_CONTENT_PRODUCT_EDIT
+            - ROLE_ADMIN_USER_EDIT
+            - ROLE_ADMIN_BLOG_EDIT
+            - ROLE_USER_SWITCHER
 
     providers:
         fos_userbundle:
@@ -27,6 +47,7 @@ security:
 
         main:
             pattern: ^/
+            switch_user: true
             form_login:
                 provider: fos_userbundle
                 csrf_provider: security.csrf.token_manager
@@ -38,6 +59,7 @@ security:
 
 
     access_control:
+        - { path: ^/admin, role: ROLE_ADMIN }
         - { path: ^/login, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/login-response, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/notify, role: [IS_AUTHENTICATED_ANONYMOUSLY]}

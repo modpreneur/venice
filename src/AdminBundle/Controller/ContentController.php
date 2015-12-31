@@ -52,6 +52,26 @@ class ContentController extends BaseAdminController
         );
     }
 
+
+    /**
+     * @Route("/show/{id}", name="admin_content_show")
+     * @Method("GET")
+     * @Security("is_granted('ROLE_ADMIN_CONTENT_VIEW')")
+     *
+     * @param Request $request
+     * @param Content $content
+     *
+     * @return Response
+     */
+    public function showAction(Request $request, Content $content)
+    {
+        return $this->render(
+            ":AdminBundle/Content:show".ucfirst($content->getType()).".html.twig",
+            ["content" => $content]
+        );
+    }
+
+
     /**
      * @Route("/tabs/{id}", name="admin_content_tabs")
      * @Method("GET")
@@ -64,7 +84,7 @@ class ContentController extends BaseAdminController
      */
     public function tabsAction(Request $request, Content $content)
     {
-        return $this->render("tabs.html.twig", ["content" => $content,]);
+        return $this->render(":AdminBundle/Content:tabs.html.twig", ["content" => $content,]);
     }
 
 
@@ -163,7 +183,7 @@ class ContentController extends BaseAdminController
                 [
                     "message" => "Content successfully created",
                     "location" => $this->generateUrl(
-                        "admin_content_tab",
+                        "admin_content_tabs",
                         ["id" => $content->getId(),]
                     )
                 ]

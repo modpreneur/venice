@@ -27,6 +27,7 @@ class GroupContent extends Content
      * @var ArrayCollection<ContentInGroup>
      *
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Content\ContentInGroup", mappedBy="group", cascade={"PERSIST"})
+     * @ORM\OrderBy({"orderNumber" = "ASC"})
      */
     protected $items;
 

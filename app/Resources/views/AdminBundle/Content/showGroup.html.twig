@@ -1,0 +1,12 @@
+{% extends ":AdminBundle/Content:show.html.twig" %}
+
+{% block tableContent %}
+    <tr>
+        <th>Items</th>
+        <td>
+            {% for item in content.items %}
+                {{ item.content.name }} with delay: {{ item.delay }}<br>
+            {% endfor %}
+        </td>
+    </tr>
+{% endblock %}
