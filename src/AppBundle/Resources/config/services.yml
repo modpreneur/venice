@@ -7,7 +7,7 @@ services:
         arguments:
             - @service_container
             - @doctrine.orm.entity_manager
-            - @app.services.connector
+#            - @app.services.connector
             - @security.token_storage
             - @router
             - @app.services.necktie_gateway_helper
@@ -17,10 +17,6 @@ services:
 
     app.services.necktie_gateway_helper:
         class: AppBundle\Services\NecktieGatewayHelper
-
-    app.services.connector:
-        class: AppBundle\Services\Connector
-        arguments:  [@anchovy.curl]
 
     app.services.connection_manager:
         class: AppBundle\Services\ConnectionManager

@@ -22,7 +22,6 @@
         "incenteev/composer-parameter-handler": "~2.1",
         "dmishh/settings-bundle": "dev-master",
         "cocur/slugify": "~1.4",
-        "anchovy/curl-bundle": "dev-master",
         "whiteoctober/breadcrumbs-bundle": "^1.2",
         "phpunit/phpunit": "^5.0",
         "friendsofsymfony/rest-bundle": "~1.7",
@@ -31,7 +30,9 @@
         "trinity/framework": "dev-master",
         "trinity/notification": "dev-master",
         "trinity/admin": "dev-master",
-        "modpreneur/bowtie": "dev-master"
+        "modpreneur/bowtie": "dev-master",
+        "guzzlehttp/guzzle": "~6",
+        "sensiolabs-de/deprecation-detector": "0.1.0-alpha3"
     },
     "require-dev": {
         "sensio/generator-bundle": "~3.0",

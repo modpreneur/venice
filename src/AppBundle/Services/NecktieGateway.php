@@ -16,6 +16,8 @@ use AppBundle\Exceptions\ExpiredRefreshTokenException;
 use AppBundle\Exceptions\UnsuccessfulNecktieResponseException;
 use AppBundle\Interfaces\NecktieGatewayInterface;
 use Doctrine\ORM\EntityManagerInterface;
+use GuzzleHttp\Client;
+use GuzzleHttp\Psr7\Request;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Cookie;
@@ -40,11 +42,6 @@ class NecktieGateway implements NecktieGatewayInterface
     protected $entityManager;
 
     /**
-     * @var Connector
-     */
-    protected $connector;
-
-    /**
      * @var ContainerInterface
      */
     protected $container;
@@ -64,26 +61,37 @@ class NecktieGateway implements NecktieGatewayInterface
      */
     protected $helper;
 
+    /**
+     * @var  Client
+     */
+    protected $client;
+
+    /** @var  Cookie */
     protected $stateCookie;
+
+    /** @var string */
     protected $necktieUrl;
 
     public function __construct(
         $container,
         $entityManager,
-        $connector,
         $tokenStorage,
         $router,
         $helper
     )
     {
         $this->entityManager = $entityManager;
-        $this->connector = $connector;
         $this->container = $container;
         $this->tokenStorage = $tokenStorage;
         $this->router = $router;
         $this->helper = $helper;
 
         $this->necktieUrl = $this->container->getParameter("necktie_url");
+        if(!$this->necktieUrl){
+            throw new \Exception("Please define parameter: \"necktie_url\"");
+        }
+
+        $this->client = new Client(["base_uri" => $this->necktieUrl]);
     }
 
 
@@ -98,11 +106,16 @@ class NecktieGateway implements NecktieGatewayInterface
     {
         $necktieUrl = $this->necktieUrl . self::NECKTIE_OAUTH_AUTH_URI;
         $this->stateCookie = new Cookie(self::STATE_COOKIE_NAME, hash("sha256", rand() + time()));
+        $router = $this->router;
 
         $queryParameters = [
             "client_id" => $this->container->getParameter("necktie_client_id"),
             "client_secret" => $this->container->getParameter("necktie_client_secret"),
-            "redirect_uri" => $this->router->generate($this->container->getParameter("login_response_route"), [], $this->router::ABSOLUTE_URL), // phpstorm marks this as an error... it's not!
+            "redirect_uri" => $this->router->generate(
+                $this->container->getParameter("login_response_route"),
+                [],
+                $router::ABSOLUTE_URL)
+            ,
             "grant_type" => "trusted_authorization",
             "state" => $this->stateCookie->getValue()
         ];
@@ -131,15 +144,16 @@ class NecktieGateway implements NecktieGatewayInterface
             throw new \InvalidArgumentException("Access token has to be valid string");
         }
 
-        $necktieUrl = $this->necktieUrl . self::NECKTIE_USER_PROFILE_URI;
-        $response = $this->connector->get($necktieUrl, $accessToken);
+        $request = new Request("GET", self::NECKTIE_USER_PROFILE_URI, ["Authorization" =>  "Bearer {$accessToken}"]);
+        $response = $this->client->send($request);
+        $responseData = $response->getBody()->getContents();
 
-        if(!$this->helper->isResponseOk($response))
+        if(!$this->helper->isResponseOk($responseData))
         {
             throw new UnsuccessfulNecktieResponseException();
         }
 
-        $userInfo = $this->helper->getUserInfoFromNecktieProfileResponse($response);
+        $userInfo = $this->helper->getUserInfoFromNecktieProfileResponse($responseData);
 
         if($userInfo)
         {
@@ -263,19 +277,19 @@ class NecktieGateway implements NecktieGatewayInterface
      */
     public function refreshAccessToken(User $user)
     {
-        $response = $this->connector->postAndGetJson(
-            $this->necktieUrl . self::NECKTIE_OATH_TOKEN_URI,
-            [
-                "client_id" => $this->container->getParameter("necktie_client_id"),
-                "client_secret" => $this->container->getParameter("necktie_client_secret"),
-                "grant_type" => "refresh_token",
-                "refresh_token" => $user->getLastRefreshToken()
-            ]
-        );
+        $response = $this->client->request("POST", self::NECKTIE_OATH_TOKEN_URI, ["json" => [
+            "client_id" => $this->container->getParameter("necktie_client_id"),
+            "client_secret" => $this->container->getParameter("necktie_client_secret"),
+            "grant_type" => "refresh_token",
+            "refresh_token" => $user->getLastRefreshToken()
+        ]]);
 
-        if(!$response)
+        $rawResponseData = $response->getBody()->getContents();
+        $responseData = json_decode($rawResponseData, true);
+
+        if(!$responseData)
         {
-            throw new Exception("Necktie response error");
+            throw new Exception("Necktie response error. The response was: {$rawResponseData}");
         }
 
         if($this->helper->isInvalidClientResponse($response))
@@ -287,11 +301,12 @@ class NecktieGateway implements NecktieGatewayInterface
         {
             $token = $this->helper->createAccessTokenFromArray($response);
 
-            if($token)
+            if($token) {
                 $user->addOAuthToken($token);
-            else
+            }
+            else {
                 throw new \Exception("Could not get token from response. Have you configured necktie client id and secret?");
-
+            }
         }
         else
         {
@@ -468,16 +483,23 @@ class NecktieGateway implements NecktieGatewayInterface
             return null;
         }
 
-        $necktieUrl = $this->necktieUrl . $uri;
+        $response = $this->client->request(
+            "GET",
+            $uri,
+            [
+                "query" => $queryParameters,
+                "headers" => ["Authorization" =>  "Bearer {$accessToken}"],
+            ]
+        );
 
-        $rawResponse = $this->connector->get($necktieUrl, $accessToken, $queryParameters);
-        $response = json_decode($rawResponse, true);
+        $rawResponseData = $response->getBody()->getContents();
+        $responseData = json_decode($rawResponseData, true);
 
-        if(!$response || !$this->helper->isResponseOk($response))
+        if(!$responseData || !$this->helper->isResponseOk($responseData))
         {
-            throw new UnsuccessfulNecktieResponseException($rawResponse);
+            throw new UnsuccessfulNecktieResponseException($rawResponseData);
         }
 
-        return $response;
+        return json_decode($rawResponseData, true);
     }
 }

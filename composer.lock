@@ -4,62 +4,9 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "82373d3cc146cfaf074833d7e26bbbed",
-    "content-hash": "18eddd5f758cf0c0d89c1e9f277ee63e",
+    "hash": "ea2812224e0225f46cc2ceca8b461be2",
+    "content-hash": "423d743c045e2597c9d745ba461cb2ad",
     "packages": [
-        {
-            "name": "anchovy/curl-bundle",
-            "version": "dev-master",
-            "target-dir": "Anchovy/CURLBundle",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/Iman/AnchovyCURLBundle.git",
-                "reference": "a8052d78adde0d126a096ff15eb90f0ad492f8c0"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/Iman/AnchovyCURLBundle/zipball/a8052d78adde0d126a096ff15eb90f0ad492f8c0",
-                "reference": "a8052d78adde0d126a096ff15eb90f0ad492f8c0",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.2",
-                "symfony/framework-bundle": "~2.3"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "~4.1",
-                "symfony/symfony": "~2.3"
-            },
-            "type": "symfony-bundle",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-0": {
-                    "Anchovy\\CURLBundle\\": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Iman Samizadeh",
-                    "email": "iman@imanpage.com"
-                }
-            ],
-            "description": "This bundle provides a simple OOP interfaces for cURL php wrapper.",
-            "homepage": "http://www.imanpage.com/",
-            "keywords": [
-                "PHP cURL",
-                "Symfony2 cURL",
-                "curl"
-            ],
-            "time": "2015-11-08 19:56:07"
-        },
         {
             "name": "apy/datagrid-bundle",
             "version": "2.2.16",
@@ -365,33 +312,33 @@
         },
         {
             "name": "doctrine/cache",
-            "version": "v1.5.4",
+            "version": "v1.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/cache.git",
-                "reference": "47cdc76ceb95cc591d9c79a36dc3794975b5d136"
+                "reference": "f8af318d14bdb0eff0336795b428b547bd39ccb6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/cache/zipball/47cdc76ceb95cc591d9c79a36dc3794975b5d136",
-                "reference": "47cdc76ceb95cc591d9c79a36dc3794975b5d136",
+                "url": "https://api.github.com/repos/doctrine/cache/zipball/f8af318d14bdb0eff0336795b428b547bd39ccb6",
+                "reference": "f8af318d14bdb0eff0336795b428b547bd39ccb6",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.2"
+                "php": "~5.5|~7.0"
             },
             "conflict": {
                 "doctrine/common": ">2.2,<2.4"
             },
             "require-dev": {
-                "phpunit/phpunit": ">=3.7",
+                "phpunit/phpunit": "~4.8|~5.0",
                 "predis/predis": "~1.0",
                 "satooshi/php-coveralls": "~0.6"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.5.x-dev"
+                    "dev-master": "1.6.x-dev"
                 }
             },
             "autoload": {
@@ -431,7 +378,7 @@
                 "cache",
                 "caching"
             ],
-            "time": "2015-12-19 05:03:47"
+            "time": "2015-12-31 16:37:02"
         },
         {
             "name": "doctrine/collections",
@@ -2389,6 +2336,51 @@
             "time": "2015-11-30 00:11:35"
         },
         {
+            "name": "nikic/php-parser",
+            "version": "v1.4.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/nikic/PHP-Parser.git",
+                "reference": "f78af2c9c86107aa1a34cd1dbb5bbe9eeb0d9f51"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/f78af2c9c86107aa1a34cd1dbb5bbe9eeb0d9f51",
+                "reference": "f78af2c9c86107aa1a34cd1dbb5bbe9eeb0d9f51",
+                "shasum": ""
+            },
+            "require": {
+                "ext-tokenizer": "*",
+                "php": ">=5.3"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.4-dev"
+                }
+            },
+            "autoload": {
+                "files": [
+                    "lib/bootstrap.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Nikita Popov"
+                }
+            ],
+            "description": "A PHP parser written in PHP",
+            "keywords": [
+                "parser",
+                "php"
+            ],
+            "time": "2015-09-19 14:15:08"
+        },
+        {
             "name": "oyejorge/less.php",
             "version": "v1.7.0.10",
             "source": {
@@ -3685,6 +3677,62 @@
             "time": "2015-12-18 17:39:27"
         },
         {
+            "name": "sensiolabs-de/deprecation-detector",
+            "version": "0.1.0-alpha3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sensiolabs-de/deprecation-detector.git",
+                "reference": "014b084a6cdee5529170bd743efc54c18322926c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sensiolabs-de/deprecation-detector/zipball/014b084a6cdee5529170bd743efc54c18322926c",
+                "reference": "014b084a6cdee5529170bd743efc54c18322926c",
+                "shasum": ""
+            },
+            "require": {
+                "nikic/php-parser": "^1.3",
+                "php": ">=5.3.9",
+                "phpdocumentor/reflection-docblock": "~2.0",
+                "symfony/config": "^2.7",
+                "symfony/console": "~2.6",
+                "symfony/dependency-injection": "^2.7",
+                "symfony/expression-language": "^2.7",
+                "symfony/filesystem": "^2.7",
+                "symfony/finder": "~2.6",
+                "symfony/stopwatch": "^2.7"
+            },
+            "require-dev": {
+                "mikey179/vfsstream": "^1.0",
+                "phpunit/phpunit": "4.8.*"
+            },
+            "bin": [
+                "bin/deprecation-detector"
+            ],
+            "type": "application",
+            "autoload": {
+                "psr-4": {
+                    "SensioLabs\\DeprecationDetector\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Marvin Klemp",
+                    "email": "marvin.klemp@sensiolabs.de"
+                },
+                {
+                    "name": "The SensioLabs Deutschland Team",
+                    "email": "opensource@sensiolabs.de"
+                }
+            ],
+            "description": "Command line tool to detect usage of deprecated code",
+            "time": "2015-12-04 14:08:33"
+        },
+        {
             "name": "sensiolabs/security-checker",
             "version": "v3.0.2",
             "source": {
@@ -4562,12 +4610,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/modpreneur/trinity-admin.git",
-                "reference": "92b65fb48d5c2cb2f47366ff3d61e2c0b67dd1cd"
+                "reference": "e80f724255b1c4b7f60c7c6d456b73ea00ae4ba7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/modpreneur/trinity-admin/zipball/92b65fb48d5c2cb2f47366ff3d61e2c0b67dd1cd",
-                "reference": "92b65fb48d5c2cb2f47366ff3d61e2c0b67dd1cd",
+                "url": "https://api.github.com/repos/modpreneur/trinity-admin/zipball/e80f724255b1c4b7f60c7c6d456b73ea00ae4ba7",
+                "reference": "e80f724255b1c4b7f60c7c6d456b73ea00ae4ba7",
                 "shasum": ""
             },
             "require": {
@@ -4609,7 +4657,7 @@
                 }
             ],
             "description": "Trinity Admin bundle",
-            "time": "2015-12-30 10:18:14"
+            "time": "2015-12-31 15:13:12"
         },
         {
             "name": "trinity/framework",
@@ -5094,11 +5142,11 @@
     "stability-flags": {
         "friendsofsymfony/user-bundle": 20,
         "dmishh/settings-bundle": 20,
-        "anchovy/curl-bundle": 20,
         "trinity/framework": 20,
         "trinity/notification": 20,
         "trinity/admin": 20,
-        "modpreneur/bowtie": 20
+        "modpreneur/bowtie": 20,
+        "sensiolabs-de/deprecation-detector": 15
     },
     "prefer-stable": false,
     "prefer-lowest": false,
