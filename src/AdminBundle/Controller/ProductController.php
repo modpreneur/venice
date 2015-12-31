@@ -14,6 +14,7 @@ use Doctrine\DBAL\DBALException;
 use ReflectionException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -28,6 +29,7 @@ class ProductController extends BaseAdminController
      * @Route("", name="admin_product_index")
      * @Route("/")
      * @Method("GET")
+     * @Security("is_granted('ROLE_ADMIN_PRODUCT_VIEW')")
      *
      * @param Request $request
      *
@@ -46,7 +48,28 @@ class ProductController extends BaseAdminController
 
 
     /**
+     * @Route("/show/{id}", name="admin_product_show")
+     * @Method("GET")
+     * @Security("is_granted('ROLE_ADMIN_PRODUCT_VIEW')")
+     *
+     * @param Request $request
+     * @param Product $product
+     *
+     * @return Response
+     */
+    public function showAction(Request $request, Product $product)
+    {
+        return $this->render(
+            ":AdminBundle/Product:show.html.twig",
+            ["product" => $product]
+        );
+    }
+
+
+    /**
      * @Route("/tabs/{id}", name="admin_product_tabs")
+     * @Security("is_granted('ROLE_ADMIN_PRODUCT_VIEW')")
+     *
      * @param Request $request
      * @param Product $product
      *
@@ -66,12 +89,12 @@ class ProductController extends BaseAdminController
      *
      * @Route("/new/{productType}",requirements={"productType": "\w+"}, name="admin_product_new")
      * @Method("GET")
+     * @Security("is_granted('ROLE_ADMIN_PRODUCT_EDIT')")
      *
      * @param Request $request
      * @param         $productType
      *
      * @return \Symfony\Component\HttpFoundation\Response
-     * @internal param $type
      *
      */
     public function newAction(Request $request, $productType)
@@ -107,6 +130,7 @@ class ProductController extends BaseAdminController
      *
      * @Route("/create/{productType}",requirements={"productType": "\w+"}, name="admin_product_create")
      * @Method("POST")
+     * @Security("is_granted('ROLE_ADMIN_PRODUCT_EDIT')")
      *
      * @param Request $request
      *
@@ -166,7 +190,7 @@ class ProductController extends BaseAdminController
      *
      * @Route("/edit/{id}", requirements={"id": "\d+"}, name="admin_product_edit")
      * @Method("GET")
-     *
+     * @Security("is_granted('ROLE_ADMIN_PRODUCT_EDIT')")
      * @param Request $request
      * @param Product $product
      *
@@ -174,7 +198,6 @@ class ProductController extends BaseAdminController
      */
     public function editAction(Request $request, Product $product)
     {
-//        $productType = $product->getFormType([$product]);
         $productForm = $this->get("admin.form_factory")
             ->createEditForm($this,
                 $product,
@@ -197,6 +220,8 @@ class ProductController extends BaseAdminController
 
     /**
      * @Route("/tab/{id}/delete", name="admin_product_delete_tab")
+     * @Method("GET")
+     * @Security("is_granted('ROLE_ADMIN_PRODUCT_EDIT')")
      *
      * @param Product $product
      *
@@ -221,6 +246,7 @@ class ProductController extends BaseAdminController
      *
      * @Route("/{id}/update", requirements={"id": "\d+"}, name="admin_product_update")
      * @Method("PUT")
+     * @Security("is_granted('ROLE_ADMIN_PRODUCT_EDIT')")
      *
      * @param Request $request
      * @param Product $product
@@ -262,6 +288,8 @@ class ProductController extends BaseAdminController
 
     /**
      * @Route("/{id}/delete", name="admin_product_delete")
+     * @Method("DELETE")
+     * @Security("is_granted('ROLE_ADMIN_PRODUCT_EDIT')")
      *
      * @param Request $request
      * @param Product $product

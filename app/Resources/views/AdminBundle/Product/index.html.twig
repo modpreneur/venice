@@ -9,19 +9,17 @@
 {% endblock %}
 
 {% block pageAction %}
-    {#todo: button to create 2 product types?#}
-    <div class="navigation-box row margin-top-20">
-        <a class="new-entry" id="newEntryIcon" href="{{ path('admin_product_new', {'productType': 'standard'}) }}">
-            <i class="trinity trinity-plus"></i>
-            <span class="hover-text">Create a new product</span>
-        </a>
-    </div>
+    {% if is_granted('ROLE_ADMIN_PRODUCT_EDIT') %}
+        {#todo: button to create 2 product types?#}
+    {% endif %}
 {% endblock %}
 
 
 {% block pageBody %}
-    <a href="{{ path("admin_product_new", {"productType":"free"}) }}" class="button">New free</a>
-    <a href="{{ path("admin_product_new", {"productType":"standard"}) }}" class="button">New standard</a>
+    {% if is_granted('ROLE_ADMIN_PRODUCT_EDIT') %}
+        <a href="{{ path("admin_product_new", {"productType":"free"}) }}" class="button">New free</a>
+        <a href="{{ path("admin_product_new", {"productType":"standard"}) }}" class="button">New standard</a>
+    {% endif %}
     <div class="wrapper-grid">
         <ul>
             {% for product in products %}

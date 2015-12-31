@@ -25,7 +25,7 @@ export default class ContetntController extends Controller {
      * @param $scope
      */
     newAction($scope) {
-        $scope.form = new TrinityForm(q('form[name="usertype"]'), TrinityForm.formType.NEW);
+        $scope.form = new TrinityForm(q('form[name="user"]'), TrinityForm.formType.NEW);
     }
 
 }

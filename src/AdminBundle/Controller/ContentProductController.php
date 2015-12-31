@@ -13,6 +13,7 @@ use AppBundle\Entity\ContentProduct;
 use Doctrine\DBAL\DBALException;
 use FOS\RestBundle\Controller\Annotations\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -30,7 +31,11 @@ class ContentProductController extends BaseAdminController
     /**
      * @Route("", name="admin_content_product_index")
      * @Route("/")
+     * @Method("GET")
+     * @Security("is_granted('ROLE_ADMIN_CONTENT_PRODUCT_VIEW')")
+     *
      * @param Request $request
+     *
      *
      * @return string
      */
@@ -49,7 +54,28 @@ class ContentProductController extends BaseAdminController
 
 
     /**
+     * @Route("/show/{id}", name="admin_content_product_show")
+     * @Method("GET")
+     * @Security("is_granted('ROLE_ADMIN_PRODUCT_VIEW')")
+     *
+     * @param Request $request
+     * @param ContentProduct $contentProduct
+     *
+     * @return Response
+     */
+    public function showAction(Request $request, ContentProduct $contentProduct)
+    {
+        return $this->render(
+            ":AdminBundle/ContentProduct:show.html.twig",
+            ["contentProduct" => $contentProduct]
+        );
+    }
+
+
+    /**
      * @Route("/tabs/{id}", name="admin_content_product_tabs")
+     * @Method("GET")
+     * @Security("is_granted('ROLE_ADMIN_CONTENT_PRODUCT_VIEW')")
      *
      * @param Request $request
      *
@@ -69,6 +95,7 @@ class ContentProductController extends BaseAdminController
      *
      * @Route("/new", name="admin_content_product_new")
      * @Method("GET")
+     * @Security("is_granted('ROLE_ADMIN_CONTENT_PRODUCT_EDIT')")
      * @param Request $request
      *
      * @return \Symfony\Component\HttpFoundation\Response
@@ -91,8 +118,10 @@ class ContentProductController extends BaseAdminController
     /**
      * Process a request to create a new ContentProduct entity.
      *
-     * @Method("POST")
      * @Route("/create", name="admin_content_product_create")
+     * @Method("POST")
+     * @Security("is_granted('ROLE_ADMIN_CONTENT_PRODUCT_EDIT')")
+     *
      * @param Request $request
      *
      * @return \Symfony\Component\HttpFoundation\Response
@@ -143,6 +172,7 @@ class ContentProductController extends BaseAdminController
      *
      * @Route("/edit/{id}", requirements={"id": "\d+"}, name="admin_content_product_edit")
      * @Method("GET")
+     * @Security("is_granted('ROLE_ADMIN_CONTENT_PRODUCT_EDIT')")
      *
      * @param Request $request
      * @param ContentProduct $contentProduct
@@ -175,6 +205,7 @@ class ContentProductController extends BaseAdminController
      *
      * @Route("/{id}/update", requirements={"id": "\d+"}, name="admin_content_product_update")
      * @Method("PUT")
+     * @Security("is_granted('ROLE_ADMIN_CONTENT_PRODUCT_EDIT')")
      *
      * @param Request $request
      * @param ContentProduct $contentProduct
@@ -224,6 +255,8 @@ class ContentProductController extends BaseAdminController
 
     /**
      * @Route("/tab/{id}/delete", name="admin_content_product_delete_tab")
+     * @Method("GET")
+     * @Security("is_granted('ROLE_ADMIN_CONTENT_PRODUCT_EDIT')")
      *
      * @param ContentProduct $contentProduct
      *
@@ -246,6 +279,8 @@ class ContentProductController extends BaseAdminController
 
     /**
      * @Route("/{id}/delete", name="admin_content_product_delete")
+     * @Method("DELETE")
+     * @Security("is_granted('ROLE_ADMIN_CONTENT_PRODUCT_EDIT')")
      *
      * @param Request $request
      * @param ContentProduct $contentProduct

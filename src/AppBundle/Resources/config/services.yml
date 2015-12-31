@@ -48,3 +48,11 @@ services:
             - @service_container
         tags:
             - {name: "kernel.event_listener", event: "kernel.exception", method: "onKernelException"}
+
+    # TWIG EXTENSIONS #
+
+    app.twig.extension.human_bool:
+        class: AppBundle\Twig\HumanBoolExtension
+        public: false
+        tags:
+            - { name: twig.extension }

@@ -10,24 +10,32 @@
 
 
 {% block pageBody -%}
-
-    <div class="page-actions">
-        <div class="item">
-            <a href="{{ path('admin_blog_article_new') }}"><i class="tiecons tiecons-plus-radius-large"></i> Create new blog article</a>
+    {% if is_granted('ROLE_ADMIN_BLOG_EDIT') %}
+        <div class="page-actions">
+            <div class="item">
+                <a href="{{ path('admin_blog_article_new') }}"><i class="tiecons tiecons-plus-radius-large"></i> Create new blog article</a>
+            </div>
         </div>
-    </div>
+    {% endif %}
 
     <div class="tabs-wrapper margin-top-20">
-
         <input type="radio" name="tab" id="tab1" class="tab-head" checked />
-        <label for="tab1">Edit</label>
+        <label for="tab1">Show</label>
 
-        <input type="radio" name="tab" id="tab2" class="tab-head" />
-        <label for="tab2">Danger zone</label>
+        {% if is_granted('ROLE_ADMIN_BLOG_EDIT') %}
+            <input type="radio" name="tab" id="tab2" class="tab-head" checked />
+            <label for="tab2">Edit</label>
+
+            <input type="radio" name="tab" id="tab3" class="tab-head" />
+            <label for="tab3">Danger zone</label>
+        {% endif %}
 
         <div class="tab-body-wrapper">
-            <div id="tab-body-1" class="tab-body" data-source="{{ path('admin_blog_article_edit', {'id': article.id}) }}"></div>
-            <div id="tab-body-2" class="tab-body" data-source="{{ path("admin_blog_article_delete_tab", {'id': article.id}) }}"></div>
+            <div id="tab-body-1" class="tab-body" data-source="{{ path('admin_blog_article_show', {'id': article.id}) }}"></div>
+            {% if is_granted('ROLE_ADMIN_BLOG_EDIT') %}
+                <div id="tab-body-2" class="tab-body" data-source="{{ path('admin_blog_article_edit', {'id': article.id}) }}"></div>
+                <div id="tab-body-3" class="tab-body" data-source="{{ path("admin_blog_article_delete_tab", {'id': article.id}) }}"></div>
+            {% endif %}
         </div>
     </div>
 

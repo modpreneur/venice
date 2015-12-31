@@ -1,0 +1,30 @@
+<div class="product-show">
+    <table class="record_properties grid">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ product.id }}</td>
+            </tr>
+            <tr>
+                <th>Name</th>
+                <td>{{ product.name }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ product.description }}</td>
+            </tr>
+            <tr>
+                <th>Image</th>
+                <td>{{ product.image }}</td>
+            </tr>
+            <tr>
+                <th>Enabled</th>
+                <td>{{ product.enabled|humanBool }}</td>
+            </tr>
+            <tr>
+                <th>Order number</th>
+                <td>{{ product.orderNumber }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

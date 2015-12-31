@@ -11,10 +11,11 @@ namespace AdminBundle\Controller;
 
 use AdminBundle\Form\BlogArticleType;
 use AppBundle\Entity\BlogArticle;
-use AppBundle\Entity\Product\Product;
 use Doctrine\DBAL\DBALException;
+use FOS\RestBundle\Controller\Annotations\Get;
 use FOS\RestBundle\Controller\Annotations\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -32,6 +33,7 @@ class BlogArticleController extends BaseAdminController
      *
      * @Route("", name="admin_blog_article_index")
      * @Route("/")
+     * @Security("is_granted('ROLE_ADMIN_BLOG_VIEW')")
      * @param Request $request
      *
      * @return string
@@ -51,6 +53,8 @@ class BlogArticleController extends BaseAdminController
      * Render page for blog article tabs.
      *
      * @Route("/tabs/{id}", name="admin_blog_article_tabs")
+     * @Method("GET")
+     * @Security("is_granted('ROLE_ADMIN_BLOG_VIEW')")
      *
      * @param BlogArticle $article
      *
@@ -69,10 +73,30 @@ class BlogArticleController extends BaseAdminController
 
 
     /**
+     * @Route("/show/{id}", name="admin_blog_article_show")
+     * @Method("GET")
+     * @Security("is_granted('ROLE_ADMIN_BLOG_VIEW')")
+     *
+     * @param Request $request
+     * @param BlogArticle $article
+     *
+     * @return Response
+     */
+    public function showAction(Request $request, BlogArticle $article)
+    {
+        return $this->render(
+            ":AdminBundle/BlogArticle:show.html.twig",
+            ["article" => $article]
+        );
+    }
+
+
+    /**
      * Display a form to create a new BlogArticle entity.
      *
      * @Route("/new", name="admin_blog_article_new")
      * @Method("GET")
+     * @Security("is_granted('ROLE_ADMIN_BLOG_EDIT')")
      *
      * @param Request $request
      *
@@ -101,6 +125,7 @@ class BlogArticleController extends BaseAdminController
      *
      * @Route("/create", name="admin_blog_article_create")
      * @Method("POST")
+     * @Security("is_granted('ROLE_ADMIN_BLOG_EDIT')")
      *
      * @param Request $request
      *
@@ -148,6 +173,7 @@ class BlogArticleController extends BaseAdminController
      *
      * @Route("/edit/{id}", requirements={"id": "\d+"}, name="admin_blog_article_edit")
      * @Method("GET")
+     * @Security("is_granted('ROLE_ADMIN_BLOG_EDIT')")
      *
      * @param Request $request
      * @param BlogArticle $blogArticle
@@ -178,6 +204,7 @@ class BlogArticleController extends BaseAdminController
      *
      * @Route("/{id}/update", requirements={"id": "\d+"}, name="admin_blog_article_update")
      * @Method("PUT")
+     * @Security("is_granted('ROLE_ADMIN_BLOG_EDIT')")
      *
      * @param Request $request
      * @param BlogArticle $blogArticle
@@ -221,6 +248,8 @@ class BlogArticleController extends BaseAdminController
 
     /**
      * @Route("/tab/blogArticle/{id}/delete", name="admin_blog_article_delete_tab")
+     * @Method("GET")
+     * @Security("is_granted('ROLE_ADMIN_BLOG_EDIT')")
      *
      * @param BlogArticle $blogArticle
      *
@@ -244,6 +273,8 @@ class BlogArticleController extends BaseAdminController
 
     /**
      * @Route("/{id}/delete", name="admin_blog_article_delete")
+     * @Method("DELETE")
+     * @Security("is_granted('ROLE_ADMIN_BLOG_EDIT')")
      *
      * @param Request $request
      * @param BlogArticle $blogArticle

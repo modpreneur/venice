@@ -17,6 +17,7 @@ use Doctrine\DBAL\DBALException;
 use FOS\RestBundle\Controller\Annotations\Route;
 use ReflectionException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -34,6 +35,9 @@ class ContentController extends BaseAdminController
     /**
      * @Route("", name="admin_content_index")
      * @Route("/")
+     * @Method("GET")
+     * @Security("is_granted('ROLE_ADMIN_CONTENT_VIEW')")
+     *
      * @param Request $request
      *
      * @return string
@@ -49,28 +53,18 @@ class ContentController extends BaseAdminController
     }
 
     /**
-     * @Route("/tabs", name="admin_content_tabs")
+     * @Route("/tabs/{id}", name="admin_content_tabs")
+     * @Method("GET")
+     * @Security("is_granted('ROLE_ADMIN_CONTENT_VIEW')")
      *
      * @param Request $request
+     * @param Content $content
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
-    public function tabsAction(Request $request)
+    public function tabsAction(Request $request, Content $content)
     {
-        return $this->render(":AdminBundle/Content:tabs.html.twig");
-    }
-
-
-    /**
-     * @Route("/tab/{id}", name="admin_content_tab")
-     *
-     * @param Request $request
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function tabAction(Request $request, Content $content)
-    {
-        return $this->render(":AdminBundle/Content:tab.html.twig", ["content" => $content,]);
+        return $this->render("tabs.html.twig", ["content" => $content,]);
     }
 
 
@@ -79,6 +73,7 @@ class ContentController extends BaseAdminController
      *
      * @Route("/new/{contentType}",requirements={"contentType": "\w+"}, name="admin_content_new")
      * @Method("GET")
+     * @Security("is_granted('ROLE_ADMIN_CONTENT_EDIT')")
      *
      * @param Request $request
      * @param         $contentType
@@ -127,13 +122,12 @@ class ContentController extends BaseAdminController
      *
      * @Route("/create/{contentType}",requirements={"contentType": "\w+"}, name="admin_content_create")
      * @Method("POST")
+     * @Security("is_granted('ROLE_ADMIN_CONTENT_EDIT')")
      *
      * @param Request $request
-     *
      * @param         $contentType
      *
      * @return JsonResponse
-     *
      */
     public function createAction(Request $request, $contentType)
     {
@@ -188,6 +182,7 @@ class ContentController extends BaseAdminController
      *
      * @Route("/edit/{id}", requirements={"id": "\d+"}, name="admin_content_edit")
      * @Method("GET")
+     * @Security("is_granted('ROLE_ADMIN_CONTENT_EDIT')")
      *
      * @param Request $request
      * @param Content $content
@@ -224,6 +219,7 @@ class ContentController extends BaseAdminController
      *
      * @Route("/{id}/update", requirements={"id": "\d+"}, name="admin_content_update")
      * @Method("PUT")
+     * @Security("is_granted('ROLE_ADMIN_CONTENT_EDIT')")
      *
      * @param Request $request
      * @param Content $content
@@ -233,9 +229,9 @@ class ContentController extends BaseAdminController
     public function updateAction(Request $request, Content $content)
     {
         if ($content instanceof GroupContent) {
-            return $this->updateGroupContentAction($request, $content);
+            return $this->updateGroupContent($request, $content);
         } else {
-            return $this->updateNonGroupContentAction($request, $content);
+            return $this->updateNonGroupContent($request, $content);
         }
     }
 
@@ -246,7 +242,7 @@ class ContentController extends BaseAdminController
      *
      * @return JsonResponse
      */
-    protected function updateNonGroupContentAction(Request $request, Content $content)
+    protected function updateNonGroupContent(Request $request, Content $content)
     {
         $em = $this->getEntityManager();
 
@@ -287,7 +283,7 @@ class ContentController extends BaseAdminController
      *
      * @return JsonResponse
      */
-    protected function updateGroupContentAction(Request $request, GroupContent $content)
+    protected function updateGroupContent(Request $request, GroupContent $content)
     {
         $contentForm = $this->get("admin.form_factory")
             ->createEditForm(
@@ -343,6 +339,8 @@ class ContentController extends BaseAdminController
 
     /**
      * @Route("/tab/{id}/delete", name="admin_content_delete_tab")
+     * @Method("GET")
+     * @Security("is_granted('ROLE_ADMIN_CONTENT_EDIT')")
      *
      * @param Content $content
      *
@@ -366,6 +364,9 @@ class ContentController extends BaseAdminController
 
     /**
      * @Route("/{id}/delete", name="admin_content_delete")
+     * @Method("DELETE")
+     *
+     * @Security("is_granted('ROLE_ADMIN_CONTENT_EDIT')")
      *
      * @param Request $request
      * @param Content $content

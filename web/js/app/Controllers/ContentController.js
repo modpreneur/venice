@@ -12,19 +12,10 @@ import TrinityForm from 'trinity/TrinityForm';
 export default class ContetntController extends Controller {
 
     /**
-     * Content and associations tabs action
-     * @param $scope
-     */
-    tabsAction($scope) {
-        //Tell trinity there is tab to be loaded
-        $scope.trinityTab = new TrinityTab();
-    }
-
-    /**
      * Content tab action
      * @param $scope
      */
-    tabAction($scope) {
+    tabsAction($scope) {
         //Tell trinity there is tab to be loaded
         $scope.trinityTab = new TrinityTab();
 
@@ -45,7 +36,7 @@ export default class ContetntController extends Controller {
      * @param $scope
      */
     newPdfAction($scope) {
-        $scope.form = new TrinityForm(q('form[name="pdfcontenttype"]'), TrinityForm.formType.NEW);
+        $scope.form = new TrinityForm(q('form[name="pdf_content"]'), TrinityForm.formType.NEW);
     }
 
     /**
@@ -53,7 +44,7 @@ export default class ContetntController extends Controller {
      * @param $scope
      */
     newTextAction($scope) {
-        $scope.form = new TrinityForm(q('form[name="textcontenttype"]'), TrinityForm.formType.NEW);
+        $scope.form = new TrinityForm(q('form[name="text_content"]'), TrinityForm.formType.NEW);
     }
 
     /**
@@ -61,7 +52,7 @@ export default class ContetntController extends Controller {
      * @param $scope
      */
     newMp3Action($scope) {
-        $scope.form = new TrinityForm(q('form[name="mp3contenttype"]'), TrinityForm.formType.NEW);
+        $scope.form = new TrinityForm(q('form[name="mp3_content"]'), TrinityForm.formType.NEW);
     }
 
     /**
@@ -69,7 +60,7 @@ export default class ContetntController extends Controller {
      * @param $scope
      */
     newVideoAction($scope) {
-        $scope.form = new TrinityForm(q('form[name="videocontenttype"]'), TrinityForm.formType.NEW);
+        $scope.form = new TrinityForm(q('form[name="video_content"]'), TrinityForm.formType.NEW);
     }
 
     /**
@@ -77,7 +68,7 @@ export default class ContetntController extends Controller {
      * @param $scope
      */
     newIFrameAction($scope) {
-        $scope.form = new TrinityForm(q('form[name="iframecontenttype"]'), TrinityForm.formType.NEW);
+        $scope.form = new TrinityForm(q('form[name="iframe_content"]'), TrinityForm.formType.NEW);
     }
 
     /**
@@ -85,6 +76,6 @@ export default class ContetntController extends Controller {
      * @param $scope
      */
     newGroupAction($scope) {
-        $scope.form = new TrinityForm(q('form[name="groupcontenttype"]'), TrinityForm.formType.NEW);
+        $scope.form = new TrinityForm(q('form[name="group_content"]'), TrinityForm.formType.NEW);
     }
 }

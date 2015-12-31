@@ -24,12 +24,8 @@ export default [
         action: 'BlogArticle.new'
     },
     {
-        path: '/admin/content/tabs(/)',
+        path: '/admin/content/tabs/:id(/)',
         action: 'Content.tabs'
-    },
-    {
-        path: '/admin/content/tab/:id(/)',
-        action: 'Content.tab'
     },
     {
         path: '/admin/content/new/pdf(/)',

@@ -32,7 +32,6 @@ class MenuListener
         $this->container = $container;
     }
 
-
     /**
      * @param MenuEvent $event
      */
@@ -48,22 +47,32 @@ class MenuListener
         $menu
             ->addChild('Products', array('route' => 'admin_product_index'))
             ->setAttribute('icon', 'trinity trinity-products')
-            ->setExtra('orderNumber', 1);
+            ->setExtra('orderNumber', 1)
+            ->setExtra('roles', ['ROLE_ADMIN_PRODUCT_VIEW']);
 
         $menu
-            ->addChild('Contents', array('route' => 'admin_content_tabs'))
+            ->addChild('Contents', array('route' => 'admin_content_index'))
             ->setAttribute('icon', 'tiecons tiecons-bookmark-3')
-            ->setExtra('orderNumber', 2);
+            ->setExtra('orderNumber', 2)
+            ->setExtra('roles', ['ROLE_ADMIN_CONTENT_VIEW']);
+
+        $menu
+            ->addChild('Associations', array('route' => 'admin_content_product_index'))
+            ->setAttribute('icon', 'tiecons tiecons-bookmark-2')
+            ->setExtra('orderNumber', 3)
+            ->setExtra('roles', ['ROLE_ADMIN_CONTENT_PRODUCT_VIEW']);
 
         $menu
             ->addChild('Blog articles', array('route' => 'admin_blog_article_index'))
             ->setAttribute('icon', 'tiecons tiecons-book-text')
-            ->setExtra('orderNumber', 3);
-        //
+            ->setExtra('orderNumber', 4)
+            ->setExtra('roles', ['ROLE_ADMIN_BLOG_VIEW']);
+
         $menu
             ->addChild('Users', array('route' => 'admin_user_index'))
             ->setAttribute('icon', 'tiecons tiecons-user-negative')
-            ->setExtra('orderNumber', 4);
+            ->setExtra('orderNumber', 5)
+            ->setExtra('roles', ['ROLE_ADMIN_USER_VIEW']);
         //
         //$menu
         //    ->addChild('Newsletters', array('route' => 'newsletter'))

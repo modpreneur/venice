@@ -1,0 +1,66 @@
+<div class="user-show">
+    <table class="record_properties grid">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ user.id }}</td>
+            </tr>
+            <tr>
+                <th>Username</th>
+                <td>{{ user.username }}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ user.email }}</td>
+            </tr>
+            <tr>
+                <th>Public</th>
+                <td>{{ user.public|humanBool }}</td>
+            </tr>
+            <tr>
+                <th>Locked</th>
+                <td>{{ user.locked|humanBool }}</td>
+            </tr>
+            <tr>
+                <th>First name</th>
+                <td>{{ user.firstName }}</td>
+            </tr>
+            <tr>
+                <th>Last name</th>
+                <td>{{ user.lastName }}</td>
+            </tr>
+            <tr>
+                <th>Phone number</th>
+                <td>{{ user.phoneNumber }}</td>
+            </tr>
+            <tr>
+                <th>Website</th>
+                <td>{{ user.website }}</td>
+            </tr>
+            <tr>
+                <th>Country</th>
+                <td>{{ user.country }}</td>
+            </tr>
+            <tr>
+                <th>Region</th>
+                <td>{{ user.region }}</td>
+            </tr>
+            <tr>
+                <th>City</th>
+                <td>{{ user.city }}</td>
+            </tr>
+            <tr>
+                <th>Postal code</th>
+                <td>{{ user.postalCode }}</td>
+            </tr>
+            <tr>
+                <th>Address line 1</th>
+                <td>{{ user.addressLine1 }}</td>
+            </tr>
+            <tr>
+                <th>Address line 2</th>
+                <td>{{ user.addressLine2 }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

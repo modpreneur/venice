@@ -12,15 +12,27 @@
 
     <div class="tabs-wrapper margin-top-20">
 
-        <input type="radio" name="tab" id="tab1" class="tab-head" checked />
-        <label for="tab1">Edit</label>
+        {% if is_granted('ROLE_ADMIN_USER_VIEW') %}
+            <input type="radio" name="tab" id="tab1" class="tab-head" checked />
+            <label for="tab1">Show</label>
+        {% endif %}
+        {% if is_granted('ROLE_ADMIN_USER_EDIT') %}
+            <input type="radio" name="tab" id="tab2" class="tab-head" checked />
+            <label for="tab2">Edit</label>
 
-        <input type="radio" name="tab" id="tab2" class="tab-head" />
-        <label for="tab2">Danger zone</label>
+            <input type="radio" name="tab" id="tab3" class="tab-head" />
+            <label for="tab3">Danger zone</label>
+        {% endif %}
+
 
         <div class="tab-body-wrapper">
-            <div id="tab-body-1" class="tab-body" data-source="{{ path('admin_user_edit', {'id': user.id}) }}"></div>
-            <div id="tab-body-2" class="tab-body" data-source="{{ path('admin_user_delete_tab', {'id': user.id}) }}"></div>
+            {% if is_granted('ROLE_ADMIN_USER_VIEW') %}
+                <div id="tab-body-1" class="tab-body" data-source="{{ path('admin_user_show', {'id': user.id}) }}"></div>
+            {% endif %}
+            {% if is_granted('ROLE_ADMIN_USER_EDIT') %}
+                <div id="tab-body-2" class="tab-body" data-source="{{ path('admin_user_edit', {'id': user.id}) }}"></div>
+                <div id="tab-body-3" class="tab-body" data-source="{{ path('admin_user_delete_tab', {'id': user.id}) }}"></div>
+            {% endif %}
         </div>
     </div>
 

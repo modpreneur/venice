@@ -1,0 +1,30 @@
+{#todo: display content as it will be displayed in the user's section with proper css#}
+
+<div class="blog-show">
+    <table class="record_properties grid">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ article.id }}</td>
+            </tr>
+            <tr>
+                <th>Name</th>
+                <td>{{ article.title }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ article.handle }}</td>
+            </tr>
+            <tr>
+                <th>Image</th>
+                <td>{{ article.dateWritten|date("Y-m-d") }}</td>
+            </tr>
+            <tr>
+                <th>Enabled</th>
+                <td>{{ article.dateToPublish|date("Y-m-d")}}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <p>{{ article.content|raw }}</p>
+</div>

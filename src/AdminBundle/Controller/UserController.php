@@ -14,6 +14,7 @@ use AppBundle\Entity\User;
 use Doctrine\DBAL\DBALException;
 use FOS\RestBundle\Controller\Annotations\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -30,6 +31,8 @@ class UserController extends BaseAdminController
      * @Route("", name="admin_user_index")
      * @Route("/")
      * @Method("GET")
+     *
+     * @Security("is_granted('ROLE_ADMIN_USER_VIEW')")
      *
      * @param Request $request
      *
@@ -48,8 +51,30 @@ class UserController extends BaseAdminController
 
 
     /**
+     * @Route("/show/{id}", name="admin_user_show")
+     * @Method("GET")
+     *
+     * @Security("is_granted('ROLE_ADMIN_USER_VIEW')")
+     *
+     * @param Request $request
+     * @param User $user
+     *
+     * @return Response
+     */
+    public function showAction(Request $request, User $user)
+    {
+        return $this->render(
+            ":AdminBundle/User:show.html.twig",
+            ["user" => $user,]
+        );
+    }
+
+
+    /**
      * @Route("/tabs/{id}", name="admin_user_tabs")
      * @Method("GET")
+     *
+     * @Security("is_granted('ROLE_ADMIN_USER_VIEW')")
      *
      * @param User $user
      *
@@ -68,6 +93,7 @@ class UserController extends BaseAdminController
      * @Route("/new", name="admin_user_new")
      * @Method("GET")
      *
+     * @Security("is_granted('ROLE_ADMIN_USER_EDIT')")
      */
     public function newAction()
     {
@@ -91,7 +117,10 @@ class UserController extends BaseAdminController
 
 
     /**
-     * @Route("/create")
+     * @Route("/create", name="admin_user_create")
+     * @Method("POST")
+     *
+     * @Security("is_granted('ROLE_ADMIN_USER_EDIT')")
      */
     public function createAction(Request $request)
     {
@@ -138,6 +167,8 @@ class UserController extends BaseAdminController
      * @Route("/edit/{id}", name="admin_user_edit")
      * @Method("GET")
      *
+     * @Security("is_granted('ROLE_ADMIN_USER_EDIT')")
+     *
      * @param User $user
      *
      * @return \Symfony\Component\HttpFoundation\Response
@@ -166,6 +197,8 @@ class UserController extends BaseAdminController
     /**
      * @Route("/update/{id}", name="admin_user_update")
      * @Method("PUT")
+     *
+     * @Security("is_granted('ROLE_ADMIN_USER_EDIT')")
      *
      * @param Request $request
      * @param User $user
@@ -225,6 +258,8 @@ class UserController extends BaseAdminController
 
     /**
      * @Route("/tab/{id}/delete", name="admin_user_delete_tab")
+     * @Method("GET")
+     * @Security("is_granted('ROLE_ADMIN_USER_EDIT')")
      *
      * @param User $user
      *
@@ -246,6 +281,9 @@ class UserController extends BaseAdminController
 
     /**
      * @Route("/{id}/delete", name="admin_user_delete")
+     * @Method("DELETE")
+     *
+     * @Security("is_granted('ROLE_ADMIN_USER_EDIT')")
      *
      * @param Request $request
      * @param User $user
