@@ -31,8 +31,7 @@
         "trinity/notification": "dev-master",
         "trinity/admin": "dev-master",
         "modpreneur/bowtie": "dev-master",
-        "guzzlehttp/guzzle": "~6",
-        "sensiolabs-de/deprecation-detector": "0.1.0-alpha3"
+        "guzzlehttp/guzzle": "~6"
     },
     "require-dev": {
         "sensio/generator-bundle": "~3.0",
