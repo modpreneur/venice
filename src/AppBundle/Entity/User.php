@@ -11,13 +11,16 @@ namespace AppBundle\Entity;
 use AppBundle\Entity\Product\FreeProduct;
 use AppBundle\Entity\Product\Product;
 use AppBundle\Entity\Product\StandardProduct;
+use AppBundle\Traits\HasNotificationStateTrait;
 use \DateTime;
 use \InvalidArgumentException;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation\SerializedName;
 use Trinity\FrameworkBundle\Entity\BaseUser as TrinityUser;
+use Trinity\FrameworkBundle\Entity\ClientInterface;
 use Trinity\NotificationBundle\Annotations as N;
+use Trinity\NotificationBundle\Entity\NotificationEntityInterface;
 
 /**
  * Class User
@@ -32,11 +35,12 @@ use Trinity\NotificationBundle\Annotations as N;
  *
  * @package AppBundle\Entity
  */
-class User extends TrinityUser
+class User extends TrinityUser implements NotificationEntityInterface
 {
+    use HasNotificationStateTrait;
+
     const PREFERRED_UNITS_IMPERIAL = "imperial";
     const PREFERRED_UNITS_METRIC = "metric";
-
     const DEFAULT_PREFERRED_METRICS = "imperial";
 
     /**
@@ -88,6 +92,15 @@ class User extends TrinityUser
     protected $OAuthTokens;
 
 
+    /**
+     * @var []
+     *
+     * @ORM\Column(type="array", nullable=true)
+     */
+    protected $status;
+
+
+
     public function __construct()
     {
         parent::__construct();
@@ -98,6 +111,7 @@ class User extends TrinityUser
         $this->OAuthTokens = new ArrayCollection();
         $this->preferredUnits = self::DEFAULT_PREFERRED_METRICS;
         $this->birthDate = new DateTime();
+        $this->status = [];
     }
 
 
@@ -422,4 +436,19 @@ class User extends TrinityUser
         return null;
     }
 
+    /** @return ClientInterface[] */
+    public function getClients()
+    {
+        return [];
+    }
+
+    /**
+     * @param ClientInterface $client
+     * @param string $status
+     * @return void
+     */
+    public function setSyncStatus(ClientInterface $client, $status)
+    {
+        $this->status[$client->getId()] = $status;
+    }
 }

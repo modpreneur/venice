@@ -10,9 +10,11 @@ namespace AppBundle\Entity\Product;
 
 
 use AppBundle\Entity\BillingPlan;
+use AppBundle\Traits\HasNotificationStateTrait;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation\SerializedName;
 use Trinity\NotificationBundle\Annotations as N;
+use Trinity\NotificationBundle\Entity\NotificationEntityInterface;
 
 
 /**
@@ -28,8 +30,10 @@ use Trinity\NotificationBundle\Annotations as N;
  * Class StandardProduct
  * @package AppBundle\Entity\Product
  */
-class StandardProduct extends Product
+class StandardProduct extends Product implements NotificationEntityInterface
 {
+    use HasNotificationStateTrait;
+
     const TYPE = "standard";
 
     /**
@@ -60,6 +64,8 @@ class StandardProduct extends Product
     public function __construct()
     {
         parent::__construct();
+
+        $this->status = [];
     }
 
 
