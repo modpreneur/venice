@@ -148,16 +148,16 @@ class ContentProductController extends BaseAdminController
             } catch (DBALException $e) {
                 return new JsonResponse(
                     [
-                        "errors" => [
-                            "db" => $e->getMessage(),],
-                    ]
+                        "error" => ["db" => $e->getMessage(),],
+                    ],
+                    400
                 );
             }
 
             return new JsonResponse(
                 [
                     "message" => "Association successfully created",
-                    "location" => $this->generateUrl("admin_content_tabs")."#tab2"
+                    "location" => $this->generateUrl("admin_content_product_index")
                 ],
                 302
             );
@@ -236,8 +236,8 @@ class ContentProductController extends BaseAdminController
             } catch (DBALException $e) {
                 return new JsonResponse(
                     [
-                        "errors" => ["db" => $e->getMessage(),],
-                    ]
+                        "error" => ["db" => $e->getMessage(),],
+                    ], 400
                 );
             }
 
@@ -296,16 +296,17 @@ class ContentProductController extends BaseAdminController
         } catch (DBALException $e) {
             return new JsonResponse(
                 [
-                    "errors" => ["db" => $e->getMessage(),],
+                    "error" => ["db" => $e->getMessage(),],
                     "message" => "Could not delete.",
-                ]
+                ],
+                400
             );
         }
 
         return new JsonResponse(
             [
                 "message" => "Association successfully deleted.",
-                "location" => $this->generateUrl("admin_content_tabs")."#tab2",
+                "location" => $this->generateUrl("admin_content_product_index"),
             ],
             302);
     }
