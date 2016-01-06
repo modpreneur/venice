@@ -4,10 +4,10 @@
 
 import events from 'trinity/utils/closureEvents';
 import Controller from 'trinity/Controller';
-import TrinityTab from 'trinity/TrinityTab';
+import TrinityTab from 'trinity/components/TrinityTab';
 import Collection from 'trinity/Collection';
 import _ from 'lodash';
-import TrinityForm from 'trinity/TrinityForm';
+import VeniceForm from '../Libraries/VeniceForm';
 
 export default class ContetntController extends Controller {
 
@@ -17,6 +17,15 @@ export default class ContetntController extends Controller {
     tabsAction($scope) {
         //Tell trinity there is tab to be loaded
         $scope.trinityTab = new TrinityTab();
+
+        //On tabs load
+        $scope.trinityTab.addListener('tab-load', function(e) {
+            let form = e.element.q('form');
+            if(form){
+                $scope.veniceForms = $scope.veniceForms || {};
+                $scope.veniceForms[e.id] = new VeniceForm(form);
+            }
+        }, this);
     }
 
 
@@ -25,7 +34,7 @@ export default class ContetntController extends Controller {
      * @param $scope
      */
     newAction($scope) {
-        $scope.form = new TrinityForm(q('form[name="user"]'), TrinityForm.formType.NEW);
+        $scope.form = new VeniceForm(q('form[name="user"]'), VeniceForm.formType.NEW);
     }
 
 }
