@@ -5,8 +5,8 @@
 
 import events from 'trinity/utils/closureEvents';
 import Controller from 'trinity/Controller';
-import TrinityForm from 'trinity/TrinityForm';
-import TrinityTab from 'trinity/TrinityTab';
+import VeniceForm from '../Libraries/VeniceForm';
+import TrinityTab from 'trinity/components/TrinityTab';
 
 export default class ProductController extends Controller {
     /**
@@ -14,8 +14,8 @@ export default class ProductController extends Controller {
      * @param $scope
      */
     newFreeAction($scope) {
-        //Attach TrinityForm
-        $scope.form = new TrinityForm(q('form[name="freeproducttype"]'), TrinityForm.formType.NEW);
+        //Attach VeniceForm
+        $scope.form = new VeniceForm(q('form[name="free_product"]'), VeniceForm.formType.NEW);
     }
 
     /**
@@ -23,11 +23,21 @@ export default class ProductController extends Controller {
      * @param $scope
      */
     newStandardAction($scope) {
-        //Attach TrinityForm
-        $scope.form = new TrinityForm(q('form[name="standardproducttype"]'), TrinityForm.formType.NEW);
+        //Attach VeniceForm
+        $scope.form = new VeniceForm(q('form[name="standard_product"]'), VeniceForm.formType.NEW);
     }
 
     tabsAction($scope) {
         $scope.trinityTab = new TrinityTab();
+
+        //On tabs load
+        $scope.trinityTab.addListener('tab-load', function(e) {
+            console.log(e);
+            let form = e.element.q('form');
+            if(form){
+                $scope.veniceForms = $scope.veniceForms || {};
+                $scope.veniceForms[e.id] = new VeniceForm(form);
+            }
+        }, this);
     }
 }

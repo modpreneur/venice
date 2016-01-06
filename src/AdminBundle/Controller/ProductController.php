@@ -270,8 +270,9 @@ class ProductController extends BaseAdminController
             } catch (DBALException $e) {
                 return new JsonResponse(
                     [
-                        "errors" => ["db" => $e->getMessage(),]
-                    ]
+                        "error" => ["db" => $e->getMessage(),]
+                    ],
+                    500
                 );
             }
 
@@ -307,7 +308,8 @@ class ProductController extends BaseAdminController
                 [
                     "errors" => ["db" => $e->getMessage()],
                     "message" => "Could not delete.",
-                ]
+                ],
+                500
             );
         }
 
