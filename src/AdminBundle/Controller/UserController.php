@@ -145,9 +145,9 @@ class UserController extends BaseAdminController
             } catch (DBALException $e) {
                 return new JsonResponse(
                     [
-                        'errors' => ['db' => $e->getMessage(),]
-                    ]
-                );
+                        'error' => ['db' => $e->getMessage(),]
+                    ],
+                    500);
             }
 
             return new JsonResponse(
@@ -241,7 +241,7 @@ class UserController extends BaseAdminController
             } catch (DBALException $e) {
                 return new JsonResponse(
                     [
-                        "errors" => ["db" => $e->getMessage(),]
+                        "error" => ["db" => $e->getMessage(),]
                     ]
                 );
             }
@@ -299,7 +299,7 @@ class UserController extends BaseAdminController
         } catch (DBALException $e) {
             return new JsonResponse(
                 [
-                    "errors" => ["db" => $e->getMessage(),],
+                    "error" => ["db" => $e->getMessage(),],
                     "message" => "Could not delete.",
                 ]
             );
