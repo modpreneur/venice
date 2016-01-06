@@ -53,7 +53,13 @@ security:
                 csrf_provider: security.csrf.token_manager
                 login_path: /login
                 check_path: /login_check
-            anonymous:    true
+            remember_me:
+                name: venice_auth
+                lifetime: 31536000 # 365 days in seconds
+                secure: false
+                httponly: true
+                always_remember_me: true
+                key: "%secret%"
             logout:
                 target: homepage
 
