@@ -59,6 +59,7 @@ fi
     --migrate-database          Migrate database
     --recreate-database         Drop, create and migrate database
     --cache-logs-clear          Clear cache and logs
+    --redis-flush               Flush Redis
 
     --install                   Install Docker (Mac OS only)
 
@@ -193,6 +194,15 @@ function migrateDatabase {
 function clearCacheAndLogs {
     prepareDinghy
     runCommand "_web" "bash -c 'rm -r $PATH_CACHE/dev/; rm -r $PATH_CACHE/prod; rm $PATH_LOGS/dev.log; rm $PATH_LOGS/test.log'"
+}
+
+function redisFlush {
+    runRedisCommand "FLUSHALL"
+}
+
+#Param 1: command
+function runRedisCommand {
+    runCommand "redis" "bash -c \"redis-cli '$1'\""
 }
 
 function install {
@@ -349,6 +359,11 @@ elif [ "$1" = "--migrate-database" ]
 elif [ "$1" = "--cache-logs-clear" ]
     then
         clearCacheAndLogs
+
+elif [ "$1" = "--redis-flush" ]
+    then
+        prepareDinghy
+        redisFlush
 
 elif [ "$1" = "--install" ]
     then
