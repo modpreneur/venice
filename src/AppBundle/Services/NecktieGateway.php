@@ -17,6 +17,7 @@ use AppBundle\Exceptions\UnsuccessfulNecktieResponseException;
 use AppBundle\Interfaces\NecktieGatewayInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\ServerException;
 use GuzzleHttp\Psr7\Request;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -145,7 +146,13 @@ class NecktieGateway implements NecktieGatewayInterface
         }
 
         $request = new Request("GET", self::NECKTIE_USER_PROFILE_URI, ["Authorization" =>  "Bearer {$accessToken}"]);
-        $response = $this->client->send($request);
+
+        try{
+            $response = $this->client->send($request);
+        }catch(ServerException $e){
+            throw new \Exception($e->getResponse()->getBody()->getContents());
+        };
+
         $responseData = $response->getBody()->getContents();
 
         if(!$this->helper->isResponseOk($responseData))
