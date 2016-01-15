@@ -11,7 +11,7 @@ namespace AppBundle\Entity;
 use AppBundle\Entity\Product\FreeProduct;
 use AppBundle\Entity\Product\Product;
 use AppBundle\Entity\Product\StandardProduct;
-use AppBundle\Traits\HasNotificationStateTrait;
+use AppBundle\Traits\HasNotificationStatusTrait;
 use \DateTime;
 use \InvalidArgumentException;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -37,7 +37,7 @@ use Trinity\NotificationBundle\Entity\NotificationEntityInterface;
  */
 class User extends TrinityUser implements NotificationEntityInterface
 {
-    use HasNotificationStateTrait;
+    use HasNotificationStatusTrait;
 
     const PREFERRED_UNITS_IMPERIAL = "imperial";
     const PREFERRED_UNITS_METRIC = "metric";

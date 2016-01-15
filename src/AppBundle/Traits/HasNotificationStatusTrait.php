@@ -16,29 +16,32 @@ use Trinity\FrameworkBundle\Entity\ClientInterface;
  *
  * Don not forget to initialize $status to empty array in constructor.
  */
-trait HasNotificationStateTrait
+trait HasNotificationStatusTrait
 {
     /**
      * @var []
      *
      * @ORM\Column(type="array", nullable=true)
      */
-    protected $status;
+    protected $notificationStatus;
 
-
-    /** @return ClientInterface[] */
-    public function getClients()
-    {
-        return [];
-    }
 
     /**
      * @param ClientInterface $client
      * @param string $status
      * @return void
      */
-    public function setSyncStatus(ClientInterface $client, $status)
+    public function setNotificationStatus(ClientInterface $client, $status)
     {
-        $this->status[$client->getId()] = $status;
+        $this->notificationStatus[$client->getId()] = $status;
+    }
+
+
+    /**
+     * @return array|null
+     */
+    public function getNotificationStatus()
+    {
+        return $this->notificationStatus;
     }
 }

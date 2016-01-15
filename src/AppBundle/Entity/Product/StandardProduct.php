@@ -10,9 +10,10 @@ namespace AppBundle\Entity\Product;
 
 
 use AppBundle\Entity\BillingPlan;
-use AppBundle\Traits\HasNotificationStateTrait;
+use AppBundle\Traits\HasNotificationStatusTrait;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation\SerializedName;
+use Trinity\FrameworkBundle\Entity\ClientInterface;
 use Trinity\NotificationBundle\Annotations as N;
 use Trinity\NotificationBundle\Entity\NotificationEntityInterface;
 
@@ -32,7 +33,7 @@ use Trinity\NotificationBundle\Entity\NotificationEntityInterface;
  */
 class StandardProduct extends Product implements NotificationEntityInterface
 {
-    use HasNotificationStateTrait;
+    use HasNotificationStatusTrait;
 
     const TYPE = "standard";
 
@@ -140,5 +141,10 @@ class StandardProduct extends Product implements NotificationEntityInterface
     }
 
 
+    /** @return ClientInterface[] */
+    public function getClients()
+    {
+        return [];
+    }
 
 }
