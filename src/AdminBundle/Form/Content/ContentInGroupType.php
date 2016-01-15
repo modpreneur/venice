@@ -58,6 +58,7 @@ class ContentInGroupType extends AdminBaseType
                     "choice_label" => "name",
                     "label" => "Content",
                     "placeholder" => "Choose content",
+                    "required" => true
                 ]
             )
             ->add(

@@ -8,7 +8,10 @@
 
 namespace AppBundle\Entity;
 
+use AppBundle\Entity\Content\Content;
+use AppBundle\Entity\Product\Product;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Class ContentProduct
@@ -21,7 +24,7 @@ use Doctrine\ORM\Mapping as ORM;
 class ContentProduct
 {
     /**
-     * @var
+     * @var int
      *
      * @ORM\Id()
      * @ORM\Column(name="id", type="integer")
@@ -31,7 +34,9 @@ class ContentProduct
 
 
     /**
-     * @var
+     * @var Content
+     *
+     * @Assert\NotBlank()
      *
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Content\Content", inversedBy="contentProducts")
      * @ORM\JoinColumn(name="content_id", referencedColumnName="id")
@@ -40,7 +45,9 @@ class ContentProduct
 
 
     /**
-     * @var
+     * @var Product
+     *
+     * @Assert\NotBlank()
      *
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Product\Product", inversedBy="contentProducts")
      * @ORM\JoinColumn(name="product_id", referencedColumnName="id")
@@ -51,6 +58,11 @@ class ContentProduct
     /**
      * @var
      *
+     * @Assert\Range(
+     *     min = 0,
+     *     max = 10000
+     *     )
+     *
      * @ORM\Column(name="delay", type="integer", nullable=false)
      */
     protected $delay;
@@ -58,6 +70,11 @@ class ContentProduct
 
     /**
      * @var
+     *
+     * @Assert\Range(
+     *     min = 0,
+     *     max = 10000
+     *     )
      *
      * @ORM\Column(name="order_number", type="integer", nullable=false)
      */

@@ -8,10 +8,9 @@
 
 namespace AppBundle\Entity\Content;
 
-use AppBundle\Entity\Content\Content;
-use AppBundle\Entity\Content\GroupContent;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\JoinColumn;
+use Symfony\Component\Validator\Constraints as Assert;
 
 
 /**
@@ -37,6 +36,8 @@ class ContentInGroup
     /**
      * @var GroupContent
      *
+     * @Assert\NotBlank()
+     *
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Content\GroupContent", inversedBy="items")
      * @JoinColumn(name="group_id", referencedColumnName="id")
      */
@@ -46,6 +47,8 @@ class ContentInGroup
     /**
      * @var Content
      *
+     * @Assert\NotBlank()
+     *
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Content\Content", inversedBy="contentsInGroup")
      */
     protected $content;
@@ -54,6 +57,11 @@ class ContentInGroup
     /**
      * @var int
      *
+     * @Assert\Range(
+     *     min = 0,
+     *     max = 10000
+     *     )
+     *
      * @ORM\Column(name="delay", type="integer", nullable=false)
      */
     protected $delay;
@@ -61,6 +69,11 @@ class ContentInGroup
 
     /**
      * @var int
+     *
+     * @Assert\Range(
+     *     min = 0,
+     *     max = 1000
+     *     )
      *
      * @ORM\Column(name="order_number", type="integer", nullable=false)
      */
