@@ -1,12 +1,10 @@
 /**
  * Created by Jakub Fajkus on 10.12.15.
  */
-
-
 import events from 'trinity/utils/closureEvents';
 import Controller from 'trinity/Controller';
-import TrinityForm from 'trinity/TrinityForm';
-import TrinityTab from 'trinity/TrinityTab';
+import VeniceForm from '../Libraries/VeniceForm';
+import TrinityTab from 'trinity/components/TrinityTab';
 
 export default class BlogArticleController extends Controller {
 
@@ -17,6 +15,15 @@ export default class BlogArticleController extends Controller {
     tabsAction($scope) {
         //Tell trinity there is tab to be loaded
         $scope.trinityTab = new TrinityTab();
+
+        //On tabs load
+        $scope.trinityTab.addListener('tab-load', function(e) {
+            let form = e.element.q('form');
+            if(form){
+                $scope.veniceForms = $scope.veniceForms || {};
+                $scope.veniceForms[e.id] = new VeniceForm(form);
+            }
+        }, this);
     }
 
     /**
@@ -24,6 +31,6 @@ export default class BlogArticleController extends Controller {
      * @param $scope
      */
     newAction($scope) {
-        $scope.form = new TrinityForm(q('form[name="blogarticletype"]'), TrinityForm.formType.NEW);
+        $scope.form = new VeniceForm(q('form[name="blogarticletype"]'), VeniceForm.formType.NEW);
     }
 }

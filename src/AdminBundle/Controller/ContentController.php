@@ -284,8 +284,9 @@ class ContentController extends BaseAdminController
             } catch (DBALException $e) {
                 return new JsonResponse(
                     [
-                        "errors" => ["db" => $e->getMessage(),]
-                    ]
+                        "error" => ["db" => $e->getMessage(),],
+                    ],
+                    400
                 );
             }
 
@@ -343,8 +344,9 @@ class ContentController extends BaseAdminController
             } catch (DBALException $e) {
                 return new JsonResponse(
                     [
-                        "errors" => ["db" => $e->getMessage(),]
-                    ]
+                        "error" => ["db" => $e->getMessage(),],
+                    ],
+                    400
                 );
             }
 
@@ -411,11 +413,10 @@ class ContentController extends BaseAdminController
         } catch (DBALException $e) {
             return new JsonResponse(
                 [
-                    "errors" => [
-                        "db" => $e->getMessage()
-                    ],
+                    "error" => ["db" => $e->getMessage(),],
                     "message" => "Could not delete.",
-                ]
+                ],
+                400
             );
         }
 

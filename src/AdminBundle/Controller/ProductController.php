@@ -272,7 +272,7 @@ class ProductController extends BaseAdminController
                     [
                         "error" => ["db" => $e->getMessage(),]
                     ],
-                    500
+                    400
                 );
             }
 
@@ -309,7 +309,7 @@ class ProductController extends BaseAdminController
                     "errors" => ["db" => $e->getMessage()],
                     "message" => "Could not delete.",
                 ],
-                500
+                400
             );
         }
 

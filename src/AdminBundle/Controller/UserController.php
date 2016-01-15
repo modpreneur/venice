@@ -147,7 +147,7 @@ class UserController extends BaseAdminController
                     [
                         'error' => ['db' => $e->getMessage(),]
                     ],
-                    500);
+                    400);
             }
 
             return new JsonResponse(
@@ -242,7 +242,8 @@ class UserController extends BaseAdminController
                 return new JsonResponse(
                     [
                         "error" => ["db" => $e->getMessage(),]
-                    ]
+                    ],
+                    400
                 );
             }
 
@@ -301,7 +302,8 @@ class UserController extends BaseAdminController
                 [
                     "error" => ["db" => $e->getMessage(),],
                     "message" => "Could not delete.",
-                ]
+                ],
+                400
             );
         }
 

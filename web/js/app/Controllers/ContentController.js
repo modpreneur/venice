@@ -4,10 +4,10 @@
 
 import events from 'trinity/utils/closureEvents';
 import Controller from 'trinity/Controller';
-import TrinityTab from 'trinity/TrinityTab';
+import TrinityTab from 'trinity/components/TrinityTab';
 import Collection from 'trinity/Collection';
 import _ from 'lodash';
-import TrinityForm from 'trinity/TrinityForm';
+import VeniceForm from '../Libraries/VeniceForm';
 
 export default class ContetntController extends Controller {
 
@@ -19,16 +19,26 @@ export default class ContetntController extends Controller {
         //Tell trinity there is tab to be loaded
         $scope.trinityTab = new TrinityTab();
 
-        // Listen changes on the div with id "content-edit"
-        $scope.trinityTab.listen('content-edit', function (e) {
-            let $scope = this.getScope();
+        //On tabs load
+        $scope.trinityTab.addListener('tab-load', function(e) {
+            let form = e.element.q('form');
+            if(form){
+                $scope.veniceForms = $scope.veniceForms || {};
+                $scope.veniceForms[e.id] = new VeniceForm(form);
+            }
 
-            // Collection
-            $scope.collection = _.map(qAll('[data-prototype]'), function (node) {
-                return new Collection(node, {addFirst:false, label:true});
-            });
-        }, false, this);
-
+            //Edit tab
+            if(e.id === 'tab2'){
+                // Collection
+                $scope.collection = _.map(qAll('[data-prototype]'), (node)=>{
+                    return new Collection(node, {addFirst:false, label:true});
+                });
+                // Reload tab1 (SHOW) when success update
+                $scope.veniceForms[e.id].success((e)=>{
+                    $scope.trinityTab.reload('tab1');
+                });
+            }
+        }, this);
     }
 
     /**
@@ -36,7 +46,7 @@ export default class ContetntController extends Controller {
      * @param $scope
      */
     newPdfAction($scope) {
-        $scope.form = new TrinityForm(q('form[name="pdf_content"]'), TrinityForm.formType.NEW);
+        $scope.form = new VeniceForm(q('form[name="pdf_content"]'), VeniceForm.formType.NEW);
     }
 
     /**
@@ -44,7 +54,7 @@ export default class ContetntController extends Controller {
      * @param $scope
      */
     newTextAction($scope) {
-        $scope.form = new TrinityForm(q('form[name="text_content"]'), TrinityForm.formType.NEW);
+        $scope.form = new VeniceForm(q('form[name="text_content"]'), VeniceForm.formType.NEW);
     }
 
     /**
@@ -52,7 +62,7 @@ export default class ContetntController extends Controller {
      * @param $scope
      */
     newMp3Action($scope) {
-        $scope.form = new TrinityForm(q('form[name="mp3_content"]'), TrinityForm.formType.NEW);
+        $scope.form = new VeniceForm(q('form[name="mp3_content"]'), VeniceForm.formType.NEW);
     }
 
     /**
@@ -60,7 +70,7 @@ export default class ContetntController extends Controller {
      * @param $scope
      */
     newVideoAction($scope) {
-        $scope.form = new TrinityForm(q('form[name="video_content"]'), TrinityForm.formType.NEW);
+        $scope.form = new VeniceForm(q('form[name="video_content"]'), VeniceForm.formType.NEW);
     }
 
     /**
@@ -68,7 +78,7 @@ export default class ContetntController extends Controller {
      * @param $scope
      */
     newIFrameAction($scope) {
-        $scope.form = new TrinityForm(q('form[name="iframe_content"]'), TrinityForm.formType.NEW);
+        $scope.form = new VeniceForm(q('form[name="iframe_content"]'), VeniceForm.formType.NEW);
     }
 
     /**
@@ -76,6 +86,6 @@ export default class ContetntController extends Controller {
      * @param $scope
      */
     newGroupAction($scope) {
-        $scope.form = new TrinityForm(q('form[name="group_content"]'), TrinityForm.formType.NEW);
+        $scope.form = new VeniceForm(q('form[name="group_content"]'), VeniceForm.formType.NEW);
     }
 }
