@@ -117,7 +117,8 @@ class ContentInGroupType extends AdminBaseType
      */
     protected function getQueryBuilderFunction()
     {
-        // The contentGroup entity contains data
+        // If the contentGroup entity contains data
+        // Get all ContentGroups but the given group - do not allow circular relations
         if ($this->groupContent && $this->groupContent->getId()) {
             $groupId = $this->groupContent->getId();
             return function (EntityRepository $er) use ($groupId) {
