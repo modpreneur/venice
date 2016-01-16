@@ -9,19 +9,21 @@
 namespace AppBundle\Entity\Content;
 
 use Doctrine\ORM\Mapping as ORM;
-
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Class IframeContent
+ * Class HtmlContent
  * @package AppBundle\Entity\Content
  *
  * @ORM\Entity()
- * @ORM\Table(name="content_iframe")
+ * @ORM\Table(name="content_html")
  */
-class IframeContent extends Content
+class HtmlContent extends Content
 {
     /**
      * @var string
+     *
+     * @Assert\Length(min=10)
      *
      * @ORM\Column(name="html", type="text", nullable=false)
      */
@@ -52,7 +54,7 @@ class IframeContent extends Content
     /**
      * @param string $html
      *
-     * @return IframeContent
+     * @return HtmlContent
      *
      */
     public function setHtml($html)
@@ -68,6 +70,6 @@ class IframeContent extends Content
      */
     public function getType()
     {
-        return "iframe";
+        return "html";
     }
 }

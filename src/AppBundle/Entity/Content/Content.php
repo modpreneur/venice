@@ -169,7 +169,7 @@ abstract class Content
     /**
      * Creates new instance of content from type (first part of entity name ends with Content)
      *
-     * @param string $type Could be formatted like IframeContent, Mp3Content, AppBundle\\Entity\\Content\\PdfContent, ...
+     * @param string $type Could be formatted like HtmlContent, Mp3Content, AppBundle\\Entity\\Content\\PdfContent, ...
      * @param array  $args
      *
      * @return Content

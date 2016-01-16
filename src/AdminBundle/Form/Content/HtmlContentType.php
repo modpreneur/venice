@@ -12,7 +12,7 @@ namespace AdminBundle\Form\Content;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 
-class IframeContentType extends ContentType
+class HtmlContentType extends ContentType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
