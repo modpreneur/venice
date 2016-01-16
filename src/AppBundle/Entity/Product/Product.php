@@ -16,7 +16,9 @@ use AppBundle\Entity\User;
 use Cocur\Slugify\Slugify;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Trinity\FrameworkBundle\Entity\BaseProduct as TrinityProduct;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Class BaseProduct
@@ -27,27 +29,33 @@ use Trinity\FrameworkBundle\Entity\BaseProduct as TrinityProduct;
  * @ORM\InheritanceType("JOINED")
  * @ORM\DiscriminatorColumn(name="type", type="string")
  *
+ *
+ * @UniqueEntity("handle")
+ *
  * @package AppBundle\Entity\Product
  */
 abstract class Product extends TrinityProduct
 {
     /**
+     * @var string
+     *
      * @ORM\Column(name="handle", type="string", unique=true)
-     * @var
      */
     protected $handle;
 
 
     /**
-     * @ORM\Column(name="image", type="string", length=255, nullable=true)
+     * @var string Url to image of the product
      *
-     * @var
+     * @Assert\Url()
+     *
+     * @ORM\Column(name="image", type="string", length=255, nullable=true)
      */
     protected $image;
 
 
     /**
-     * @var
+     * @var bool
      *
      * @ORM\Column(name="enabled", type="boolean")
      */
@@ -57,13 +65,18 @@ abstract class Product extends TrinityProduct
     /**
      * @var integer
      *
+     * @Assert\Range(
+     *     min = 0,
+     *     max = 10000
+     *     )
+     *
      * @ORM\Column(name="order_number", type="integer")
      */
     protected $orderNumber;
 
 
     /**
-     * @var
+     * @var ArrayCollection<ProductAccess>
      *
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\ProductAccess", mappedBy="product", cascade={"remove"})
      */
@@ -71,7 +84,7 @@ abstract class Product extends TrinityProduct
 
 
     /**
-     * @var
+     * @var ArrayCollection<ContentProduct>
      *
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\ContentProduct", mappedBy="product", cascade={"remove"})
      */
@@ -304,6 +317,7 @@ abstract class Product extends TrinityProduct
         $name = str_replace('Entity', 'Form', $name);
 
         $class = new \ReflectionClass($name);
+
         return $class->newInstanceArgs($arguments);
     }
 

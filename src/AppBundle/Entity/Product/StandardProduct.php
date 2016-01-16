@@ -13,6 +13,7 @@ use AppBundle\Entity\BillingPlan;
 use AppBundle\Traits\HasNotificationStatusTrait;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation\SerializedName;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Trinity\FrameworkBundle\Entity\ClientInterface;
 use Trinity\NotificationBundle\Annotations as N;
 use Trinity\NotificationBundle\Entity\NotificationEntityInterface;
@@ -28,8 +29,9 @@ use Trinity\NotificationBundle\Entity\NotificationEntityInterface;
  * @N\Methods(types={"put", "post", "delete"})
  * @N\Url(postfix="product")
  *
+ * @UniqueEntity(fields={"necktieId", "amemberId"})
+ *
  * Class StandardProduct
- * @package AppBundle\Entity\Product
  */
 class StandardProduct extends Product implements NotificationEntityInterface
 {
@@ -41,6 +43,7 @@ class StandardProduct extends Product implements NotificationEntityInterface
      * @var integer
      *
      * @ORM\Column(name="necktie_id", type="integer", nullable=true, unique=true)
+     *
      * @SerializedName("id")
      */
     protected $necktieId;

@@ -21,6 +21,7 @@ use Trinity\FrameworkBundle\Entity\BaseUser as TrinityUser;
 use Trinity\FrameworkBundle\Entity\ClientInterface;
 use Trinity\NotificationBundle\Annotations as N;
 use Trinity\NotificationBundle\Entity\NotificationEntityInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Class User
@@ -41,45 +42,47 @@ class User extends TrinityUser implements NotificationEntityInterface
 
     const PREFERRED_UNITS_IMPERIAL = "imperial";
     const PREFERRED_UNITS_METRIC = "metric";
-    const DEFAULT_PREFERRED_METRICS = "imperial";
+    const DEFAULT_PREFERRED_METRICS = self::PREFERRED_UNITS_IMPERIAL;
 
     /**
+     * @var integer
+     *
      * @ORM\Column(name="necktie_id", type="integer", unique=true, nullable=true)
      * @SerializedName("id")
-     *
-     * @var integer
      */
     protected $necktieId;
 
 
     /**
-     * @ORM\Column(name="amember_id", type="integer", unique=true, nullable=true)
-     *
      * @var integer
+     *
+     * @ORM\Column(name="amember_id", type="integer", unique=true, nullable=true)
      */
     protected $amemberId;
 
 
     /**
-     * @ORM\Column(name="preferred_units", type="string", length=10)
-     *
      * @var string
+     *
+     * @ORM\Column(name="preferred_units", type="string", length=10)
      */
     protected $preferredUnits;
 
 
     /**
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\ProductAccess", mappedBy="user", cascade={"REMOVE", "PERSIST"})
-     *
      * @var ArrayCollection<ProductAccess>
+     *
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\ProductAccess", mappedBy="user", cascade={"REMOVE", "PERSIST"})
      */
     protected $productAccesses;
 
 
     /**
-     * @ORM\Column(name="date_of_birth", type="date")
-     *
      * @var DateTime
+     *
+     * @Assert\DateTime()
+     *
+     * @ORM\Column(name="date_of_birth", type="date")
      */
     protected $birthDate;
 
@@ -98,7 +101,6 @@ class User extends TrinityUser implements NotificationEntityInterface
      * @ORM\Column(type="array", nullable=true)
      */
     protected $status;
-
 
 
     public function __construct()

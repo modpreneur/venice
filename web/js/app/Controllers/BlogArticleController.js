@@ -31,6 +31,6 @@ export default class BlogArticleController extends Controller {
      * @param $scope
      */
     newAction($scope) {
-        $scope.form = new VeniceForm(q('form[name="blogarticletype"]'), VeniceForm.formType.NEW);
+        $scope.form = new VeniceForm(q('form[name="blog_article"]'), VeniceForm.formType.NEW);
     }
 }

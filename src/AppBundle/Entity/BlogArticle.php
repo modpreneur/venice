@@ -12,13 +12,16 @@ namespace AppBundle\Entity;
 use Cocur\Slugify\Slugify;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity()
  * @ORM\Table(name="blog_article")
  *
+ * @UniqueEntity("handle")
+ *
  * Class BlogArticle
- * @package AppBundle\Entity
  */
 class BlogArticle
 {
@@ -27,10 +30,12 @@ class BlogArticle
      */
     private $lastAllowedDotPosition = 200;
 
+
     /**
      * @var int Used for creating a preview
      */
     private $maxCountOfCharacters = 400;
+
 
     /**
      * @var int
@@ -41,11 +46,17 @@ class BlogArticle
      */
     protected $id;
 
+
     /**
+     * @var string
+     *
+     * @Assert\NotBlank()
+     *
      * @ORM\Column(name="handle", type="string", unique=true)
-     * @var
+     *
      */
     protected $handle;
+
 
     /**
      * @var User
@@ -55,29 +66,41 @@ class BlogArticle
      */
     protected $publisher;
 
+
     /**
      * @var DateTime
+     *
+     * @Assert\DateTime()
      *
      * @ORM\Column(name="date_written", type="datetime")
      */
     protected $dateWritten;
 
+
     /**
      * @var DateTime
+     *
+     * @Assert\DateTime()
      *
      * @ORM\Column(name="date_to_publish", type="datetime", nullable=true)
      */
     protected $dateToPublish;
 
+
     /**
      * @var string
+     *
+     * @Assert\NotBlank()
      *
      * @ORM\Column(name="title", type="string", length=255)
      */
     protected $title;
 
+
     /**
      * @var string
+     *
+     * @Assert\Length(min = 10)
      *
      * @ORM\Column(name="content", type="text")
      */
@@ -279,7 +302,11 @@ class BlogArticle
         }
     }
 
-
+    /**
+     * Get preview of the article. Returns the first paragraph of a few first sentences.
+     *
+     * @return string
+     */
     public function getPreview()
     {
         $firstPEnd = strpos($this->content,"</p>");
