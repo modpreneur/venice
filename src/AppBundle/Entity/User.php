@@ -397,7 +397,7 @@ class User extends TrinityUser implements NotificationEntityInterface
                 ->setProduct($product)
                 ->setUser($this)
                 ->setDateFrom($dateFrom)
-                ->setDateTo($dateTo);
+                ->setToDate($dateTo);
 
             $this->addProductAccess($productAccess);
 
@@ -416,7 +416,7 @@ class User extends TrinityUser implements NotificationEntityInterface
                         $productAccess->setProduct($product);
                         $productAccess->setUser($this);
                         $productAccess->setDateFrom($dateFrom);
-                        $productAccess->setDateTo($dateTo);
+                        $productAccess->setToDate($dateTo);
                     }
                 }
                 else
@@ -426,7 +426,7 @@ class User extends TrinityUser implements NotificationEntityInterface
                         $productAccess->setProduct($product);
                         $productAccess->setUser($this);
                         $productAccess->setDateFrom($dateFrom);
-                        $productAccess->setDateTo($dateTo);
+                        $productAccess->setToDate($dateTo);
 
                         return $productAccess;
                     }
@@ -452,5 +452,18 @@ class User extends TrinityUser implements NotificationEntityInterface
     public function setSyncStatus(ClientInterface $client, $status)
     {
         $this->status[$client->getId()] = $status;
+    }
+
+
+    public function getProductAccess(Product $product)
+    {
+        /** @var ProductAccess $productAccess */
+        foreach ($this->productAccesses as $productAccess) {
+            if ($productAccess->getProduct() == $product) {
+                return $productAccess;
+            }
+        }
+
+        return null;
     }
 }

@@ -49,21 +49,21 @@ class ProductAccess
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="date_from", type="datetimetz", nullable=false)
+     * @ORM\Column(name="from_date", type="datetimetz", nullable=false)
      */
-    private $dateFrom;
+    private $fromDate;
 
     /**
      * @var \DateTime
      *
      * @ORM\Column(name="date_to", type="datetimetz", nullable=true)
      */
-    private $dateTo;
+    private $toDate;
 
 
     public function __construct()
     {
-        $this->dateFrom = new \DateTime();
+        $this->fromDate = new \DateTime();
     }
 
 
@@ -131,15 +131,15 @@ class ProductAccess
 
 
     /**
-     * Set dateFrom
+     * Set fromDate
      *
-     * @param \DateTime $dateFrom
+     * @param \DateTime $fromDate
      *
      * @return ProductAccess
      */
-    public function setDateFrom(\DateTime $dateFrom)
+    public function setDateFrom(\DateTime $fromDate)
     {
-        $this->dateFrom = $dateFrom;
+        $this->fromDate = $fromDate;
 
         return $this;
     }
@@ -159,45 +159,39 @@ class ProductAccess
 
 
     /**
-     * Get dateFrom
+     * Get fromDate
      *
      * @return \DateTime
      */
     public function getDateFrom()
     {
-        return $this->dateFrom;
+        return $this->fromDate;
     }
 
 
     /**
-     * Set dateTo
+     * Set toDate
      *
-     * @param \DateTime $dateTo
+     * @param \DateTime $toDate
      *
      * @return ProductAccess
      */
-    public function setDateTo(\DateTime $dateTo = null)
+    public function setToDate(\DateTime $toDate = null)
     {
-        $this->dateTo = $dateTo;
+        $this->toDate = $toDate;
 
         return $this;
     }
 
 
-    public function setToDate(\DateTime $dateTo = null)
-    {
-        return $this->setDateTo($dateTo);
-    }
-
-
     /**
-     * Get dateTo
+     * Get toDate
      *
      * @return \DateTime
      */
-    public function getDateTo()
+    public function getToDate()
     {
-        return $this->dateTo;
+        return $this->toDate;
     }
 
 
