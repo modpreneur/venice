@@ -10,7 +10,7 @@ namespace AppBundle\Entity\Content;
 
 
 use Doctrine\ORM\Mapping as ORM;
-
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Class Mp3Content
@@ -24,6 +24,8 @@ class Mp3Content extends AbstractPlayableContent
 {
     /**
      * @var string Url address to the file.
+     *
+     * @Assert\Url()
      *
      * @ORM\Column(name="link", type="string", length=255)
      */

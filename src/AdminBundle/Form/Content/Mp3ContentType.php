@@ -20,8 +20,17 @@ class Mp3ContentType extends ContentType
         parent::buildForm($builder, $options);
 
         $builder
-            ->add("link", TextType::class)
-            ->add("duration", NumberType::class);
+            ->add(
+                "link",
+                TextType::class
+            )
+            ->add(
+                "duration",
+                NumberType::class,
+                [
+                    "label" => "Duration in seconds"
+                ]
+            );
     }
 
 }

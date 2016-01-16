@@ -14,6 +14,7 @@ use AppBundle\Entity\ContentProduct;
 use AppBundle\Entity\User;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Class AbstractContent
@@ -28,7 +29,7 @@ use Doctrine\ORM\Mapping as ORM;
 abstract class Content
 {
     /**
-     * @var
+     * @var int
      *
      * @ORM\Id()
      * @ORM\Column(name="id", type="integer")
@@ -39,15 +40,17 @@ abstract class Content
 
 
     /**
-     * @var
+     * @var string
      *
-     * @ORM\Column(name="name", type="string", length=255)
+     * @Assert\Length(min = 3)
+     *
+     * @ORM\Column(name="name", type="string", length=255, nullable=false)
      */
     protected $name;
 
 
     /**
-     * @var ArrayCollection
+     * @var ArrayCollection<ContentProduct>
      *
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\ContentProduct", mappedBy="content")
      */
@@ -55,7 +58,7 @@ abstract class Content
 
 
     /**
-     * @var
+     * @var User
      *
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
      */
@@ -63,7 +66,7 @@ abstract class Content
 
 
     /**
-     * @var
+     * @var ContentInGroup
      *
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Content\ContentInGroup", mappedBy="content")
      */
@@ -74,7 +77,6 @@ abstract class Content
      * Return Content's content no matter what concrete implementation is.
      *
      * @return string
-     *
      */
     abstract public function getContent();
 

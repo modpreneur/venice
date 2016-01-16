@@ -10,6 +10,7 @@ namespace AppBundle\Entity\Content;
 
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Class TextContent
@@ -22,7 +23,9 @@ use Doctrine\ORM\Mapping as ORM;
 class TextContent extends Content
 {
     /**
-     * @var
+     * @var string
+     *
+     * @Assert\NotBlank()
      *
      * @ORM\Column(name="text", type="text", nullable=false)
      */

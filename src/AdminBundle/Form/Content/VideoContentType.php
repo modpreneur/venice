@@ -20,28 +20,46 @@ class VideoContentType extends ContentType
         parent::buildForm($builder, $options);
 
         $builder
-            ->add("duration", NumberType::class, [
+            ->add(
+                "duration",
+                NumberType::class,
+                [
                     "required" => true
                 ]
             )
-            ->add("previewImage", TextType::class, [
+            ->add(
+                "previewImage",
+                TextType::class,
+                [
                     "required" => true,
-                    "label" => "Preview image link"
+                    "label" => "Preview image link",
                 ]
             )
-            ->add("videoMobile", TextType::class, [
+            ->add(
+                "videoMobile",
+                TextType::class,
+                [
                     "required" => false
                 ]
             )
-            ->add("videoLq", TextType::class, [
+            ->add(
+                "videoLq",
+                TextType::class,
+                [
                     "required" => false
                 ]
             )
-            ->add("videoHq", TextType::class, [
+            ->add(
+                "videoHq",
+                TextType::class,
+                [
                     "required" => false
                 ]
             )
-            ->add("videoHd", TextType::class, [
+            ->add(
+                "videoHd",
+                TextType::class,
+                [
                     "required" => false
                 ]
             );

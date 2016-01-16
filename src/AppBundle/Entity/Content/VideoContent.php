@@ -10,7 +10,7 @@ namespace AppBundle\Entity\Content;
 
 
 use Doctrine\ORM\Mapping as ORM;
-
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Class VideoContent
@@ -22,37 +22,50 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class VideoContent extends AbstractPlayableContent
 {
-
     /**
-     * @var string
+     * @var string Url to the preview image
      *
-     * @ORM\Column(name="preview_image", type="string", length=255, nullable=true)
+     * @Assert\Url()
+     *
+     * @ORM\Column(name="preview_image", type="string", length=255, nullable=false)
      */
     protected $previewImage;
 
+
     /**
-     * @var string
+     * @var string Url to the video in the mobile quality
+     *
+     * @Assert\Url()
      *
      * @ORM\Column(name="video_mob", type="string", length=255, nullable=true)
      */
     protected $videoMobile;
 
+
     /**
-     * @var string
+     * @var string Url to the video in the low quality
+     *
+     * @Assert\Url()
      *
      * @ORM\Column(name="video_lq", type="string", length=255, nullable=true)
      */
     protected $videoLq;
 
+
     /**
-     * @var string
+     * @var string Url to the video in the high quality
+     *
+     * @Assert\Url()
      *
      * @ORM\Column(name="video_hq", type="string", length=255, nullable=true)
      */
     protected $videoHq;
 
+
     /**
-     * @var string
+     * @var string Url to the video in the high definition
+     *
+     * @Assert\Url()
      *
      * @ORM\Column(name="video_hd", type="string", length=255, nullable=true)
      */
