@@ -34,6 +34,12 @@ services:
     form_error_serializer:
         class: AppBundle\Services\FormErrorSerializer
 
+    app.handler.logout_success_handler:
+        class: AppBundle\Services\LogoutSuccessHandler
+        arguments:
+            - %necktie_url%
+            - @router.default
+
 
     # EVENT LISTENERS #
 
