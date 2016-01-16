@@ -37,7 +37,7 @@ framework:
         engines: ['twig']
         form:
             resources:
-                - 'TrinityAdminBundle:Form:bowtie_form_layout.html.twig'
+                - ':AdminBundle:formLayout.html.twig'
 
         #assets_version: SomeVersionScheme
     default_locale:  "%locale%"
@@ -56,7 +56,6 @@ twig:
     strict_variables: "%kernel.debug%"
     form_themes:
         - ':AdminBundle:formLayout.html.twig'
-        - 'TrinityAdminBundle:Form:bowtie_form_layout.html.twig'
     globals:
       root_path: %kernel.root_dir%
       admin_manager: @trinity.admin.service.admin_manager

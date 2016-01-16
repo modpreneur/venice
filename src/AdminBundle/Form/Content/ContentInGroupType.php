@@ -68,6 +68,7 @@ class ContentInGroupType extends AdminBaseType
                     // Uses model transformer
                     "data" => $this->groupContent,
                     "data_class" => null,
+                    "label" => false,
                 ]
             )
             ->add(
