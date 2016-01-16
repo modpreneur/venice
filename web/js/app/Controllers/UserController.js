@@ -25,6 +25,11 @@ export default class ContetntController extends Controller {
                 $scope.veniceForms = $scope.veniceForms || {};
                 $scope.veniceForms[e.id] = new VeniceForm(form);
             }
+
+            // Reload tab1 (SHOW) when success update
+            $scope.veniceForms[e.id].success((e)=>{
+                $scope.trinityTab.reload('tab1');
+            });
         }, this);
     }
 

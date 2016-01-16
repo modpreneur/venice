@@ -242,11 +242,8 @@ class ContentProductController extends BaseAdminController
             }
 
             return new JsonResponse(
-                [
-                    "message" => "Association successfully updated",
-                    "location" => $this->generateUrl("admin_content_product_tabs", ["id" => $contentProduct->getId(),])
-                ],
-                302);
+                ["message" => "Association successfully updated",]
+            );
         } else {
             return $this->returnFormErrorsJsonResponse($form);
         }

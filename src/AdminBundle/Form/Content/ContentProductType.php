@@ -43,7 +43,7 @@ class ContentProductType extends AdminBaseType
                 NumberType::class,
                 [
                     "required" => true,
-                    "data" => 0
+                    "empty_data" => 0
 
                 ]
             )
@@ -52,7 +52,7 @@ class ContentProductType extends AdminBaseType
                 NumberType::class,
                 [
                     "required" => true,
-                    "data" => 0
+                    "empty_data" => 0
                 ]
             );
 
