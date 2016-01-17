@@ -90,7 +90,7 @@ abstract class Product extends TrinityProduct
      * @var ArrayCollection<ContentProduct>
      *
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\ContentProduct", mappedBy="product", cascade={"remove"})
-     * @OrderBy({"orderNumber" = "ASC"})
+     * @OrderBy({"delay" = "ASC", "orderNumber" = "ASC"})
      *
      */
     protected $contentProducts;
@@ -478,6 +478,14 @@ abstract class Product extends TrinityProduct
         }
 
         return $contentProducts;
+    }
+    
+    
+    public function getAllContentForImmersion()
+    {
+        $content = [];
+
+
     }
 
 

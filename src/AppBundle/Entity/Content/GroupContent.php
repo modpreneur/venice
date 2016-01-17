@@ -28,7 +28,7 @@ class GroupContent extends Content
      * @Assert\Valid()
      *
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Content\ContentInGroup", mappedBy="group", cascade={"PERSIST"})
-     * @ORM\OrderBy({"orderNumber" = "ASC"})
+     * @OrderBy({"delay" = "ASC", "orderNumber" = "ASC"})
      */
     protected $items;
 
