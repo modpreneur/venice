@@ -1,0 +1,4 @@
+<h3>Group content - {{ content.name }}</h3>
+{% for item in content.items %}
+    {{ item.content|renderDefault }}
+{% endfor %}

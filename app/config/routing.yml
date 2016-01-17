@@ -6,6 +6,10 @@ admin:
     resource: "@AdminBundle/Controller"
     type:     annotation
 
+front:
+    resource: "@FrontBundle/Controller"
+    type:     annotation
+
 fos_user:
     resource: "@FOSUserBundle/Resources/config/routing/security.xml"
 

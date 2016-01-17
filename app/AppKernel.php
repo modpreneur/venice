@@ -24,6 +24,7 @@ class AppKernel extends Kernel
 
             new AppBundle\AppBundle(),
             new AdminBundle\AdminBundle(),
+            new FrontBundle\FrontBundle(),
 
             new WhiteOctober\BreadcrumbsBundle\WhiteOctoberBreadcrumbsBundle(),
 

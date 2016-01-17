@@ -142,13 +142,12 @@ class User extends TrinityUser implements NotificationEntityInterface
      */
     public function setPreferredUnits($preferredUnits)
     {
-        if($preferredUnits !== self::PREFERRED_UNITS_METRIC || $preferredUnits !== self::PREFERRED_UNITS_IMPERIAL)
-        {
+        if ($preferredUnits !== self::PREFERRED_UNITS_METRIC || $preferredUnits !== self::PREFERRED_UNITS_IMPERIAL) {
             throw new InvalidArgumentException(
-                "Preferred units has to be one of " .
-                self::PREFERRED_UNITS_METRIC .
-                " or " .
-                self::PREFERRED_UNITS_IMPERIAL .
+                "Preferred units has to be one of ".
+                self::PREFERRED_UNITS_METRIC.
+                " or ".
+                self::PREFERRED_UNITS_IMPERIAL.
                 ", $preferredUnits given.");
         }
 
@@ -172,8 +171,7 @@ class User extends TrinityUser implements NotificationEntityInterface
      */
     public function addProductAccess(ProductAccess $productAccess)
     {
-        if(!$this->productAccesses->contains($productAccess))
-        {
+        if (!$this->productAccesses->contains($productAccess)) {
             $this->productAccesses->add($productAccess);
         }
 
@@ -302,8 +300,7 @@ class User extends TrinityUser implements NotificationEntityInterface
      */
     public function addOAuthToken(OAuthToken $OAuthToken)
     {
-        if(!$this->OAuthTokens->contains($OAuthToken))
-        {
+        if (!$this->OAuthTokens->contains($OAuthToken)) {
             $this->OAuthTokens->add($OAuthToken);
         }
 
@@ -329,12 +326,9 @@ class User extends TrinityUser implements NotificationEntityInterface
      */
     public function getFullNameOrUsername()
     {
-        if($this->getFullName())
-        {
+        if ($this->getFullName()) {
             return $this->getFullName();
-        }
-        else
-        {
+        } else {
             return $this->getUsername();
         }
     }
@@ -347,50 +341,49 @@ class User extends TrinityUser implements NotificationEntityInterface
      */
     public function hasAccessToProduct(Product $product)
     {
-        if($product instanceof FreeProduct)
-        {
-            return true;
+        $access = null;
+
+        if (!$product->isEnabled()) {
+            return false;
         }
 
-        $today = new \DateTime();
-
         /** @var ProductAccess $productAccess */
-        foreach($this->getProductAccesses() as $productAccess)
-        {
-            if($productAccess->getProduct() == $product && $productAccess->getDateFrom() < $today)
-            {
-                if($productAccess->getDateTo() == null)
-                {
-                    return true;
-                }
-                else if($productAccess->getDateTo() > $today)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+        foreach ($this->getProductAccesses() as $productAccess) {
+            if ($productAccess->getProduct()->getId() === $product->getId()) {
+                $access = $productAccess;
             }
         }
 
-        return false;
+        if (!$access) {
+            return false;
+        }
+
+        $timeOfStart = $access->getFromDate();
+        $timeOfEnd = $access->getToDate();
+        $now = new \DateTime();
+
+        if (!$timeOfEnd) {
+            return $timeOfStart < $now;
+        } else {
+            return $timeOfStart < $now && $timeOfEnd > $now;
+        }
     }
 
 
     /**
      * @param Product|StandardProduct $product
-     * @param DateTime                $dateFrom
-     * @param DateTime|null           $dateTo
-     * @param int|null                $necktieId
+     * @param DateTime $dateFrom
+     * @param DateTime|null $dateTo
+     * @param int|null $necktieId
      *
      * @return ProductAccess|null
      */
     public function giveAccessToProduct(StandardProduct $product, \DateTime $dateFrom, \DateTime $dateTo = null, $necktieId = null)
     {
+        //todo: refactor and simplify
+
         //create a new ProductAccess record
-        if(!$this->hasAccessToProduct($product))
-        {
+        if (!$this->hasAccessToProduct($product)) {
             $productAccess = new ProductAccess();
             $productAccess
                 ->setNecktieId($necktieId)
@@ -402,27 +395,19 @@ class User extends TrinityUser implements NotificationEntityInterface
             $this->addProductAccess($productAccess);
 
             return $productAccess;
-        }
-        //edit existing product access record
-        else
-        {
+        } //edit existing product access record
+        else {
             /** @var ProductAccess $productAccess */
-            foreach($this->getProductAccesses() as $productAccess)
-            {
-                if($necktieId)
-                {
-                    if($productAccess->getNecktieId() == $necktieId)
-                    {
+            foreach ($this->getProductAccesses() as $productAccess) {
+                if ($necktieId) {
+                    if ($productAccess->getNecktieId() == $necktieId) {
                         $productAccess->setProduct($product);
                         $productAccess->setUser($this);
                         $productAccess->setDateFrom($dateFrom);
                         $productAccess->setToDate($dateTo);
                     }
-                }
-                else
-                {
-                    if($productAccess->getProduct() == $product)
-                    {
+                } else {
+                    if ($productAccess->getProduct() == $product) {
                         $productAccess->setProduct($product);
                         $productAccess->setUser($this);
                         $productAccess->setDateFrom($dateFrom);
@@ -455,6 +440,12 @@ class User extends TrinityUser implements NotificationEntityInterface
     }
 
 
+    /**
+     * Get productAccess entity for this user and given product.
+     *
+     * @param Product $product
+     * @return ProductAccess|null
+     */
     public function getProductAccess(Product $product)
     {
         /** @var ProductAccess $productAccess */

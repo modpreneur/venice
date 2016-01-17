@@ -56,7 +56,7 @@ class ContentProduct
 
 
     /**
-     * @var
+     * @var int delay in hours
      *
      * @Assert\Range(
      *     min = 0,
@@ -91,7 +91,7 @@ class ContentProduct
 
 
     /**
-     * @return mixed
+     * @return int
      */
     public function getId()
     {
@@ -100,7 +100,7 @@ class ContentProduct
 
 
     /**
-     * @return mixed
+     * @return Content
      */
     public function getContent()
     {
@@ -109,7 +109,7 @@ class ContentProduct
 
 
     /**
-     * @param mixed $content
+     * @param Content $content
      *
      * @return ContentProduct
      */
@@ -122,7 +122,7 @@ class ContentProduct
 
 
     /**
-     * @return mixed
+     * @return Product
      */
     public function getProduct()
     {
@@ -131,7 +131,7 @@ class ContentProduct
 
 
     /**
-     * @param mixed $product
+     * @param Product $product
      *
      * @return ContentProduct
      */
@@ -144,7 +144,7 @@ class ContentProduct
 
 
     /**
-     * @return mixed
+     * @return int delay in hours
      */
     public function getDelay()
     {
@@ -153,7 +153,7 @@ class ContentProduct
 
 
     /**
-     * @param mixed $delay
+     * @param int $delay delay in hours
      *
      * @return ContentProduct
      */
@@ -166,7 +166,7 @@ class ContentProduct
 
 
     /**
-     * @return mixed
+     * @return int
      */
     public function getOrderNumber()
     {
@@ -175,7 +175,7 @@ class ContentProduct
 
 
     /**
-     * @param mixed $orderNumber
+     * @param int $orderNumber
      *
      * @return ContentProduct
      */
@@ -184,5 +184,37 @@ class ContentProduct
         $this->orderNumber = $orderNumber;
 
         return $this;
+    }
+
+    /**
+     * Check if the given user has access to this contentProduct.
+     *
+     * @param User $user
+     * @param bool $checkAccessToProduct Check access to product
+     * @return bool true - the user has access to the parent product and the delay of this contentProduct + delay < now
+     */
+    public function isAvailableFor(User $user, $checkAccessToProduct = true)
+    {
+        $product = $this->getProduct();
+        $now = new \DateTime();
+
+        if ($checkAccessToProduct && !$user->hasAccessToProduct($this->product)) {
+            return false;
+        }
+
+        // Get time when the user was given access to this product
+        $productAccess = $user->getProductAccess($product);
+        if (!$productAccess) {
+            return false;
+        }
+        // Clone product access object to avoid weird errors.
+        $timeOfAccess = clone $productAccess->getFromDate();
+
+        // Add delay to the time
+        $hours = $this->getDelay();
+        $timeOfAccess->add(new \DateInterval("PT{$hours}H"));
+
+        // Check if the the of the access + delay(in hours) < now
+        return $timeOfAccess < $now;
     }
 }

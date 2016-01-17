@@ -11,6 +11,8 @@ namespace AppBundle\Entity\Product;
 
 use AdminBundle\Form\Product\FreeProductType;
 use AdminBundle\Form\Product\StandardProductType;
+use AppBundle\Entity\Content\Content;
+use AppBundle\Entity\ContentProduct;
 use AppBundle\Entity\ProductAccess;
 use AppBundle\Entity\User;
 use Cocur\Slugify\Slugify;
@@ -173,8 +175,7 @@ abstract class Product extends TrinityProduct
      */
     public function addUser(User $user)
     {
-        if(!$this->users->contains($user))
-        {
+        if (!$this->users->contains($user)) {
             $this->users->add($user);
         }
 
@@ -201,9 +202,17 @@ abstract class Product extends TrinityProduct
         return $this->enabled;
     }
 
+    /**
+     * @return bool
+     */
+    public function isEnabled()
+    {
+        return $this->enabled;
+    }
+
 
     /**
-     * @param mixed $enabled
+     * @param bool $enabled
      *
      * @return Product
      */
@@ -239,7 +248,7 @@ abstract class Product extends TrinityProduct
     /**
      * @return ArrayCollection<ProductAccess>
      */
-    public function getProductAccesss()
+    public function getProductAccesses()
     {
         return $this->productAccesses;
     }
@@ -251,8 +260,7 @@ abstract class Product extends TrinityProduct
      */
     public function addProductAccess(ProductAccess $productAccess)
     {
-        if(!$this->productAccesses->contains($productAccess))
-        {
+        if (!$this->productAccesses->contains($productAccess)) {
             $this->productAccesses->add($productAccess);
         }
 
@@ -271,11 +279,47 @@ abstract class Product extends TrinityProduct
         return $this;
     }
 
+
+    /**
+     * @return ArrayCollection<ContentProduct>
+     */
+    public function getContentProducts()
+    {
+        return $this->contentProducts;
+    }
+
+
+    /**
+     * @param ContentProduct $contentProduct
+     * @return $this
+     */
+    public function addContentProduct(ContentProduct $contentProduct)
+    {
+        if (!$this->contentProducts->contains($contentProduct)) {
+            $this->contentProducts->add($contentProduct);
+        }
+
+        return $this;
+    }
+
+
+    /**
+     * @param ContentProduct $contentProduct
+     * @return $this
+     */
+    public function removeContentProduct(ContentProduct $contentProduct)
+    {
+        $this->contentProducts->remove($contentProduct);
+
+        return $this;
+    }
+
+
     /**
      * Creates new instance of product from type (first part of entity name ends with Product)
      *
      * @param string $type Could be formatted like StandardProduct, FreeProduct, AppBundle\\Entity\\Product\\StandardProduct, ...
-     * @param array  $args
+     * @param array $args
      *
      * @return Product
      */
@@ -283,11 +327,11 @@ abstract class Product extends TrinityProduct
     {
         $type = ucfirst($type);
 
-        if(!strpos($type,"Product"))
+        if (!strpos($type, "Product"))
             $type .= "Product";
 
-        if(!strpos($type,"AppBundle\\Entity\\Product\\"))
-            $type = "AppBundle\\Entity\\Product\\" . $type;
+        if (!strpos($type, "AppBundle\\Entity\\Product\\"))
+            $type = "AppBundle\\Entity\\Product\\".$type;
 
         $class = new \ReflectionClass($type);
 
@@ -312,7 +356,7 @@ abstract class Product extends TrinityProduct
      */
     public function getFormType($arguments = [])
     {
-        $name = get_class($this) . "Type";
+        $name = get_class($this)."Type";
         $name = str_replace('AppBundle', 'AdminBundle', $name);
         $name = str_replace('Entity', 'Form', $name);
 
@@ -320,5 +364,118 @@ abstract class Product extends TrinityProduct
 
         return $class->newInstanceArgs($arguments);
     }
+
+
+    /**
+     * Get all Content of the product.
+     *
+     * @internal potentially dangerous - does not check the delay and product access!
+     *
+     * @return Content[]
+     */
+    public function getAllContent()
+    {
+        $content = [];
+
+        /** @var ContentProduct $contentProduct */
+        foreach ($this->getContentProducts() as $contentProduct) {
+            $content[] = $contentProduct->getContent();
+        }
+
+        return $content;
+    }
+
+
+    /**
+     * Get all content by type.
+     *
+     * @internal potentially dangerous - does not check the delay and product access!
+     *
+     * @param User $user
+     * @param string $type Type of the content (html, text, video, mp3, ...)
+     *
+     * @return array
+     */
+    public function getAllContentByType(User $user, $type)
+    {
+        $content = [];
+
+        /** @var ContentProduct $contentProduct */
+        foreach ($this->contentProducts as $contentProduct) {
+            if ($contentProduct->getContent()->getType() === $type) {
+                $content[] = $content;
+            }
+        }
+
+        return $content;
+    }
+
+
+    /**
+     * Get all available content without information about delay and order.
+     *
+     * @param User $user
+     *
+     * @return Content[]
+     */
+    public function getAllAvailableContent(User $user)
+    {
+        $content = [];
+
+        foreach ($this->getAvailableContentProducts($user) as $availableContentProduct) {
+            $content[] = $availableContentProduct->getContent();
+        }
+
+        return $content;
+    }
+
+
+    /**
+     * Get all available content by type without information about delay and order.
+     *
+     * @param User $user
+     * @param string $type Type of the content (html, text, video, mp3, ...)
+     *
+     * @return Content[]
+     */
+    public function getAllAvailableContentByType(User $user, $type)
+    {
+        $content = [];
+
+        foreach ($this->getAvailableContentProducts($user) as $availableContentProduct) {
+            if ($availableContentProduct->getContent()->getType() === $type) {
+                $content[] = $availableContentProduct->getContent();
+            }
+        }
+
+        return $content;
+    }
+
+
+    /**
+     * Get all available ContentProducts.
+     *
+     * @param User $user
+     *
+     * @return ContentProduct[]
+     */
+    public function getAvailableContentProducts(User $user)
+    {
+        $contentProducts = [];
+
+        if (!$user->hasAccessToProduct($this)) {
+            return [];
+        }
+
+        /** @var ContentProduct $contentProduct */
+        foreach ($this->contentProducts as $contentProduct) {
+            if ($contentProduct->isAvailableFor($user, true)) {
+                $contentProducts[] = $contentProduct;
+            }
+        }
+
+        return $contentProducts;
+    }
+
 
 }

@@ -1,0 +1,10 @@
+{% extends('base.html.twig') %}
+
+{% block body %}
+    {#Demo: The group can be rendered in a separate page like this. You can use this when you have plenty of content in a product and it would be cluttered on one page. #}
+    {{ group.name }}
+
+    {% for item in group.items %}
+        {{ item.content|renderDefault }}
+    {% endfor %}
+{% endblock %}

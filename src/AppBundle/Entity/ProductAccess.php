@@ -5,12 +5,15 @@ namespace AppBundle\Entity;
 use AppBundle\Entity\Product\Product;
 use AppBundle\Entity\Product\StandardProduct;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * ProductAccess
  *
  * @ORM\Table(name="product_access")
  * @ORM\Entity()
+ *
+ * @UniqueEntity(fields={"user", "product"})
  */
 class ProductAccess
 {
@@ -56,14 +59,13 @@ class ProductAccess
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="date_to", type="datetimetz", nullable=true)
+     * @ORM\Column(name="to_date", type="datetimetz", nullable=true)
      */
     private $toDate;
 
 
     public function __construct()
     {
-        $this->fromDate = new \DateTime();
     }
 
 
@@ -137,7 +139,7 @@ class ProductAccess
      *
      * @return ProductAccess
      */
-    public function setDateFrom(\DateTime $fromDate)
+    public function setFromDate(\DateTime $fromDate)
     {
         $this->fromDate = $fromDate;
 
@@ -146,24 +148,11 @@ class ProductAccess
 
 
     /**
-     * Method to maintain compatibility with necktie.
-     *
-     * @param \DateTime $fromDate
-     *
-     * @return ProductAccess
-     */
-    public function setFromDate(\DateTime $fromDate)
-    {
-        return $this->setDateFrom($fromDate);
-    }
-
-
-    /**
      * Get fromDate
      *
      * @return \DateTime
      */
-    public function getDateFrom()
+    public function getFromDate()
     {
         return $this->fromDate;
     }

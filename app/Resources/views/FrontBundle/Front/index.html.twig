@@ -1,0 +1,14 @@
+{% extends('base.html.twig') %}
+
+{% block body %}
+    A little menu:
+    <ul>
+        <li><a href="{{ path("front_product_index") }}">To products</a></li>
+
+        {% for group in groups %}
+            <li><a href="{{ path("front_group_show", {"id": group.id}) }}">To group {{ group.name }}</a></li>
+        {% endfor %}
+    </ul>
+
+
+{% endblock %}

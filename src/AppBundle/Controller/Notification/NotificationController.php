@@ -34,6 +34,8 @@ class NotificationController extends Controller
      */
     public function productAction(Request $request)
     {
+        $this->get("monolog.logger.php")->addInfo("product_notification_body: ".json_encode($request->request->all()));
+
         $this->get("trinity.notification.services.notification_parser")
             ->parseNotification(
                 $request->request->all(),
@@ -55,9 +57,11 @@ class NotificationController extends Controller
      */
     public function userAction(Request $request)
     {
+        $this->get("monolog.logger.php")->addInfo("user_notification_body: ".json_encode($request->request->all()));
+
         $this->get("trinity.notification.services.notification_parser")
             ->parseNotification(
-                json_decode($request->getContent(), true),
+                $request->request->all(),
                 "AppBundle\\Entity\\User",
                 $request->getMethod(),
                 $this->getParameter("necktie_client_secret")
@@ -76,6 +80,8 @@ class NotificationController extends Controller
      */
     public function billingPlanAction(Request $request)
     {
+        $this->get("monolog.logger.php")->addInfo("billing_plan_notification_body: ".json_encode($request->request->all()));
+
         $updatedBillingPlan = $this->get("trinity.notification.services.notification_parser")
             ->parseNotification(
                 $request->request->all(),
@@ -105,6 +111,8 @@ class NotificationController extends Controller
      */
     public function productAccessAction(Request $request)
     {
+        $this->get("monolog.logger.php")->addInfo("product_access_notification_body: ".json_encode($request->request->all()));
+
         $this->get("trinity.notification.services.notification_parser")
             ->parseNotification(
                 $request->request->all(),
