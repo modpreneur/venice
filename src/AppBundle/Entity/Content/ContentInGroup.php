@@ -187,13 +187,13 @@ class ContentInGroup
 
 
     /**
-     * Check if the given user has access to this contentProduct.
+     * Check if the given user has access to this ContentInGroup.
      *
      * @param User $user
-     * @param Product $product The product which is associated with the group
+     * @param Product $product The Product which is associated with the GroupContent
      * @param bool $checkAccessToProduct Check access to product?
      *
-     * @return bool true - the user has access to the parent product and the delay of this contentProduct + delay < now
+     * @return bool true - the user has access to the parent Product and the delay of this ContentInGroup + delay < now
      */
     public function isAvailableFor(User $user, Product $product, $checkAccessToProduct = true)
     {

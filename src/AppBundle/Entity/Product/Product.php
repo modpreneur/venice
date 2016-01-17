@@ -456,7 +456,7 @@ abstract class Product extends TrinityProduct
 
 
     /**
-     * Get all available ContentProducts.
+     * Get all available ContentProducts. Check if the user has access to the content.
      *
      * @param User $user
      *
@@ -481,6 +481,29 @@ abstract class Product extends TrinityProduct
     }
 
 
+    /**
+     * Get all content for immersion.
+     *
+     * Returns array of arrays of ContentProduct.
+     * Example:
+     * Every index of the top level array holds array of ContentProducts with the same delay
+     * [
+     *  0 => [  //The content products are ordered by their orderNumber
+     *          // ContentProducts with delay e.g. 24(hours)
+     *          0 => ContentProduct #1
+     *          1 => ContentProduct #2
+     *          2 => ContentProduct #2
+     *       ]
+     * 1 => [  //The content products are ordered by their orderNumber
+     *          // ContentProducts with delay e.g. 48(hours)
+     *          0 => ContentProduct #4
+     *          1 => ContentProduct #5
+     *          2 => ContentProduct #6
+     *       ]
+     * ]
+     *
+     * @return array
+     */
     public function getAllContentForImmersion()
     {
         if ($this->contentProducts->count() === 0) {
@@ -491,6 +514,7 @@ abstract class Product extends TrinityProduct
         $index = 0;
         $lastDelay = $this->contentProducts[0];
 
+        //Group the content products
         /** @var ContentProduct $contentProduct */
         foreach ($this->contentProducts as $contentProduct) {
             if ($lastDelay === $contentProduct->getDelay()) {
