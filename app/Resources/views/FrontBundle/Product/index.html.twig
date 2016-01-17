@@ -9,6 +9,8 @@
                     <a href="{{ path("front_product_show", {"id": product.id}) }}">
                         {{ product.name }}
                     </a>
+
+                    <a href="{{ path("front_product_demo", {"id": product.id}) }}">To demo</a>
                 {% else %}
                     {{ product.name }} <button>Buy me!</button>
                 {% endif %}

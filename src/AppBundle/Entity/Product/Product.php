@@ -18,6 +18,7 @@ use AppBundle\Entity\User;
 use Cocur\Slugify\Slugify;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\OrderBy;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Trinity\FrameworkBundle\Entity\BaseProduct as TrinityProduct;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -89,6 +90,8 @@ abstract class Product extends TrinityProduct
      * @var ArrayCollection<ContentProduct>
      *
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\ContentProduct", mappedBy="product", cascade={"remove"})
+     * @OrderBy({"orderNumber" = "ASC"})
+     *
      */
     protected $contentProducts;
 

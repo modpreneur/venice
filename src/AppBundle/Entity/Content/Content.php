@@ -14,6 +14,7 @@ use AppBundle\Entity\ContentProduct;
 use AppBundle\Entity\User;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\OrderBy;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -53,6 +54,8 @@ abstract class Content
      * @var ArrayCollection<ContentProduct>
      *
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\ContentProduct", mappedBy="content")
+     * @OrderBy({"orderNumber" = "ASC"})
+     *
      */
     protected $contentProducts;
 
@@ -69,6 +72,7 @@ abstract class Content
      * @var ContentInGroup
      *
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Content\ContentInGroup", mappedBy="content")
+     * @OrderBy({"orderNumber" = "ASC"})
      */
     protected $contentsInGroup;
 
