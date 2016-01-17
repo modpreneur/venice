@@ -11,7 +11,7 @@ namespace AdminBundle\Form\Content;
 
 use AdminBundle\Form\AdminBaseType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -40,7 +40,7 @@ class ContentProductType extends AdminBaseType
             )
             ->add(
                 "delay",
-                NumberType::class,
+                IntegerType::class,
                 [
                     "required" => true,
                     "empty_data" => 0
@@ -49,7 +49,7 @@ class ContentProductType extends AdminBaseType
             )
             ->add(
                 "orderNumber",
-                NumberType::class,
+                IntegerType::class,
                 [
                     "required" => true,
                     "empty_data" => 0
