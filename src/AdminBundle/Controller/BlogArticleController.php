@@ -40,6 +40,9 @@ class BlogArticleController extends BaseAdminController
      */
     public function indexAction(Request $request)
     {
+        $this->getBreadcrumbs()
+            ->addRouteItem("Blog articles", "admin_blog_article_index");
+
         $blogArticles = $this->getEntityManager()->getRepository("AppBundle:BlogArticle")->findAll();
 
         return $this->render(
@@ -62,6 +65,10 @@ class BlogArticleController extends BaseAdminController
      */
     public function tabsAction(BlogArticle $article)
     {
+        $this->getBreadcrumbs()
+            ->addRouteItem("Blog articles", "admin_blog_article_index")
+            ->addRouteItem($article->getTitle(), "admin_blog_article_tabs", ["id" => $article->getId()]);
+
         if (!$article) {
             throw $this->createNotFoundException('Unable to find BlogArticle entity.');
         }
@@ -104,6 +111,10 @@ class BlogArticleController extends BaseAdminController
      */
     public function newAction(Request $request)
     {
+        $this->getBreadcrumbs()
+            ->addRouteItem("Blog articles", "admin_blog_article_index")
+            ->addRouteItem("New blog article", "admin_blog_article_new");
+
         $form = $this
             ->get("admin.form_factory")
             ->createCreateForm(

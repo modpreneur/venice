@@ -171,3 +171,6 @@ knp_menu:
         template: knp_menu.html.twig
     templating: false
     default_renderer: twig
+
+white_october_breadcrumbs:
+    separator: ''

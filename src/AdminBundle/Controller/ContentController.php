@@ -44,6 +44,9 @@ class ContentController extends BaseAdminController
      */
     public function indexAction(Request $request)
     {
+        $this->getBreadcrumbs()
+            ->addRouteItem("Contents", "admin_content_index");
+
         $contents = $this->getEntityManager()->getRepository("AppBundle:Content\\Content")->findAll();
 
         return $this->render(
@@ -84,6 +87,10 @@ class ContentController extends BaseAdminController
      */
     public function tabsAction(Request $request, Content $content)
     {
+        $this->getBreadcrumbs()
+            ->addRouteItem("Contents", "admin_content_index")
+            ->addRouteItem($content->getName(), "admin_content_tabs", ["id" => $content->getId()]);
+
         return $this->render(":AdminBundle/Content:tabs.html.twig", ["content" => $content,]);
     }
 
@@ -102,6 +109,10 @@ class ContentController extends BaseAdminController
      */
     public function newAction(Request $request, $contentType)
     {
+        $this->getBreadcrumbs()
+            ->addRouteItem("Contents", "admin_content_index")
+            ->addRouteItem("New content", "admin_content_new", ["contentType" => $contentType]);
+
         try {
             $content = Content::createContentByType($contentType);
         } catch (ReflectionException $e) {

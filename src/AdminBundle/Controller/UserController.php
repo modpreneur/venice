@@ -40,6 +40,9 @@ class UserController extends BaseAdminController
      */
     public function indexAction(Request $request)
     {
+        $this->getBreadcrumbs()
+            ->addRouteItem("Users", "admin_user_index");
+
         $entityManager = $this->getEntityManager();
         $users = $entityManager->getRepository("AppBundle:User")->findAll();
 
@@ -82,6 +85,11 @@ class UserController extends BaseAdminController
      */
     public function tabsAction(User $user)
     {
+        $this->getBreadcrumbs()
+            ->addRouteItem("Users", "admin_user_index")
+            ->addRouteItem($user->getFullNameOrUsername(), "admin_user_tabs", ["id" => $user->getId()]);
+
+
         return $this->render(
             ':AdminBundle/User:tabs.html.twig',
             ["user" => $user,]
@@ -97,6 +105,10 @@ class UserController extends BaseAdminController
      */
     public function newAction()
     {
+        $this->getBreadcrumbs()
+            ->addRouteItem("Users", "admin_user_index")
+            ->addRouteItem("New user", "admin_user_new");
+
         $user = new User();
         $form = $this->get("admin.form_factory")
             ->createCreateForm(

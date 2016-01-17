@@ -37,8 +37,11 @@ class ProductController extends BaseAdminController
      */
     public function indexAction(Request $request)
     {
+        $this->getBreadcrumbs()->addRouteItem("Products", "admin_product_index");
+
         $entityManager = $this->getEntityManager();
         $products = $entityManager->getRepository("AppBundle:Product\\Product")->findAll();
+
 
         return $this->render(
             ":AdminBundle/Product:index.html.twig",
@@ -77,6 +80,10 @@ class ProductController extends BaseAdminController
      */
     public function tabsAction(Request $request, Product $product)
     {
+        $this->getBreadcrumbs()
+            ->addRouteItem("Products", "admin_product_index")
+            ->addRouteItem($product->getName(), "admin_product_tabs", ["id" => $product->getId()]);
+
         return $this->render(
             ":AdminBundle/Product:tabs.html.twig",
             ["product" => $product,]
@@ -99,6 +106,10 @@ class ProductController extends BaseAdminController
      */
     public function newAction(Request $request, $productType)
     {
+        $this->getBreadcrumbs()
+            ->addRouteItem("Products", "admin_product_index")
+            ->addRouteItem("New product", "admin_product_new", ["productType" => $productType]);
+
         try {
             $product = Product::createProductByType($productType);
         } catch (ReflectionException $e) {

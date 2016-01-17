@@ -64,4 +64,19 @@ class BaseAdminController extends FOSRestController
         );
     }
 
+    /**
+     * @param bool $setDashboard
+     * @return \WhiteOctober\BreadcrumbsBundle\Model\Breadcrumbs
+     */
+    public function getBreadcrumbs($setDashboard = true)
+    {
+        $breadcrumbs = $this->get('white_october_breadcrumbs');
+
+        if($setDashboard)
+            $breadcrumbs->addRouteItem("Dashboard", "admin_dashboard");
+
+        return $breadcrumbs;
+    }
+
+
 }

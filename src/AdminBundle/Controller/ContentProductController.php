@@ -41,6 +41,9 @@ class ContentProductController extends BaseAdminController
      */
     public function indexAction(Request $request)
     {
+        $this->getBreadcrumbs()
+            ->addRouteItem("Associations", "admin_content_product_index");
+
         $contentProducts = $this
             ->getEntityManager()
             ->getRepository("AppBundle:ContentProduct")
@@ -83,6 +86,14 @@ class ContentProductController extends BaseAdminController
      */
     public function tabsAction(Request $request, ContentProduct $contentProduct)
     {
+        $this->getBreadcrumbs()
+            ->addRouteItem("Associations", "admin_content_product_index")
+            ->addRouteItem(
+                $contentProduct->getProduct()->getName()." - ".$contentProduct->getContent()->getName(),
+                "admin_content_product_tabs",
+                ["id" => $contentProduct->getId()]
+            );
+
         return $this->render(
             ":AdminBundle/ContentProduct:tabs.html.twig",
             ["contentProduct" => $contentProduct,]
@@ -102,6 +113,10 @@ class ContentProductController extends BaseAdminController
      */
     public function newAction(Request $request)
     {
+        $this->getBreadcrumbs()
+            ->addRouteItem("Associations", "admin_content_product_index")
+            ->addRouteItem("New association", "admin_content_product_new");
+
         $form = $this->get("admin.form_factory")
             ->createCreateForm($this,
                 new ContentProduct(),
