@@ -2,5 +2,8 @@
 
 {% block body %}
     <h1>Welcome back {{ app.user.username }}!</h1>
+
+    <a href="{{ path('admin_dashboard') }}">To admin section</a>
+    <a href="{{ path('front_index') }}">To demo section</a>
 {% endblock %}
 

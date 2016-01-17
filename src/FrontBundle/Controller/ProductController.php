@@ -58,6 +58,17 @@ class ProductController extends Controller
 
 
     /**
+     * @Route("/immersionIndex", name="front_product_immersion_index")
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function immersionIndexAction()
+    {
+        return $this->render(":FrontBundle/Product:immersionIndex.html.twig");
+    }
+
+
+    /**
      * @Route("/immersion/{id}", name="front_product_immersion")
      *
      * @param Product $product

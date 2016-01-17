@@ -8,6 +8,8 @@
         {% for group in groups %}
             <li><a href="{{ path("front_group_show", {"id": group.id}) }}">To group {{ group.name }}</a></li>
         {% endfor %}
+
+        <li><a href="{{ path("front_product_immersion_index") }}">To immersions</a></li>
     </ul>
 
 
