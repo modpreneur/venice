@@ -56,4 +56,40 @@ class ProductController extends Controller
         return $this->render(":FrontBundle/Product:demo.html.twig",["product" => $product]);
     }
 
+
+    /**
+     * @Route("/immersion/{id}", name="front_product_immersion")
+     *
+     * @param Product $product
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function immersionAction(Product $product)
+    {
+        $immersion = $product->getAllContentForImmersion();
+
+        return $this->render(":FrontBundle/Product:immersion.html.twig",["immersion" => $immersion]);
+    }
+
+
+    /**
+     * @Route("/immersion2/{id}", name="front_product_immersion2")
+     *
+     * @param Product $product
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function immersion2Action(Product $product)
+    {
+        $immersion = $product->getAllContentForImmersion();
+
+        return $this->render(
+            ":FrontBundle/Product:immersion2.html.twig",
+            [
+                "immersion" => $immersion,
+                "product" => $product,
+            ]
+        );
+    }
+
 }

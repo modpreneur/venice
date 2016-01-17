@@ -8,6 +8,8 @@
 
 namespace AppBundle\Entity\Content;
 
+use AppBundle\Entity\Product\Product;
+use AppBundle\Entity\User;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -181,5 +183,40 @@ class ContentInGroup
         $this->orderNumber = $orderNumber;
 
         return $this;
+    }
+
+
+    /**
+     * Check if the given user has access to this contentProduct.
+     *
+     * @param User $user
+     * @param Product $product The product which is associated with the group
+     * @param bool $checkAccessToProduct Check access to product?
+     *
+     * @return bool true - the user has access to the parent product and the delay of this contentProduct + delay < now
+     */
+    public function isAvailableFor(User $user, Product $product, $checkAccessToProduct = true)
+    {
+        $now = new \DateTime();
+
+        if ($checkAccessToProduct && !$user->hasAccessToProduct($product)) {
+            return false;
+        }
+
+        // Get time when the user was given access to this product
+        $productAccess = $user->getProductAccess($product);
+        if (!$productAccess) {
+            return false;
+        }
+
+        // Clone product access object to avoid weird errors.
+        $timeOfAccess = clone $productAccess->getFromDate();
+
+        // Add delay to the time
+        $hours = $this->getDelay();
+        $timeOfAccess->add(new \DateInterval("PT{$hours}H"));
+
+        // Check if the the of the access + delay(in hours) < now
+        return $timeOfAccess < $now;
     }
 }

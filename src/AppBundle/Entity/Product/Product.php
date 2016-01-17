@@ -479,14 +479,31 @@ abstract class Product extends TrinityProduct
 
         return $contentProducts;
     }
-    
-    
+
+
     public function getAllContentForImmersion()
     {
+        if ($this->contentProducts->count() === 0) {
+            return [];
+        }
+
         $content = [];
+        $index = 0;
+        $lastDelay = $this->contentProducts[0];
 
+        /** @var ContentProduct $contentProduct */
+        foreach ($this->contentProducts as $contentProduct) {
+            if ($lastDelay === $contentProduct->getDelay()) {
+                $content[$index][] = $contentProduct;
+            } else {
+                $index++;
+                $content[$index][] = $contentProduct;
+                $lastDelay = $contentProduct->getDelay();
+            }
+        }
 
+        // Reindex the array
+        return array_values($content);
     }
-
 
 }
