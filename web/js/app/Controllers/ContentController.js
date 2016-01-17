@@ -77,8 +77,8 @@ export default class ContetntController extends Controller {
      * New blog article action
      * @param $scope
      */
-    newIFrameAction($scope) {
-        $scope.form = new VeniceForm(q('form[name="iframe_content"]'), VeniceForm.formType.NEW);
+    newHtmlAction($scope) {
+        $scope.form = new VeniceForm(q('form[name="html_content"]'), VeniceForm.formType.NEW);
     }
 
     /**

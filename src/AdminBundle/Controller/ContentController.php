@@ -423,7 +423,7 @@ class ContentController extends BaseAdminController
         return new JsonResponse(
             [
                 "message" => "Content successfully deleted.",
-                "location" => $this->generateUrl("admin_content_tabs"),
+                "location" => $this->generateUrl("admin_content_index"),
             ],
             302
         );
