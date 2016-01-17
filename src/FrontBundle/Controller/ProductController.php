@@ -43,4 +43,17 @@ class ProductController extends Controller
     {
         return $this->render(":FrontBundle/Product:show.html.twig", ["product" => $product]);
     }
+
+    /**
+     * @Route("/demo/{id}", name="front_product_demo")
+     *
+     * @param Product $product
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function demoAction(Product $product)
+    {
+        return $this->render(":FrontBundle/Product:demo.html.twig",["product" => $product]);
+    }
+
 }

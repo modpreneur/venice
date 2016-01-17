@@ -438,7 +438,7 @@ abstract class Product extends TrinityProduct
      *
      * @return Content[]
      */
-    public function getAllAvailableContentByType(User $user, $type)
+    public function getAvailableContentByType(User $user, $type)
     {
         $content = [];
 
