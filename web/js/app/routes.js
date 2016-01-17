@@ -44,8 +44,8 @@ export default [
         action: 'Content.newVideo'
     },
     {
-        path: '/admin/content/new/iframe(/)',
-        action: 'Content.newIFrame'
+        path: '/admin/content/new/html(/)',
+        action: 'Content.newHtml'
     },
     {
         path: '/admin/content/new/group(/)',

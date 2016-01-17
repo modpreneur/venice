@@ -175,7 +175,7 @@ class ProductController extends BaseAdminController
             return new JsonResponse(
                 [
                     "message" => "Product successfully created",
-                    "location" => $this->generateUrl("admin_product_edit", ["id" => $product->getId()]),
+                    "location" => $this->generateUrl("admin_product_tabs", ["id" => $product->getId()]),
                 ],
                 302
             );
