@@ -2,6 +2,12 @@
 
 {% block tableContent %}
     <tr>
+        <th>Handle</th>
+        <td>
+            {{ content.handle }}
+        </td>
+    </tr>
+    <tr>
         <th>Items</th>
         <td>
             {% for item in content.items %}

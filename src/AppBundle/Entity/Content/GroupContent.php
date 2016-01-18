@@ -8,10 +8,11 @@
 
 namespace AppBundle\Entity\Content;
 
-use AppBundle\Entity\ProductAccess;
+use Cocur\Slugify\Slugify;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\OrderBy;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
@@ -19,8 +20,9 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  * @ORM\Entity()
  * @ORM\Table(name="content_group")
  *
+ * @UniqueEntity("handle")
+ *
  * Class GroupContent
- * @package AppBundle\Entity\Content
  */
 class GroupContent extends Content
 {
@@ -33,6 +35,14 @@ class GroupContent extends Content
      * @OrderBy({"delay" = "ASC", "orderNumber" = "ASC"})
      */
     protected $items;
+
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="handle", type="string", unique=true)
+     */
+    protected $handle;
 
 
     /**
@@ -119,6 +129,46 @@ class GroupContent extends Content
         }
 
         return $this;
+    }
+
+
+    /**
+     * @return string
+     */
+    public function getHandle()
+    {
+        return $this->handle;
+    }
+
+    public function setName($name)
+    {
+        parent::setName($name);
+
+        $this->createHandle($name);
+    }
+
+
+    /**
+     * @param string $handle
+     */
+    public function setHandle($handle)
+    {
+        if (empty($handle)) {
+            $this->createHandle($this->name);
+        } else {
+            $this->handle = $handle;
+        }
+    }
+
+
+    /**
+     * Create a new handle from given source and set it to the entity.
+     *
+     * @param $source String which will be source of a new handle.
+     */
+    public function createHandle($source)
+    {
+        $this->handle = (new Slugify())->slugify($source);
     }
 
 

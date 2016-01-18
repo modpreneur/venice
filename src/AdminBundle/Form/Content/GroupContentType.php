@@ -12,6 +12,7 @@ namespace AdminBundle\Form\Content;
 use AdminBundle\Form\Collection\CollectionType;
 use AppBundle\Entity\Content\GroupContent;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -44,6 +45,13 @@ class GroupContentType extends ContentType
 
         $builder
             ->add(
+                "handle",
+                TextType::class,
+                [
+                    "required" => false,
+                ]
+            )
+            ->add(
                 "items",
                 CollectionType::class,
                 [
@@ -53,7 +61,6 @@ class GroupContentType extends ContentType
                     "allow_add" => true,
                     "allow_delete" => true,
                 ]
-
             );
     }
 
