@@ -8,9 +8,7 @@
 
 namespace AppBundle\Entity;
 
-use AppBundle\Entity\Product\FreeProduct;
 use AppBundle\Entity\Product\Product;
-use AppBundle\Entity\Product\StandardProduct;
 use AppBundle\Traits\HasNotificationStatusTrait;
 use \DateTime;
 use \InvalidArgumentException;
@@ -370,8 +368,61 @@ class User extends TrinityUser implements NotificationEntityInterface
     }
 
 
+//    /**
+//     * @param Product $product
+//     * @param DateTime $dateFrom
+//     * @param DateTime|null $dateTo
+//     * @param int|null $necktieId
+//     *
+//     * @return ProductAccess|null
+//     */
+//    public function giveAccessToProduct(Product $product, \DateTime $dateFrom, \DateTime $dateTo = null, $necktieId = null)
+//    {
+//        //todo: refactor and simplify
+//
+//        //create a new ProductAccess record
+//        if (!$this->hasAccessToProduct($product)) {
+//            $productAccess = new ProductAccess();
+//            $productAccess
+//                ->setNecktieId($necktieId)
+//                ->setProduct($product)
+//                ->setUser($this)
+//                ->setFromDate($dateFrom)
+//                ->setToDate($dateTo);
+//
+//            $this->addProductAccess($productAccess);
+//
+//            return $productAccess;
+//        } //edit existing product access record
+//        else {
+//            /** @var ProductAccess $productAccess */
+//            foreach ($this->getProductAccesses() as $productAccess) {
+//                if ($necktieId) {
+//                    if ($productAccess->getNecktieId() == $necktieId) {
+//                        $productAccess->setProduct($product);
+//                        $productAccess->setUser($this);
+//                        $productAccess->setFromDate($dateFrom);
+//                        $productAccess->setToDate($dateTo);
+//                    }
+//                } else {
+//                    if ($productAccess->getProduct() == $product) {
+//                        $productAccess->setProduct($product);
+//                        $productAccess->setUser($this);
+//                        $productAccess->setFromDate($dateFrom);
+//                        $productAccess->setToDate($dateTo);
+//
+//                        return $productAccess;
+//                    }
+//                }
+//
+//            }
+//        }
+//
+//        return null;
+//    }
+
     /**
-     * @param Product|StandardProduct $product
+     * @param Product $product
      * @param DateTime $dateFrom
      * @param DateTime|null $dateTo
      * @param int|null $necktieId
@@ -380,10 +431,16 @@ class User extends TrinityUser implements NotificationEntityInterface
      */
     public function giveAccessToProduct(Product $product, \DateTime $dateFrom, \DateTime $dateTo = null, $necktieId = null)
     {
-        //todo: refactor and simplify
+        $productAccess = $this->getProductAccess($product);
+        $now = new \DateTime("now");
 
-        //create a new ProductAccess record
-        if (!$this->hasAccessToProduct($product)) {
+        // If the user does not have an access - 3 situations:
+        // 1st - the productAccess between this user and product does not exist
+        // 2nd - the productAccess between this user and product exists but it has already expired(toDate < now)
+        // 3rd - the productAccess between this user and product exists but the fromDate > now
+
+        // 1st - create a new ProductAccess entity
+        if (!$productAccess) {
             $productAccess = new ProductAccess();
             $productAccess
                 ->setNecktieId($necktieId)
@@ -395,32 +452,15 @@ class User extends TrinityUser implements NotificationEntityInterface
             $this->addProductAccess($productAccess);
 
             return $productAccess;
-        } //edit existing product access record
-        else {
-            /** @var ProductAccess $productAccess */
-            foreach ($this->getProductAccesses() as $productAccess) {
-                if ($necktieId) {
-                    if ($productAccess->getNecktieId() == $necktieId) {
-                        $productAccess->setProduct($product);
-                        $productAccess->setUser($this);
-                        $productAccess->setFromDate($dateFrom);
-                        $productAccess->setToDate($dateTo);
-                    }
-                } else {
-                    if ($productAccess->getProduct() == $product) {
-                        $productAccess->setProduct($product);
-                        $productAccess->setUser($this);
-                        $productAccess->setFromDate($dateFrom);
-                        $productAccess->setToDate($dateTo);
-
-                        return $productAccess;
-                    }
-                }
-
-            }
+        } // 2nd - set the toDate property to given dateTo
+        else if ($productAccess->getToDate() !== null && $productAccess->getToDate() < $now) {
+            $productAccess->setToDate($dateTo);
+        } //3rd - set the fromDate property to given fromDate
+        else if ($productAccess->getFromDate() > $now) {
+            $productAccess->setFromDate($dateFrom);
         }
 
-        return null;
+        return $productAccess;
     }
 
     /** @return ClientInterface[] */

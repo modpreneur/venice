@@ -9,7 +9,10 @@
 namespace AdminBundle\Controller;
 
 
+use AppBundle\Entity\Product\FreeProduct;
 use AppBundle\Entity\Product\Product;
+use AppBundle\Event\AppEvents;
+use AppBundle\Event\FreeProductCreatedEvent;
 use Doctrine\DBAL\DBALException;
 use ReflectionException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -41,7 +44,6 @@ class ProductController extends BaseAdminController
 
         $entityManager = $this->getEntityManager();
         $products = $entityManager->getRepository("AppBundle:Product\\Product")->findAll();
-
 
         return $this->render(
             ":AdminBundle/Product:index.html.twig",
@@ -175,6 +177,10 @@ class ProductController extends BaseAdminController
 
             try {
                 $em->flush();
+
+                if($product instanceof FreeProduct) {
+                    $this->get("event_dispatcher")->dispatch(AppEvents::FREE_PRODUCT_CREATED, new FreeProductCreatedEvent($product));
+                }
             } catch (DBALException $e) {
                 return new JsonResponse(
                     [

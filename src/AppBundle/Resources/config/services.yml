@@ -51,6 +51,13 @@ services:
         tags:
             - {name: "kernel.event_listener", event: "kernel.exception", method: "onKernelException"}
 
+    app.event_listener.free_product_created:
+        class: AppBundle\EventListener\AppLogicListener
+        arguments:
+            - @doctrine.orm.entity_manager
+        tags:
+            - {name: "kernel.event_listener", event: app.free_product_created, method: "onFreeProductCreated"}
+
     # TWIG EXTENSIONS #
 
     app.twig.extension.human_bool:
