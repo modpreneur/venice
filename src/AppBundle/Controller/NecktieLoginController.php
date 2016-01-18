@@ -9,6 +9,8 @@
 namespace AppBundle\Controller;
 
 
+use AppBundle\Event\AppEvents;
+use AppBundle\Event\NecktieLoginSuccessfulEvent;
 use AppBundle\Exceptions\UnsuccessfulNecktieResponseException;
 use AppBundle\Interfaces\NecktieGatewayInterface;
 use AppBundle\Services\NecktieGateway;
@@ -105,6 +107,8 @@ class NecktieLoginController extends Controller
         {
             return new Response("An error occurred. Please report it to the support.");
         }
+
+        $this->get("event_dispatcher")->dispatch(AppEvents::NECKTIE_LOGIN_SUCCESSFUL, new NecktieLoginSuccessfulEvent($user));
 
         return $this->redirectToRoute("homepage");
     }

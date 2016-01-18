@@ -12,6 +12,7 @@ namespace AppBundle\EventListener;
 use AppBundle\Entity\Product\Product;
 use AppBundle\Entity\User;
 use AppBundle\Event\FreeProductCreatedEvent;
+use AppBundle\Event\NecktieLoginSuccessfulEvent;
 use Doctrine\ORM\EntityManagerInterface;
 
 class AppLogicListener
@@ -41,6 +42,25 @@ class AppLogicListener
     }
 
 
+    /**
+     * Add access to all free products
+     *
+     * @param NecktieLoginSuccessfulEvent $event
+     */
+    public function onNecktieLoginSuccessful(NecktieLoginSuccessfulEvent $event)
+    {
+        $freeProducts = $this->entityManager->getRepository("AppBundle:Product\\FreeProduct")->findAll();
+
+        foreach ($freeProducts as $freeProduct) {
+            $this->giveLifetimeAccessToAllUsers($freeProduct);
+        }
+    }
+
+    /**
+     * Give lifetime access to all users
+     *
+     * @param Product $product
+     */
     protected function giveLifetimeAccessToAllUsers(Product $product)
     {
         $users = $this->entityManager->getRepository("AppBundle:User")->findAll();

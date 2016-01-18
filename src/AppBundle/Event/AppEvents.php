@@ -12,4 +12,5 @@ namespace AppBundle\Event;
 final class AppEvents
 {
     const FREE_PRODUCT_CREATED = "app.free_product_created";
+    const NECKTIE_LOGIN_SUCCESSFUL = "app.necktie_login_successful";
 }
