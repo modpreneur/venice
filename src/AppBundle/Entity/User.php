@@ -378,7 +378,7 @@ class User extends TrinityUser implements NotificationEntityInterface
      *
      * @return ProductAccess|null
      */
-    public function giveAccessToProduct(StandardProduct $product, \DateTime $dateFrom, \DateTime $dateTo = null, $necktieId = null)
+    public function giveAccessToProduct(Product $product, \DateTime $dateFrom, \DateTime $dateTo = null, $necktieId = null)
     {
         //todo: refactor and simplify
 
@@ -389,7 +389,7 @@ class User extends TrinityUser implements NotificationEntityInterface
                 ->setNecktieId($necktieId)
                 ->setProduct($product)
                 ->setUser($this)
-                ->setDateFrom($dateFrom)
+                ->setFromDate($dateFrom)
                 ->setToDate($dateTo);
 
             $this->addProductAccess($productAccess);
@@ -403,14 +403,14 @@ class User extends TrinityUser implements NotificationEntityInterface
                     if ($productAccess->getNecktieId() == $necktieId) {
                         $productAccess->setProduct($product);
                         $productAccess->setUser($this);
-                        $productAccess->setDateFrom($dateFrom);
+                        $productAccess->setFromDate($dateFrom);
                         $productAccess->setToDate($dateTo);
                     }
                 } else {
                     if ($productAccess->getProduct() == $product) {
                         $productAccess->setProduct($product);
                         $productAccess->setUser($this);
-                        $productAccess->setDateFrom($dateFrom);
+                        $productAccess->setFromDate($dateFrom);
                         $productAccess->setToDate($dateTo);
 
                         return $productAccess;

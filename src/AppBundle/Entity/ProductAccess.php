@@ -3,7 +3,6 @@
 namespace AppBundle\Entity;
 
 use AppBundle\Entity\Product\Product;
-use AppBundle\Entity\Product\StandardProduct;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
@@ -109,11 +108,11 @@ class ProductAccess
     /**
      * Set product
      *
-     * @param StandardProduct $product
+     * @param Product $product
      *
      * @return ProductAccess
      */
-    public function setProduct(StandardProduct $product)
+    public function setProduct(Product $product)
     {
         $this->product = $product;
 
