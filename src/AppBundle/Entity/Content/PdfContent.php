@@ -26,8 +26,9 @@ class PdfContent extends Content
      * @var string Url address to the file.
      *
      * @Assert\Url()
+     * @Assert\NotBlank()
      *
-     * @ORM\Column(name="link", type="string", length=255)
+     * @ORM\Column(name="link", type="string", length=255, nullable=false)
      */
     protected $link;
 

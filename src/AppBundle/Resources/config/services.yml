@@ -25,11 +25,11 @@ services:
             - %primary_gateway_service%
             - %secondary_gateway_service%
 
-    app.services.cms_problem_helper:
-        class: AppBundle\Services\CMSProblemHelper
-        arguments:
-            - @service_container
-            - %primary_gateway_service%
+#    app.services.cms_problem_helper:
+#        class: AppBundle\Services\CMSProblemHelper
+#        arguments:
+#            - @service_container
+#            - %primary_gateway_service%
 
     form_error_serializer:
         class: AppBundle\Services\FormErrorSerializer
@@ -54,9 +54,16 @@ services:
     app.event_listener.free_product_created:
         class: AppBundle\EventListener\AppLogicListener
         arguments:
-            - @doctrine.orm.entity_manager
+            - @doctrine
         tags:
             - {name: "kernel.event_listener", event: app.free_product_created, method: "onFreeProductCreated"}
+
+    app.entity_listener:
+        class: AppBundle\EventListener\EntityListener
+        arguments:
+            - @service_container
+        tags:
+            - { name: doctrine.event_listener, event: onFlush}
 
     # TWIG EXTENSIONS #
 

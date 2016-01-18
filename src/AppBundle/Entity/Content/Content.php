@@ -47,6 +47,7 @@ abstract class Content
      * @var string
      *
      * @Assert\Length(min = 3)
+     * @Assert\NotBlank()
      *
      * @ORM\Column(name="name", type="string", length=255, nullable=false, unique=true)
      */

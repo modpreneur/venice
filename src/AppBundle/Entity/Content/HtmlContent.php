@@ -24,6 +24,7 @@ class HtmlContent extends Content
      * @var string
      *
      * @Assert\Length(min=10)
+     * @Assert\NotBlank()
      *
      * @ORM\Column(name="html", type="text", nullable=false)
      */

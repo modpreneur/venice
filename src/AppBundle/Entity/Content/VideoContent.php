@@ -26,6 +26,7 @@ class VideoContent extends AbstractPlayableContent
      * @var string Url to the preview image
      *
      * @Assert\Url()
+     * @Assert\NotBlank()
      *
      * @ORM\Column(name="preview_image", type="string", length=255, nullable=false)
      */
