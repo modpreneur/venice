@@ -32,19 +32,14 @@ class NecktieGatewayHelper implements NecktieGatewayHelperInterface
         $userInfo = [];
 
 
-        if(is_array($response) && array_key_exists("user", $response))
-        {
+        if (is_array($response) && array_key_exists("user", $response)) {
             $response = $response["user"];
         }
 
-        foreach($requiredFields as $requiredFiled)
-        {
-            if(is_array($response) && array_key_exists($requiredFiled, $response))
-            {
+        foreach ($requiredFields as $requiredFiled) {
+            if (is_array($response) && array_key_exists($requiredFiled, $response)) {
                 $userInfo[$requiredFiled] = $response[$requiredFiled];
-            }
-            else
-            {
+            } else {
                 return null;
             }
         }
@@ -58,11 +53,11 @@ class NecktieGatewayHelper implements NecktieGatewayHelperInterface
      */
     public function createAccessTokenFromArray(array $array)
     {
-        if(array_key_exists("access_token", $array)
-           && array_key_exists("refresh_token", $array)
-           && array_key_exists("scope", $array)
-           && array_key_exists("expires_in", $array))
-        {
+        if (array_key_exists("access_token", $array)
+            && array_key_exists("refresh_token", $array)
+            && array_key_exists("scope", $array)
+            && array_key_exists("expires_in", $array)
+        ) {
             $necktieToken = new OAuthToken();
             $necktieToken->setAccessToken($array["access_token"]);
             $necktieToken->setRefreshToken($array["refresh_token"]);
@@ -70,9 +65,7 @@ class NecktieGatewayHelper implements NecktieGatewayHelperInterface
             $necktieToken->setValidToByLifetime($array["expires_in"]);
 
             return $necktieToken;
-        }
-        else
-        {
+        } else {
             return null;
         }
     }
@@ -87,37 +80,29 @@ class NecktieGatewayHelper implements NecktieGatewayHelperInterface
     {
         $invoices = [];
 
-        foreach($response["invoices"] as $invoice)
-        {
+        foreach ($response["invoices"] as $invoice) {
             $invoiceObject = new Invoice();
 
-            if(array_key_exists("id", $invoice))
-            {
+            if (array_key_exists("id", $invoice)) {
                 $invoiceObject->setId($invoice["id"]);
             }
 
-            if(array_key_exists("total_customer_price", $invoice))
-            {
+            if (array_key_exists("total_customer_price", $invoice)) {
                 $invoiceObject->setTotalPrice($invoice["total_customer_price"]);
             }
 
-            if(array_key_exists("transaction_type", $invoice))
-            {
+            if (array_key_exists("transaction_type", $invoice)) {
                 $invoiceObject->setTransactionType($invoice["transaction_type"]);
             }
 
-            if(array_key_exists("transaction_time", $invoice))
-            {
+            if (array_key_exists("transaction_time", $invoice)) {
                 $date = \DateTime::createFromFormat(\DateTime::W3C, $invoice["transaction_time"]);
                 $invoiceObject->setTransactionTime($date);
             }
 
-            if(array_key_exists("items", $invoice))
-            {
-                foreach($invoice["items"] as $invoiceItem)
-                {
-                    if(array_key_exists("product", $invoiceItem) && array_key_exists("name", $invoiceItem["product"]))
-                    {
+            if (array_key_exists("items", $invoice)) {
+                foreach ($invoice["items"] as $invoiceItem) {
+                    if (array_key_exists("product", $invoiceItem) && array_key_exists("name", $invoiceItem["product"])) {
                         $invoiceObject->addItem($invoiceItem["product"]["name"]);
                     }
                 }
@@ -175,9 +160,9 @@ class NecktieGatewayHelper implements NecktieGatewayHelperInterface
     public function isResponseOk($response)
     {
         return !($this->isAccessTokenExpiredResponse($response)
-                 || $this->isAccessTokenInvalidResponse($response)
-                 || $this->isRefreshTokenExpiredResponse($response)
-                 || $this->isInvalidClientResponse($response)
+            || $this->isAccessTokenInvalidResponse($response)
+            || $this->isRefreshTokenExpiredResponse($response)
+            || $this->isInvalidClientResponse($response)
         );
     }
 
@@ -189,13 +174,11 @@ class NecktieGatewayHelper implements NecktieGatewayHelperInterface
      */
     public function isAccessTokenInvalidResponse($response)
     {
-        if((is_string($response) && strpos($response, self::NECKTIE_INVALID_ACCESS_TOKEN_ERROR))
-           || (is_array($response) && $response == json_decode(self::NECKTIE_INVALID_ACCESS_TOKEN_ERROR, true))
-        )
-        {
+        if ((is_string($response) && strpos($response, self::NECKTIE_INVALID_ACCESS_TOKEN_ERROR))
+            || (is_array($response) && $response == json_decode(self::NECKTIE_INVALID_ACCESS_TOKEN_ERROR, true))
+        ) {
             return true;
-        } else
-        {
+        } else {
             return false;
         }
     }
@@ -208,13 +191,11 @@ class NecktieGatewayHelper implements NecktieGatewayHelperInterface
      */
     public function isAccessTokenExpiredResponse($response)
     {
-        if((is_string($response) && strpos($response,self::NECKTIE_EXPIRED_ACCESS_TOKEN_ERROR))
-           || (is_array($response) && $response == json_decode(self::NECKTIE_EXPIRED_ACCESS_TOKEN_ERROR, true))
-        )
-        {
+        if ((is_string($response) && strpos($response, self::NECKTIE_EXPIRED_ACCESS_TOKEN_ERROR))
+            || (is_array($response) && $response == json_decode(self::NECKTIE_EXPIRED_ACCESS_TOKEN_ERROR, true))
+        ) {
             return true;
-        } else
-        {
+        } else {
             return false;
         }
 
@@ -228,13 +209,11 @@ class NecktieGatewayHelper implements NecktieGatewayHelperInterface
      */
     public function isRefreshTokenExpiredResponse($response)
     {
-        if((is_string($response) && strpos($response, self::NECKTIE_EXPIRED_REFRESH_TOKEN_ERROR) != 0)
-           || (is_array($response) && $response == json_decode(self::NECKTIE_EXPIRED_REFRESH_TOKEN_ERROR, true))
-        )
-        {
+        if ((is_string($response) && strpos($response, self::NECKTIE_EXPIRED_REFRESH_TOKEN_ERROR) != 0)
+            || (is_array($response) && $response == json_decode(self::NECKTIE_EXPIRED_REFRESH_TOKEN_ERROR, true))
+        ) {
             return true;
-        } else
-        {
+        } else {
             return false;
         }
     }
@@ -246,13 +225,11 @@ class NecktieGatewayHelper implements NecktieGatewayHelperInterface
      */
     public function isInvalidClientResponse($response)
     {
-        if((is_string($response) && strpos($response,self::NECKTIE_INVALID_CLIENT_ERROR))
-           || (is_array($response) && $response == json_decode(self::NECKTIE_INVALID_CLIENT_ERROR, true))
-        )
-        {
+        if ((is_string($response) && strpos($response, self::NECKTIE_INVALID_CLIENT_ERROR))
+            || (is_array($response) && $response == json_decode(self::NECKTIE_INVALID_CLIENT_ERROR, true))
+        ) {
             return true;
-        } else
-        {
+        } else {
             return false;
         }
     }
