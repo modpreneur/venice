@@ -75,7 +75,7 @@ abstract class Content
     /**
      * @var ContentInGroup
      *
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Content\ContentInGroup", mappedBy="content")
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Content\ContentInGroup", mappedBy="content", cascade={"PERSIST", "DELETE"})
      * @OrderBy({"orderNumber" = "ASC"})
      */
     protected $contentsInGroup;
