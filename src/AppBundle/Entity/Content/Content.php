@@ -57,7 +57,7 @@ abstract class Content
     /**
      * @var ArrayCollection<ContentProduct>
      *
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\ContentProduct", mappedBy="content")
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\ContentProduct", mappedBy="content", cascade={"PERSIST", "REMOVE"})
      * @OrderBy({"orderNumber" = "ASC"})
      *
      */
