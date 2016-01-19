@@ -31,8 +31,6 @@ class EntityListener
 
     public function onFlush(OnFlushEventArgs $args)
     {
-        dump("onFlush");
-
         $em = $args->getEntityManager();
         $uow = $em->getUnitOfWork();
 

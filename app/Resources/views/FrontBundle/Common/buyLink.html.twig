@@ -1,0 +1,10 @@
+
+{% if id is not defined%}
+    {% set id = "" %}
+{% endif %}
+
+{% if class is not defined%}
+    {% set class = "" %}
+{% endif %}
+
+<a id="{{ id }}" class="{{ class }}" href="{{ url }}">{{ text }}</a>

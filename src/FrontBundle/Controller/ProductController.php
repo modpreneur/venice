@@ -29,8 +29,15 @@ class ProductController extends Controller
     public function indexAction()
     {
         $products = $this->getDoctrine()->getRepository("AppBundle:Product\\Product")->findAll();
+        $urlGenerator = $this->get("app.services.buy_url_generator");
 
-        return $this->render(":FrontBundle/Product:index.html.twig", ["products" => $products]);
+        return $this->render(
+            ":FrontBundle/Product:index.html.twig",
+            [
+                "products" => $products,
+                "urlGenerator" => $urlGenerator
+            ]
+        );
     }
 
     /**
@@ -53,7 +60,7 @@ class ProductController extends Controller
      */
     public function demoAction(Product $product)
     {
-        return $this->render(":FrontBundle/Product:demo.html.twig",["product" => $product]);
+        return $this->render(":FrontBundle/Product:demo.html.twig", ["product" => $product]);
     }
 
 
@@ -79,7 +86,7 @@ class ProductController extends Controller
     {
         $immersion = $product->getAllContentForImmersion();
 
-        return $this->render(":FrontBundle/Product:immersion.html.twig",["immersion" => $immersion]);
+        return $this->render(":FrontBundle/Product:immersion.html.twig", ["immersion" => $immersion]);
     }
 
 

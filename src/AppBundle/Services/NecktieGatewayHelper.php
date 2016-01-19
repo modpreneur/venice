@@ -193,7 +193,7 @@ class NecktieGatewayHelper implements NecktieGatewayHelperInterface
      */
     public function isRefreshTokenExpiredResponse($response)
     {
-        if((is_string($response) && $response == self::NECKTIE_EXPIRED_REFRESH_TOKEN_ERROR)
+        if((is_string($response) && strpos($response, self::NECKTIE_EXPIRED_REFRESH_TOKEN_ERROR) != 0)
            || (is_array($response) && $response == json_decode(self::NECKTIE_EXPIRED_REFRESH_TOKEN_ERROR, true))
         )
         {

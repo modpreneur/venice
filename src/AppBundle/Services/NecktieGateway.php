@@ -17,6 +17,7 @@ use AppBundle\Exceptions\UnsuccessfulNecktieResponseException;
 use AppBundle\Interfaces\NecktieGatewayInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Exception\ServerException;
 use GuzzleHttp\Psr7\Request;
 use Symfony\Component\Config\Definition\Exception\Exception;
@@ -284,12 +285,23 @@ class NecktieGateway implements NecktieGatewayInterface
      */
     public function refreshAccessToken(User $user)
     {
-        $response = $this->client->request("POST", self::NECKTIE_OATH_TOKEN_URI, ["json" => [
-            "client_id" => $this->container->getParameter("necktie_client_id"),
-            "client_secret" => $this->container->getParameter("necktie_client_secret"),
-            "grant_type" => "refresh_token",
-            "refresh_token" => $user->getLastRefreshToken()
-        ]]);
+        try
+        {
+            $response = $this->client->request("POST", self::NECKTIE_OATH_TOKEN_URI, ["json" => [
+                "client_id" => $this->container->getParameter("necktie_client_id"),
+                "client_secret" => $this->container->getParameter("necktie_client_secret"),
+                "grant_type" => "refresh_token",
+                "refresh_token" => $user->getLastRefreshToken()
+            ]]);
+        }
+        catch (GuzzleException $e) {
+            if($this->helper->isRefreshTokenExpiredResponse($e->getMessage()))
+            {
+                throw new ExpiredRefreshTokenException("Necktie refresh token has expired.");
+            }
+
+            throw new Exception("Necktie response error. Message: ".$e->getMessage());
+        }
 
         $rawResponseData = $response->getBody()->getContents();
         $responseData = json_decode($rawResponseData, true);
@@ -299,17 +311,18 @@ class NecktieGateway implements NecktieGatewayInterface
             throw new Exception("Necktie response error. The response was: {$rawResponseData}");
         }
 
-        if($this->helper->isInvalidClientResponse($response))
+        if($this->helper->isInvalidClientResponse($responseData))
         {
             throw new \Exception("Invalid oauth client id and secret!");
         }
 
-        if(!$this->helper->isRefreshTokenExpiredResponse($response))
+        if(!$this->helper->isRefreshTokenExpiredResponse($responseData))
         {
-            $token = $this->helper->createAccessTokenFromArray($response);
+            $token = $this->helper->createAccessTokenFromArray($responseData);
 
             if($token) {
                 $user->addOAuthToken($token);
+                $token->setUser($user);
             }
             else {
                 throw new \Exception("Could not get token from response. Have you configured necktie client id and secret?");

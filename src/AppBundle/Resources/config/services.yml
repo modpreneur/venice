@@ -40,6 +40,12 @@ services:
             - %necktie_url%
             - @router.default
 
+    app.services.buy_url_generator:
+        class: AppBundle\Services\BuyUrlGenerator
+        arguments:
+            - %necktie_url%
+            - @router
+
 
     # EVENT LISTENERS #
 
