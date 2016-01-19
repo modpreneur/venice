@@ -33,16 +33,16 @@ export default class ProductController extends Controller {
         //On tabs load
         $scope.trinityTab.addListener('tab-load', function(e) {
             console.log(e);
+            if(e.element.innerHTML.indexOf("DELETE") == -1)
+            {
+                console.log("delete");
+            }
             let form = e.element.q('form');
             if(form){
                 $scope.veniceForms = $scope.veniceForms || {};
                 $scope.veniceForms[e.id] = new VeniceForm(form);
             }
 
-            // Reload tab1 (SHOW) when success update
-            $scope.veniceForms[e.id].success((e)=>{
-                $scope.trinityTab.reload('tab1');
-            });
         }, this);
     }
 }

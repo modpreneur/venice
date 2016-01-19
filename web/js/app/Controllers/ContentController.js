@@ -33,10 +33,6 @@ export default class ContetntController extends Controller {
                 $scope.collection = _.map(qAll('[data-prototype]'), (node)=>{
                     return new Collection(node, {addFirst:false, label:true});
                 });
-                // Reload tab1 (SHOW) when success update
-                $scope.veniceForms[e.id].success((e)=>{
-                    $scope.trinityTab.reload('tab1');
-                });
             }
         }, this);
     }
