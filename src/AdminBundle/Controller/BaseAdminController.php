@@ -12,7 +12,6 @@ namespace AdminBundle\Controller;
 use AppBundle\Services\FormErrorSerializer;
 use Doctrine\Common\Persistence\ObjectManager;
 use FOS\RestBundle\Controller\FOSRestController;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
@@ -65,15 +64,15 @@ class BaseAdminController extends FOSRestController
     }
 
     /**
-     * @param bool $setDashboard
+     * @param bool $setHome
      * @return \WhiteOctober\BreadcrumbsBundle\Model\Breadcrumbs
      */
-    public function getBreadcrumbs($setDashboard = true)
+    public function getBreadcrumbs($setHome = true)
     {
         $breadcrumbs = $this->get('white_october_breadcrumbs');
 
-        if($setDashboard)
-            $breadcrumbs->addRouteItem("Dashboard", "admin_dashboard");
+        if($setHome)
+            $breadcrumbs->addRouteItem("Home", "admin_dashboard");
 
         return $breadcrumbs;
     }

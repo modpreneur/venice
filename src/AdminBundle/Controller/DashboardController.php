@@ -10,10 +10,9 @@ namespace AdminBundle\Controller;
 
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
-class DashboardController extends Controller
+class DashboardController extends BaseAdminController
 {
     /**
      *
@@ -26,6 +25,7 @@ class DashboardController extends Controller
      */
     public function indexAction(Request $request)
     {
+        $this->getBreadcrumbs();
         return $this->render(":AdminBundle:adminBase.html.twig");
     }
 }
