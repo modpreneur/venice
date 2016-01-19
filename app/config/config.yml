@@ -6,13 +6,15 @@ imports:
 parameters:
     locale: en
     bowtie_path: "%kernel.root_dir%/../vendor/modpreneur/bowtie/src/less"
+    create_new_entity_on_necktie_notification: true
+    app_version: 2.0.0
 
 trinity_notification:
     client:
         drivers: ["trinity.notification.driver.client_api"]
         entity_id_field: necktieId
-        server_notify_url: %necktie_notify_url%
-        server_oauth_url: %necktie_oauth_url%
+        server_notify_url: %necktie_url%/api/notify
+        server_oauth_url: %necktie_url%/oauth/v2/token
         server_client_id: %necktie_client_id%
         server_client_secret: %necktie_client_secret%
         create_new_entity: %create_new_entity_on_necktie_notification%

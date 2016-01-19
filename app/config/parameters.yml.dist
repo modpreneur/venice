@@ -10,9 +10,6 @@ parameters:
     necktie_client_id: ~
     necktie_client_secret: ~
     necktie_url: 'http://192.168.99.100:80/app_dev.php'
-    necktie_notify_url: 'http://192.168.99.100:80/app_dev.php/api/notify'
-    necktie_oauth_url: 'http://192.168.99.100:80/app_dev.php/oauth/v2/token'
-    create_new_entity_on_necktie_notification: true
 
     mailer_transport:  smtp
     mailer_host:       127.0.0.1
@@ -20,8 +17,7 @@ parameters:
     mailer_password:   ~
 
     # A secret key that's used to generate certain security-related tokens
-    secret:            ThisTokenIsNotSoSecretChangeIt
-    app_version: 2.0.0
+    secret:            SecretTokenForVenice
 
     #values for customer management services
     login_route: necktie_login
