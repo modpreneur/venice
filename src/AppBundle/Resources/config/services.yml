@@ -7,8 +7,6 @@ services:
         arguments:
             - @service_container
             - @doctrine.orm.entity_manager
-#            - @app.services.connector
-            - @security.token_storage
             - @router
             - @app.services.necktie_gateway_helper
 

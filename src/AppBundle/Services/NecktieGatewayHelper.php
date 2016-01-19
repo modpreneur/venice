@@ -9,6 +9,7 @@
 namespace AppBundle\Services;
 
 
+use AppBundle\Entity\BillingPlan;
 use AppBundle\Entity\Invoice;
 use AppBundle\Entity\OAuthToken;
 use AppBundle\Interfaces\NecktieGatewayHelperInterface;
@@ -29,23 +30,18 @@ class NecktieGatewayHelper implements NecktieGatewayHelperInterface
     {
         $requiredFields = ["username", "email", "id"];
         $userInfo = [];
-        $responseContent = json_decode($response, true);
-
-        if(!$responseContent) {
-            throw new \Exception("The response body is not valid json. The response was: ".$responseContent);
-        }
 
 
-        if(array_key_exists("user", $responseContent))
+        if(is_array($response) && array_key_exists("user", $response))
         {
-            $responseContent = $responseContent["user"];
+            $response = $response["user"];
         }
 
         foreach($requiredFields as $requiredFiled)
         {
-            if(array_key_exists($requiredFiled, $responseContent))
+            if(is_array($response) && array_key_exists($requiredFiled, $response))
             {
-                $userInfo[$requiredFiled] = $responseContent[$requiredFiled];
+                $userInfo[$requiredFiled] = $response[$requiredFiled];
             }
             else
             {
@@ -135,6 +131,45 @@ class NecktieGatewayHelper implements NecktieGatewayHelperInterface
 
 
     /**
+     * @param $response
+     *
+     * @return BillingPlan|null
+     */
+    public function getBillingPlanFromResponse($response)
+    {
+        $billingPlan = new BillingPlan();
+
+        if (array_key_exists("initial_price", $response)) {
+            $billingPlan->setInitialPrice($response["initial_price"]);
+        }
+
+        if (array_key_exists("id", $response)) {
+            $billingPlan->setNecktieId($response["id"]);
+        }
+
+        if (array_key_exists("id", $response)) {
+            $billingPlan->setId($response["id"]);
+        }
+
+        if (array_key_exists("type", $response) && $response["type"] == "recurring") {
+            if (array_key_exists("rebill_price", $response)) {
+                $billingPlan->setRebillPrice($response["rebill_price"]);
+            }
+
+            if (array_key_exists("frequency", $response)) {
+                $billingPlan->setFrequency($response["frequency"]);
+            }
+
+            if (array_key_exists("rebill_times", $response)) {
+                $billingPlan->setRebillTimes($response["rebill_times"]);
+            }
+        }
+
+        return $billingPlan;
+    }
+
+
+    /**
      * @inheritdoc
      */
     public function isResponseOk($response)
@@ -154,7 +189,7 @@ class NecktieGatewayHelper implements NecktieGatewayHelperInterface
      */
     public function isAccessTokenInvalidResponse($response)
     {
-        if((is_string($response) && $response == self::NECKTIE_INVALID_ACCESS_TOKEN_ERROR)
+        if((is_string($response) && strpos($response, self::NECKTIE_INVALID_ACCESS_TOKEN_ERROR))
            || (is_array($response) && $response == json_decode(self::NECKTIE_INVALID_ACCESS_TOKEN_ERROR, true))
         )
         {
@@ -173,7 +208,7 @@ class NecktieGatewayHelper implements NecktieGatewayHelperInterface
      */
     public function isAccessTokenExpiredResponse($response)
     {
-        if((is_string($response) && $response == self::NECKTIE_EXPIRED_ACCESS_TOKEN_ERROR)
+        if((is_string($response) && strpos($response,self::NECKTIE_EXPIRED_ACCESS_TOKEN_ERROR))
            || (is_array($response) && $response == json_decode(self::NECKTIE_EXPIRED_ACCESS_TOKEN_ERROR, true))
         )
         {
@@ -211,7 +246,7 @@ class NecktieGatewayHelper implements NecktieGatewayHelperInterface
      */
     public function isInvalidClientResponse($response)
     {
-        if((is_string($response) && $response == self::NECKTIE_INVALID_CLIENT_ERROR)
+        if((is_string($response) && strpos($response,self::NECKTIE_INVALID_CLIENT_ERROR))
            || (is_array($response) && $response == json_decode(self::NECKTIE_INVALID_CLIENT_ERROR, true))
         )
         {
