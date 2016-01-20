@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "2d26ba55cfa13a8afe861289c3d3f7cb",
-    "content-hash": "0c5bc2913b8fd6663eb62875e849d850",
+    "hash": "aa2c544968d65e595405a9d8d2c07799",
+    "content-hash": "31c3b48b29a023b619e15044c8ecc50f",
     "packages": [
         {
             "name": "apy/datagrid-bundle",
@@ -870,6 +870,64 @@
             "time": "2015-11-04 21:23:23"
         },
         {
+            "name": "doctrine/doctrine-migrations-bundle",
+            "version": "1.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/doctrine/DoctrineMigrationsBundle.git",
+                "reference": "303a576e2124efb07ec215e34ea2480b841cf5e4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/doctrine/DoctrineMigrationsBundle/zipball/303a576e2124efb07ec215e34ea2480b841cf5e4",
+                "reference": "303a576e2124efb07ec215e34ea2480b841cf5e4",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/doctrine-bundle": "~1.0",
+                "doctrine/migrations": "~1.0",
+                "php": ">=5.3.2",
+                "symfony/framework-bundle": "~2.3|~3.0"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.1-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Doctrine\\Bundle\\MigrationsBundle\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Symfony Community",
+                    "homepage": "http://symfony.com/contributors"
+                },
+                {
+                    "name": "Doctrine Project",
+                    "homepage": "http://www.doctrine-project.org"
+                },
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                }
+            ],
+            "description": "Symfony DoctrineMigrationsBundle",
+            "homepage": "http://www.doctrine-project.org",
+            "keywords": [
+                "dbal",
+                "migrations",
+                "schema"
+            ],
+            "time": "2015-11-04 13:45:30"
+        },
+        {
             "name": "doctrine/inflector",
             "version": "v1.1.0",
             "source": {
@@ -1043,6 +1101,74 @@
                 "parser"
             ],
             "time": "2014-09-09 13:34:57"
+        },
+        {
+            "name": "doctrine/migrations",
+            "version": "v1.2.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/doctrine/migrations.git",
+                "reference": "6b70c2c4484c02878743929bb3cd3fdbf41193a6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/doctrine/migrations/zipball/6b70c2c4484c02878743929bb3cd3fdbf41193a6",
+                "reference": "6b70c2c4484c02878743929bb3cd3fdbf41193a6",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/dbal": "~2.2",
+                "php": ">=5.4.0",
+                "symfony/console": "~2.3|~3.0",
+                "symfony/yaml": "~2.3|~3.0"
+            },
+            "require-dev": {
+                "doctrine/coding-standard": "dev-master",
+                "doctrine/orm": "2.*",
+                "johnkary/phpunit-speedtrap": "~1.0@dev",
+                "mockery/mockery": "^0.9.4",
+                "phpunit/phpunit": "~4.7",
+                "satooshi/php-coveralls": "0.6.*"
+            },
+            "bin": [
+                "bin/doctrine-migrations"
+            ],
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "v1.1.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Doctrine\\DBAL\\Migrations\\": "lib/Doctrine/DBAL/Migrations"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-2.1"
+            ],
+            "authors": [
+                {
+                    "name": "Benjamin Eberlei",
+                    "email": "kontakt@beberlei.de"
+                },
+                {
+                    "name": "Jonathan Wage",
+                    "email": "jonwage@gmail.com"
+                },
+                {
+                    "name": "Michael Simonson",
+                    "email": "contact@mikesimonson.com"
+                }
+            ],
+            "description": "Database Schema migrations using Doctrine DBAL",
+            "homepage": "http://www.doctrine-project.org",
+            "keywords": [
+                "database",
+                "migrations"
+            ],
+            "time": "2016-01-07 21:28:50"
         },
         {
             "name": "doctrine/orm",
@@ -4315,16 +4441,16 @@
         },
         {
             "name": "symfony/swiftmailer-bundle",
-            "version": "v2.3.10",
+            "version": "v2.3.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/swiftmailer-bundle.git",
-                "reference": "de5a2ddcaf91d2e44c19161e0fe8ed88022ceb51"
+                "reference": "5e1a90f28213231ceee19c953bbebc5b5b95c690"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/swiftmailer-bundle/zipball/de5a2ddcaf91d2e44c19161e0fe8ed88022ceb51",
-                "reference": "de5a2ddcaf91d2e44c19161e0fe8ed88022ceb51",
+                "url": "https://api.github.com/repos/symfony/swiftmailer-bundle/zipball/5e1a90f28213231ceee19c953bbebc5b5b95c690",
+                "reference": "5e1a90f28213231ceee19c953bbebc5b5b95c690",
                 "shasum": ""
             },
             "require": {
@@ -4368,7 +4494,7 @@
             ],
             "description": "Symfony SwiftmailerBundle",
             "homepage": "http://symfony.com",
-            "time": "2016-01-14 10:25:38"
+            "time": "2016-01-15 16:41:20"
         },
         {
             "name": "symfony/symfony",
@@ -4509,12 +4635,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/modpreneur/trinity-admin.git",
-                "reference": "853e6ce1a4365c5af0fc788a434913fbbf5e7783"
+                "reference": "0064365678ac1dfee456ef6d48631c65a78b708e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/modpreneur/trinity-admin/zipball/853e6ce1a4365c5af0fc788a434913fbbf5e7783",
-                "reference": "853e6ce1a4365c5af0fc788a434913fbbf5e7783",
+                "url": "https://api.github.com/repos/modpreneur/trinity-admin/zipball/0064365678ac1dfee456ef6d48631c65a78b708e",
+                "reference": "0064365678ac1dfee456ef6d48631c65a78b708e",
                 "shasum": ""
             },
             "require": {
@@ -4556,7 +4682,7 @@
                 }
             ],
             "description": "Trinity Admin bundle",
-            "time": "2016-01-10 16:38:32"
+            "time": "2016-01-19 14:36:54"
         },
         {
             "name": "trinity/framework",
@@ -4621,12 +4747,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/modpreneur/trinity-notifications.git",
-                "reference": "52fe7c9c62d2b85edfb7d2f90f1e5ace5e98229b"
+                "reference": "8e6ac909b4692e2f9848754751686e55df48fde1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/modpreneur/trinity-notifications/zipball/52fe7c9c62d2b85edfb7d2f90f1e5ace5e98229b",
-                "reference": "52fe7c9c62d2b85edfb7d2f90f1e5ace5e98229b",
+                "url": "https://api.github.com/repos/modpreneur/trinity-notifications/zipball/8e6ac909b4692e2f9848754751686e55df48fde1",
+                "reference": "8e6ac909b4692e2f9848754751686e55df48fde1",
                 "shasum": ""
             },
             "require": {
@@ -4671,7 +4797,7 @@
                 }
             ],
             "description": "Trinity Notification bundle",
-            "time": "2016-01-15 11:16:15"
+            "time": "2016-01-16 18:41:36"
         },
         {
             "name": "twig/extensions",

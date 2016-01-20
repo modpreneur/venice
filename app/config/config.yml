@@ -176,3 +176,9 @@ knp_menu:
 
 white_october_breadcrumbs:
     separator: ''
+
+doctrine_migrations:
+    dir_name: src/AppBundle/DoctrineMigrations
+    namespace: AppBundle\DoctrineMigrations
+    table_name: migration_versions
+    name: Application Migrations
