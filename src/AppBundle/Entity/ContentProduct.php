@@ -10,6 +10,7 @@ namespace AppBundle\Entity;
 
 use AppBundle\Entity\Content\Content;
 use AppBundle\Entity\Product\Product;
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -207,7 +208,7 @@ class ContentProduct
         if (!$productAccess) {
             return false;
         }
-        // Clone product access object to avoid weird errors.
+        // Clone product access Datetime object to avoid weird errors.
         $timeOfAccess = clone $productAccess->getFromDate();
 
         // Add delay to the time
@@ -217,4 +218,31 @@ class ContentProduct
         // Check if the the of the access + delay(in hours) < now
         return $timeOfAccess < $now;
     }
+
+
+    /**
+     * @param User $user
+     * @return DateTime
+     */
+    public function willBeAvailableOn(User $user)
+    {
+        if ($this->isAvailableFor($user)) {
+            // 0 hours to access
+            return new \DateInterval("PT0H");
+        }
+
+        $productAccess = $user->getProductAccess($this->product);
+
+        if(!$productAccess) {
+            return null;
+        }
+
+        // Clone product access Datetime object to avoid weird errors.
+        $timeOfAccess = clone $productAccess->getFromDate();
+
+        // Add delay to the time
+        $hours = $this->getDelay();
+        return $timeOfAccess->add(new \DateInterval("PT{$hours}H"));
+    }
+
 }

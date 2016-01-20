@@ -25,7 +25,11 @@
                                 </div>
                                 <hr/>
                             {% else %}
-                                <h1>not available now</h1>
+                                <div class="content-inner">
+                                    {{ contentProduct.content.name }}
+                                    Not available now - will be available in {{ contentProduct.willBeAvailableOn(app.user)|time_diff }}
+                                </div>
+                                <hr/>
                             {% endif %}
                         {% endfor %}
                     </div>
