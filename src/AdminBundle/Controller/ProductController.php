@@ -9,6 +9,7 @@
 namespace AdminBundle\Controller;
 
 
+use AppBundle\Entity\BillingPlan;
 use AppBundle\Entity\Product\FreeProduct;
 use AppBundle\Entity\Product\Product;
 use AppBundle\Event\AppEvents;
@@ -75,12 +76,11 @@ class ProductController extends BaseAdminController
      * @Route("/tabs/{id}", name="admin_product_tabs")
      * @Security("is_granted('ROLE_ADMIN_PRODUCT_VIEW')")
      *
-     * @param Request $request
      * @param Product $product
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function tabsAction(Request $request, Product $product)
+    public function tabsAction(Product $product)
     {
         $this->getBreadcrumbs()
             ->addRouteItem("Products", "admin_product_index")
@@ -315,14 +315,24 @@ class ProductController extends BaseAdminController
      */
     public function deleteAction(Request $request, Product $product)
     {
+        //remove all billing plans
+        $entityManager = $this->getDoctrine()->getManager();
+
+        $billingPlans = $entityManager->getRepository("AppBundle:BillingPlan")->findBy(["product" => $product]);
+
+        foreach ($billingPlans as $billingPlan) {
+            $entityManager->remove($billingPlan);
+        }
+
+        $entityManager->flush();
+
         try {
-            $em = $this->getEntityManager();
-            $em->remove($product);
-            $em->flush();
+            $entityManager->remove($product);
+            $entityManager->flush();
         } catch (DBALException $e) {
             return new JsonResponse(
                 [
-                    "errors" => ["db" => $e->getMessage()],
+                    "error" => ["db" => $e->getMessage()],
                     "message" => "Could not delete.",
                 ],
                 400

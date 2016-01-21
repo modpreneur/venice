@@ -8,23 +8,15 @@ import Controller from 'trinity/Controller';
 import VeniceForm from '../Libraries/VeniceForm';
 import TrinityTab from 'trinity/components/TrinityTab';
 
-export default class ProductController extends Controller {
-    /**
-     * New free product action
-     * @param $scope
-     */
-    newFreeAction($scope) {
-        //Attach VeniceForm
-        $scope.form = new VeniceForm(q('form[name="free_product"]'), VeniceForm.formType.NEW);
-    }
+export default class BillingPlanController extends Controller {
 
     /**
-     * New standard product action
+     * New billing plan action
      * @param $scope
      */
-    newStandardAction($scope) {
+    newAction($scope) {
         //Attach VeniceForm
-        $scope.form = new VeniceForm(q('form[name="standard_product"]'), VeniceForm.formType.NEW);
+        $scope.form = new VeniceForm(q('form[name="billing_plan"]'), VeniceForm.formType.NEW);
     }
 
     tabsAction($scope) {

@@ -9,7 +9,6 @@
 namespace AdminBundle\Form\DataTransformer;
 
 
-use AppBundle\Entity\Content\GroupContent;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Exception\TransformationFailedException;
@@ -63,7 +62,6 @@ class EntityToNumberTransformer implements DataTransformerInterface
         }
 
         if (is_object($value)) {
-//            dump($value);die();
             if (method_exists($value, "getId")) {
                 return $value->getId();
             } elseif (property_exists($value, "id")) {

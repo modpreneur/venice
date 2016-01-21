@@ -28,16 +28,11 @@
                 {{ form_row(form.enabled) }}
                 {{ form_row(form.orderNumber) }}
 
-                {% if productType == "standard" %}
-                    {{ form_row(form.billingPlan) }}
-                {% endif %}
                 {{ form_row(form.submit, {'attr': {'class': 'button create'}} ) }}
 
                 {{ form_end(form) }}
             {% endblock %}
         </div>
-
-
     </div>
 
 {% endblock %}

@@ -1,0 +1,110 @@
+{% extends('base.html.twig') %}
+
+{% block body %}
+    {% if billingPlans|length > 0 %}
+        <table class="grid">
+            <thead>
+            <tr>
+                <th>Id</th>
+                {% if displayNecktieField %}
+                    <th>Necktie id</th>
+                {% endif %}
+                {% if displayAmemberField %}
+                    <th>Amember id</th>
+                {% endif %}
+                <th>Standard</th>
+                <th>Mobile</th>
+                <th>Price</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for billingPlan in billingPlans %}
+                <tr>
+                    <td>
+                        <div class="action-cell">
+                            <span class="content">
+                                <a href="{{ path('admin_billing_plan_tabs', {'id': billingPlan.id}) }}">{{ billingPlan.id }}</a>
+                            </span>
+                            <span class="actions">
+                                <a href="{{ path('admin_billing_plan_tabs', {'id': billingPlan.id}) }}">Go to</a>
+                            </span>
+                        </div>
+
+                    </td>
+                    {#Necktie id#}
+                    {% if displayNecktieField %}
+                        <td>
+                            {{ billingPlan.necktieId }}
+                        </td>
+                    {% endif %}
+
+                    {#Amember id#}
+                    {% if displayAmemberField %}
+                        <td>
+                            {{ billingPlan.amemberId }}
+                        </td>
+                    {% endif %}
+
+
+                    {#Desktop#}
+                    <td>
+                        {% if billingPlan == product.desktopBillingPlan %}
+                            <i class="trinity trinity-yes"></i>
+
+                        {% else %}
+                            <a href="{{ path('admin_billing_plan_product_set', { 'purpose':"desktop" ,'id': billingPlan.id }) }}" title="set as desktop">
+                                <i class="trinity trinity-pin"></i>
+                            </a>
+                        {% endif %}
+                    </td>
+
+                    {#Mobile#}
+                    <td>
+                        {% if billingPlan == product.mobileBillingPlan %}
+                            <i class="trinity trinity-yes"></i>
+                        {% else %}
+                            <a href="{{ path('admin_billing_plan_product_set', { 'purpose':"mobile" ,'id': billingPlan.id }) }}" title="set as mobile">
+                                <i class="trinity trinity-pin"></i>
+                            </a>
+                        {% endif %}
+                    </td>
+
+                    {#price#}
+                    <td>
+                        {{ billingPlan.price }}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+    {% else %}
+        <div class="row">
+            <div class="span-none-padding-xlarge-24 margin-auto">
+                <div class="span-none-xlarge-10 margin-top-20">
+                    <div class="info-empty-form">
+                        <div class="row"><i class="trinity-info"></i></div>
+                        <div class="row"><h2 class="warning">NO DATA</h2></div>
+                        <div class="row span-none-xlarge-10">
+                            <p>Let's start adding some billing plan here!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+
+    {% if(is_granted('ROLE_ADMIN_PRODUCT_EDIT') and is_granted('ROLE_ADMIN_BILLING_PLAN_EDIT') and allowAddingNewBillingPlans) %}
+        <div class="span-none-padding-xlarge-24 margin-auto">
+            <div class="row">
+                <div class="info-empty-form">
+                    <a class="button button-addNew" id="newIcon" href="{{ path('admin_billing_plan_new', { 'id':product.id }) }}">
+                        Add new billing plan
+                    </a>
+                </div>
+            </div>
+        </div>
+
+    {% endif %}
+{% endblock %}

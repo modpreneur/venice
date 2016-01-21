@@ -16,10 +16,19 @@
 
             {% if product.type == "standard" %}
                 <tr>
-                    <th>Billing plan</th>
+                    <th>Desktop billing plan</th>
                     <td>
-                        {% if product.billingPlan %}
-                           {{ product.billingPlan.price }}
+                        {% if product.desktopBillingPlan %}
+                           {{ product.desktopBillingPlan.price }}
+                        {% endif %}
+                    </td>
+                </tr>
+
+                <tr>
+                    <th>Mobile billing plan</th>
+                    <td>
+                        {% if product.mobileBillingPlan %}
+                            {{ product.mobileBillingPlan.price }}
                         {% endif %}
                     </td>
                 </tr>

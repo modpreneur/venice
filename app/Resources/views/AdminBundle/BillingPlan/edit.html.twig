@@ -1,0 +1,16 @@
+<div class="box box-new-form">
+    <div class="row">
+        {{ form_start(form, {'attr': {'class': 'edit-form'}} ) }}
+        {{ form_errors(form) }}
+
+        {{ form_row(form.amemberId) }}
+        {{ form_row(form.initialPrice) }}
+        {{ form_row(form.rebillPrice) }}
+        {{ form_row(form.frequency) }}
+        {{ form_row(form.rebillTimes) }}
+
+        {{ form_row(form.submit, {'attr': {'class': 'button edit'}} ) }}
+
+        {{ form_end(form) }}
+    </div>
+</div>

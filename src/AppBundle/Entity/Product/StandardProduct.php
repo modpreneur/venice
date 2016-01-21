@@ -32,7 +32,8 @@ use Trinity\NotificationBundle\Entity\NotificationEntityInterface;
  *
  * @UniqueEntity(fields={"necktieId"})
  * @UniqueEntity(fields={"amemberId"})
- * @UniqueEntity(fields={"billingPlan"})
+ * @UniqueEntity(fields={"desktopBillingPlan"})
+ * @UniqueEntity(fields={"mobileBillingPlan"})
  *
  * Class StandardProduct
  */
@@ -53,19 +54,29 @@ class StandardProduct extends Product implements NotificationEntityInterface
 
 
     /**
-    * @var integer
-    *
-    * @ORM\Column(name="amember_id", type="integer", nullable=true, unique=true)
-    */
+     * @var integer
+     *
+     * @ORM\Column(name="amember_id", type="integer", nullable=true, unique=true)
+     */
     protected $amemberId;
 
 
     /**
      * @var BillingPlan
      *
-     * @ORM\OneToOne(targetEntity="AppBundle\Entity\BillingPlan", cascade={"PERSIST", "REFRESH"}, inversedBy="product")
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\BillingPlan", cascade={"PERSIST", "REMOVE"})
      */
-    protected $billingPlan;
+    protected $desktopBillingPlan;
+
+
+    /**
+     * Billing plan which will be used e.g.g in mobile application.
+     *
+     * @var BillingPlan
+     *
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\BillingPlan", cascade={"PERSIST", "REMOVE"})
+     */
+    protected $mobileBillingPlan;
 
 
     public function __construct()
@@ -79,9 +90,9 @@ class StandardProduct extends Product implements NotificationEntityInterface
     /**
      * @return BillingPlan
      */
-    public function getBillingPlan()
+    public function getDesktopBillingPlan()
     {
-        return $this->billingPlan;
+        return $this->desktopBillingPlan;
     }
 
 
@@ -90,12 +101,31 @@ class StandardProduct extends Product implements NotificationEntityInterface
      *
      * @return $this
      */
-    public function setBillingPlan($billingPlan)
+    public function setDesktopBillingPlan($billingPlan)
     {
-        $this->billingPlan = $billingPlan;
+        $this->desktopBillingPlan = $billingPlan;
 
         return $this;
     }
+
+
+    /**
+     * @return BillingPlan
+     */
+    public function getMobileBillingPlan()
+    {
+        return $this->mobileBillingPlan;
+    }
+
+
+    /**
+     * @param BillingPlan $mobileBillingPlan
+     */
+    public function setMobileBillingPlan($mobileBillingPlan)
+    {
+        $this->mobileBillingPlan = $mobileBillingPlan;
+    }
+
 
     public function getType()
     {

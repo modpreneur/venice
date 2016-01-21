@@ -66,6 +66,14 @@ export default [
     {
         path: '/admin/user/tabs/:id(/)',
         action: 'User.tabs'
+    },
+    {
+        path: '/admin/billing-plan/tabs/:id(/)',
+        action: 'BillingPlan.tabs'
+    },
+    {
+        path: '/admin/billing-plan/new/:id(/)',
+        action: 'BillingPlan.new'
     }
 ];
 

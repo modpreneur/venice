@@ -10,14 +10,17 @@ namespace AppBundle\Entity;
 
 use AppBundle\Entity\Product\StandardProduct;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 
 /**
  * @ORM\Entity()
  * @ORM\Table(name="billing_plan")
  *
+ * @UniqueEntity("necktieId")
+ * @UniqueEntity("amemberId")
+ *
  * Class BillingPlan
- * @package AppBundle\Entity
  */
 class BillingPlan
 {
@@ -90,7 +93,7 @@ class BillingPlan
     /**
      * @var StandardProduct
      *
-     * @ORM\OneToOne(targetEntity="AppBundle\Entity\Product\StandardProduct", cascade={"PERSIST", "REFRESH"}, mappedBy="billingPlan")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Product\StandardProduct")
      */
     protected $product;
 
