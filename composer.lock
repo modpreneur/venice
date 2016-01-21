@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "aa2c544968d65e595405a9d8d2c07799",
+    "hash": "cc185f2a570cde45f78a784ecf1e8df8",
     "content-hash": "31c3b48b29a023b619e15044c8ecc50f",
     "packages": [
         {
@@ -4690,12 +4690,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/modpreneur/trinity.git",
-                "reference": "016eff27a1a4ca5f326de7652efc9f798835517c"
+                "reference": "9eb1daf8837652fab7afa66f4b4bfd8819e3022e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/modpreneur/trinity/zipball/016eff27a1a4ca5f326de7652efc9f798835517c",
-                "reference": "016eff27a1a4ca5f326de7652efc9f798835517c",
+                "url": "https://api.github.com/repos/modpreneur/trinity/zipball/9eb1daf8837652fab7afa66f4b4bfd8819e3022e",
+                "reference": "9eb1daf8837652fab7afa66f4b4bfd8819e3022e",
                 "shasum": ""
             },
             "require": {
@@ -4738,7 +4738,7 @@
                 }
             ],
             "description": "Trinity Framework",
-            "time": "2016-01-14 10:31:57"
+            "time": "2016-01-20 15:45:48"
         },
         {
             "name": "trinity/notification",

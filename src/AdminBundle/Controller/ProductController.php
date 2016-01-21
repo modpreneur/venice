@@ -178,7 +178,7 @@ class ProductController extends BaseAdminController
             try {
                 $em->flush();
 
-                if($product instanceof FreeProduct) {
+                if ($product instanceof FreeProduct) {
                     $this->get("event_dispatcher")->dispatch(AppEvents::FREE_PRODUCT_CREATED, new FreeProductCreatedEvent($product));
                 }
             } catch (DBALException $e) {
@@ -222,7 +222,6 @@ class ProductController extends BaseAdminController
                 "admin_product",
                 ["id" => $product->getId(),]
             );
-
 
         return $this->render(
             ":AdminBundle/Product:edit.html.twig",

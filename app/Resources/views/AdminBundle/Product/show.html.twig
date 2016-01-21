@@ -13,6 +13,17 @@
                 <th>Description</th>
                 <td>{{ product.description }}</td>
             </tr>
+
+            {% if product.type == "standard" %}
+                <tr>
+                    <th>Billing plan</th>
+                    <td>
+                        {% if product.billingPlan %}
+                           {{ product.billingPlan.price }}
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endif %}
             <tr>
                 <th>Image</th>
                 <td>{{ product.image }}</td>

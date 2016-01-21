@@ -204,7 +204,7 @@ class BillingPlan
     /**
      * @return int
      */
-    public function getRebilTimes()
+    public function getRebillTimes()
     {
         return $this->rebillTimes;
     }
@@ -320,4 +320,43 @@ class BillingPlan
         return $this;
     }
 
+
+    /**
+     * Generate and set the price string.
+     *
+     * @return string price
+     */
+    public function generateAndSetPriceString()
+    {
+        $fullPrice = sprintf("$%.2f", $this->initialPrice);
+
+        if ($this->getType() === 'recurring') {
+            $fullPrice = $fullPrice.' and ';
+
+            if ($this->rebillTimes != 999) {
+                $fullPrice = $fullPrice.($this->rebillTimes - 1).' times ';
+            }
+
+            $fullPrice = $fullPrice.sprintf("$%.2f", $this->rebillPrice);
+
+            if ($this->rebillTimes == 999) {
+                $fullPrice = $fullPrice.' lifetime';
+            }
+        }
+
+        $this->price = $fullPrice;
+
+        return $fullPrice;
+    }
+
+
+    /**
+     * Get type of the billing plan - check rebillTimes.
+     *
+     * @return bool
+     */
+    public function getType()
+    {
+        return ($this->rebillTimes == 0) ? "standard" : "recurring";
+    }
 }

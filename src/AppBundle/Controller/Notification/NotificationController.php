@@ -14,7 +14,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Trinity\NotificationBundle\Annotations\DisableNotification;
-use Trinity\NotificationBundle\Notification\NotificationParser;
 
 /**
  * @DisableNotification()
@@ -34,7 +33,7 @@ class NotificationController extends Controller
      */
     public function productAction(Request $request)
     {
-        $this->get("monolog.logger.php")->addInfo("product_notification_body: ".json_encode($request->request->all()));
+        $this->get("logger")->addEmergency("product_notification_body: ".json_encode($request->request->all()));
 
         $this->get("trinity.notification.services.notification_parser")
             ->parseNotification(
@@ -57,7 +56,7 @@ class NotificationController extends Controller
      */
     public function userAction(Request $request)
     {
-        $this->get("monolog.logger.php")->addInfo("user_notification_body: ".json_encode($request->request->all()));
+        $this->get("logger")->addEmergency("user_notification_body: ".json_encode($request->request->all()));
 
         $this->get("trinity.notification.services.notification_parser")
             ->parseNotification(
@@ -80,7 +79,7 @@ class NotificationController extends Controller
      */
     public function billingPlanAction(Request $request)
     {
-        $this->get("monolog.logger.php")->addInfo("billing_plan_notification_body: ".json_encode($request->request->all()));
+        $this->get("logger")->addEmergency("billing_plan_notification_body: ".json_encode($request->request->all()));
 
         $updatedBillingPlan = $this->get("trinity.notification.services.notification_parser")
             ->parseNotification(
@@ -94,9 +93,11 @@ class NotificationController extends Controller
         // The parser returns updated entity. In this case we have to set the updated billing plan to the product.
         $product = $updatedBillingPlan->getProduct();
         $product->setBillingPlan($updatedBillingPlan);
+        $updatedBillingPlan->generateAndSetPriceString();
 
         $em = $this->getDoctrine()->getManager();
         $em->persist($product);
+        $em->persist($updatedBillingPlan);
         $em->flush();
 
         return new JsonResponse("ok");
@@ -111,7 +112,7 @@ class NotificationController extends Controller
      */
     public function productAccessAction(Request $request)
     {
-        $this->get("monolog.logger.php")->addInfo("product_access_notification_body: ".json_encode($request->request->all()));
+        $this->get("logger")->addEmergency("product_access_notification_body: ".json_encode($request->request->all()));
 
         $this->get("trinity.notification.services.notification_parser")
             ->parseNotification(
