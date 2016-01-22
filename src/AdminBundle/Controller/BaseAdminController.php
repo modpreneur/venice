@@ -9,6 +9,7 @@
 namespace AdminBundle\Controller;
 
 
+use AppBundle\Services\AppLogic;
 use AppBundle\Services\FormErrorSerializer;
 use Doctrine\Common\Persistence\ObjectManager;
 use FOS\RestBundle\Controller\FOSRestController;
@@ -17,6 +18,9 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 class BaseAdminController extends FOSRestController
 {
+    /** @var  AppLogic */
+    protected $logic;
+
     /**
      * @return ObjectManager
      */
@@ -75,6 +79,19 @@ class BaseAdminController extends FOSRestController
             $breadcrumbs->addRouteItem("Home", "admin_dashboard");
 
         return $breadcrumbs;
+    }
+
+    /**
+     * @return AppLogic
+     */
+    public function getLogic():AppLogic
+    {
+        // save logic to variable to speed up the process a bit
+        if(!$this->logic) {
+            $this->logic = $this->get("app_logic");
+        }
+
+        return $this->logic;
     }
 
 

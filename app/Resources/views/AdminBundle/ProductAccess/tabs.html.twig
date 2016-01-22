@@ -15,11 +15,11 @@
         <label for="tab1">Show</label>
 
         {% if is_granted('ROLE_ADMIN_PRODUCT_ACCESS_EDIT') %}
-            {% if displayEditTab %}
+            {% if appLogic.displayEditTabForProductAccess %}
                 <input type="radio" name="tab" id="tab2" class="tab-head" />
                 <label for="tab2">Edit</label>
             {% endif %}
-            {% if displayDeleteTab %}
+            {% if appLogic.displayDeleteTabForProductAccess %}
                 <input type="radio" name="tab" id="tab3" class="tab-head" />
                 <label for="tab3">Danger zone</label>
             {% endif %}
@@ -28,10 +28,10 @@
         <div class="tab-body-wrapper">
             <div id="tab-body-1" class="tab-body" data-source="{{ path('admin_product_access_show', {'id': productAccess.id}) }}"></div>
             {% if is_granted('ROLE_ADMIN_PRODUCT_ACCESS_EDIT') %}
-                {% if displayEditTab %}
+                {% if appLogic.displayEditTabForProductAccess %}
                     <div id="tab-body-2" class="tab-body" data-source="{{ path('admin_product_access_edit', {'id': productAccess.id}) }}"></div>
                 {% endif %}
-                {% if displayDeleteTab %}
+                {% if appLogic.displayDeleteTabForProductAccess %}
                     <div id="tab-body-3" class="tab-body" data-source="{{ path('admin_product_access_delete_tab', {'id': productAccess.id}) }}"></div>
                 {% endif %}
             {% endif %}

@@ -2,6 +2,13 @@ services:
 
     # SERVICES #
 
+    logic:
+         alias: app_logic
+
+    app_logic:
+        class: AppBundle\Services\AppLogic
+        arguments: [ @service_container ]
+
     app.services.necktie_gateway:
         class: AppBundle\Services\NecktieGateway
         arguments:

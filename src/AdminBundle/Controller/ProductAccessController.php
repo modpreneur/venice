@@ -45,15 +45,11 @@ class ProductAccessController extends BaseAdminController
         $entityManager = $this->getDoctrine()->getManager();
         $productAccesses = $entityManager->getRepository("AppBundle:ProductAccess")->findBy(["user" => $user]);
 
-        $connectedToNecktie = $this->container->getParameter("necktie_url") !== null;
-
         return $this->render(
             ":AdminBundle/ProductAccess:index.html.twig",
             [
                 "productAccesses" => $productAccesses,
                 "user" => $user,
-                "allowAddingNewProductAccesses" => !$connectedToNecktie,
-                "displayNecktieField" => $connectedToNecktie,
             ]
         );
     }
@@ -70,13 +66,10 @@ class ProductAccessController extends BaseAdminController
      */
     public function showAction(ProductAccess $productAccess)
     {
-        $connectedToNecktie = $this->container->getParameter("necktie_url") !== null;
-
         return $this->render(
             ":AdminBundle/ProductAccess:show.html.twig",
             [
                 "productAccess" => $productAccess,
-                "displayNecktieField" => $connectedToNecktie,
             ]
         );
     }
@@ -101,16 +94,14 @@ class ProductAccessController extends BaseAdminController
                 "Product access ".$productAccess->getId(),
                 "admin_product_access_tabs",
                 ["id" => $productAccess->getId()]
-        );
-
-        $connectedToNecktie = $this->container->getParameter("necktie_url") !== null;
+            );
 
         return $this->render(
             ":AdminBundle/ProductAccess:tabs.html.twig",
             [
                 "productAccess" => $productAccess,
-                "displayEditTab" => !$connectedToNecktie,
-                "displayDeleteTab" => !$connectedToNecktie
+                "displayEditTab" => $this->getLogic()->displayEditTabForProductAccess(),
+                "displayDeleteTab" => $this->getLogic()->displayDeleteTabForProductAccess()
             ]
         );
     }
@@ -122,7 +113,6 @@ class ProductAccessController extends BaseAdminController
      * @Route("/edit/{id}", requirements={"id": "\d+"}, name="admin_product_access_edit")
      * @Method("GET")
      * @Security("is_granted('ROLE_ADMIN_PRODUCT_ACCESS_EDIT')")
-
      * @param ProductAccess $productAccess
      *
      * @return \Symfony\Component\HttpFoundation\Response

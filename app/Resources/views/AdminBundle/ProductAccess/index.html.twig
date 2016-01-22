@@ -6,7 +6,7 @@
             <thead>
             <tr>
                 <th>Id</th>
-                {% if displayNecktieField %}
+                {% if appLogic.displayNecktieFieldForProductAccess %}
                     <th>Necktie id</th>
                 {% endif %}
                 <th>Product</th>
@@ -29,7 +29,7 @@
 
                     </td>
                     {#Necktie id#}
-                    {% if displayNecktieField %}
+                    {% if appLogic.displayNecktieFieldForProductAccess %}
                         <td>
                             {{ productAccess.necktieId }}
                         </td>
@@ -68,7 +68,7 @@
     {% endif %}
 
 
-    {% if(is_granted('ROLE_ADMIN_USER_EDIT') and is_granted('ROLE_ADMIN_PRODUCT_ACCESS_EDIT') and allowAddingNewProductAccesses) %}
+    {% if(is_granted('ROLE_ADMIN_USER_EDIT') and is_granted('ROLE_ADMIN_PRODUCT_ACCESS_EDIT') and appLogic.allowAddingNewProductAccesses) %}
         <div class="span-none-padding-xlarge-24 margin-auto">
             <div class="row">
                 <div class="info-empty-form">
