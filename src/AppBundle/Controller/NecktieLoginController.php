@@ -84,7 +84,7 @@ class NecktieLoginController extends Controller
             }
             catch(UnsuccessfulNecktieResponseException $e)
             {
-                throw new UnsuccessfulNecktieResponseException("Could not get user from necktie.");
+                throw new UnsuccessfulNecktieResponseException("Could not get user from necktie.". $e->getMessage());
             }
 
             try

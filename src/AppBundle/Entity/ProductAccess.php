@@ -5,6 +5,8 @@ namespace AppBundle\Entity;
 use AppBundle\Entity\Product\Product;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
  * ProductAccess
@@ -12,7 +14,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @ORM\Table(name="product_access")
  * @ORM\Entity()
  *
- * @UniqueEntity(fields={"user", "product"})
+ * @UniqueEntity(fields={"user", "product"}, errorPath="product")
  */
 class ProductAccess
 {
@@ -58,6 +60,9 @@ class ProductAccess
     /**
      * @var \DateTime
      *
+     * @Assert\Type("\DateTime")
+     * @Assert\GreaterThanOrEqual("now")
+     *
      * @ORM\Column(name="to_date", type="datetimetz", nullable=true)
      */
     private $toDate;
@@ -65,6 +70,22 @@ class ProductAccess
 
     public function __construct()
     {
+    }
+
+
+    /**
+     * @Assert\Callback
+     *
+     * @param ExecutionContextInterface $context
+     */
+    public function validate(ExecutionContextInterface $context)
+    {
+        if ($this->toDate && $this->fromDate > $this->toDate) {
+            $context
+                ->buildViolation('To date must be greater than From date.')
+                ->atPath('toDate')
+                ->addViolation();
+        }
     }
 
 

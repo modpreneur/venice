@@ -1,0 +1,33 @@
+<div class="blog-show">
+    <table class="record_properties grid">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ productAccess.id }}</td>
+            </tr>
+            {% if displayNecktieField %}
+                <tr>
+                    <th>Necktie id</th>
+                    <td>{{ productAccess.necktieId }}</td>
+                </tr>
+            {% endif %}
+            <tr>
+                <th>Product</th>
+                <td>{{ productAccess.product }}</td>
+            </tr>
+            <tr>
+                <th>From date</th>
+                <td>{{ productAccess.fromDate|date("Y-m-d") }}</td>
+            </tr>
+            <tr>
+                <th>To date</th>
+                <td>
+                    {% if productAccess.toDate %}
+                        {{ productAccess.toDate|date("Y-m-d") }}</td>
+                    {% else %}
+                        Lifetime
+                    {% endif %}
+            </tr>
+        </tbody>
+    </table>
+</div>

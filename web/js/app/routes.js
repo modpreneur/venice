@@ -74,6 +74,14 @@ export default [
     {
         path: '/admin/billing-plan/new/:id(/)',
         action: 'BillingPlan.new'
+    },
+    {
+        path: '/admin/product-access/tabs/:id(/)',
+        action: 'ProductAccess.tabs'
+    },
+    {
+        path: '/admin/product-access/new/:id(/)',
+        action: 'ProductAccess.new'
     }
 ];
 
