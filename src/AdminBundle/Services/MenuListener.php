@@ -52,13 +52,13 @@ class MenuListener
 
         $menu
             ->addChild('Contents', array('route' => 'admin_content_index'))
-            ->setAttribute('icon', 'tiecons tiecons-bookmark-3')
+            ->setAttribute('icon', 'tiecons tiecons-video')
             ->setExtra('orderNumber', 2)
             ->setExtra('roles', ['ROLE_ADMIN_CONTENT_VIEW']);
 
         $menu
             ->addChild('Associations', array('route' => 'admin_content_product_index'))
-            ->setAttribute('icon', 'tiecons tiecons-bookmark-2')
+            ->setAttribute('icon', 'tiecons tiecons-pin-right-negative')
             ->setExtra('orderNumber', 3)
             ->setExtra('roles', ['ROLE_ADMIN_CONTENT_PRODUCT_VIEW']);
 
