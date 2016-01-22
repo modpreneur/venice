@@ -9,7 +9,7 @@ parameters:
     database_password: pass
     necktie_client_id: ~
     necktie_client_secret: ~
-    necktie_url: 'http://192.168.99.100:80/app_dev.php'
+    necktie_url: 'http://192.168.99.100:80/app_dev.php' #without trailing backslash!
 
     mailer_transport:  smtp
     mailer_host:       127.0.0.1

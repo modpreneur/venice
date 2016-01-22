@@ -82,7 +82,7 @@ class NecktieGateway implements NecktieGatewayInterface
             throw new \Exception("Please define parameter: \"necktie_url\"");
         }
 
-        $this->client = new Client(["base_uri" => $this->necktieUrl]);
+        $this->client = new Client(["base_uri" => $this->necktieUrl . "/"]);
     }
 
 

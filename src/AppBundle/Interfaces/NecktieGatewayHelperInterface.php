@@ -15,7 +15,7 @@ use AppBundle\Entity\OAuthToken;
 interface NecktieGatewayHelperInterface
 {
     /**
-     * @param $response string
+     * @param $response array
      *
      * @return array|null
      */
