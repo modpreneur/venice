@@ -6,10 +6,10 @@
             <thead>
             <tr>
                 <th>Id</th>
-                {% if displayNecktieField %}
+                {% if appLogic.displayNecktieFieldForBillingPlan %}
                     <th>Necktie id</th>
                 {% endif %}
-                {% if displayAmemberField %}
+                {% if appLogic.displayAmemberFieldForBillingPlan %}
                     <th>Amember id</th>
                 {% endif %}
                 <th>Standard</th>
@@ -32,14 +32,14 @@
 
                     </td>
                     {#Necktie id#}
-                    {% if displayNecktieField %}
+                    {% if appLogic.displayNecktieFieldForBillingPlan %}
                         <td>
                             {{ billingPlan.necktieId }}
                         </td>
                     {% endif %}
 
                     {#Amember id#}
-                    {% if displayAmemberField %}
+                    {% if appLogic.displayAmemberFieldForBillingPlan %}
                         <td>
                             {{ billingPlan.amemberId }}
                         </td>
@@ -92,7 +92,7 @@
     {% endif %}
 
 
-    {% if(is_granted('ROLE_ADMIN_PRODUCT_EDIT') and is_granted('ROLE_ADMIN_BILLING_PLAN_EDIT') and allowAddingNewBillingPlans) %}
+    {% if(is_granted('ROLE_ADMIN_PRODUCT_EDIT') and is_granted('ROLE_ADMIN_BILLING_PLAN_EDIT') and appLogic.allowAddingNewBillingPlans ) %}
         <div class="span-none-padding-xlarge-24 margin-auto">
             <div class="row">
                 <div class="info-empty-form">

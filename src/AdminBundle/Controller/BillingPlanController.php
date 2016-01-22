@@ -53,10 +53,7 @@ class BillingPlanController extends BaseAdminController
             ":AdminBundle/BillingPlan:index.html.twig",
             [
                 "billingPlans" => $billingPlans,
-                "product" => $product,
-                "allowAddingNewBillingPlans" => !$connectedToNecktie,
-                "displayAmemberField" => !$connectedToNecktie,
-                "displayNecktieField" => $connectedToNecktie,
+                "product" => $product
             ]
         );
     }
@@ -111,8 +108,6 @@ class BillingPlanController extends BaseAdminController
             ":AdminBundle/BillingPlan:tabs.html.twig",
             [
                 "billingPlan" => $billingPlan,
-                "displayEditTab" => !$connectedToNecktie,
-                "displayDeleteTab" => !$connectedToNecktie
             ]
         );
     }
@@ -152,8 +147,10 @@ class BillingPlanController extends BaseAdminController
             $this->get('session')->getFlashBag()->add('danger', $e->getMessage());
         }
 
-        return $this->redirect($this->generateUrl('admin_product_tabs',
-                ['id' => $product->getId()])."#tab3");
+        return $this->redirect(
+            $this->generateUrl('admin_product_tabs',
+            ['id' => $product->getId()])."#tab3"
+        );
     }
 
 
@@ -252,9 +249,19 @@ class BillingPlanController extends BaseAdminController
      */
     public function newAction(Request $request, StandardProduct $product)
     {
-//        $this->getBreadcrumbs()
-//            ->addRouteItem("Products", "admin_product_index")
-//            ->addRouteItem("New product", "admin_product_new", ["productType" => $productType]);
+        $this->getBreadcrumbs()
+            ->addRouteItem("Products", "admin_product_index")
+            ->addRouteItem(
+                $product->getName(),
+                "admin_product_tabs",
+                ["id" => $product->getId()]
+            )
+            ->addRouteItem(
+                "New billing plan",
+                "admin_billing_plan_new",
+                ["id" => $product->getId()]
+            );
+
         $billingPlan = new BillingPlan();
 
         $form = $this->get("admin.form_factory")

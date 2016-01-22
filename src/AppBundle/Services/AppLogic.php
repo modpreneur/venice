@@ -23,7 +23,7 @@ class AppLogic
     public function __construct(ContainerInterface $container)
     {
         $this->container = $container;
-        $this->connectedToNecktie = $this->container->has("necktie_url");
+        $this->connectedToNecktie = $this->container->hasParameter("necktie_url");
     }
 
 
@@ -50,7 +50,7 @@ class AppLogic
 
 
     /**
-     * Display necktie field in product access template
+     * Display necktie id field in ProductAccess template.
      *
      * @return bool
      */
@@ -61,7 +61,7 @@ class AppLogic
 
 
     /**
-     * Display edit tab in ProductAccess template
+     * Display edit tab in ProductAccess template.
      *
      * @return bool
      */
@@ -70,12 +70,68 @@ class AppLogic
         return !$this->connectedToNecktie;
     }
 
+
     /**
-     * Display delete tab in ProductAccess template
+     * Display delete tab in ProductAccess template.
      *
      * @return bool
      */
     public function displayDeleteTabForProductAccess():bool
+    {
+        return !$this->connectedToNecktie;
+    }
+
+
+    /**
+     * Allow adding new billing plans.
+     *
+     * @return bool
+     */
+    public function allowAddingNewBillingPlans():bool
+    {
+        return !$this->connectedToNecktie;
+    }
+
+
+    /**
+     * Display amember id field in ProductAccess template
+     *
+     * @return bool
+     */
+    public function displayAmemberFieldForBillingPlan():bool
+    {
+        return !$this->connectedToNecktie;
+    }
+
+
+    /**
+     * Display necktie id field in ProductAccess template
+     *
+     * @return bool
+     */
+    public function displayNecktieFieldForBillingPlan():bool
+    {
+        return $this->connectedToNecktie;
+    }
+
+
+    /**
+     * Display edit tab in ProductAccess template.
+     *
+     * @return bool
+     */
+    public function displayEditTabForBillingPlan():bool
+    {
+        return !$this->connectedToNecktie;
+    }
+
+
+    /**
+     * Display edit tab in ProductAccess template.
+     *
+     * @return bool
+     */
+    public function displayDeleteTabForBillingPlan():bool
     {
         return !$this->connectedToNecktie;
     }
