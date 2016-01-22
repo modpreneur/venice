@@ -46,16 +46,15 @@ class BillingPlanController extends BaseAdminController
         $entityManager = $this->getDoctrine()->getManager();
         $billingPlans = $entityManager->getRepository("AppBundle:BillingPlan")->findBy(["product" => $product]);
 
-        $connectedToNecktie = $this->container->hasParameter("necktie_url");
+        $connectedToNecktie = $this->container->getParameter("necktie_url") !== null;
         //If not connected to necktie allow adding new billing plans
-        $allowAddingNewBillingPlans = !$connectedToNecktie;
 
         return $this->render(
             ":AdminBundle/BillingPlan:index.html.twig",
             [
                 "billingPlans" => $billingPlans,
                 "product" => $product,
-                "allowAddingNewBillingPlans" => $allowAddingNewBillingPlans,
+                "allowAddingNewBillingPlans" => !$connectedToNecktie,
                 "displayAmemberField" => !$connectedToNecktie,
                 "displayNecktieField" => $connectedToNecktie,
             ]
@@ -106,9 +105,15 @@ class BillingPlanController extends BaseAdminController
                 ["id" => $billingPlan->getId()]
             );
 
+        $connectedToNecktie = $this->container->getParameter("necktie_url") !== null;
+
         return $this->render(
             ":AdminBundle/BillingPlan:tabs.html.twig",
-            ["billingPlan" => $billingPlan,]
+            [
+                "billingPlan" => $billingPlan,
+                "displayEditTab" => !$connectedToNecktie,
+                "displayDeleteTab" => !$connectedToNecktie
+            ]
         );
     }
 
@@ -152,7 +157,6 @@ class BillingPlanController extends BaseAdminController
     }
 
 
-
     /**
      * Display a form to edit a BillingPlan entity.
      *
@@ -183,7 +187,6 @@ class BillingPlanController extends BaseAdminController
 
         );
     }
-
 
 
     /**
