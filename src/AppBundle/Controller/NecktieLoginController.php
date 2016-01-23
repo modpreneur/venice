@@ -72,7 +72,7 @@ class NecktieLoginController extends Controller
             throw new AccessDeniedHttpException();
         }
 
-        $necktieToken = $necktieGateway->getHelper()->createAccessTokenFromArray($request->query->all());
+        $necktieToken = $necktieGateway->getHelper()->createOAuthTokenFromArray($request->query->all());
 
         if($necktieToken)
         {

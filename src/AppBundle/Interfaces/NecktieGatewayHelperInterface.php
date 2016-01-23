@@ -23,13 +23,13 @@ interface NecktieGatewayHelperInterface
 
 
     /**
-     * Create a NecktieToken object from oauth server response converted to array.
+     * Create a OAuthToken object from oauth server response converted to array.
      *
      * @param $array array
      *
      * @return OAuthToken|null
      */
-    public function createAccessTokenFromArray(array $array);
+    public function createOAuthTokenFromArray(array $array);
 
 
     /**
@@ -70,4 +70,20 @@ interface NecktieGatewayHelperInterface
      * @return bool
      */
     public function isRefreshTokenExpiredResponse($response);
+
+
+    /**
+     * @param string|array $response
+     *
+     * @return bool
+     */
+    public function isInvalidClientResponse($response);
+
+
+    /**
+     * @param string|array $response
+     *
+     * @return bool
+     */
+    public function hasError($response);
 }

@@ -18,9 +18,13 @@ services:
             - @doctrine.orm.entity_manager
             - @router
             - @app.services.necktie_gateway_helper
+            - @app.services.necktie_connector
 
     necktie:
         alias: app.services.necktie_gateway
+
+    app.services.necktie_connector:
+        class: AppBundle\Services\NecktieConnector
 
     app.services.necktie_gateway_helper:
         class: AppBundle\Services\NecktieGatewayHelper
