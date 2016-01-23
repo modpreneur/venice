@@ -61,10 +61,9 @@ class EntityListener
         $message = "";
 
         if($violations->count() !== 0) {
-            $messages = [];
             /** @var ConstraintViolationInterface $violation */
             foreach ($violations as $violation) {
-                $message .= $violation->getPropertyPath().": ".$violation->getMessage();
+                $message .= $violation->getPropertyPath().": ".$violation->getMessage().";";
             }
 
             throw new ValidatorException($message);
