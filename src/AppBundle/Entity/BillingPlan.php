@@ -10,11 +10,15 @@ namespace AppBundle\Entity;
 
 use AppBundle\Entity\Product\StandardProduct;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
+use Doctrine\ORM\Mapping\PrePersist;
+use Doctrine\ORM\Mapping\PreUpdate;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 
 /**
  * @ORM\Entity()
+ * @HasLifecycleCallbacks
  * @ORM\Table(name="billing_plan")
  *
  * @UniqueEntity("necktieId")
@@ -113,6 +117,16 @@ class BillingPlan
         $this->frequency = 0;
         $this->rebillTimes = 0;
         $this->price = "";
+    }
+
+    /**
+     * @PrePersist
+     * @PreUpdate
+     *
+     */
+    public function doStuffOnPrePersist()
+    {
+        $this->generateAndSetPriceString();
     }
 
 

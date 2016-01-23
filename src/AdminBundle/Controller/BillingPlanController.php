@@ -46,9 +46,6 @@ class BillingPlanController extends BaseAdminController
         $entityManager = $this->getDoctrine()->getManager();
         $billingPlans = $entityManager->getRepository("AppBundle:BillingPlan")->findBy(["product" => $product]);
 
-        $connectedToNecktie = $this->container->getParameter("necktie_url") !== null;
-        //If not connected to necktie allow adding new billing plans
-
         return $this->render(
             ":AdminBundle/BillingPlan:index.html.twig",
             [
@@ -101,8 +98,6 @@ class BillingPlanController extends BaseAdminController
                 "admin_billing_plan_tabs",
                 ["id" => $billingPlan->getId()]
             );
-
-        $connectedToNecktie = $this->container->getParameter("necktie_url") !== null;
 
         return $this->render(
             ":AdminBundle/BillingPlan:tabs.html.twig",
@@ -214,7 +209,6 @@ class BillingPlanController extends BaseAdminController
         $billingPlanForm->handleRequest($request);
 
         if ($billingPlanForm->isValid()) {
-            $billingPlan->generateAndSetPriceString();
             $em->persist($billingPlan);
 
             try {
@@ -313,7 +307,6 @@ class BillingPlanController extends BaseAdminController
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $billingPlan->generateAndSetPriceString();
             $em->persist($billingPlan);
 
             try {
