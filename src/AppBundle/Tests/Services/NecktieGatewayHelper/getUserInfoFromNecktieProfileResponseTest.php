@@ -76,16 +76,4 @@ class GetUserInfoFromNecktieProfileResponseTest extends BaseTest
 
         $this->assertEquals(null, $result);
     }
-
-    /**
-     * @test
-     */
-    public function notArray()
-    {
-        $data = "i am not an array!";
-
-        $result = $this->helper->getUserInfoFromNecktieProfileResponse($data);
-
-        $this->assertEquals(null, $result);
-    }
 }
