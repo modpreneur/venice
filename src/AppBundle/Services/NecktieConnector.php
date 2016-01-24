@@ -13,6 +13,7 @@ use AppBundle\Entity\User;
 use AppBundle\Exceptions\UnsuccessfulNecktieResponseException;
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
+use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\ServerException;
 
 class NecktieConnector
@@ -62,6 +63,11 @@ class NecktieConnector
             );
         } catch (ServerException $e) {
             throw new UnsuccessfulNecktieResponseException($e->getResponse()->getBody()->getContents());
+        }
+        catch (ClientException $e) {
+            if($e->getCode() === 404) {
+                return null;
+            }
         }
 
         if($jsonDecodeResponse) {

@@ -248,6 +248,7 @@ class NecktieGateway implements NecktieGatewayInterface
         return $invoices;
     }
 
+
     public function getNewsletters(User $user)
     {
         $this->refreshAccessTokenIfNeeded($user);

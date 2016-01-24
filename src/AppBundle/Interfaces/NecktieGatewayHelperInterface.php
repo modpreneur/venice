@@ -19,7 +19,7 @@ interface NecktieGatewayHelperInterface
      *
      * @return array|null
      */
-    public function getUserInfoFromNecktieProfileResponse($response);
+    public function getUserInfoFromNecktieProfileResponse(array $response);
 
 
     /**

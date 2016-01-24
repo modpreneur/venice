@@ -26,7 +26,7 @@ class NecktieGatewayHelper implements NecktieGatewayHelperInterface
     /**
      * @inheritdoc
      */
-    public function getUserInfoFromNecktieProfileResponse($response)
+    public function getUserInfoFromNecktieProfileResponse(array $response)
     {
         $requiredFields = ["username", "email", "id"];
         $userInfo = [];
@@ -34,6 +34,8 @@ class NecktieGatewayHelper implements NecktieGatewayHelperInterface
 
         if (is_array($response) && array_key_exists("user", $response)) {
             $response = $response["user"];
+        } else {
+            return null;
         }
 
         foreach ($requiredFields as $requiredFiled) {
@@ -72,33 +74,46 @@ class NecktieGatewayHelper implements NecktieGatewayHelperInterface
 
 
     /**
-     * todo: test or remove
-     * @param $response array
-     *
-     * @return array
+     * @inheritdoc
      */
     public function getInvoicesFromNecktieResponse(array $response)
     {
+        if (array_key_exists("invoices", $response) && is_array($response["invoices"])) {
+            $response = $response["invoices"];
+        } else {
+            return [];
+        }
+
+
         $invoices = [];
 
-        foreach ($response["invoices"] as $invoice) {
+        foreach ($response as $invoice) {
             $invoiceObject = new Invoice();
 
             if (array_key_exists("id", $invoice)) {
                 $invoiceObject->setId($invoice["id"]);
+            } else {
+                continue;
             }
+
 
             if (array_key_exists("total_customer_price", $invoice)) {
                 $invoiceObject->setTotalPrice($invoice["total_customer_price"]);
+            } else {
+                continue;
             }
 
             if (array_key_exists("transaction_type", $invoice)) {
                 $invoiceObject->setTransactionType($invoice["transaction_type"]);
+            } else {
+                continue;
             }
 
             if (array_key_exists("transaction_time", $invoice)) {
                 $date = \DateTime::createFromFormat(\DateTime::W3C, $invoice["transaction_time"]);
                 $invoiceObject->setTransactionTime($date);
+            } else {
+                continue;
             }
 
             if (array_key_exists("items", $invoice)) {
@@ -107,6 +122,8 @@ class NecktieGatewayHelper implements NecktieGatewayHelperInterface
                         $invoiceObject->addItem($invoiceItem["product"]["name"]);
                     }
                 }
+            } else {
+                continue;
             }
 
             $invoices[] = $invoiceObject;
@@ -172,15 +189,14 @@ class NecktieGatewayHelper implements NecktieGatewayHelperInterface
 
 
     /**
-     * @param string|array $response
-     *
-     * @return bool
+     * @inheritdoc
      */
     public function isAccessTokenInvalidResponse($response)
     {
         if ((is_string($response) && false !== strpos($response, self::NECKTIE_INVALID_ACCESS_TOKEN_ERROR))
             || (is_array($response) && ($response == json_decode(self::NECKTIE_INVALID_ACCESS_TOKEN_ERROR, true))
-            )) {
+            )
+        ) {
             return true;
         } else {
             return false;
@@ -189,9 +205,7 @@ class NecktieGatewayHelper implements NecktieGatewayHelperInterface
 
 
     /**
-     * @param string|array $response
-     *
-     * @return bool
+     * @inheritdoc
      */
     public function isAccessTokenExpiredResponse($response)
     {
@@ -207,9 +221,7 @@ class NecktieGatewayHelper implements NecktieGatewayHelperInterface
 
 
     /**
-     * @param string|array $response
-     *
-     * @return bool
+     * @inheritdoc
      */
     public function isRefreshTokenExpiredResponse($response)
     {
@@ -224,9 +236,7 @@ class NecktieGatewayHelper implements NecktieGatewayHelperInterface
 
 
     /**
-     * @param string|array $response
-     *
-     * @return bool
+     * @inheritdoc
      */
     public function isInvalidClientResponse($response)
     {
@@ -241,9 +251,7 @@ class NecktieGatewayHelper implements NecktieGatewayHelperInterface
 
 
     /**
-     * @param string|array $response
-     *
-     * @return bool
+     * @inheritdoc
      */
     public function hasError($response)
     {
