@@ -90,15 +90,17 @@ class NotificationController extends Controller
             )
         ;
 
-        // The parser returns updated entity. In this case we have to set the updated billing plan to the product.
-        $product = $updatedBillingPlan->getProduct();
-        $product->setBillingPlan($updatedBillingPlan);
-        $updatedBillingPlan->generateAndSetPriceString();
+        if("DELETE" !== $request->getMethod()) {
+            // The parser returns updated entity. In this case we have to set the updated billing plan to the product.
+            $product = $updatedBillingPlan->getProduct();
+            $product->setBillingPlan($updatedBillingPlan);
+            $updatedBillingPlan->generateAndSetPriceString();
 
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($product);
-        $em->persist($updatedBillingPlan);
-        $em->flush();
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($product);
+            $em->persist($updatedBillingPlan);
+            $em->flush();
+        }
 
         return new JsonResponse("ok");
     }
