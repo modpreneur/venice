@@ -9,8 +9,6 @@
 namespace AppBundle\Interfaces;
 
 
-use AppBundle\Entity\BillingPlan;
-use AppBundle\Entity\Product\StandardProduct;
 use AppBundle\Entity\ProductAccess;
 use AppBundle\Entity\User;
 
@@ -46,25 +44,25 @@ interface GatewayInterface
     public function getNewsletters(User $user);
 
 
-    /**
-     * Get billing plan by id
-     *
-     * @param User $user
-     * @param      $id
-     *
-     * @return BillingPlan
-     */
-    public function getBillingPlan(User $user, $id);
-
-
-    /**
-     * Get all billing plans.
-     *
-     * @param User            $user
-     *
-     * @param StandardProduct $product
-     *
-     * @return \AppBundle\Entity\BillingPlan[]
-     */
-    public function getBillingPlans(User $user, StandardProduct $product);
+//    /**
+//     * Get billing plan by id
+//     *
+//     * @param User $user
+//     * @param      $id
+//     *
+//     * @return BillingPlan
+//     */
+//    public function getBillingPlan(User $user, $id);
+//
+//
+//    /**
+//     * Get all billing plans.
+//     *
+//     * @param User            $user
+//     *
+//     * @param StandardProduct $product
+//     *
+//     * @return \AppBundle\Entity\BillingPlan[]
+//     */
+//    public function getBillingPlans(User $user, StandardProduct $product);
 }

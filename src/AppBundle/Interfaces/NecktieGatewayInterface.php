@@ -22,13 +22,13 @@ interface NecktieGatewayInterface extends GatewayInterface
      *
      *
      * @param string     $accessToken
-     * @param bool|false $createNewUser
-     * @param bool|true  $persistNewUser
+     * @param bool       $createNewUser
+     * @param bool       $persistNewUser
      *
      * @return User|null
      * @throws UnsuccessfulNecktieResponseException
      */
-    public function getUserByAccessToken($accessToken = null, $createNewUser = false, $persistNewUser = true);
+    public function getUserByAccessToken(string $accessToken, bool $createNewUser = false, bool $persistNewUser = true);
 
 
     /**

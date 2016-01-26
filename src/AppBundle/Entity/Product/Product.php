@@ -20,14 +20,14 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\OrderBy;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Trinity\FrameworkBundle\Entity\BaseProduct as TrinityProduct;
 use Symfony\Component\Validator\Constraints as Assert;
+use Trinity\FrameworkBundle\Entity\BaseProduct as TrinityProduct;
 
 /**
  * Class BaseProduct
  *
  * @ORM\Table(name="product")
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="ProductRepository", )
  *
  * @ORM\InheritanceType("JOINED")
  * @ORM\DiscriminatorColumn(name="type", type="string")

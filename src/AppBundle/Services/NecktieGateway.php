@@ -9,7 +9,6 @@
 namespace AppBundle\Services;
 
 
-use AppBundle\Entity\BillingPlan;
 use AppBundle\Entity\Product\StandardProduct;
 use AppBundle\Entity\User;
 use AppBundle\Exceptions\ExpiredRefreshTokenException;
@@ -18,7 +17,6 @@ use AppBundle\Interfaces\NecktieGatewayHelperInterface;
 use AppBundle\Interfaces\NecktieGatewayInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use GuzzleHttp\Client;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\Routing\RouterInterface;
 
@@ -38,11 +36,6 @@ class NecktieGateway implements NecktieGatewayInterface
      * @var EntityManagerInterface
      */
     protected $entityManager;
-
-    /**
-     * @var ContainerInterface
-     */
-    protected $container;
 
     /**
      * @var RouterInterface
@@ -65,41 +58,53 @@ class NecktieGateway implements NecktieGatewayInterface
     protected $stateCookie;
 
     /**
+     * @var NecktieConnector
+     */
+    protected $connector;
+
+    /**
      * @var string
      */
     protected $necktieUrl;
 
     /**
-     * @var NecktieConnector
+     * @var string
      */
-    protected $connector;
+    protected $necktieClientId;
+
+    /**
+     * @var string
+     */
+    protected $necktieClientSecret;
+
+    /**
+     * @var string
+     */
+    protected $loginResponseRoute;
 
     public function __construct(
-        ContainerInterface $container,
         EntityManagerInterface $entityManager,
         RouterInterface $router,
         NecktieGatewayHelperInterface $helper,
-        NecktieConnector $connector
+        NecktieConnector $connector,
+        string $necktieUrl = null,
+        string $necktieClientId = null,
+        string $necktieClientSecret = null,
+        string $loginResponseRoute = null
     )
     {
         $this->entityManager = $entityManager;
-        $this->container = $container;
         $this->router = $router;
         $this->helper = $helper;
         $this->connector = $connector;
 
-        $this->necktieUrl = $this->container->getParameter("necktie_url");
+        $this->necktieUrl = $necktieUrl;
+        $this->necktieClientId = $necktieClientId;
+        $this->necktieClientSecret = $necktieClientSecret;
+        $this->loginResponseRoute = $loginResponseRoute;
 
-        if (!$this->necktieUrl) {
-            throw new \Exception("Please define parameter: \"necktie_url\"");
-        }
+        $this->setClientBaseUri();
 
-        // Add slash to the end of the url
-        if (substr($this->necktieUrl, -1) !== "/") {
-            $this->necktieUrl .= "/";
-        }
-
-        $this->connector->setBaseUri($this->necktieUrl);
     }
 
 
@@ -113,17 +118,17 @@ class NecktieGateway implements NecktieGatewayInterface
     public function getLoginUrl()
     {
         $necktieUrl = $this->necktieUrl.self::NECKTIE_OAUTH_AUTH_URI;
-        $this->stateCookie = new Cookie(self::STATE_COOKIE_NAME, hash("sha256", rand() + time()));
+        $this->stateCookie = $this->createStateCookie();
         $router = $this->router;
 
         $queryParameters = [
-            "client_id" => $this->container->getParameter("necktie_client_id"),
-            "client_secret" => $this->container->getParameter("necktie_client_secret"),
+            "client_id" => $this->necktieClientId,
+            "client_secret" => $this->necktieClientSecret,
             "redirect_uri" => $this->router->generate(
-                $this->container->getParameter("login_response_route"),
+                $this->loginResponseRoute,
                 [],
-                $router::ABSOLUTE_URL)
-            ,
+                $router::ABSOLUTE_URL
+            ),
             "grant_type" => "trusted_authorization",
             "state" => $this->stateCookie->getValue()
         ];
@@ -146,16 +151,15 @@ class NecktieGateway implements NecktieGatewayInterface
      * @throws UnsuccessfulNecktieResponseException
      * @throws \Exception
      */
-    public function getUserByAccessToken($accessToken = null, $createNewUser = false, $persistNewUser = true)
+    public function getUserByAccessToken(string $accessToken, bool $createNewUser = false, bool $persistNewUser = true)
     {
-        if (!is_string($accessToken)) {
-            throw new \InvalidArgumentException("Access token has to be valid string");
+        $responseData = json_decode($this->connector->getResponse(null, "GET", self::NECKTIE_USER_PROFILE_URI, [], $accessToken), true);
+
+        if (!is_array($responseData)) {
+            return null;
         }
 
-        $responseData = $this->connector->getResponse(null, "GET", self::NECKTIE_USER_PROFILE_URI, [], $accessToken);
-
         $userInfo = $this->helper->getUserInfoFromNecktieProfileResponse($responseData);
-
         if ($userInfo) {
             $user = $this
                 ->entityManager
@@ -167,7 +171,7 @@ class NecktieGateway implements NecktieGatewayInterface
             if ($user) {
                 return $user;
             } else if ($createNewUser) {
-                return $this->createANewUser($userInfo, $persistNewUser);
+                return $this->createNewUser($userInfo, $persistNewUser);
             }
         }
 
@@ -189,7 +193,19 @@ class NecktieGateway implements NecktieGatewayInterface
         $this->refreshAccessTokenIfNeeded($user);
         $givenProductAccesses = [];
 
-        $response = $this->connector->getResponse($user, "GET", self::NECKTIE_PRODUCT_ACCESSES_URI);
+        $response = json_decode($this->connector->getResponse($user, "GET", self::NECKTIE_PRODUCT_ACCESSES_URI), true);
+
+        if (!is_array($response)) {
+            return [];
+        }
+
+        if (!array_key_exists("productAccesses", $response)) {
+            return [];
+        }
+
+        if (!is_array($response["productAccesses"])) {
+            return [];
+        }
 
         foreach ($response["productAccesses"] as $productAccess) {
             if (is_array($productAccess)
@@ -199,9 +215,9 @@ class NecktieGateway implements NecktieGatewayInterface
                 $dateTo = null;
                 $product = $this
                     ->entityManager
-                    ->getRepository("AppBundle:Product\\Product")
+                    ->getRepository(StandardProduct::class)
                     ->findOneBy(
-                        ["id" => $productAccess["product"]]
+                        ["necktieId" => $productAccess["product"]]
                     );
 
                 if (!$product) {
@@ -237,7 +253,7 @@ class NecktieGateway implements NecktieGatewayInterface
     {
         $this->refreshAccessTokenIfNeeded($user);
 
-        $response = $this->connector->getResponse($user, "GET", self::NECKTIE_USER_INVOICES_URI, ["withItems" => true]);
+        $response = json_decode($this->connector->getResponse($user, "GET", self::NECKTIE_USER_INVOICES_URI, ["withItems" => true]), true);
 
         if (!is_array($response) || !array_key_exists("invoices", $response)) {
             return [];
@@ -251,8 +267,8 @@ class NecktieGateway implements NecktieGatewayInterface
 
     public function getNewsletters(User $user)
     {
-        $this->refreshAccessTokenIfNeeded($user);
-        //todo: implement method
+//        $this->refreshAccessTokenIfNeeded($user);
+//        todo: implement method
     }
 
 
@@ -273,20 +289,26 @@ class NecktieGateway implements NecktieGatewayInterface
      */
     public function refreshAccessToken(User $user)
     {
-        $response = $this->connector->getResponse(
+        $response = json_decode($this->connector->getResponse(
             $user,
             "POST",
             self::NECKTIE_OATH_TOKEN_URI,
             [
-                "client_id" => $this->container->getParameter("necktie_client_id"),
-                "client_secret" => $this->container->getParameter("necktie_client_secret"),
+                "client_id" => $this->necktieClientId,
+                "client_secret" => $this->necktieClientSecret,
                 "grant_type" => "refresh_token",
                 "refresh_token" => $user->getLastRefreshToken()
 
             ],
             null,
             true
+        ),
+            true
         );
+
+        if (!$response) {
+            throw new \Exception("Could not get token from response.");
+        }
 
         if (!$this->helper->isRefreshTokenExpiredResponse($response)) {
             $token = $this->helper->createOAuthTokenFromArray($response);
@@ -295,7 +317,7 @@ class NecktieGateway implements NecktieGatewayInterface
                 $user->addOAuthToken($token);
                 $token->setUser($user);
             } else {
-                throw new \Exception("Could not get token from response. Have you configured necktie client id and secret?");
+                throw new \Exception("Could not get token from response.");
             }
         } else {
             throw new ExpiredRefreshTokenException("Necktie refresh token has expired.");
@@ -328,57 +350,57 @@ class NecktieGateway implements NecktieGatewayInterface
     }
 
 
-    /**
-     * Get billing plan by id
-     *
-     * @param User $user
-     * @param      $id
-     *
-     * @return BillingPlan
-     */
-    public function getBillingPlan(User $user, $id)
-    {
-        $this->refreshAccessTokenIfNeeded($user);
+//    /**
+//     * Get billing plan by id
+//     *
+//     * @param User $user
+//     * @param      $id
+//     *
+//     * @return BillingPlan
+//     */
+//    public function getBillingPlan(User $user, $id)
+//    {
+//        $this->refreshAccessTokenIfNeeded($user);
+//
+//        $necktieUrl = str_replace("{id}", $id, self::NECKTIE_BILLING_PLAN_URI);
+//
+//        $response = $this->connector->getResponse($user, "GET", $necktieUrl);
+//
+//        if (is_array($response) && array_key_exists("billing plan", $response)) {
+//            return $this->helper->getBillingPlanFromResponse($response["billing plan"]);
+//        }
+//
+//        return null;
+//    }
 
-        $necktieUrl = str_replace("{id}", $id, self::NECKTIE_BILLING_PLAN_URI);
 
-        $response = $this->connector->getResponse($user, "GET", $necktieUrl);
-
-        if (is_array($response) && array_key_exists("billing plan", $response)) {
-            return $this->helper->getBillingPlanFromResponse($response["billing plan"]);
-        }
-
-        return null;
-    }
-
-
-    /**
-     * Get billing all billing plans for given product.
-     *
-     * @param User $user
-     * @param StandardProduct $product
-     *
-     * @return BillingPlan[]
-     * @throws UnsuccessfulNecktieResponseException
-     */
-    public function getBillingPlans(User $user, StandardProduct $product)
-    {
-        $this->refreshAccessTokenIfNeeded($user);
-
-        $necktieUrl = str_replace("{productId}", $product->getNecktieId(), self::NECKTIE_PRODUCT_BILLING_PLANS_URI);
-        $response = $this->connector->getResponse($user, "GET", $necktieUrl);
-        $billingPlans = [];
-
-        if (is_array($response) && array_key_exists("billing plans", $response)) {
-            foreach ($response["billing plans"] as $billingPlanArray) {
-                $billingPlans[] = $this->helper->getBillingPlanFromResponse($billingPlanArray);
-            }
-
-            return $billingPlans;
-        }
-
-        return null;
-    }
+//    /**
+//     * Get billing all billing plans for given product.
+//     *
+//     * @param User $user
+//     * @param StandardProduct $product
+//     *
+//     * @return BillingPlan[]
+//     * @throws UnsuccessfulNecktieResponseException
+//     */
+//    public function getBillingPlans(User $user, StandardProduct $product)
+//    {
+//        $this->refreshAccessTokenIfNeeded($user);
+//
+//        $necktieUrl = str_replace("{productId}", $product->getNecktieId(), self::NECKTIE_PRODUCT_BILLING_PLANS_URI);
+//        $response = $this->connector->getResponse($user, "GET", $necktieUrl);
+//        $billingPlans = [];
+//
+//        if (is_array($response) && array_key_exists("billing plans", $response)) {
+//            foreach ($response["billing plans"] as $billingPlanArray) {
+//                $billingPlans[] = $this->helper->getBillingPlanFromResponse($billingPlanArray);
+//            }
+//
+//            return $billingPlans;
+//        }
+//
+//        return null;
+//    }
 
 
     /**
@@ -387,7 +409,7 @@ class NecktieGateway implements NecktieGatewayInterface
      *
      * @return User
      */
-    protected function createANewUser($userInfo, $persist)
+    protected function createNewUser($userInfo, $persist)
     {
         $user = new User();
         $user->setUsername($userInfo["username"])
@@ -401,4 +423,20 @@ class NecktieGateway implements NecktieGatewayInterface
 
         return $user;
     }
+
+    protected function setClientBaseUri()
+    {
+        // Add slash to the end of the url
+        if (substr($this->necktieUrl, -1) !== "/") {
+            $this->necktieUrl .= "/";
+        }
+
+        $this->connector->setBaseUri($this->necktieUrl);
+    }
+
+    protected function createStateCookie()
+    {
+        return new Cookie(self::STATE_COOKIE_NAME, hash("sha256", rand() + time()));
+    }
+
 }

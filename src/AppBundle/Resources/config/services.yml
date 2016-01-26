@@ -14,11 +14,14 @@ services:
     app.services.necktie_gateway:
         class: AppBundle\Services\NecktieGateway
         arguments:
-            - @service_container
             - @doctrine.orm.entity_manager
             - @router
             - @app.services.necktie_gateway_helper
             - @app.services.necktie_connector
+            - %necktie_url%
+            - %necktie_client_id%
+            - %necktie_client_secret%
+            - necktie_login_response #route
 
     necktie:
         alias: app.services.necktie_gateway
