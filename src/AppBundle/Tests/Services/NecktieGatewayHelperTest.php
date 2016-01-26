@@ -12,8 +12,9 @@ namespace AppBundle\Tests\Services;
 use AppBundle\Entity\Invoice;
 use AppBundle\Entity\OAuthToken;
 use AppBundle\Services\NecktieGatewayHelper;
+use AppBundle\Tests\BaseTest;
 
-class NecktieGatewayHelperTest extends \PHPUnit_Framework_TestCase
+class NecktieGatewayHelperTest extends BaseTest
 {
     const ACCESS_TOKEN = "ZTcxZDNmYjU1ZTQ2NWExYmQ0YTRmMDBiZGJmZDEyOTBkNzhiYWQyNWQxM2UyZTMzMjQwMzY5OGRlODVhNzAwNw";
     const REFRESH_TOKEN = "ODBmZGRlZDUwYjRjY2Q2MGZjYjI0YWFmOTJmZTdhYTMxNDg4ZjRjN2UzNWYzMTQ3ZGMyNGZjZGFjZDNjMjhlZg";

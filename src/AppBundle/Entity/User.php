@@ -240,11 +240,17 @@ class User extends TrinityUser implements NotificationEntityInterface
     /**
      * Get the last refresh token string.
      *
-     * @return string
+     * @return null|string
      */
     public function getLastAccessToken()
     {
-        return $this->OAuthTokens->last()->getAccessToken();
+        $token = $this->OAuthTokens->last();
+
+        if(false !== $token) {
+            return $token->getAccessToken();
+        }
+
+        return null;
     }
 
 
