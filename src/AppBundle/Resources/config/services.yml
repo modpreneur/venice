@@ -8,20 +8,20 @@ services:
     app_logic:
         class: AppBundle\Services\AppLogic
         arguments:
-          - @service_container
+          - "@service_container"
           - true # if bool all methods will return the given bool! leave blank or set to null to ensure default behavior
 
     app.services.necktie_gateway:
         class: AppBundle\Services\NecktieGateway
         arguments:
-            - @doctrine.orm.entity_manager
-            - @router
-            - @app.services.necktie_gateway_helper
-            - @app.services.necktie_connector
+            - "@doctrine.orm.entity_manager"
+            - "@router"
+            - "@app.services.necktie_gateway_helper"
+            - "@app.services.necktie_connector"
             - %necktie_url%
             - %necktie_client_id%
             - %necktie_client_secret%
-            - necktie_login_response #route
+            - %login_response_route% #route
 
     necktie:
         alias: app.services.necktie_gateway
@@ -35,15 +35,9 @@ services:
     app.services.connection_manager:
         class: AppBundle\Services\ConnectionManager
         arguments:
-            - @service_container
+            - "@service_container"
             - %primary_gateway_service%
             - %secondary_gateway_service%
-
-#    app.services.cms_problem_helper:
-#        class: AppBundle\Services\CMSProblemHelper
-#        arguments:
-#            - @service_container
-#            - %primary_gateway_service%
 
     form_error_serializer:
         class: AppBundle\Services\FormErrorSerializer
@@ -52,13 +46,13 @@ services:
         class: AppBundle\Services\LogoutSuccessHandler
         arguments:
             - %necktie_url%
-            - @router.default
+            - "@router.default"
 
     app.services.buy_url_generator:
         class: AppBundle\Services\BuyUrlGenerator
         arguments:
             - %necktie_url%
-            - @router
+            - "@router"
 
 
     # EVENT LISTENERS #
@@ -66,22 +60,22 @@ services:
     app.event_listener.kernel_excetpion:
         class: AppBundle\EventListener\KernelExceptionListener
         arguments:
-            - @router
-            - @service_container
+            - "@router"
+            - "@service_container"
         tags:
             - {name: "kernel.event_listener", event: "kernel.exception", method: "onKernelException"}
 
     app.event_listener.free_product_created:
         class: AppBundle\EventListener\AppLogicListener
         arguments:
-            - @doctrine
+            - "@doctrine"
         tags:
             - {name: "kernel.event_listener", event: app.free_product_created, method: "onFreeProductCreated"}
 
     app.entity_listener:
         class: AppBundle\EventListener\EntityListener
         arguments:
-            - @service_container
+            - "@service_container"
         tags:
             - { name: doctrine.event_listener, event: onFlush}
 

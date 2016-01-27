@@ -60,8 +60,8 @@ twig:
         - ':AdminBundle:formLayout.html.twig'
     globals:
         root_path: %kernel.root_dir%
-        admin_manager: @trinity.admin.service.admin_manager
-        appLogic: @app_logic
+        admin_manager: "@trinity.admin.service.admin_manager"
+        appLogic: "@app_logic"
 
 # Assetic Configuration
 assetic:
