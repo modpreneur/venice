@@ -9,17 +9,21 @@
 namespace AdminBundle\Controller;
 
 
+use AdminBundle\Services\FormCreator;
 use AppBundle\Services\AppLogic;
 use AppBundle\Services\FormErrorSerializer;
 use Doctrine\Common\Persistence\ObjectManager;
 use FOS\RestBundle\Controller\FOSRestController;
-use Symfony\Component\Form\Form;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 class BaseAdminController extends FOSRestController
 {
     /** @var  AppLogic */
     protected $logic;
+
+    /** @var  FormCreator */
+    protected $formCreator;
 
     /**
      * @return ObjectManager
@@ -40,21 +44,36 @@ class BaseAdminController extends FOSRestController
 
 
     /**
-     * @return \AppBundle\Services\CMSProblemHelper
+     * @return AppLogic
      */
-    public function getCMSProblemHelper()
+    public function getLogic():AppLogic
     {
-        return $this->get("app.services.cms_problem_helper");
+        // save logic to variable to speed up the process a bit
+        if(!$this->logic) {
+            $this->logic = $this->get("app_logic");
+        }
+
+        return $this->logic;
+    }
+
+    public function getFormCreator()
+    {
+        // save creator to variable to speed up the process a bit
+        if(!$this->formCreator) {
+            $this->formCreator = $this->get("admin.form_creator");
+        }
+
+        return $this->formCreator;
     }
 
 
     /**
-     * @param Form $form
-     * @param      $message
+     * @param FormInterface $form
+     * @param string $message
      *
      * @return JsonResponse
      */
-    public function returnFormErrorsJsonResponse(Form $form, $message = "")
+    public function returnFormErrorsJsonResponse(FormInterface $form, $message = "")
     {
         $errors = $this->getFormErrorSerializer()->serializeFormErrors($form, true, true);
 
@@ -80,19 +99,5 @@ class BaseAdminController extends FOSRestController
 
         return $breadcrumbs;
     }
-
-    /**
-     * @return AppLogic
-     */
-    public function getLogic():AppLogic
-    {
-        // save logic to variable to speed up the process a bit
-        if(!$this->logic) {
-            $this->logic = $this->get("app_logic");
-        }
-
-        return $this->logic;
-    }
-
 
 }

@@ -8,7 +8,7 @@
     },
     "require": {
         "php": "~7.0",
-        "symfony/symfony": ">=2.8",
+        "symfony/symfony": "~3",
         "symfony/assetic-bundle": "~2.7",
         "symfony/swiftmailer-bundle": "~2.3",
         "symfony/monolog-bundle": "~2.8",
@@ -21,7 +21,6 @@
         "twig/extensions": "~1.3",
         "knplabs/knp-menu-bundle": "~2.1",
         "incenteev/composer-parameter-handler": "~2.1",
-        "dmishh/settings-bundle": "dev-master",
         "cocur/slugify": "~1.4",
         "whiteoctober/breadcrumbs-bundle": "^1.2",
         "phpunit/phpunit": "^5.0",
@@ -31,6 +30,7 @@
         "trinity/framework": "dev-master",
         "trinity/notification": "dev-master",
         "trinity/admin": "dev-master",
+        "trinity/settings": "dev-master",
         "modpreneur/bowtie": "dev-master",
         "guzzlehttp/guzzle": "~6"
     },

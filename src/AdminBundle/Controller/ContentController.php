@@ -119,9 +119,8 @@ class ContentController extends BaseAdminController
             throw new NotFoundHttpException("Content type: ".$contentType." not found.");
         }
 
-        $form = $this->get("admin.form_factory")
+        $form = $this->getFormCreator()
             ->createCreateForm(
-                $this,
                 $content,
                 $content->getFormType(
                     [
@@ -170,9 +169,8 @@ class ContentController extends BaseAdminController
 
         $em = $this->getEntityManager();
 
-        $form = $this->get("admin.form_factory")
+        $form = $this->getFormCreator()
             ->createCreateForm(
-                $this,
                 $content,
                 $content->getFormType(
                     [
@@ -222,9 +220,8 @@ class ContentController extends BaseAdminController
      */
     public function editAction(Request $request, Content $content)
     {
-        $form = $this->get("admin.form_factory")
+        $form = $this->getFormCreator()
             ->createEditForm(
-                $this,
                 $content,
                 $content->getFormType(
                     [
@@ -277,9 +274,8 @@ class ContentController extends BaseAdminController
     {
         $em = $this->getEntityManager();
 
-        $form = $this->get("admin.form_factory")
+        $form = $this->getFormCreator()
             ->createEditForm(
-                $this,
                 $content,
                 $content->getFormType(),
                 "admin_content"
@@ -317,9 +313,8 @@ class ContentController extends BaseAdminController
      */
     protected function updateGroupContent(Request $request, GroupContent $content)
     {
-        $contentForm = $this->get("admin.form_factory")
+        $contentForm = $this->getFormCreator()
             ->createEditForm(
-                $this,
                 $content,
                 $content->getFormType(
                     [
@@ -382,8 +377,8 @@ class ContentController extends BaseAdminController
      */
     public function deleteTabAction(Content $content)
     {
-        $form = $this->get("admin.form_factory")
-            ->createDeleteForm($this, "admin_content", $content->getId());
+        $form = $this->getFormCreator()
+            ->createDeleteForm("admin_content", $content->getId());
 
         return $this
             ->render(

@@ -110,9 +110,8 @@ class UserController extends BaseAdminController
             ->addRouteItem("New user", "admin_user_new");
 
         $user = new User();
-        $form = $this->get("admin.form_factory")
+        $form = $this->getFormCreator()
             ->createCreateForm(
-                $this,
                 $user,
                 new UserType(),
                 "admin_user"
@@ -139,9 +138,8 @@ class UserController extends BaseAdminController
         $user = new User();
         $em = $this->getEntityManager();
 
-        $productForm = $this->get("admin.form_factory")
+        $productForm = $this->getFormCreator()
             ->createCreateForm(
-                $this,
                 $user,
                 new UserType(),
                 "admin_user"
@@ -187,9 +185,8 @@ class UserController extends BaseAdminController
      */
     public function editAction(User $user)
     {
-        $form = $this->get("admin.form_factory")
+        $form = $this->getFormCreator()
             ->createEditForm(
-                $this,
                 $user,
                 new UserType(),
                 "admin_user",
@@ -221,9 +218,8 @@ class UserController extends BaseAdminController
     {
         $em = $this->getEntityManager();
 
-        $form = $this->get("admin.form_factory")
+        $form = $this->getFormCreator()
             ->createEditForm(
-                $this,
                 $user,
                 new UserType(),
                 "admin_user",
@@ -281,8 +277,8 @@ class UserController extends BaseAdminController
      */
     public function deleteTabAction(User $user)
     {
-        $form = $this->get("admin.form_factory")
-            ->createDeleteForm($this, "admin_user", $user->getId());
+        $form = $this->getFormCreator()
+            ->createDeleteForm("admin_user", $user->getId());
 
         return $this
             ->render(

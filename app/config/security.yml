@@ -1,7 +1,4 @@
 security:
-    acl:
-        connection: default
-
     encoders:
         FOS\UserBundle\Model\UserInterface: bcrypt
 
@@ -59,7 +56,7 @@ security:
             anonymous: true
             form_login:
                 provider: fos_userbundle
-                csrf_provider: security.csrf.token_manager
+                csrf_token_generator: security.csrf.token_manager
                 login_path: /login
                 check_path: /login_check
 #            remember_me:

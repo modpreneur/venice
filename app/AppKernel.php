@@ -20,7 +20,6 @@ class AppKernel extends Kernel
             new FOS\UserBundle\FOSUserBundle(),
             new FOS\RestBundle\FOSRestBundle(),
             new JMS\SerializerBundle\JMSSerializerBundle(),
-            new Dmishh\Bundle\SettingsBundle\DmishhSettingsBundle(),
 
 
             new \Knp\Bundle\MenuBundle\KnpMenuBundle(),
@@ -35,6 +34,7 @@ class AppKernel extends Kernel
             new Trinity\FrameworkBundle\TrinityFrameworkBundle(),
             new Trinity\NotificationBundle\TrinityNotificationBundle(),
             new Trinity\AdminBundle\TrinityAdminBundle(),
+            new \Trinity\Bundle\SettingsBundle\SettingsBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

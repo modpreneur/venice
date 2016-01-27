@@ -162,8 +162,8 @@ class BillingPlanController extends BaseAdminController
      */
     public function editAction(Request $request, BillingPlan $billingPlan)
     {
-        $billingPlanForm = $this->get("admin.form_factory")
-            ->createEditForm($this,
+        $billingPlanForm = $this->getFormCreator()
+            ->createEditForm(
                 $billingPlan,
                 new BillingPlanType($billingPlan->getProduct(), $this->getDoctrine()->getManager()),
                 "admin_billing_plan",
@@ -197,9 +197,8 @@ class BillingPlanController extends BaseAdminController
     {
         $em = $this->getEntityManager();
 
-        $billingPlanForm = $this->get("admin.form_factory")
+        $billingPlanForm = $this->getFormCreator()
             ->createEditForm(
-                $this,
                 $billingPlan,
                 new BillingPlanType($billingPlan->getProduct(), $em),
                 "admin_product",
@@ -258,9 +257,8 @@ class BillingPlanController extends BaseAdminController
 
         $billingPlan = new BillingPlan();
 
-        $form = $this->get("admin.form_factory")
+        $form = $this->getFormCreator()
             ->createCreateForm(
-                $this,
                 $billingPlan,
                 new BillingPlanType($product, $this->getEntityManager()),
                 "admin_billing_plan",
@@ -295,9 +293,8 @@ class BillingPlanController extends BaseAdminController
         $billingPlan = new BillingPlan();
         $type = new BillingPlanType($product, $this->getEntityManager());
 
-        $form = $this->get("admin.form_factory")
+        $form = $this->getFormCreator()
             ->createCreateForm(
-                $this,
                 $billingPlan,
                 $type,
                 "admin_billing_plan",
@@ -342,8 +339,8 @@ class BillingPlanController extends BaseAdminController
      */
     public function deleteTabAction(BillingPlan $billingPlan)
     {
-        $form = $this->get("admin.form_factory")
-            ->createDeleteForm($this, "admin_billing_plan", $billingPlan->getId());
+        $form = $this->getFormCreator()
+            ->createDeleteForm("admin_billing_plan", $billingPlan->getId());
 
         return $this
             ->render(

@@ -117,8 +117,8 @@ class ContentProductController extends BaseAdminController
             ->addRouteItem("Associations", "admin_content_product_index")
             ->addRouteItem("New association", "admin_content_product_new");
 
-        $form = $this->get("admin.form_factory")
-            ->createCreateForm($this,
+        $form = $this->getFormCreator()
+            ->createCreateForm(
                 new ContentProduct(),
                 new ContentProductType(),
                 "admin_content_product"
@@ -144,9 +144,8 @@ class ContentProductController extends BaseAdminController
     public function createAction(Request $request)
     {
         $contentProduct = new ContentProduct();
-        $form = $this->get("admin.form_factory")
+        $form = $this->getFormCreator()
             ->createCreateForm(
-                $this,
                 $contentProduct,
                 new ContentProductType(),
                 "admin_content_product"
@@ -196,9 +195,8 @@ class ContentProductController extends BaseAdminController
      */
     public function editAction(Request $request, ContentProduct $contentProduct)
     {
-        $contentForm = $this->get("admin.form_factory")
+        $contentForm = $this->getFormCreator()
             ->createEditForm(
-                $this,
                 $contentProduct,
                 new ContentProductType(),
                 "admin_content_product",
@@ -230,9 +228,8 @@ class ContentProductController extends BaseAdminController
      */
     public function updateAction(Request $request, ContentProduct $contentProduct)
     {
-        $form = $this->get("admin.form_factory")
+        $form = $this->getFormCreator()
             ->createEditForm(
-                $this,
                 $contentProduct,
                 new ContentProductType(),
                 "admin_content_product",
@@ -276,8 +273,8 @@ class ContentProductController extends BaseAdminController
      */
     public function deleteTabAction(ContentProduct $contentProduct)
     {
-        $form = $this->get("admin.form_factory")
-            ->createDeleteForm($this, "admin_content_product", $contentProduct->getId());
+        $form = $this->getFormCreator()
+            ->createDeleteForm("admin_content_product", $contentProduct->getId());
 
         return $this
             ->render(

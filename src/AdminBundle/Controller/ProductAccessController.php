@@ -119,8 +119,8 @@ class ProductAccessController extends BaseAdminController
      */
     public function editAction(ProductAccess $productAccess)
     {
-        $productAccessForm = $this->get("admin.form_factory")
-            ->createEditForm($this,
+        $productAccessForm = $this->getFormCreator()
+            ->createEditForm(
                 $productAccess,
                 new ProductAccessType($productAccess->getUser(), $this->getDoctrine()->getManager()),
                 "admin_product_access",
@@ -154,9 +154,8 @@ class ProductAccessController extends BaseAdminController
     {
         $em = $this->getEntityManager();
 
-        $productAccessForm = $this->get("admin.form_factory")
+        $productAccessForm = $this->getFormCreator()
             ->createEditForm(
-                $this,
                 $productAccess,
                 new ProductAccessType($productAccess->getUser(), $em),
                 "admin_product",
@@ -210,9 +209,8 @@ class ProductAccessController extends BaseAdminController
 
         $productAccess = new ProductAccess();
 
-        $form = $this->get("admin.form_factory")
+        $form = $this->getFormCreator()
             ->createCreateForm(
-                $this,
                 $productAccess,
                 new ProductAccessType($user, $this->getEntityManager()),
                 "admin_product_access",
@@ -247,9 +245,8 @@ class ProductAccessController extends BaseAdminController
         $productAccess = new ProductAccess();
         $type = new ProductAccessType($user, $this->getEntityManager());
 
-        $form = $this->get("admin.form_factory")
+        $form = $this->getFormCreator()
             ->createCreateForm(
-                $this,
                 $productAccess,
                 $type,
                 "admin_product_access",
@@ -294,8 +291,8 @@ class ProductAccessController extends BaseAdminController
      */
     public function deleteTabAction(ProductAccess $productAccess)
     {
-        $form = $this->get("admin.form_factory")
-            ->createDeleteForm($this, "admin_product_access", $productAccess->getId());
+        $form = $this->getFormCreator()
+            ->createDeleteForm("admin_product_access", $productAccess->getId());
 
         return $this
             ->render(

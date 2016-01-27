@@ -118,9 +118,8 @@ class ProductController extends BaseAdminController
             throw new NotFoundHttpException("Product type: ".$productType." not found.");
         }
 
-        $form = $this->get("admin.form_factory")
+        $form = $this->getFormCreator()
             ->createCreateForm(
-                $this,
                 $product,
                 $product->getFormType(),
                 "admin_product",
@@ -161,9 +160,8 @@ class ProductController extends BaseAdminController
 
         $em = $this->getEntityManager();
 
-        $productForm = $this->get("admin.form_factory")
+        $productForm = $this->getFormCreator()
             ->createCreateForm(
-                $this,
                 $product,
                 $product->getFormType(),
                 "admin_product",
@@ -215,8 +213,8 @@ class ProductController extends BaseAdminController
      */
     public function editAction(Request $request, Product $product)
     {
-        $productForm = $this->get("admin.form_factory")
-            ->createEditForm($this,
+        $productForm = $this->getFormCreator()
+            ->createEditForm(
                 $product,
                 $product->getFormType(),
                 "admin_product",
@@ -246,8 +244,8 @@ class ProductController extends BaseAdminController
      */
     public function deleteTabAction(Product $product)
     {
-        $form = $this->get("admin.form_factory")
-            ->createDeleteForm($this, "admin_product", $product->getId());
+        $form = $this->getFormCreator()
+            ->createDeleteForm("admin_product", $product->getId());
 
         return $this
             ->render(
@@ -271,8 +269,13 @@ class ProductController extends BaseAdminController
      */
     public function updateAction(Request $request, Product $product)
     {
-        $productForm = $this->get("admin.form_factory")
-            ->createEditForm($this, $product, $product->getFormType(), "admin_product", ["id" => $product->getId()]);
+        $productForm = $this->getFormCreator()
+            ->createEditForm(
+                $product,
+                $product->getFormType(),
+                "admin_product",
+                ["id" => $product->getId()]
+            );
 
         $em = $this->getEntityManager();
 

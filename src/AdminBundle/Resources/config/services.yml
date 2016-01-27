@@ -13,8 +13,11 @@ services:
         tags:
             - { name: knp_menu.menu, alias: sidebar }
 
-    admin.form_factory:
-        class: AdminBundle\Services\FormFactory
+    admin.form_creator:
+        class: AdminBundle\Services\FormCreator
+        arguments:
+            - "@form.factory"
+            - "@router"
 
     admin.form.custom_collection:
           class: AdminBundle\Form\Collection\CollectionType

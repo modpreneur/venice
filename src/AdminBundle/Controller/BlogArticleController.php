@@ -12,7 +12,6 @@ namespace AdminBundle\Controller;
 use AdminBundle\Form\BlogArticleType;
 use AppBundle\Entity\BlogArticle;
 use Doctrine\DBAL\DBALException;
-use FOS\RestBundle\Controller\Annotations\Get;
 use FOS\RestBundle\Controller\Annotations\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -116,9 +115,8 @@ class BlogArticleController extends BaseAdminController
             ->addRouteItem("New blog article", "admin_blog_article_new");
 
         $form = $this
-            ->get("admin.form_factory")
+            ->getFormCreator()
             ->createCreateForm(
-                $this,
                 new BlogArticle(),
                 new BlogArticleType(),
                 "admin_blog_article"
@@ -149,9 +147,8 @@ class BlogArticleController extends BaseAdminController
         $blogArticle = new BlogArticle();
 
         $form = $this
-            ->get("admin.form_factory")
+            ->getFormCreator()
             ->createCreateForm(
-                $this,
                 $blogArticle,
                 new BlogArticleType(),
                 "admin_blog_article"
@@ -193,8 +190,8 @@ class BlogArticleController extends BaseAdminController
      */
     public function editAction(Request $request, BlogArticle $blogArticle)
     {
-        $form = $this->get("admin.form_factory")
-            ->createEditForm($this,
+        $form = $this->getFormCreator()
+            ->createEditForm(
                 $blogArticle,
                 new BlogArticleType(),
                 'admin_blog_article', ["id",]
@@ -224,8 +221,8 @@ class BlogArticleController extends BaseAdminController
      */
     public function updateAction(Request $request, BlogArticle $blogArticle)
     {
-        $blogArticleForm = $this->get("admin.form_factory")
-            ->createEditForm($this,
+        $blogArticleForm = $this->getFormCreator()
+            ->createEditForm(
                 $blogArticle,
                 new BlogArticleType(),
                 "admin_blog_article"
@@ -268,9 +265,8 @@ class BlogArticleController extends BaseAdminController
      */
     public function deleteTabAction(BlogArticle $blogArticle)
     {
-        $formFactory = $this->get("admin.form_factory");
+        $formFactory = $this->getFormCreator();
         $form = $formFactory->createDeleteForm(
-            $this,
             "admin_blog_article",
             $blogArticle->getId()
         );
