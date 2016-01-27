@@ -95,6 +95,7 @@ class NecktieLoginController extends Controller
         return $this->redirectToRoute("homepage");
     }
 
+
     /**
      * @param NecktieGateway $necktieGateway
      * @param $user
@@ -103,6 +104,7 @@ class NecktieLoginController extends Controller
     {
         $necktieGateway->updateProductAccesses($user);
     }
+
 
     /**
      * Get user from necktie by access token and log him in
@@ -146,6 +148,7 @@ class NecktieLoginController extends Controller
         }
     }
 
+
     /**
      * Get OAuthToken or null from request
      *
@@ -158,6 +161,11 @@ class NecktieLoginController extends Controller
         return $necktieGateway->getHelper()->createOAuthTokenFromArray($request->query->all());
     }
 
+    /**
+     * Get login manager
+     *
+     * @return \FOS\UserBundle\Security\LoginManager
+     */
     protected function getLoginManager()
     {
         return $this->get("fos_user.security.login_manager");
