@@ -9,10 +9,10 @@
 namespace AppBundle\Controller;
 
 
+use AppBundle\Entity\OAuthToken;
 use AppBundle\Event\AppEvents;
 use AppBundle\Event\NecktieLoginSuccessfulEvent;
 use AppBundle\Exceptions\UnsuccessfulNecktieResponseException;
-use AppBundle\Interfaces\NecktieGatewayInterface;
 use AppBundle\Services\NecktieGateway;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -60,39 +60,23 @@ class NecktieLoginController extends Controller
         /** @var NecktieGateway $necktieGateway */
         $necktieGateway = $this->get("app.services.necktie_gateway");
         $entityManager = $this->getDoctrine()->getManager();
-        $cookieValue = $request->cookies->get($necktieGateway::STATE_COOKIE_NAME);
 
-        if(!is_string($cookieValue))
-        {
-            return new Response("Please, enable cookies in your browser.");
-        }
+        $this->validateCookie($necktieGateway, $request);
 
-        if($cookieValue !== $request->get("state"))
-        {
-            throw new AccessDeniedHttpException();
-        }
+        $necktieToken = $this->getAccessTokenFromRequest($necktieGateway, $request);
 
-        $necktieToken = $necktieGateway->getHelper()->createOAuthTokenFromArray($request->query->all());
-
-        if($necktieToken)
-        {
+        if ($necktieToken) {
             $user = null;
 
-            try
-            {
+            try {
                 $user = $this->getAndLoginUser($necktieGateway, $request, $necktieToken);
-            }
-            catch(UnsuccessfulNecktieResponseException $e)
-            {
-                throw new UnsuccessfulNecktieResponseException("Could not get user from necktie.". $e->getMessage());
+            } catch (UnsuccessfulNecktieResponseException $e) {
+                throw new UnsuccessfulNecktieResponseException("Could not get user from necktie.".$e->getMessage());
             }
 
-            try
-            {
+            try {
                 $this->performNecktieCalls($necktieGateway, $user);
-            }
-            catch(UnsuccessfulNecktieResponseException $e)
-            {
+            } catch (UnsuccessfulNecktieResponseException $e) {
                 //necktie requests failed
                 //try to refresh access token and perform requests again
                 $necktieGateway->refreshAccessToken($user);
@@ -102,9 +86,7 @@ class NecktieLoginController extends Controller
 
             $entityManager->persist($user);
             $entityManager->flush();
-        }
-        else
-        {
+        } else {
             return new Response("An error occurred. Please report it to the support.");
         }
 
@@ -113,19 +95,72 @@ class NecktieLoginController extends Controller
         return $this->redirectToRoute("homepage");
     }
 
-    protected function performNecktieCalls(NecktieGatewayInterface $necktieGateway, $user)
+    /**
+     * @param NecktieGateway $necktieGateway
+     * @param $user
+     */
+    protected function performNecktieCalls(NecktieGateway $necktieGateway, $user)
     {
         $necktieGateway->updateProductAccesses($user);
     }
 
-    protected function getAndLoginUser(NecktieGatewayInterface $necktieGateway, $request, $necktieToken)
+    /**
+     * Get user from necktie by access token and log him in
+     *
+     * @param NecktieGateway $necktieGateway
+     * @param Request $request
+     * @param OAuthToken $necktieToken
+     * @return \AppBundle\Entity\User|null
+     */
+    protected function getAndLoginUser(NecktieGateway $necktieGateway, Request $request, OAuthToken $necktieToken)
     {
         $user = $necktieGateway->getUserByAccessToken($request->query->get("access_token"), true);
-        $this->get("fos_user.security.login_manager")->logInUser("main", $user);
+
+        $this->getLoginManager()->logInUser("main", $user);
+
         $necktieToken->setUser($user);
         $user->addOAuthToken($necktieToken);
 
         return $user;
+    }
+
+
+    /**
+     * Validate cookie and it's value with the "state" parameter from query string
+     *
+     * @param NecktieGateway $necktieGateway
+     * @param Request $request
+     *
+     * @return Response
+     */
+    protected function validateCookie(NecktieGateway $necktieGateway, Request $request)
+    {
+        $cookieValue = $request->cookies->get($necktieGateway::STATE_COOKIE_NAME);
+
+        if (!is_string($cookieValue)) {
+            return new Response("Please, enable cookies in your browser.");
+        }
+
+        if ($cookieValue !== $request->get("state")) {
+            throw new AccessDeniedHttpException();
+        }
+    }
+
+    /**
+     * Get OAuthToken or null from request
+     *
+     * @param $request
+     * @param $necktieGateway
+     * @return OAuthToken|null
+     */
+    protected function getAccessTokenFromRequest(NecktieGateway $necktieGateway, Request $request)
+    {
+        return $necktieGateway->getHelper()->createOAuthTokenFromArray($request->query->all());
+    }
+
+    protected function getLoginManager()
+    {
+        return $this->get("fos_user.security.login_manager");
     }
 
 
