@@ -113,7 +113,7 @@ class UserController extends BaseAdminController
         $form = $this->getFormCreator()
             ->createCreateForm(
                 $user,
-                new UserType(),
+                UserType::class,
                 "admin_user"
             );
 
@@ -141,7 +141,7 @@ class UserController extends BaseAdminController
         $productForm = $this->getFormCreator()
             ->createCreateForm(
                 $user,
-                new UserType(),
+                UserType::class,
                 "admin_user"
             );
 
@@ -188,7 +188,7 @@ class UserController extends BaseAdminController
         $form = $this->getFormCreator()
             ->createEditForm(
                 $user,
-                new UserType(),
+                UserType::class,
                 "admin_user",
                 ["id" => $user->getId(),]
             );
@@ -221,7 +221,7 @@ class UserController extends BaseAdminController
         $form = $this->getFormCreator()
             ->createEditForm(
                 $user,
-                new UserType(),
+                UserType::class,
                 "admin_user",
                 ["id" => $user->getId(),]
             );
@@ -301,18 +301,25 @@ class UserController extends BaseAdminController
      */
     public function deleteAction(Request $request, User $user)
     {
-        try {
-            $em = $this->getEntityManager();
-            $em->remove($user);
-            $em->flush();
-        } catch (DBALException $e) {
-            return new JsonResponse(
-                [
-                    "error" => ["db" => $e->getMessage(),],
-                    "message" => "Could not delete.",
-                ],
-                400
-            );
+        $form = $this->getFormCreator()
+            ->createDeleteForm("admin_user", $user->getId());
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            try {
+                $em = $this->getEntityManager();
+                $em->remove($user);
+                $em->flush();
+            } catch (DBALException $e) {
+                return new JsonResponse(
+                    [
+                        "error" => ["db" => $e->getMessage(),],
+                        "message" => "Could not delete.",
+                    ],
+                    400
+                );
+            }
         }
 
         return new JsonResponse(
@@ -323,5 +330,4 @@ class UserController extends BaseAdminController
             302
         );
     }
-
 }

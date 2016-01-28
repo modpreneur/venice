@@ -62,7 +62,7 @@ class BlogArticleType extends AdminBaseType
     {
         $resolver->setDefaults(
             [
-                "data_class" => "AppBundle\\Entity\\BlogArticle"
+                "data_class" => "AppBundle\\Entity\\BlogArticle",
             ]
         );
     }

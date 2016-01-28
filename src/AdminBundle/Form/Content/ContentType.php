@@ -13,13 +13,8 @@ use AdminBundle\Form\AdminBaseType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 
-class ContentType extends AdminBaseType
+abstract class ContentType extends AdminBaseType
 {
-    public function __construct()
-    {
-
-    }
-
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         parent::buildForm($builder, $options);

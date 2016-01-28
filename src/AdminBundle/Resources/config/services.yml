@@ -19,7 +19,108 @@ services:
             - "@form.factory"
             - "@router"
 
+# ************   FORMS   ************
+
     admin.form.custom_collection:
-          class: AdminBundle\Form\Collection\CollectionType
-          tags:
+        class: AdminBundle\Form\Collection\CollectionType
+        tags:
             - { name: form.type, alias: collection }
+
+    admin.form.content_in_group:
+        class: AdminBundle\Form\Content\ContentInGroupType
+        arguments:
+            - "@doctrine.orm.entity_manager"
+        tags:
+            - { name: form.type }
+
+    admin.form.content_product:
+        class: AdminBundle\Form\Content\ContentProductType
+        arguments:
+            - "@doctrine.orm.entity_manager"
+        tags:
+            - { name: form.type }
+
+    admin.form.group_content:
+        class: AdminBundle\Form\Content\GroupContentType
+        arguments:
+            - "@doctrine.orm.entity_manager"
+        tags:
+            - { name: form.type }
+
+    admin.form.html_content:
+        class: AdminBundle\Form\Content\HtmlContentType
+        arguments:
+            - "@doctrine.orm.entity_manager"
+        tags:
+            - { name: form.type }
+
+    admin.form.mp3_content:
+        class: AdminBundle\Form\Content\Mp3ContentType
+        arguments:
+            - "@doctrine.orm.entity_manager"
+        tags:
+            - { name: form.type }
+
+    admin.form.pdf_content:
+        class: AdminBundle\Form\Content\PdfContentType
+        arguments:
+            - "@doctrine.orm.entity_manager"
+        tags:
+            - { name: form.type }
+
+    admin.form.text_content:
+        class: AdminBundle\Form\Content\TextContentType
+        arguments:
+            - "@doctrine.orm.entity_manager"
+        tags:
+            - { name: form.type }
+
+    admin.form.video_content:
+        class: AdminBundle\Form\Content\VideoContentType
+        arguments:
+            - "@doctrine.orm.entity_manager"
+        tags:
+            - { name: form.type }
+
+    admin.form.free_product:
+        class: AdminBundle\Form\Product\FreeProductType
+        arguments:
+            - "@doctrine.orm.entity_manager"
+        tags:
+            - { name: form.type }
+
+    admin.form.standard_product:
+        class: AdminBundle\Form\Product\StandardProductType
+        arguments:
+            - "@doctrine.orm.entity_manager"
+        tags:
+            - { name: form.type }
+
+    admin.form.user:
+        class: AdminBundle\Form\User\UserType
+        arguments:
+            - "@doctrine.orm.entity_manager"
+        tags:
+            - { name: form.type }
+
+    admin.form.billing_plan:
+        class: AdminBundle\Form\BillingPlanType
+        arguments:
+            - "@doctrine.orm.entity_manager"
+        tags:
+            - { name: form.type }
+
+    admin.form.blog_article:
+        class: AdminBundle\Form\BlogArticleType
+        arguments:
+            - "@doctrine.orm.entity_manager"
+        tags:
+            - { name: form.type }
+
+    admin.form.product_access:
+        class: AdminBundle\Form\ProductAccessType
+        arguments:
+            - "@doctrine.orm.entity_manager"
+        tags:
+            - { name: form.type }
+

@@ -12,7 +12,6 @@ namespace AdminBundle\Form\Content;
 use AdminBundle\Form\AdminBaseType;
 use AdminBundle\Form\DataTransformer\EntityToNumberTransformer;
 use AppBundle\Entity\Content\GroupContent;
-use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
@@ -22,24 +21,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ContentInGroupType extends AdminBaseType
 {
-    /** @var  GroupContent */
-    protected $groupContent;
-
-    /** @var  EntityManagerInterface */
-    protected $entityManager;
-
-    /**
-     * ContentInGroupType constructor.
-     *
-     * @param GroupContent $groupContent
-     * @param EntityManagerInterface $entityManager
-     */
-    public function __construct(GroupContent $groupContent, EntityManagerInterface $entityManager)
-    {
-        $this->groupContent = $groupContent;
-        $this->entityManager = $entityManager;
-    }
-
     /**
      * @param FormBuilderInterface $builder
      * @param array $options
@@ -54,7 +35,7 @@ class ContentInGroupType extends AdminBaseType
                 EntityType::class,
                 [
                     "class" => "AppBundle\\Entity\\Content\\Content",
-                    'query_builder' => $this->getQueryBuilderFunction(),
+                    'query_builder' => $this->getQueryBuilderFunction($options["groupContent"]),
                     "choice_label" => "name",
                     "label" => "Content",
                     "placeholder" => "Choose content",
@@ -66,7 +47,7 @@ class ContentInGroupType extends AdminBaseType
                 HiddenType::class,
                 [
                     // Uses model transformer
-                    "data" => $this->groupContent,
+                    "data" => $options["groupContent"],
                     "data_class" => null,
                     "label" => false,
                 ]
@@ -105,6 +86,7 @@ class ContentInGroupType extends AdminBaseType
         $resolver->setDefaults(
             [
                 "data_class" => "AppBundle\\Entity\\Content\\ContentInGroup",
+                "groupContent" => null
             ]
         );
     }
@@ -113,14 +95,16 @@ class ContentInGroupType extends AdminBaseType
     /**
      * Get query builder function to query entities from database
      *
+     * @param GroupContent $groupContent
+     *
      * @return \Closure
      */
-    protected function getQueryBuilderFunction()
+    protected function getQueryBuilderFunction(GroupContent $groupContent = null)
     {
         // If the contentGroup entity contains data
         // Get all ContentGroups but the given group - do not allow circular relations
-        if ($this->groupContent && $this->groupContent->getId()) {
-            $groupId = $this->groupContent->getId();
+        if ($groupContent && $groupContent->getId()) {
+            $groupId = $groupContent->getId();
             return function (EntityRepository $er) use ($groupId) {
                 return $er
                     ->createQueryBuilder('c')

@@ -10,7 +10,6 @@ namespace AdminBundle\Form\Product;
 
 
 use AdminBundle\Form\AdminBaseType;
-use AppBundle\Entity\Product\Product;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -19,13 +18,6 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 class ProductType extends AdminBaseType
 {
-    protected $product;
-
-    function __construct(Product $product = null)
-    {
-        $this->product = $product;
-    }
-
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder

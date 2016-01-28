@@ -11,7 +11,6 @@ namespace AdminBundle\Form\Content;
 
 use AdminBundle\Form\Collection\CollectionType;
 use AppBundle\Entity\Content\GroupContent;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -20,20 +19,6 @@ class GroupContentType extends ContentType
 {
     /** @var  GroupContent */
     protected $groupContent;
-
-    /** @var  EntityManagerInterface */
-    protected $entityManager;
-
-    /**
-     * GroupContentType constructor.
-     * @param GroupContent $groupContent
-     * @param EntityManagerInterface $entityManager
-     */
-    public function __construct(GroupContent $groupContent, EntityManagerInterface $entityManager)
-    {
-        $this->groupContent = $groupContent;
-        $this->entityManager = $entityManager;
-    }
 
     /**
      * @param FormBuilderInterface $builder
@@ -55,7 +40,8 @@ class GroupContentType extends ContentType
                 "items",
                 CollectionType::class,
                 [
-                    "type" => new ContentInGroupType($this->groupContent, $this->entityManager),
+                    "type" => ContentInGroupType::class,
+                    "options" => ["groupContent" => $options["groupContent"]],
                     "required" => false,
                     "label" => "Contents",
                     "allow_add" => true,
@@ -71,7 +57,8 @@ class GroupContentType extends ContentType
     {
         $resolver->setDefaults(
             [
-                "data_class" => "AppBundle\\Entity\\Content\\GroupContent"
+                "data_class" => "AppBundle\\Entity\\Content\\GroupContent",
+                "groupContent" => null
             ]
         );
     }

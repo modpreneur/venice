@@ -357,15 +357,13 @@ abstract class Product extends TrinityProduct
      *
      * @return StandardProductType|FreeProductType
      */
-    public function getFormType($arguments = [])
+    public function getFormTypeClass($arguments = [])
     {
         $name = get_class($this)."Type";
         $name = str_replace('AppBundle', 'AdminBundle', $name);
         $name = str_replace('Entity', 'Form', $name);
 
-        $class = new \ReflectionClass($name);
-
-        return $class->newInstanceArgs($arguments);
+        return $name;
     }
 
 

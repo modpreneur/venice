@@ -122,9 +122,10 @@ class ProductAccessController extends BaseAdminController
         $productAccessForm = $this->getFormCreator()
             ->createEditForm(
                 $productAccess,
-                new ProductAccessType($productAccess->getUser(), $this->getDoctrine()->getManager()),
+                ProductAccessType::class,
                 "admin_product_access",
-                ["id" => $productAccess->getId(),]
+                ["id" => $productAccess->getId(),],
+                ["user" => $productAccess->getUser()]
             );
 
         return $this->render(
@@ -157,9 +158,10 @@ class ProductAccessController extends BaseAdminController
         $productAccessForm = $this->getFormCreator()
             ->createEditForm(
                 $productAccess,
-                new ProductAccessType($productAccess->getUser(), $em),
+                ProductAccessType::class,
                 "admin_product",
-                ["id" => $productAccess->getId()]
+                ["id" => $productAccess->getId()],
+                ["user" => $productAccess->getUser()]
             );
 
         $productAccessForm->handleRequest($request);
@@ -212,9 +214,10 @@ class ProductAccessController extends BaseAdminController
         $form = $this->getFormCreator()
             ->createCreateForm(
                 $productAccess,
-                new ProductAccessType($user, $this->getEntityManager()),
+                ProductAccessType::class,
                 "admin_product_access",
-                ["id" => $user->getId(),]
+                ["id" => $user->getId(),],
+                ["user" => $user]
             );
 
         return $this->render(
@@ -243,14 +246,14 @@ class ProductAccessController extends BaseAdminController
     {
         $em = $this->getEntityManager();
         $productAccess = new ProductAccess();
-        $type = new ProductAccessType($user, $this->getEntityManager());
 
         $form = $this->getFormCreator()
             ->createCreateForm(
                 $productAccess,
-                $type,
+                ProductAccessType::class,
                 "admin_product_access",
-                ["id" => $user->getId(),]
+                ["id" => $user->getId(),],
+                ["user" => $user]
             );
 
         $form->handleRequest($request);
@@ -307,25 +310,34 @@ class ProductAccessController extends BaseAdminController
      * @Method("DELETE")
      * @Security("is_granted('ROLE_ADMIN_PRODUCT_ACCESS_EDIT')")
      *
+     * @param Request $request
      * @param ProductAccess $productAccess
      *
      * @return JsonResponse
      */
-    public function deleteAction(ProductAccess $productAccess)
+    public function deleteAction(Request $request, ProductAccess $productAccess)
     {
         $user = $productAccess->getUser();
-        try {
-            $em = $this->getEntityManager();
-            $em->remove($productAccess);
-            $em->flush();
-        } catch (DBALException $e) {
-            return new JsonResponse(
-                [
-                    "error" => ["db" => $e->getMessage()],
-                    "message" => "Could not delete.",
-                ],
-                400
-            );
+
+        $form = $this->getFormCreator()
+            ->createDeleteForm("admin_product_access", $productAccess->getId());
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            try {
+                $em = $this->getEntityManager();
+                $em->remove($productAccess);
+                $em->flush();
+            } catch (DBALException $e) {
+                return new JsonResponse(
+                    [
+                        "error" => ["db" => $e->getMessage()],
+                        "message" => "Could not delete.",
+                    ],
+                    400
+                );
+            }
         }
 
         return new JsonResponse(

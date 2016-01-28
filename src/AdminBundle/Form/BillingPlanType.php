@@ -10,27 +10,13 @@ namespace AdminBundle\Form;
 
 
 use AdminBundle\Form\DataTransformer\EntityToNumberTransformer;
-use AppBundle\Entity\Product\StandardProduct;
-use AppBundle\Form\BaseType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class BillingPlanType extends BaseType
+class BillingPlanType extends AdminBaseType
 {
-    /** @var StandardProduct */
-    protected $product;
-
-    protected $entityManager;
-
-    public function __construct(StandardProduct $product, $entityManager)
-    {
-        $this->product = $product;
-        $this->entityManager = $entityManager;
-    }
-
-
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         parent::buildForm($builder, $options);
@@ -63,7 +49,7 @@ class BillingPlanType extends BaseType
                 HiddenType::class,
                 [
                     // Uses model transformer
-                    "data" => $this->product,
+                    "data" => $options["product"],
                     "data_class" => null,
                     "label" => false,
                 ]
@@ -86,6 +72,7 @@ class BillingPlanType extends BaseType
         $resolver->setDefaults(
             [
                 "data_class" => "AppBundle\\Entity\\BillingPlan",
+                "product" => null,
             ]
         );
     }

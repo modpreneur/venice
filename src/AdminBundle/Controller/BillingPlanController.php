@@ -144,7 +144,7 @@ class BillingPlanController extends BaseAdminController
 
         return $this->redirect(
             $this->generateUrl('admin_product_tabs',
-            ['id' => $product->getId()])."#tab3"
+                ['id' => $product->getId()])."#tab3"
         );
     }
 
@@ -165,9 +165,10 @@ class BillingPlanController extends BaseAdminController
         $billingPlanForm = $this->getFormCreator()
             ->createEditForm(
                 $billingPlan,
-                new BillingPlanType($billingPlan->getProduct(), $this->getDoctrine()->getManager()),
+                BillingPlanType::class,
                 "admin_billing_plan",
-                ["id" => $billingPlan->getId(),]
+                ["id" => $billingPlan->getId(),],
+                ["product" => $billingPlan->getProduct()]
             );
 
         return $this->render(
@@ -200,9 +201,10 @@ class BillingPlanController extends BaseAdminController
         $billingPlanForm = $this->getFormCreator()
             ->createEditForm(
                 $billingPlan,
-                new BillingPlanType($billingPlan->getProduct(), $em),
-                "admin_product",
-                ["id" => $billingPlan->getId()]
+                BillingPlanType::class,
+                "admin_billing_plan",
+                ["id" => $billingPlan->getId(),],
+                ["product" => $billingPlan->getProduct()]
             );
 
         $billingPlanForm->handleRequest($request);
@@ -260,9 +262,10 @@ class BillingPlanController extends BaseAdminController
         $form = $this->getFormCreator()
             ->createCreateForm(
                 $billingPlan,
-                new BillingPlanType($product, $this->getEntityManager()),
+                BillingPlanType::class,
                 "admin_billing_plan",
-                ["id" => $product->getId(),]
+                ["id" => $product->getId(),],
+                ["product" => $product]
             );
 
         return $this->render(
@@ -291,14 +294,14 @@ class BillingPlanController extends BaseAdminController
     {
         $em = $this->getEntityManager();
         $billingPlan = new BillingPlan();
-        $type = new BillingPlanType($product, $this->getEntityManager());
 
         $form = $this->getFormCreator()
             ->createCreateForm(
                 $billingPlan,
-                $type,
+                BillingPlanType::class,
                 "admin_billing_plan",
-                ["id" => $product->getId(),]
+                ["id" => $product->getId(),],
+                ["product" => $product]
             );
 
         $form->handleRequest($request);
@@ -362,19 +365,26 @@ class BillingPlanController extends BaseAdminController
      */
     public function deleteAction(Request $request, BillingPlan $billingPlan)
     {
-        $product = $billingPlan->getProduct();
-        try {
-            $em = $this->getEntityManager();
-            $em->remove($billingPlan);
-            $em->flush();
-        } catch (DBALException $e) {
-            return new JsonResponse(
-                [
-                    "error" => ["db" => $e->getMessage()],
-                    "message" => "Could not delete.",
-                ],
-                400
-            );
+        $form = $this->getFormCreator()
+            ->createDeleteForm("admin_billing_plan", $billingPlan->getId());
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $product = $billingPlan->getProduct();
+            try {
+                $em = $this->getEntityManager();
+                $em->remove($billingPlan);
+                $em->flush();
+            } catch (DBALException $e) {
+                return new JsonResponse(
+                    [
+                        "error" => ["db" => $e->getMessage()],
+                        "message" => "Could not delete.",
+                    ],
+                    400
+                );
+            }
         }
 
         return new JsonResponse(

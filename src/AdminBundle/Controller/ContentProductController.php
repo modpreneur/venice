@@ -81,8 +81,9 @@ class ContentProductController extends BaseAdminController
      * @Security("is_granted('ROLE_ADMIN_CONTENT_PRODUCT_VIEW')")
      *
      * @param Request $request
+     * @param ContentProduct $contentProduct
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function tabsAction(Request $request, ContentProduct $contentProduct)
     {
@@ -120,7 +121,7 @@ class ContentProductController extends BaseAdminController
         $form = $this->getFormCreator()
             ->createCreateForm(
                 new ContentProduct(),
-                new ContentProductType(),
+                ContentProductType::class,
                 "admin_content_product"
             );
 
@@ -147,7 +148,7 @@ class ContentProductController extends BaseAdminController
         $form = $this->getFormCreator()
             ->createCreateForm(
                 $contentProduct,
-                new ContentProductType(),
+                ContentProductType::class,
                 "admin_content_product"
             );
 
@@ -198,7 +199,7 @@ class ContentProductController extends BaseAdminController
         $contentForm = $this->getFormCreator()
             ->createEditForm(
                 $contentProduct,
-                new ContentProductType(),
+                ContentProductType::class,
                 "admin_content_product",
                 ["id" => $contentProduct->getId(),]
             );
@@ -231,7 +232,7 @@ class ContentProductController extends BaseAdminController
         $form = $this->getFormCreator()
             ->createEditForm(
                 $contentProduct,
-                new ContentProductType(),
+                ContentProductType::class,
                 "admin_content_product",
                 ["id" => $contentProduct->getId(),]
             );
@@ -298,18 +299,26 @@ class ContentProductController extends BaseAdminController
      */
     public function deleteAction(Request $request, ContentProduct $contentProduct)
     {
-        try {
-            $em = $this->getEntityManager();
-            $em->remove($contentProduct);
-            $em->flush();
-        } catch (DBALException $e) {
-            return new JsonResponse(
-                [
-                    "error" => ["db" => $e->getMessage(),],
-                    "message" => "Could not delete.",
-                ],
-                400
-            );
+        $form = $this->getFormCreator()
+            ->createDeleteForm("admin_content_product", $contentProduct->getId());
+
+        $form->handleRequest($request);
+
+        if($form->isValid())
+        {
+            try {
+                $em = $this->getEntityManager();
+                $em->remove($contentProduct);
+                $em->flush();
+            } catch (DBALException $e) {
+                return new JsonResponse(
+                    [
+                        "error" => ["db" => $e->getMessage(),],
+                        "message" => "Could not delete.",
+                    ],
+                    400
+                );
+            }
         }
 
         return new JsonResponse(
@@ -317,6 +326,7 @@ class ContentProductController extends BaseAdminController
                 "message" => "Association successfully deleted.",
                 "location" => $this->generateUrl("admin_content_product_index"),
             ],
-            302);
+            302
+        );
     }
 }

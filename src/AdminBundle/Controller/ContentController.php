@@ -119,17 +119,19 @@ class ContentController extends BaseAdminController
             throw new NotFoundHttpException("Content type: ".$contentType." not found.");
         }
 
+        $formOptions = [];
+
+        if($content instanceof GroupContent) {
+            $formOptions = ["groupContent" => ($content instanceof GroupContent)? $content : null,];
+        }
+
         $form = $this->getFormCreator()
             ->createCreateForm(
                 $content,
-                $content->getFormType(
-                    [
-                        $content,
-                        $this->getEntityManager(),
-                    ]
-                ),
+                $content->getFormTypeClass(),
                 "admin_content",
-                ["contentType" => $contentType,]
+                ["contentType" => $contentType],
+                $formOptions
             );
         // Remove items field for now. todo: remove it in future?
         // Explanation:
@@ -169,17 +171,19 @@ class ContentController extends BaseAdminController
 
         $em = $this->getEntityManager();
 
+        $formOptions = [];
+
+        if($content instanceof GroupContent) {
+            $formOptions = ["groupContent" => ($content instanceof GroupContent)? $content : null,];
+        }
+
         $form = $this->getFormCreator()
             ->createCreateForm(
                 $content,
-                $content->getFormType(
-                    [
-                        $content,
-                        $this->getEntityManager()
-                    ]
-                ),
+                $content->getFormTypeClass(),
                 "admin_content",
-                ["contentType" => $contentType]
+                ["contentType" => $contentType],
+                $formOptions
             );
 
         $form->handleRequest($request);
@@ -220,16 +224,19 @@ class ContentController extends BaseAdminController
      */
     public function editAction(Request $request, Content $content)
     {
+        $formOptions = [];
+
+        if($content instanceof GroupContent) {
+            $formOptions = ["groupContent" => ($content instanceof GroupContent)? $content : null,];
+        }
+
         $form = $this->getFormCreator()
             ->createEditForm(
                 $content,
-                $content->getFormType(
-                    [
-                        $content,
-                        $this->getEntityManager(),
-                    ]
-                ),
-                "admin_content"
+                $content->getFormTypeClass(),
+                "admin_content",
+                ["groupContent" => $content],
+                $formOptions
             );
 
         return $this->render(
@@ -277,7 +284,7 @@ class ContentController extends BaseAdminController
         $form = $this->getFormCreator()
             ->createEditForm(
                 $content,
-                $content->getFormType(),
+                $content->getFormTypeClass(),
                 "admin_content"
             );
 
@@ -316,13 +323,9 @@ class ContentController extends BaseAdminController
         $contentForm = $this->getFormCreator()
             ->createEditForm(
                 $content,
-                $content->getFormType(
-                    [
-                        $content,
-                        $this->getEntityManager()
-                    ]
-                ),
-                "admin_content"
+                $content->getFormTypeClass(),
+                "admin_content",
+                ["groupContent" => $content,]
             );
 
         $em = $this->getEntityManager();
@@ -405,26 +408,35 @@ class ContentController extends BaseAdminController
     {
         $em = $this->getEntityManager();
 
-        try {
-            // First, remove all associations of the group
-            if ($content instanceof GroupContent) {
-                /** @var ContentInGroup $item */
-                foreach ($content->getItems() as $item) {
-                    $em->remove($item);
-                }
-            }
+        $form = $this->getFormCreator()
+            ->createDeleteForm("admin_content", $content->getId());
 
-            $em->remove($content);
-            $em->flush();
-        } catch (DBALException $e) {
-            return new JsonResponse(
-                [
-                    "error" => ["db" => $e->getMessage(),],
-                    "message" => "Could not delete.",
-                ],
-                400
-            );
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            try {
+                // First, remove all associations of the group
+                if ($content instanceof GroupContent) {
+                    /** @var ContentInGroup $item */
+                    foreach ($content->getItems() as $item) {
+                        $em->remove($item);
+                    }
+                }
+
+                $em->remove($content);
+                $em->flush();
+            } catch (DBALException $e) {
+                return new JsonResponse(
+                    [
+                        "error" => ["db" => $e->getMessage(),],
+                        "message" => "Could not delete.",
+                    ],
+                    400
+                );
+            }
         }
+
+
 
         return new JsonResponse(
             [

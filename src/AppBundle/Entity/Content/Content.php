@@ -9,7 +9,6 @@
 namespace AppBundle\Entity\Content;
 
 
-use AdminBundle\Form\Content\ContentType;
 use AppBundle\Entity\ContentProduct;
 use AppBundle\Entity\User;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -207,20 +206,17 @@ abstract class Content
 
 
     /**
-     * Get form type of content
+     * Get the fully classified class name of the type
      *
-     * @param array|null $arguments
-     *
-     * @return ContentType
+     * @return string
      */
-    public function getFormType($arguments = [])
+    public function getFormTypeClass()
     {
         $name = get_class($this) . "Type";
         $name = str_replace('AppBundle', 'AdminBundle', $name);
         $name = str_replace('Entity', 'Form', $name);
 
-        $class = new \ReflectionClass($name);
-        return $class->newInstanceArgs($arguments);
+        return $name;
     }
 
 

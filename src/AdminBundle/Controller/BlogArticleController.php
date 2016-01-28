@@ -118,7 +118,7 @@ class BlogArticleController extends BaseAdminController
             ->getFormCreator()
             ->createCreateForm(
                 new BlogArticle(),
-                new BlogArticleType(),
+                BlogArticleType::class,
                 "admin_blog_article"
             );
 
@@ -150,7 +150,7 @@ class BlogArticleController extends BaseAdminController
             ->getFormCreator()
             ->createCreateForm(
                 $blogArticle,
-                new BlogArticleType(),
+                BlogArticleType::class,
                 "admin_blog_article"
             );
 
@@ -193,7 +193,7 @@ class BlogArticleController extends BaseAdminController
         $form = $this->getFormCreator()
             ->createEditForm(
                 $blogArticle,
-                new BlogArticleType(),
+                BlogArticleType::class,
                 'admin_blog_article', ["id",]
             );
 
@@ -224,7 +224,7 @@ class BlogArticleController extends BaseAdminController
         $blogArticleForm = $this->getFormCreator()
             ->createEditForm(
                 $blogArticle,
-                new BlogArticleType(),
+                BlogArticleType::class,
                 "admin_blog_article"
             );
 
@@ -290,18 +290,26 @@ class BlogArticleController extends BaseAdminController
      */
     public function deleteAction(Request $request, BlogArticle $blogArticle)
     {
-        try {
-            $em = $this->getEntityManager();
-            $em->remove($blogArticle);
-            $em->flush();
-        } catch (DBALException $e) {
-            return new JsonResponse(
-                [
-                    "errors" => ["db" => $e->getMessage(),],
-                    "message" => "Could not delete."
-                ]
-            );
+        $form = $this->getFormCreator()
+            ->createDeleteForm("admin_blog_article", $blogArticle->getId());
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            try {
+                $em = $this->getEntityManager();
+                $em->remove($blogArticle);
+                $em->flush();
+            } catch (DBALException $e) {
+                return new JsonResponse(
+                    [
+                        "errors" => ["db" => $e->getMessage(),],
+                        "message" => "Could not delete."
+                    ]
+                );
+            }
         }
+
 
         return new JsonResponse(
             [

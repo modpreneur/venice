@@ -4347,12 +4347,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/modpreneur/trinity-admin.git",
-                "reference": "59425722bccc718e9fafa268bf1bb482873c90c4"
+                "reference": "cbf25ec5af16a16a11d218370ab586e132f6dd0e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/modpreneur/trinity-admin/zipball/59425722bccc718e9fafa268bf1bb482873c90c4",
-                "reference": "59425722bccc718e9fafa268bf1bb482873c90c4",
+                "url": "https://api.github.com/repos/modpreneur/trinity-admin/zipball/cbf25ec5af16a16a11d218370ab586e132f6dd0e",
+                "reference": "cbf25ec5af16a16a11d218370ab586e132f6dd0e",
                 "shasum": ""
             },
             "require": {
@@ -4394,7 +4394,7 @@
                 }
             ],
             "description": "Trinity Admin bundle",
-            "time": "2016-01-27 12:56:56"
+            "time": "2016-01-27 16:33:53"
         },
         {
             "name": "trinity/framework",
@@ -4402,12 +4402,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/modpreneur/trinity.git",
-                "reference": "380fae735a5be0daab7000908d699d0daa4e137f"
+                "reference": "9942284670c497ce93d18a6a6f663143061b7326"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/modpreneur/trinity/zipball/380fae735a5be0daab7000908d699d0daa4e137f",
-                "reference": "380fae735a5be0daab7000908d699d0daa4e137f",
+                "url": "https://api.github.com/repos/modpreneur/trinity/zipball/9942284670c497ce93d18a6a6f663143061b7326",
+                "reference": "9942284670c497ce93d18a6a6f663143061b7326",
                 "shasum": ""
             },
             "require": {
@@ -4449,7 +4449,7 @@
                 }
             ],
             "description": "Trinity Framework",
-            "time": "2016-01-27 15:51:39"
+            "time": "2016-01-27 16:45:06"
         },
         {
             "name": "trinity/notification",

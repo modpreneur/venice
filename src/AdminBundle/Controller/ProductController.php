@@ -9,7 +9,6 @@
 namespace AdminBundle\Controller;
 
 
-use AppBundle\Entity\BillingPlan;
 use AppBundle\Entity\Product\FreeProduct;
 use AppBundle\Entity\Product\Product;
 use AppBundle\Event\AppEvents;
@@ -121,7 +120,7 @@ class ProductController extends BaseAdminController
         $form = $this->getFormCreator()
             ->createCreateForm(
                 $product,
-                $product->getFormType(),
+                $product->getFormTypeClass(),
                 "admin_product",
                 ["productType" => $productType,]
             );
@@ -163,7 +162,7 @@ class ProductController extends BaseAdminController
         $productForm = $this->getFormCreator()
             ->createCreateForm(
                 $product,
-                $product->getFormType(),
+                $product->getFormTypeClass(),
                 "admin_product",
                 ["productType" => $productType,]
             );
@@ -216,7 +215,7 @@ class ProductController extends BaseAdminController
         $productForm = $this->getFormCreator()
             ->createEditForm(
                 $product,
-                $product->getFormType(),
+                $product->getFormTypeClass(),
                 "admin_product",
                 ["id" => $product->getId(),]
             );
@@ -272,7 +271,7 @@ class ProductController extends BaseAdminController
         $productForm = $this->getFormCreator()
             ->createEditForm(
                 $product,
-                $product->getFormType(),
+                $product->getFormTypeClass(),
                 "admin_product",
                 ["id" => $product->getId()]
             );

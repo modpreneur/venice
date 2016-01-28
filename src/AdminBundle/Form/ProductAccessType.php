@@ -10,27 +10,14 @@ namespace AdminBundle\Form;
 
 
 use AdminBundle\Form\DataTransformer\EntityToNumberTransformer;
-use AppBundle\Entity\User;
-use AppBundle\Form\BaseType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ProductAccessType extends BaseType
+class ProductAccessType extends AdminBaseType
 {
-    /** @var User */
-    protected $user;
-
-    protected $entityManager;
-
-    public function __construct(User $user, $entityManager)
-    {
-        $this->user = $user;
-        $this->entityManager = $entityManager;
-    }
-
     /**
      * @param FormBuilderInterface $builder
      * @param array $options
@@ -70,7 +57,7 @@ class ProductAccessType extends BaseType
                 HiddenType::class,
                 [
                     // Uses model transformer
-                    "data" => $this->user,
+                    "data" => $options["user"],
                     "data_class" => null,
                     "label" => false,
                 ]
@@ -94,7 +81,8 @@ class ProductAccessType extends BaseType
         parent::configureOptions($resolver);
 
         $resolver->setDefaults([
-            "data_class" => "AppBundle\\Entity\\ProductAccess"
+            "data_class" => "AppBundle\\Entity\\ProductAccess",
+            "user" => null
         ]);
     }
 }
