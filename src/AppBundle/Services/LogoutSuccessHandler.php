@@ -32,10 +32,10 @@ class LogoutSuccessHandler implements LogoutSuccessHandlerInterface
      * @param string          $necktieUrl
      * @param RouterInterface $router
      */
-    public function __construct($necktieUrl, RouterInterface $router)
+    public function __construct(RouterInterface $router, $necktieUrl)
     {
-        $this->necktieUrl = $necktieUrl;
         $this->router = $router;
+        $this->necktieUrl = $necktieUrl;
     }
 
     /**

@@ -20,10 +20,10 @@ class BuyUrlGenerator
     /** @var  RouterInterface */
     protected $router;
 
-    public function __construct($necktieUrl, RouterInterface $router)
+    public function __construct(RouterInterface $router, $necktieUrl)
     {
-        $this->necktieUrl = $necktieUrl;
         $this->router = $router;
+        $this->necktieUrl = $necktieUrl;
     }
 
     /**

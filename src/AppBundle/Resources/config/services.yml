@@ -45,14 +45,14 @@ services:
     app.handler.logout_success_handler:
         class: AppBundle\Services\LogoutSuccessHandler
         arguments:
-            - %necktie_url%
             - "@router.default"
+            - %necktie_url%
 
     app.services.buy_url_generator:
         class: AppBundle\Services\BuyUrlGenerator
         arguments:
-            - %necktie_url%
             - "@router"
+            - %necktie_url%
 
     admin.form_creator:
         class: AppBundle\Services\FormCreator
