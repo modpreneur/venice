@@ -46,7 +46,7 @@ class ProductController extends BaseAdminController
         $products = $entityManager->getRepository("AppBundle:Product\\Product")->findAll();
 
         return $this->render(
-            ":AdminBundle/Product:index.html.twig",
+            "AdminBundle:Product:index.html.twig",
             ["products" => $products,]
         );
     }
@@ -65,7 +65,7 @@ class ProductController extends BaseAdminController
     public function showAction(Request $request, Product $product)
     {
         return $this->render(
-            ":AdminBundle/Product:show.html.twig",
+            "AdminBundle:Product:show.html.twig",
             ["product" => $product]
         );
     }
@@ -86,7 +86,7 @@ class ProductController extends BaseAdminController
             ->addRouteItem($product->getName(), "admin_product_tabs", ["id" => $product->getId()]);
 
         return $this->render(
-            ":AdminBundle/Product:tabs.html.twig",
+            "AdminBundle:Product:tabs.html.twig",
             ["product" => $product,]
         );
     }
@@ -126,7 +126,7 @@ class ProductController extends BaseAdminController
             );
 
         return $this->render(
-            ':AdminBundle/Product:new.html.twig',
+            'AdminBundle:Product:new.html.twig',
             [
                 'product' => $product,
                 'form' => $form->createView(),
@@ -221,7 +221,7 @@ class ProductController extends BaseAdminController
             );
 
         return $this->render(
-            ":AdminBundle/Product:edit.html.twig",
+            "AdminBundle:Product:edit.html.twig",
             [
                 "entity" => $product,
                 "form" => $productForm->createView(),
@@ -248,7 +248,7 @@ class ProductController extends BaseAdminController
 
         return $this
             ->render(
-                ":AdminBundle/Product:tabDelete.html.twig",
+                "AdminBundle:Product:tabDelete.html.twig",
                 ["form" => $form->createView(),]
             );
     }

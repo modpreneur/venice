@@ -27,6 +27,6 @@ class DashboardController extends BaseAdminController
     {
         $this->getBreadcrumbs();
 
-        return $this->render(":AdminBundle:adminBase.html.twig");
+        return $this->render("AdminBundle::adminBase.html.twig");
     }
 }

@@ -45,7 +45,7 @@ class BlogArticleController extends BaseAdminController
         $blogArticles = $this->getEntityManager()->getRepository("AppBundle:BlogArticle")->findAll();
 
         return $this->render(
-            ":AdminBundle/BlogArticle:index.html.twig",
+            "AdminBundle:BlogArticle:index.html.twig",
             ["blogArticles" => $blogArticles,]
         );
     }
@@ -73,7 +73,7 @@ class BlogArticleController extends BaseAdminController
         }
 
         return $this->render(
-            ':AdminBundle/BlogArticle:tabs.html.twig',
+            'AdminBundle:BlogArticle:tabs.html.twig',
             ['article' => $article,]);
     }
 
@@ -91,7 +91,7 @@ class BlogArticleController extends BaseAdminController
     public function showAction(Request $request, BlogArticle $article)
     {
         return $this->render(
-            ":AdminBundle/BlogArticle:show.html.twig",
+            "AdminBundle:BlogArticle:show.html.twig",
             ["article" => $article]
         );
     }
@@ -123,7 +123,7 @@ class BlogArticleController extends BaseAdminController
             );
 
         return $this->render(
-            ':AdminBundle/BlogArticle:new.html.twig',
+            'AdminBundle:BlogArticle:new.html.twig',
             ['form' => $form->createView(),]
         );
     }
@@ -198,7 +198,7 @@ class BlogArticleController extends BaseAdminController
             );
 
         return $this->render(
-            "AdminBundle/BlogArticle/edit.html.twig",
+            "AdminBundle:BlogArticle:edit.html.twig",
             [
                 "entity" => $blogArticle,
                 "form" => $form->createView(),
@@ -273,7 +273,7 @@ class BlogArticleController extends BaseAdminController
 
         return $this
             ->render(
-                ":AdminBundle/BlogArticle:tabDelete.html.twig",
+                "AdminBundle:BlogArticle:tabDelete.html.twig",
                 ["form" => $form->createView(),]
             );
     }

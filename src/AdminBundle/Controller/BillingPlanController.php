@@ -47,7 +47,7 @@ class BillingPlanController extends BaseAdminController
         $billingPlans = $entityManager->getRepository("AppBundle:BillingPlan")->findBy(["product" => $product]);
 
         return $this->render(
-            ":AdminBundle/BillingPlan:index.html.twig",
+            "AdminBundle:BillingPlan:index.html.twig",
             [
                 "billingPlans" => $billingPlans,
                 "product" => $product
@@ -69,7 +69,7 @@ class BillingPlanController extends BaseAdminController
     public function showAction(Request $request, BillingPlan $billingPlan)
     {
         return $this->render(
-            ":AdminBundle/BillingPlan:show.html.twig",
+            "AdminBundle:BillingPlan:show.html.twig",
             ["billingPlan" => $billingPlan]
         );
     }
@@ -100,7 +100,7 @@ class BillingPlanController extends BaseAdminController
             );
 
         return $this->render(
-            ":AdminBundle/BillingPlan:tabs.html.twig",
+            "AdminBundle:BillingPlan:tabs.html.twig",
             [
                 "billingPlan" => $billingPlan,
             ]
@@ -172,7 +172,7 @@ class BillingPlanController extends BaseAdminController
             );
 
         return $this->render(
-            ":AdminBundle/BillingPlan:edit.html.twig",
+            "AdminBundle:BillingPlan:edit.html.twig",
             [
                 "entity" => $billingPlan,
                 "form" => $billingPlanForm->createView(),
@@ -269,7 +269,7 @@ class BillingPlanController extends BaseAdminController
             );
 
         return $this->render(
-            ':AdminBundle/BillingPlan:new.html.twig',
+            'AdminBundle:BillingPlan:new.html.twig',
             [
                 'billingPlan' => $billingPlan,
                 'form' => $form->createView(),
@@ -347,7 +347,7 @@ class BillingPlanController extends BaseAdminController
 
         return $this
             ->render(
-                ":AdminBundle/BillingPlan:tabDelete.html.twig",
+                "AdminBundle:BillingPlan:tabDelete.html.twig",
                 ["form" => $form->createView(),]
             );
     }

@@ -50,7 +50,7 @@ class ContentProductController extends BaseAdminController
             ->findAll();
 
         return $this->render(
-            ":AdminBundle/ContentProduct:index.html.twig",
+            "AdminBundle:ContentProduct:index.html.twig",
             ["contentProducts" => $contentProducts,]
         );
     }
@@ -69,7 +69,7 @@ class ContentProductController extends BaseAdminController
     public function showAction(Request $request, ContentProduct $contentProduct)
     {
         return $this->render(
-            ":AdminBundle/ContentProduct:show.html.twig",
+            "AdminBundle:ContentProduct:show.html.twig",
             ["contentProduct" => $contentProduct]
         );
     }
@@ -96,7 +96,7 @@ class ContentProductController extends BaseAdminController
             );
 
         return $this->render(
-            ":AdminBundle/ContentProduct:tabs.html.twig",
+            "AdminBundle:ContentProduct:tabs.html.twig",
             ["contentProduct" => $contentProduct,]
         );
     }
@@ -125,7 +125,7 @@ class ContentProductController extends BaseAdminController
                 "admin_content_product"
             );
 
-        return $this->render(":AdminBundle/ContentProduct:new.html.twig",
+        return $this->render("AdminBundle:ContentProduct:new.html.twig",
             ["form" => $form->createView(),]
         );
     }
@@ -205,7 +205,7 @@ class ContentProductController extends BaseAdminController
             );
 
         return $this->render(
-            ":AdminBundle/ContentProduct:edit.html.twig",
+            "AdminBundle:ContentProduct:edit.html.twig",
             [
                 "entity" => $contentProduct,
                 "form" => $contentForm->createView(),
@@ -279,7 +279,7 @@ class ContentProductController extends BaseAdminController
 
         return $this
             ->render(
-                ":AdminBundle/ContentProduct:tabDelete.html.twig",
+                "AdminBundle:ContentProduct:tabDelete.html.twig",
                 [
                     "form" => $form->createView()
                 ]

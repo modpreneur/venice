@@ -47,7 +47,7 @@ class UserController extends BaseAdminController
         $users = $entityManager->getRepository("AppBundle:User")->findAll();
 
         return $this->render(
-            ":AdminBundle/User:index.html.twig",
+            "AdminBundle:User:index.html.twig",
             ["users" => $users,]
         );
     }
@@ -67,7 +67,7 @@ class UserController extends BaseAdminController
     public function showAction(Request $request, User $user)
     {
         return $this->render(
-            ":AdminBundle/User:show.html.twig",
+            "AdminBundle:User:show.html.twig",
             ["user" => $user,]
         );
     }
@@ -91,7 +91,7 @@ class UserController extends BaseAdminController
 
 
         return $this->render(
-            ':AdminBundle/User:tabs.html.twig',
+            'AdminBundle:User:tabs.html.twig',
             ["user" => $user,]
         );
     }
@@ -118,7 +118,7 @@ class UserController extends BaseAdminController
             );
 
         return $this->render(
-            ':AdminBundle/User:new.html.twig',
+            'AdminBundle:User:new.html.twig',
             [
                 'user' => $user,
                 'form' => $form->createView(),
@@ -194,7 +194,7 @@ class UserController extends BaseAdminController
             );
 
         return $this->render(
-            ':AdminBundle/User:edit.html.twig',
+            'AdminBundle:User:edit.html.twig',
             [
                 "user" => $user,
                 "form" => $form->createView(),
@@ -282,7 +282,7 @@ class UserController extends BaseAdminController
 
         return $this
             ->render(
-                ":AdminBundle/User:tabDelete.html.twig",
+                "AdminBundle:User:tabDelete.html.twig",
                 ["form" => $form->createView(),]
             );
     }

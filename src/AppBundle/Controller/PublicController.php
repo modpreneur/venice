@@ -29,6 +29,6 @@ class PublicController extends Controller
      */
     public function publicAction()
     {
-        return $this->render(":AppBundle/public:welcome.html.twig");
+        return $this->render("AppBundle:public:welcome.html.twig");
     }
 }

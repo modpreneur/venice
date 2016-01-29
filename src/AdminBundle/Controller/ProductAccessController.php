@@ -46,7 +46,7 @@ class ProductAccessController extends BaseAdminController
         $productAccesses = $entityManager->getRepository("AppBundle:ProductAccess")->findBy(["user" => $user]);
 
         return $this->render(
-            ":AdminBundle/ProductAccess:index.html.twig",
+            "AdminBundle:ProductAccess:index.html.twig",
             [
                 "productAccesses" => $productAccesses,
                 "user" => $user,
@@ -67,7 +67,7 @@ class ProductAccessController extends BaseAdminController
     public function showAction(ProductAccess $productAccess)
     {
         return $this->render(
-            ":AdminBundle/ProductAccess:show.html.twig",
+            "AdminBundle:ProductAccess:show.html.twig",
             [
                 "productAccess" => $productAccess,
             ]
@@ -97,7 +97,7 @@ class ProductAccessController extends BaseAdminController
             );
 
         return $this->render(
-            ":AdminBundle/ProductAccess:tabs.html.twig",
+            "AdminBundle:ProductAccess:tabs.html.twig",
             [
                 "productAccess" => $productAccess,
                 "displayEditTab" => $this->getLogic()->displayEditTabForProductAccess(),
@@ -129,7 +129,7 @@ class ProductAccessController extends BaseAdminController
             );
 
         return $this->render(
-            ":AdminBundle/ProductAccess:edit.html.twig",
+            "AdminBundle:ProductAccess:edit.html.twig",
             [
                 "entity" => $productAccess,
                 "form" => $productAccessForm->createView(),
@@ -221,7 +221,7 @@ class ProductAccessController extends BaseAdminController
             );
 
         return $this->render(
-            ':AdminBundle/ProductAccess:new.html.twig',
+            'AdminBundle:ProductAccess:new.html.twig',
             [
                 'productAccess' => $productAccess,
                 'form' => $form->createView(),
@@ -299,7 +299,7 @@ class ProductAccessController extends BaseAdminController
 
         return $this
             ->render(
-                ":AdminBundle/ProductAccess:tabDelete.html.twig",
+                "AdminBundle:ProductAccess:tabDelete.html.twig",
                 ["form" => $form->createView(),]
             );
     }

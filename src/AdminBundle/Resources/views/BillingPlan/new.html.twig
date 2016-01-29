@@ -1,0 +1,30 @@
+{% extends('AdminBundle::adminBase.html.twig') %}
+
+{% block pageIcon %}
+    <i class="trinity trinity-money"></i>
+{% endblock %}
+
+
+{% block pageTitle %}
+    Billing plan
+{% endblock %}
+
+{% block pageBody %}
+    <div class="box box-new-form">
+        <div class="row">
+            {{ form_start(form, {'attr': {'class': 'new-form'}} ) }}
+            {{ form_errors(form) }}
+
+            {{ form_row(form.amemberId) }}
+            {{ form_row(form.initialPrice) }}
+            {{ form_row(form.rebillPrice) }}
+            {{ form_row(form.frequency) }}
+            {{ form_row(form.rebillTimes) }}
+
+            {{ form_row(form.submit, {'attr': {'class': 'button new'}} ) }}
+
+            {{ form_end(form) }}
+        </div>
+    </div>
+
+{% endblock %}

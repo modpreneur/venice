@@ -50,7 +50,7 @@ class ContentController extends BaseAdminController
         $contents = $this->getEntityManager()->getRepository("AppBundle:Content\\Content")->findAll();
 
         return $this->render(
-            ":AdminBundle/Content:index.html.twig",
+            "AdminBundle:Content:index.html.twig",
             ["contents" => $contents,]
         );
     }
@@ -69,7 +69,7 @@ class ContentController extends BaseAdminController
     public function showAction(Request $request, Content $content)
     {
         return $this->render(
-            ":AdminBundle/Content:show".ucfirst($content->getType()).".html.twig",
+            "AdminBundle:Content:show".ucfirst($content->getType()).".html.twig",
             ["content" => $content]
         );
     }
@@ -91,7 +91,7 @@ class ContentController extends BaseAdminController
             ->addRouteItem("Contents", "admin_content_index")
             ->addRouteItem($content->getName(), "admin_content_tabs", ["id" => $content->getId()]);
 
-        return $this->render(":AdminBundle/Content:tabs.html.twig", ["content" => $content,]);
+        return $this->render("AdminBundle:Content:tabs.html.twig", ["content" => $content,]);
     }
 
 
@@ -140,7 +140,7 @@ class ContentController extends BaseAdminController
         $form->remove("items");
 
         return $this->render(
-            ':AdminBundle/Content:new.html.twig',
+            'AdminBundle:Content:new.html.twig',
             [
                 'entity' => $content,
                 'form' => $form->createView()
@@ -240,7 +240,7 @@ class ContentController extends BaseAdminController
             );
 
         return $this->render(
-            ":AdminBundle/Content:edit.html.twig",
+            "AdminBundle:Content:edit.html.twig",
             [
                 "entity" => $content,
                 "form" => $form->createView(),
@@ -385,7 +385,7 @@ class ContentController extends BaseAdminController
 
         return $this
             ->render(
-                ":AdminBundle/Content:tabDelete.html.twig",
+                "AdminBundle:Content:tabDelete.html.twig",
                 [
                     "form" => $form->createView()
                 ]

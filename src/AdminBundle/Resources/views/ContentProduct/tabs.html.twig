@@ -1,0 +1,51 @@
+{% extends "AdminBundle::adminBase.html.twig" %}
+
+{% block pageTitle %}
+    Associations
+{% endblock %}
+
+{% block pageIcon %}
+    <i class="tiecons tiecons-pin-right-negative"></i>
+{% endblock %}
+
+{% block pageAction %}
+    {% if is_granted('ROLE_ADMIN_CONTENT_PRODUCT_EDIT') %}
+        <div class="navigation-box row margin-top-20">
+            <a class="new-entry" id="newEntryIcon" href="{{ path('admin_content_product_new') }}">
+                <i class="trinity trinity-plus"></i>
+                <span class="hover-text">Create a new association</span>
+            </a>
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block pageBody -%}
+
+    <div class="tabs-wrapper margin-top-20">
+        {% if is_granted("ROLE_ADMIN_CONTENT_PRODUCT_VIEW") %}
+            <input type="radio" name="tab" id="tab1" class="tab-head" checked />
+            <label for="tab1">Show</label>
+        {% endif %}
+
+        {% if is_granted("ROLE_ADMIN_CONTENT_PRODUCT_EDIT") %}
+            <input type="radio" name="tab" id="tab2" class="tab-head" />
+            <label for="tab2">Edit</label>
+
+            <input type="radio" name="tab" id="tab3" class="tab-head" />
+            <label for="tab3">Danger zone</label>
+        {% endif %}
+
+        <div class="tab-body-wrapper">
+            {% if is_granted("ROLE_ADMIN_CONTENT_PRODUCT_VIEW") %}
+                <div id="tab-body-1" class="tab-body" data-source="{{ path('admin_content_product_show', {'id': contentProduct.id}) }}"></div>
+            {% endif %}
+
+            {% if is_granted("ROLE_ADMIN_CONTENT_PRODUCT_EDIT") %}
+                <div id="tab-body-2" class="tab-body" data-source="{{ path('admin_content_product_edit', {'id': contentProduct.id}) }}"></div>
+                <div id="tab-body-3" class="tab-body" data-source="{{ path("admin_content_product_delete_tab", {'id': contentProduct.id})}}"></div>
+            {% endif %}
+
+        </div>
+    </div>
+
+{% endblock %}
