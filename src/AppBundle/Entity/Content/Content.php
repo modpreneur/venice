@@ -213,7 +213,6 @@ abstract class Content
     public function getFormTypeClass()
     {
         $name = get_class($this) . "Type";
-        $name = str_replace('AppBundle', 'AdminBundle', $name);
         $name = str_replace('Entity', 'Form', $name);
 
         return $name;

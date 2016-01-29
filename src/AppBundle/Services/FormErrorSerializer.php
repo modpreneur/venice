@@ -1,6 +1,7 @@
 <?php
 
 namespace AppBundle\Services;
+use Symfony\Component\Form\FormInterface;
 
 
 /**
@@ -12,7 +13,7 @@ namespace AppBundle\Services;
 */
 class FormErrorSerializer
 {
-    public function serializeFormErrors(\Symfony\Component\Form\Form $form, $flat_array = false, $add_form_name = false, $glue_keys = '_')
+    public function serializeFormErrors(FormInterface $form, $flat_array = false, $add_form_name = false, $glue_keys = '_')
     {
         $errors = array();
         $errors['global'] = array();

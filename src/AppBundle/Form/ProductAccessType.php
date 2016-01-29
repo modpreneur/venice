@@ -6,17 +6,17 @@
  * Time: 14:03
  */
 
-namespace AdminBundle\Form;
+namespace AppBundle\Form;
 
 
-use AdminBundle\Form\DataTransformer\EntityToNumberTransformer;
+use AppBundle\Form\DataTransformer\EntityToNumberTransformer;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ProductAccessType extends AdminBaseType
+class ProductAccessType extends BaseType
 {
     /**
      * @param FormBuilderInterface $builder

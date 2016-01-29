@@ -8,9 +8,9 @@
 
 namespace AdminBundle\Controller;
 
-use AdminBundle\Form\ProductAccessType;
 use AppBundle\Entity\ProductAccess;
 use AppBundle\Entity\User;
+use AppBundle\Form\ProductAccessType;
 use Doctrine\DBAL\DBALException;
 use FOS\RestBundle\Controller\Annotations\View;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;

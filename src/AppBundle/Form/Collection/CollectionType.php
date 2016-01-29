@@ -1,6 +1,6 @@
 <?php
 
-namespace AdminBundle\Form\Collection;
+namespace AppBundle\Form\Collection;
 
 
 use Nette\Utils\Random;

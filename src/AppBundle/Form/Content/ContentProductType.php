@@ -6,16 +6,16 @@
  * Time: 16:33
  */
 
-namespace AdminBundle\Form\Content;
+namespace AppBundle\Form\Content;
 
 
-use AdminBundle\Form\AdminBaseType;
+use AppBundle\Form\BaseType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ContentProductType extends AdminBaseType
+class ContentProductType extends BaseType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {

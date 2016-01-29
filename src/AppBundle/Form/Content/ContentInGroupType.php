@@ -6,12 +6,12 @@
  * Time: 13:55
  */
 
-namespace AdminBundle\Form\Content;
+namespace AppBundle\Form\Content;
 
 
-use AdminBundle\Form\AdminBaseType;
-use AdminBundle\Form\DataTransformer\EntityToNumberTransformer;
 use AppBundle\Entity\Content\GroupContent;
+use AppBundle\Form\BaseType;
+use AppBundle\Form\DataTransformer\EntityToNumberTransformer;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
@@ -19,7 +19,7 @@ use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ContentInGroupType extends AdminBaseType
+class ContentInGroupType extends BaseType
 {
     /**
      * @param FormBuilderInterface $builder

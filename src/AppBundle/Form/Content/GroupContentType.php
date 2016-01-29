@@ -6,11 +6,11 @@
  * Time: 21:08
  */
 
-namespace AdminBundle\Form\Content;
+namespace AppBundle\Form\Content;
 
 
-use AdminBundle\Form\Collection\CollectionType;
 use AppBundle\Entity\Content\GroupContent;
+use AppBundle\Form\Collection\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;

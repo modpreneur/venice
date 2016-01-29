@@ -6,10 +6,10 @@
  * Time: 22:07
  */
 
-namespace AdminBundle\Form\User;
+namespace AppBundle\Form\User;
 
 
-use AdminBundle\Form\AdminBaseType;
+use AppBundle\Form\BaseType;
 use Symfony\Component\Form\Extension\Core\Type\CountryType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
@@ -18,7 +18,7 @@ use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class UserType extends AdminBaseType
+class UserType extends BaseType
 {
 
     /**

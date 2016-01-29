@@ -8,9 +8,9 @@
 
 namespace AdminBundle\Controller;
 
-use AdminBundle\Form\BillingPlanType;
 use AppBundle\Entity\BillingPlan;
 use AppBundle\Entity\Product\StandardProduct;
+use AppBundle\Form\BillingPlanType;
 use Doctrine\DBAL\DBALException;
 use FOS\RestBundle\Controller\Annotations\View;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;

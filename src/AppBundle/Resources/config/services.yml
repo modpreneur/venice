@@ -21,7 +21,7 @@ services:
             - %necktie_url%
             - %necktie_client_id%
             - %necktie_client_secret%
-            - %login_response_route% #route
+            - %login_response_route%
 
     necktie:
         alias: app.services.necktie_gateway
@@ -54,6 +54,11 @@ services:
             - %necktie_url%
             - "@router"
 
+    admin.form_creator:
+        class: AppBundle\Services\FormCreator
+        arguments:
+            - "@form.factory"
+            - "@router"
 
     # EVENT LISTENERS #
 
@@ -91,3 +96,109 @@ services:
          class: Twig_Extensions_Extension_Date
          tags:
              - { name: twig.extension }
+
+
+# ************   FORMS   ************
+
+    admin.form.custom_collection:
+        class: AppBundle\Form\Collection\CollectionType
+        tags:
+            - { name: form.type, alias: collection }
+
+    admin.form.content_in_group:
+        class: AppBundle\Form\Content\ContentInGroupType
+        arguments:
+            - "@doctrine.orm.entity_manager"
+        tags:
+            - { name: form.type }
+
+    admin.form.content_product:
+        class: AppBundle\Form\Content\ContentProductType
+        arguments:
+            - "@doctrine.orm.entity_manager"
+        tags:
+            - { name: form.type }
+
+    admin.form.group_content:
+        class: AppBundle\Form\Content\GroupContentType
+        arguments:
+            - "@doctrine.orm.entity_manager"
+        tags:
+            - { name: form.type }
+
+    admin.form.html_content:
+        class: AppBundle\Form\Content\HtmlContentType
+        arguments:
+            - "@doctrine.orm.entity_manager"
+        tags:
+            - { name: form.type }
+
+    admin.form.mp3_content:
+        class: AppBundle\Form\Content\Mp3ContentType
+        arguments:
+            - "@doctrine.orm.entity_manager"
+        tags:
+            - { name: form.type }
+
+    admin.form.pdf_content:
+        class: AppBundle\Form\Content\PdfContentType
+        arguments:
+            - "@doctrine.orm.entity_manager"
+        tags:
+            - { name: form.type }
+
+    admin.form.text_content:
+        class: AppBundle\Form\Content\TextContentType
+        arguments:
+            - "@doctrine.orm.entity_manager"
+        tags:
+            - { name: form.type }
+
+    admin.form.video_content:
+        class: AppBundle\Form\Content\VideoContentType
+        arguments:
+            - "@doctrine.orm.entity_manager"
+        tags:
+            - { name: form.type }
+
+    admin.form.free_product:
+        class: AppBundle\Form\Product\FreeProductType
+        arguments:
+            - "@doctrine.orm.entity_manager"
+        tags:
+            - { name: form.type }
+
+    admin.form.standard_product:
+        class: AppBundle\Form\Product\StandardProductType
+        arguments:
+            - "@doctrine.orm.entity_manager"
+        tags:
+            - { name: form.type }
+
+    admin.form.user:
+        class: AppBundle\Form\User\UserType
+        arguments:
+            - "@doctrine.orm.entity_manager"
+        tags:
+            - { name: form.type }
+
+    admin.form.billing_plan:
+        class: AppBundle\Form\BillingPlanType
+        arguments:
+            - "@doctrine.orm.entity_manager"
+        tags:
+            - { name: form.type }
+
+    admin.form.blog_article:
+        class: AppBundle\Form\BlogArticleType
+        arguments:
+            - "@doctrine.orm.entity_manager"
+        tags:
+            - { name: form.type }
+
+    admin.form.product_access:
+        class: AppBundle\Form\ProductAccessType
+        arguments:
+            - "@doctrine.orm.entity_manager"
+        tags:
+            - { name: form.type }

@@ -9,8 +9,8 @@
 namespace AdminBundle\Controller;
 
 
-use AdminBundle\Form\User\UserType;
 use AppBundle\Entity\User;
+use AppBundle\Form\User\UserType;
 use Doctrine\DBAL\DBALException;
 use FOS\RestBundle\Controller\Annotations\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;

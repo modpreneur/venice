@@ -9,12 +9,12 @@
 namespace AppBundle\Entity\Product;
 
 
-use AdminBundle\Form\Product\FreeProductType;
-use AdminBundle\Form\Product\StandardProductType;
 use AppBundle\Entity\Content\Content;
 use AppBundle\Entity\ContentProduct;
 use AppBundle\Entity\ProductAccess;
 use AppBundle\Entity\User;
+use AppBundle\Form\Product\FreeProductType;
+use AppBundle\Form\Product\StandardProductType;
 use Cocur\Slugify\Slugify;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
@@ -98,7 +98,6 @@ abstract class Product extends TrinityProduct
 
     public function __construct()
     {
-        $this->users = new ArrayCollection();
         $this->enabled = true;
         $this->productAccesses = new ArrayCollection();
         $this->orderNumber = 0;
@@ -160,41 +159,6 @@ abstract class Product extends TrinityProduct
     {
         $this->name = $name;
         $this->createHandle($name);
-    }
-
-
-    /**
-     * @return ArrayCollection<User>
-     */
-    public function getUsers()
-    {
-        return $this->users;
-    }
-
-
-    /**
-     * @param User $user
-     * @return $this
-     */
-    public function addUser(User $user)
-    {
-        if (!$this->users->contains($user)) {
-            $this->users->add($user);
-        }
-
-        return $this;
-    }
-
-
-    /**
-     * @param User $user
-     * @return $this
-     */
-    public function removeUser(User $user)
-    {
-        $this->users->remove($user);
-
-        return $this;
     }
 
     /**
@@ -353,14 +317,11 @@ abstract class Product extends TrinityProduct
     /**
      * Get form type of product
      *
-     * @param array|null $arguments
-     *
      * @return StandardProductType|FreeProductType
      */
-    public function getFormTypeClass($arguments = [])
+    public function getFormTypeClass()
     {
         $name = get_class($this)."Type";
-        $name = str_replace('AppBundle', 'AdminBundle', $name);
         $name = str_replace('Entity', 'Form', $name);
 
         return $name;
@@ -392,12 +353,11 @@ abstract class Product extends TrinityProduct
      *
      * @internal potentially dangerous - does not check the delay and product access!
      *
-     * @param User $user
      * @param string $type Type of the content (html, text, video, mp3, ...)
      *
      * @return array
      */
-    public function getAllContentByType(User $user, $type)
+    public function getAllContentByType($type)
     {
         $content = [];
 

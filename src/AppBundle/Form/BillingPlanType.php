@@ -6,16 +6,16 @@
  * Time: 14:29
  */
 
-namespace AdminBundle\Form;
+namespace AppBundle\Form;
 
 
-use AdminBundle\Form\DataTransformer\EntityToNumberTransformer;
+use AppBundle\Form\DataTransformer\EntityToNumberTransformer;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class BillingPlanType extends AdminBaseType
+class BillingPlanType extends BaseType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {

@@ -6,7 +6,7 @@
  * Time: 19:16
  */
 
-namespace AdminBundle\Form;
+namespace AppBundle\Form;
 
 
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
@@ -15,7 +15,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class BlogArticleType extends AdminBaseType
+class BlogArticleType extends BaseType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {

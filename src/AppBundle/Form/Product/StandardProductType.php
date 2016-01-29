@@ -6,7 +6,7 @@
  * Time: 18:28
  */
 
-namespace AdminBundle\Form\Product;
+namespace AppBundle\Form\Product;
 
 
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;

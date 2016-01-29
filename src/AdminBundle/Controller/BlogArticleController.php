@@ -9,8 +9,8 @@
 namespace AdminBundle\Controller;
 
 
-use AdminBundle\Form\BlogArticleType;
 use AppBundle\Entity\BlogArticle;
+use AppBundle\Form\BlogArticleType;
 use Doctrine\DBAL\DBALException;
 use FOS\RestBundle\Controller\Annotations\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;

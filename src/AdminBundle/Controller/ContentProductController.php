@@ -8,8 +8,8 @@
 
 namespace AdminBundle\Controller;
 
-use AdminBundle\Form\Content\ContentProductType;
 use AppBundle\Entity\ContentProduct;
+use AppBundle\Form\Content\ContentProductType;
 use Doctrine\DBAL\DBALException;
 use FOS\RestBundle\Controller\Annotations\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;

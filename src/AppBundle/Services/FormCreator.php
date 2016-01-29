@@ -1,6 +1,6 @@
 <?php
 
-namespace AdminBundle\Services;
+namespace AppBundle\Services;
 
 
 use Symfony\Component\Form\FormFactoryInterface;

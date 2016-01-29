@@ -6,17 +6,17 @@
  * Time: 18:03
  */
 
-namespace AdminBundle\Form\Product;
+namespace AppBundle\Form\Product;
 
 
-use AdminBundle\Form\AdminBaseType;
+use AppBundle\Form\BaseType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 
-class ProductType extends AdminBaseType
+class ProductType extends BaseType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
