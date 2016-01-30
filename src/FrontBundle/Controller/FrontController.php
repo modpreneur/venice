@@ -29,7 +29,7 @@ class FrontController extends Controller
         $groups = $this->getDoctrine()->getRepository("AppBundle:Content\\GroupContent")->findAll();
 
         return $this->render(
-            ":FrontBundle/Front:index.html.twig",
+            "FrontBundle:Front:index.html.twig",
             ["groups" => $groups,]
         );
     }

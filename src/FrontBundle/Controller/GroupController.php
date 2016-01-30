@@ -30,7 +30,7 @@ class GroupController extends Controller
     public function showGroupAction(GroupContent $group)
     {
         return $this->render(
-            ":FrontBundle/Content:uglyGroup.html.twig",
+            "FrontBundle:Content:uglyGroup.html.twig",
             [
                 "group" => $group
             ]

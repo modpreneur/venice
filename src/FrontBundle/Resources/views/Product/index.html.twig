@@ -1,4 +1,4 @@
-{% extends('base.html.twig') %}
+{% extends('AppBundle::base.html.twig') %}
 
 {% block body %}
     <h1>Products</h1>
@@ -12,8 +12,8 @@
                     <a href="{{ path("front_product_demo", {"id": product.id}) }}">To demo</a>
                 {% elseif(product.type == "standard") %}
                     {{ product.name }}
-                    {% include ":FrontBundle/Common:buyLink.html.twig" with {"url": urlGenerator.generateBuyUrl(product, false), "text": "Buy now" } %}
-                    {% include ":FrontBundle/Common:buyLink.html.twig" with {"url": urlGenerator.generateBuyUrl(product, true), "text": "Buy now with stored credit card" } %}
+                    {% include "FrontBundle:Common:buyLink.html.twig" with {"url": urlGenerator.generateBuyUrl(product, false), "text": "Buy now" } %}
+                    {% include "FrontBundle:Common:buyLink.html.twig" with {"url": urlGenerator.generateBuyUrl(product, true), "text": "Buy now with stored credit card" } %}
                 {% endif %}
             </li>
         {% endfor %}

@@ -33,7 +33,7 @@ class RenderDefaultContentTemplateExtension extends \Twig_Extension
     public function renderDefault(\Twig_Environment $twig, Content $content)
     {
         return $twig->render(
-            ":FrontBundle/Content:".$content->getType()."Default.html.twig",
+            "FrontBundle:Content:".$content->getType()."Default.html.twig",
             ["content" => $content]
         );
     }

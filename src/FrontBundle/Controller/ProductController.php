@@ -32,7 +32,7 @@ class ProductController extends Controller
         $urlGenerator = $this->get("app.services.buy_url_generator");
 
         return $this->render(
-            ":FrontBundle/Product:index.html.twig",
+            "FrontBundle:Product:index.html.twig",
             [
                 "products" => $products,
                 "urlGenerator" => $urlGenerator
@@ -48,7 +48,7 @@ class ProductController extends Controller
      */
     public function showAction(Product $product)
     {
-        return $this->render(":FrontBundle/Product:show.html.twig", ["product" => $product]);
+        return $this->render("FrontBundle:Product:show.html.twig", ["product" => $product]);
     }
 
     /**
@@ -60,7 +60,7 @@ class ProductController extends Controller
      */
     public function demoAction(Product $product)
     {
-        return $this->render(":FrontBundle/Product:demo.html.twig", ["product" => $product]);
+        return $this->render("FrontBundle:Product:demo.html.twig", ["product" => $product]);
     }
 
 
@@ -71,7 +71,7 @@ class ProductController extends Controller
      */
     public function immersionIndexAction()
     {
-        return $this->render(":FrontBundle/Product:immersionIndex.html.twig");
+        return $this->render("FrontBundle:Product:immersionIndex.html.twig");
     }
 
 
@@ -86,7 +86,7 @@ class ProductController extends Controller
     {
         $immersion = $product->getAllContentForImmersion();
 
-        return $this->render(":FrontBundle/Product:immersion.html.twig", ["immersion" => $immersion]);
+        return $this->render("FrontBundle:Product:immersion.html.twig", ["immersion" => $immersion]);
     }
 
 
@@ -102,7 +102,7 @@ class ProductController extends Controller
         $immersion = $product->getAllContentForImmersion();
 
         return $this->render(
-            ":FrontBundle/Product:immersion2.html.twig",
+            "FrontBundle:Product:immersion2.html.twig",
             [
                 "immersion" => $immersion,
                 "product" => $product,
