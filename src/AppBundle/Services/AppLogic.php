@@ -28,7 +28,7 @@ class AppLogic
      * @param ContainerInterface $container
      * @param $forceReturn bool|null If bool all methods will return the given value
      */
-    public function __construct(ContainerInterface $container, $forceReturn = null)
+    public function __construct(ContainerInterface $container, bool $forceReturn = null)
     {
         $this->container = $container;
         $this->connectedToNecktie = $this->container->hasParameter("necktie_url");
@@ -36,19 +36,6 @@ class AppLogic
         $this->setForceReturn($forceReturn);
     }
 
-    /**
-     * Set the value which will be returned by all methods.
-     *
-     * @param $forceReturn bool|null Bool to force return given value. Null to return the default logic value.
-     */
-    public function setForceReturn($forceReturn)
-    {
-        if (($forceReturn !== null) && (!is_bool($forceReturn))) {
-            throw new \InvalidArgumentException("The forceReturn has to be null or bool!");
-        }
-
-        $this->forceReturn = $forceReturn;
-    }
 
     /**
      * Is the logic in the test mode?
@@ -59,6 +46,7 @@ class AppLogic
     {
         return is_bool($this->forceReturn);
     }
+
 
     /**
      * Is the app connected to necktie.
@@ -208,4 +196,16 @@ class AppLogic
 
         return !$this->connectedToNecktie;
     }
+
+
+    /**
+     * Set the value which will be returned by all methods.
+     *
+     * @param $forceReturn bool|null Bool to force return given value. Null to return the default logic value.
+     */
+    protected function setForceReturn(bool $forceReturn = null)
+    {
+        $this->forceReturn = $forceReturn;
+    }
+
 }

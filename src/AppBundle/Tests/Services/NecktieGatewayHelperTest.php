@@ -38,7 +38,7 @@ class NecktieGatewayHelperTest extends BaseTest
             $this->assertEquals($expectedOutput->getAccessToken(), $result->getAccessToken());
             $this->assertEquals($expectedOutput->getRefreshToken(), $result->getRefreshToken());
             $this->assertEquals($expectedOutput->getScope(), $result->getScope());
-            $this->assertEquals($expectedOutput->getValidTo()->getTimestamp(), $result->getValidTo()->getTimestamp(), "", 2);
+            $this->assertDatesTimeEquals($expectedOutput->getValidTo(), $result->getValidTo(), "", 20);
         } else {
             $this->assertEquals($expectedOutput, $result);
         }

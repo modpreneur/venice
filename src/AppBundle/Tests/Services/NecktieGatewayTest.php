@@ -342,7 +342,6 @@ class NecktieGatewayTest extends BaseTest
     public function testGetUserByAccessTokenExistingUser()
     {
         $responseData = ["id" => 3, "username" => "username", "email" => "email@mail.com"];
-        $jsonResponseData = json_encode($responseData);
 
         $userInfo = [
             "id" => 3,

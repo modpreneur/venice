@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit colors="true">
+    <php>
+        <server name="KERNEL_DIR" value="app" />
+    </php>
+
     <testsuites>
         <testsuite name="Services">
             <directory>./src/AppBundle/Tests/Services</directory>

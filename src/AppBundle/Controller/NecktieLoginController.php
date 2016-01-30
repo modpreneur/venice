@@ -30,13 +30,11 @@ class NecktieLoginController extends Controller
     /**
      * @Route("/login", name="necktie_login")
      *
-     * @param Request $request
-     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function redirectToNecktieLoginAction(Request $request)
+    public function redirectToNecktieLoginAction()
     {
-        $necktieGateway = $this->get("app.services.necktie_gateway");
+        $necktieGateway = $this->getGateway();
 
         $url = $necktieGateway->getLoginUrl();
         $cookie = $necktieGateway->getStateCookie();
@@ -58,7 +56,7 @@ class NecktieLoginController extends Controller
     public function processNecktieLoginResponseAction(Request $request)
     {
         /** @var NecktieGateway $necktieGateway */
-        $necktieGateway = $this->get("app.services.necktie_gateway");
+        $necktieGateway = $this->getGateway();
         $entityManager = $this->getDoctrine()->getManager();
 
         $this->validateCookie($necktieGateway, $request);
@@ -90,7 +88,7 @@ class NecktieLoginController extends Controller
             return new Response("An error occurred. Please report it to the support.");
         }
 
-        $this->get("event_dispatcher")->dispatch(AppEvents::NECKTIE_LOGIN_SUCCESSFUL, new NecktieLoginSuccessfulEvent($user));
+        $this->dispatchSuccessfulLoginEvent($user);
 
         return $this->redirectToRoute("homepage");
     }
@@ -161,6 +159,7 @@ class NecktieLoginController extends Controller
         return $necktieGateway->getHelper()->createOAuthTokenFromArray($request->query->all());
     }
 
+
     /**
      * Get login manager
      *
@@ -171,5 +170,20 @@ class NecktieLoginController extends Controller
         return $this->get("fos_user.security.login_manager");
     }
 
+
+    /**
+     * @return NecktieGateway
+     */
+    protected function getGateway()
+    {
+        return $this->get("app.services.necktie_gateway");
+    }
+
+
+    protected function dispatchSuccessfulLoginEvent($user)
+    {
+        $this->get("event_dispatcher")
+            ->dispatch(AppEvents::NECKTIE_LOGIN_SUCCESSFUL, new NecktieLoginSuccessfulEvent($user));
+    }
 
 }

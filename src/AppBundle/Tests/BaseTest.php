@@ -28,4 +28,18 @@ abstract class BaseTest extends \PHPUnit_Framework_TestCase
 
         return $method->invokeArgs($object, $parameters);
     }
+
+
+    /**
+     * Assert that two DateTime's are equal withing given delta(difference tolleration)
+     *
+     * @param \DateTime $expected
+     * @param \DateTime $actual
+     * @param string $message
+     * @param int $delta
+     */
+    public function assertDatesTimeEquals(\DateTime $expected, \DateTime $actual, $message = '', $delta = 1)
+    {
+        $this->assertEquals($expected->getTimestamp(), $actual->getTimestamp(), $message, $delta);
+    }
 }
