@@ -34,28 +34,38 @@ class BuyUrlGenerator
      * @return string
      * @throws \Exception
      */
-    public function generateBuyUrl(StandardProduct $product, $useStoredCreditCard = false)
+    public function generateBuyUrl(StandardProduct $product, bool $useStoredCreditCard = false) : string
+    {
+        if ($this->necktieUrl) {
+            return $this->generateNecktieBuyUrl($product, $useStoredCreditCard);
+        }
+        else {
+            throw new \Exception("No method found to generate buy url when not connected to necktie");
+        }
+    }
+
+
+    /**
+     * @param StandardProduct $product
+     * @param bool $useStoredCreditCard
+     * @return string
+     */
+    protected function generateNecktieBuyUrl(StandardProduct $product, bool $useStoredCreditCard = false) : string
     {
         $router = $this->router;
 
-        // Connected to necktie
-        if ($this->necktieUrl) {
-            $url = $router->generate(
-                "necktie_buy_product",
-                [
-                    "id" => $product->getId(),
-                ],
-                $router::ABSOLUTE_URL
-            );
+        $url = $router->generate(
+            "necktie_buy_product",
+            [
+                "id" => $product->getId(),
+            ],
+            $router::ABSOLUTE_URL
+        );
 
-            if ($useStoredCreditCard) {
-                $url .= ($useStoredCreditCard)? "?useStoredCC" : "";
-            }
-
-            return $url;
-
-        } else {
-            throw new \Exception("Necktie url is not defined!");
+        if ($useStoredCreditCard) {
+            $url .= ($useStoredCreditCard) ? "?useStoredCC" : "";
         }
+
+        return $url;
     }
 }

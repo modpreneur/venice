@@ -50,6 +50,8 @@ class NecktieBuyController extends Controller
         $token = $user->getLastAccessToken();
         $productId = $product->getNecktieId();
 
+        //todo add expected price to the string; format of the string?
+
         return new RedirectResponse(
             $this->getParameter("necktie_url")."/payment/cb/ocb/{$productId}?access_token=$token&".(($useStoredCC) ? "useStoredCC=true" : ""),
             302
