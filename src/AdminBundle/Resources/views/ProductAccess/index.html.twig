@@ -67,18 +67,4 @@
         </div>
     {% endif %}
 
-
-    {% if(is_granted('ROLE_ADMIN_USER_EDIT') and is_granted('ROLE_ADMIN_PRODUCT_ACCESS_EDIT') and appLogic.allowAddingNewProductAccesses) %}
-        <div class="span-none-padding-xlarge-24 margin-auto">
-            <div class="row">
-                <div class="info-empty-form">
-                    <a class="button button-addNew" id="newIcon"
-                       href="{{ path('admin_product_access_new', { 'id':user.id }) }}">
-                        Add new product access
-                    </a>
-                </div>
-            </div>
-        </div>
-
-    {% endif %}
 {% endblock %}
