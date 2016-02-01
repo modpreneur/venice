@@ -440,7 +440,7 @@ abstract class Product extends TrinityProduct
 
 
     /**
-     * Get all content for immersion.
+     * Get all ContentProducts for immersion.
      *
      * Returns array of arrays of ContentProduct.
      * Example:
@@ -462,7 +462,7 @@ abstract class Product extends TrinityProduct
      *
      * @return array
      */
-    public function getAllContentForImmersion()
+    public function getAllContentProductsForImmersion()
     {
         if ($this->contentProducts->count() === 0) {
             return [];

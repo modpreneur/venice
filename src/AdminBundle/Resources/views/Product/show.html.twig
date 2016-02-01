@@ -16,6 +16,10 @@
 
             {% if product.type == "standard" %}
                 <tr>
+                    <th>Necktie id</th>
+                    <td>{{ product.necktieId }}</td>
+                </tr>
+                <tr>
                     <th>Desktop billing plan</th>
                     <td>
                         {% if product.desktopBillingPlan %}

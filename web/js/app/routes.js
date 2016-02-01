@@ -32,8 +32,8 @@ export default [
         action: 'Content.newPdf'
     },
     {
-        path: '/admin/content/new/text(/)',
-        action: 'Content.newText'
+        path: '/admin/content/new/iframe(/)',
+        action: 'Content.newIframe'
     },
     {
         path: '/admin/content/new/mp3(/)',

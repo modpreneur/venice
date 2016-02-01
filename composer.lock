@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "0ef0f39f706aebefb4654b353ffa7f7f",
-    "content-hash": "9207426b63ed37a6af6b9fa41f9b6833",
+    "hash": "90f9fd8567ea7e7f6e7698e2897b9fd7",
+    "content-hash": "e2b89494c1763fcad0e8a291635e5ce3",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -2416,16 +2416,16 @@
         },
         {
             "name": "paragonie/random_compat",
-            "version": "1.1.5",
+            "version": "1.1.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/paragonie/random_compat.git",
-                "reference": "dd8998b7c846f6909f4e7a5f67fabebfc412a4f7"
+                "reference": "e6f80ab77885151908d0ec743689ca700886e8b0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/paragonie/random_compat/zipball/dd8998b7c846f6909f4e7a5f67fabebfc412a4f7",
-                "reference": "dd8998b7c846f6909f4e7a5f67fabebfc412a4f7",
+                "url": "https://api.github.com/repos/paragonie/random_compat/zipball/e6f80ab77885151908d0ec743689ca700886e8b0",
+                "reference": "e6f80ab77885151908d0ec743689ca700886e8b0",
                 "shasum": ""
             },
             "require": {
@@ -2460,7 +2460,7 @@
                 "pseudorandom",
                 "random"
             ],
-            "time": "2016-01-06 13:31:20"
+            "time": "2016-01-29 16:19:52"
         },
         {
             "name": "phpcollection/phpcollection",
@@ -2913,16 +2913,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "5.1.4",
+            "version": "5.1.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "676c25c4ac563869572c878fdaf3db21587f5f3b"
+                "reference": "72e92139712e868c3888ed4dd4d3c3eb365b1bb7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/676c25c4ac563869572c878fdaf3db21587f5f3b",
-                "reference": "676c25c4ac563869572c878fdaf3db21587f5f3b",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/72e92139712e868c3888ed4dd4d3c3eb365b1bb7",
+                "reference": "72e92139712e868c3888ed4dd4d3c3eb365b1bb7",
                 "shasum": ""
             },
             "require": {
@@ -2983,7 +2983,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2016-01-11 10:11:10"
+            "time": "2016-01-29 09:19:36"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
@@ -4347,12 +4347,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/modpreneur/trinity-admin.git",
-                "reference": "cbf25ec5af16a16a11d218370ab586e132f6dd0e"
+                "reference": "051e5164c8329bfe2f8fecf38b78ecd89bc5c657"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/modpreneur/trinity-admin/zipball/cbf25ec5af16a16a11d218370ab586e132f6dd0e",
-                "reference": "cbf25ec5af16a16a11d218370ab586e132f6dd0e",
+                "url": "https://api.github.com/repos/modpreneur/trinity-admin/zipball/051e5164c8329bfe2f8fecf38b78ecd89bc5c657",
+                "reference": "051e5164c8329bfe2f8fecf38b78ecd89bc5c657",
                 "shasum": ""
             },
             "require": {
@@ -4394,7 +4394,7 @@
                 }
             ],
             "description": "Trinity Admin bundle",
-            "time": "2016-01-27 16:33:53"
+            "time": "2016-01-29 14:24:09"
         },
         {
             "name": "trinity/framework",
@@ -4402,12 +4402,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/modpreneur/trinity.git",
-                "reference": "9942284670c497ce93d18a6a6f663143061b7326"
+                "reference": "ce9f5c703ef449007046acc2161a644c3c43c7ac"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/modpreneur/trinity/zipball/9942284670c497ce93d18a6a6f663143061b7326",
-                "reference": "9942284670c497ce93d18a6a6f663143061b7326",
+                "url": "https://api.github.com/repos/modpreneur/trinity/zipball/ce9f5c703ef449007046acc2161a644c3c43c7ac",
+                "reference": "ce9f5c703ef449007046acc2161a644c3c43c7ac",
                 "shasum": ""
             },
             "require": {
@@ -4449,7 +4449,66 @@
                 }
             ],
             "description": "Trinity Framework",
-            "time": "2016-01-27 16:45:06"
+            "time": "2016-02-01 09:37:12"
+        },
+        {
+            "name": "trinity/grid",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/modpreneur/trinity-grid.git",
+                "reference": "9ab73a694eac66b60335f559bbf8505107463c30"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/modpreneur/trinity-grid/zipball/9ab73a694eac66b60335f559bbf8505107463c30",
+                "reference": "9ab73a694eac66b60335f559bbf8505107463c30",
+                "shasum": ""
+            },
+            "require": {
+                "friendsofsymfony/user-bundle": "dev-master",
+                "jms/serializer-bundle": "~1.1",
+                "nette/utils": "~2.3",
+                "php": ">=7",
+                "sensio/framework-extra-bundle": "~3.0",
+                "symfony/framework-bundle": "~2.8 | ~3.0",
+                "trinity/framework": "dev-master",
+                "trinity/search": "dev-master",
+                "trinity/settings": "dev-master",
+                "twig/extensions": "~1.3"
+            },
+            "require-dev": {
+                "fzaninotto/faker": "1.5.*",
+                "mockery/mockery": "~0.9",
+                "phpunit/phpunit": "~5.1",
+                "symfony/var-dumper": "~3.0"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Trinity\\Bundle\\GridBundle\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Trinity Team",
+                    "email": "info@modpreneur.com"
+                }
+            ],
+            "description": "Trinity Grid bundle",
+            "time": "2016-01-27 12:25:36"
         },
         {
             "name": "trinity/notification",
@@ -4458,12 +4517,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/modpreneur/trinity-notifications.git",
-                "reference": "6063057b3acb95696621f62012c41131a51f1fa3"
+                "reference": "b19ac6b5a8b1d5b2bc54e3561d924c12e9aef447"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/modpreneur/trinity-notifications/zipball/6063057b3acb95696621f62012c41131a51f1fa3",
-                "reference": "6063057b3acb95696621f62012c41131a51f1fa3",
+                "url": "https://api.github.com/repos/modpreneur/trinity-notifications/zipball/b19ac6b5a8b1d5b2bc54e3561d924c12e9aef447",
+                "reference": "b19ac6b5a8b1d5b2bc54e3561d924c12e9aef447",
                 "shasum": ""
             },
             "require": {
@@ -4508,7 +4567,66 @@
                 }
             ],
             "description": "Trinity Notification bundle",
-            "time": "2016-01-27 14:20:46"
+            "time": "2016-02-01 11:31:40"
+        },
+        {
+            "name": "trinity/search",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/modpreneur/trinity-search.git",
+                "reference": "26f60778ad44d129b03fdfd15049469d573f568f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/modpreneur/trinity-search/zipball/26f60778ad44d129b03fdfd15049469d573f568f",
+                "reference": "26f60778ad44d129b03fdfd15049469d573f568f",
+                "shasum": ""
+            },
+            "require": {
+                "friendsofsymfony/rest-bundle": "~1.7",
+                "friendsofsymfony/user-bundle": "master-dev",
+                "jms/serializer-bundle": "~1.1",
+                "nette/utils": "~2.3",
+                "php": ">=7",
+                "sensio/framework-extra-bundle": "~3.0",
+                "symfony/framework-bundle": "~2.8 | ~3.0",
+                "trinity/framework": "dev-master",
+                "trinity/settings": "dev-master"
+            },
+            "require-dev": {
+                "fzaninotto/faker": "^1.5",
+                "mockery/mockery": "~0.9",
+                "phpunit/phpunit": "5.1.*",
+                "sensio/generator-bundle": "~3.0",
+                "symfony/var-dumper": "~3.0"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Trinity\\Bundle\\SearchBundle\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Trinity Team",
+                    "email": "info@modpreneur.com"
+                }
+            ],
+            "description": "Trinity Search bundle",
+            "time": "2016-01-27 12:08:48"
         },
         {
             "name": "trinity/settings",
@@ -4516,12 +4634,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/modpreneur/trinity-settings.git",
-                "reference": "cad0b1b40df6ac008f8d27148fa63814b8da9222"
+                "reference": "6eac54de5c0a76322629ff382d3aaa0a210c1153"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/modpreneur/trinity-settings/zipball/cad0b1b40df6ac008f8d27148fa63814b8da9222",
-                "reference": "cad0b1b40df6ac008f8d27148fa63814b8da9222",
+                "url": "https://api.github.com/repos/modpreneur/trinity-settings/zipball/6eac54de5c0a76322629ff382d3aaa0a210c1153",
+                "reference": "6eac54de5c0a76322629ff382d3aaa0a210c1153",
                 "shasum": ""
             },
             "require": {
@@ -4535,7 +4653,7 @@
             "require-dev": {
                 "fzaninotto/faker": "~1.5",
                 "mockery/mockery": "~0.9",
-                "phpunit/phpunit": "5.1.*",
+                "phpunit/phpunit": "~5.1",
                 "symfony/browser-kit": "~2.8|~3.0",
                 "symfony/form": "~3",
                 "symfony/validator": "~3",
@@ -4566,7 +4684,7 @@
                 }
             ],
             "description": "Trinity Settings bundle",
-            "time": "2016-01-26 19:15:34"
+            "time": "2016-02-01 09:06:06"
         },
         {
             "name": "twig/extensions",
@@ -4982,6 +5100,8 @@
         "trinity/notification": 20,
         "trinity/admin": 20,
         "trinity/settings": 20,
+        "trinity/grid": 20,
+        "trinity/search": 20,
         "modpreneur/bowtie": 20
     },
     "prefer-stable": false,

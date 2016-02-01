@@ -31,6 +31,8 @@
         "trinity/notification": "dev-master",
         "trinity/admin": "dev-master",
         "trinity/settings": "dev-master",
+        "trinity/grid": "dev-master",
+        "trinity/search": "dev-master",
         "modpreneur/bowtie": "dev-master",
         "guzzlehttp/guzzle": "~6"
     },

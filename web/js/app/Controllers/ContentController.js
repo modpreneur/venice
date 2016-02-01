@@ -38,7 +38,6 @@ export default class ContetntController extends Controller {
     }
 
     /**
-     * New blog article action
      * @param $scope
      */
     newPdfAction($scope) {
@@ -46,15 +45,13 @@ export default class ContetntController extends Controller {
     }
 
     /**
-     * New blog article action
      * @param $scope
      */
-    newTextAction($scope) {
-        $scope.form = new VeniceForm(q('form[name="text_content"]'), VeniceForm.formType.NEW);
+    newIframeAction($scope) {
+        $scope.form = new VeniceForm(q('form[name="iframe_content"]'), VeniceForm.formType.NEW);
     }
 
     /**
-     * New blog article action
      * @param $scope
      */
     newMp3Action($scope) {
@@ -62,7 +59,6 @@ export default class ContetntController extends Controller {
     }
 
     /**
-     * New blog article action
      * @param $scope
      */
     newVideoAction($scope) {
@@ -70,7 +66,6 @@ export default class ContetntController extends Controller {
     }
 
     /**
-     * New blog article action
      * @param $scope
      */
     newHtmlAction($scope) {
@@ -78,7 +73,6 @@ export default class ContetntController extends Controller {
     }
 
     /**
-     * New blog article action
      * @param $scope
      */
     newGroupAction($scope) {

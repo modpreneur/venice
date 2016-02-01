@@ -13,14 +13,14 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Class TextContent
+ * Class IFrameContent
  *
  * @ORM\Entity()
  * @ORM\Table(name="content_text")
  *
  * @package AppBundle\Entity\Content
  */
-class TextContent extends Content
+class IframeContent extends Content
 {
     /**
      * @var string
@@ -35,7 +35,7 @@ class TextContent extends Content
     /**
      * @return string
      */
-    public function getText()
+    public function getHtml()
     {
         return $this->text;
     }
@@ -44,9 +44,9 @@ class TextContent extends Content
     /**
      * @param string $text
      *
-     * @return TextContent
+     * @return IFrameContent
      */
-    public function setText($text)
+    public function setHtml($text)
     {
         $this->text = $text;
 
@@ -68,6 +68,6 @@ class TextContent extends Content
      */
     public function getType()
     {
-        return "text";
+        return "iframe";
     }
 }

@@ -147,8 +147,8 @@ services:
         tags:
             - { name: form.type }
 
-    admin.form.text_content:
-        class: AppBundle\Form\Content\TextContentType
+    admin.form.iframe_content:
+        class: AppBundle\Form\Content\IframeContentType
         arguments:
             - "@doctrine.orm.entity_manager"
         tags:

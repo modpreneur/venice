@@ -84,7 +84,7 @@ class ProductController extends Controller
      */
     public function immersionAction(Product $product)
     {
-        $immersion = $product->getAllContentForImmersion();
+        $immersion = $product->getAllContentProductsForImmersion();
 
         return $this->render("FrontBundle:Product:immersion.html.twig", ["immersion" => $immersion]);
     }
@@ -99,7 +99,7 @@ class ProductController extends Controller
      */
     public function immersion2Action(Product $product)
     {
-        $immersion = $product->getAllContentForImmersion();
+        $immersion = $product->getAllContentProductsForImmersion();
 
         return $this->render(
             "FrontBundle:Product:immersion2.html.twig",

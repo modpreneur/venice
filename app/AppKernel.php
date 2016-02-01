@@ -35,6 +35,8 @@ class AppKernel extends Kernel
             new Trinity\NotificationBundle\TrinityNotificationBundle(),
             new Trinity\AdminBundle\TrinityAdminBundle(),
             new \Trinity\Bundle\SettingsBundle\SettingsBundle(),
+            new Trinity\Bundle\SearchBundle\SearchBundle(),
+            new Trinity\Bundle\GridBundle\GridBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

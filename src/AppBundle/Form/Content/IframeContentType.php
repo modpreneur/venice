@@ -9,17 +9,17 @@
 namespace AppBundle\Form\Content;
 
 
-use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 
-class TextContentType extends ContentType
+class IframeContentType extends ContentType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         parent::buildForm($builder, $options);
 
         $builder
-            ->add("text", TextType::class);
+            ->add("html", TextareaType::class);
     }
 
 }
