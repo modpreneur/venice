@@ -178,6 +178,7 @@ knp_menu:
 
 white_october_breadcrumbs:
     separator: ''
+    viewTemplate: 'AdminBundle::Breadcrumbs/breadcrumbs.html.twig'
 
 monolog:
     handlers:
