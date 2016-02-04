@@ -78,4 +78,27 @@ export default class ContetntController extends Controller {
     newGroupAction($scope) {
         $scope.form = new VeniceForm(q('form[name="group_content"]'), VeniceForm.formType.NEW);
     }
+
+    /**
+     * New standard product action
+     * @param $scope
+     */
+    newContentProductAction($scope) {
+        //Attach VeniceForm
+        $scope.form = new VeniceForm(q('form[name="content_product_type_with_hidden_content"]'), VeniceForm.formType.NEW);
+    }
+
+    contentProductTabsAction($scope) {
+        $scope.trinityTab = new TrinityTab();
+
+        //On tabs load
+        $scope.trinityTab.addListener('tab-load', function(e) {
+            let form = e.element.q('form');
+            if(form){
+                $scope.veniceForms = $scope.veniceForms || {};
+                $scope.veniceForms[e.id] = new VeniceForm(form);
+            }
+
+        }, this);
+    }
 }

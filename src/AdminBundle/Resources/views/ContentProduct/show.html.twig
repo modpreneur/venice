@@ -3,11 +3,15 @@
         <tbody>
             <tr>
                 <th>Product</th>
-                <td>{{ contentProduct.product.name }}</td>
+                <td>
+                    <a href="{{ path("admin_product_tabs", {"id": contentProduct.product.id }) }}">{{ contentProduct.product.name }}</a>
+                </td>
             </tr>
             <tr>
                 <th>Content</th>
-                <td>{{ contentProduct.content.name }}</td>
+                <td>
+                    <a href="{{ path("admin_content_tabs", {"id": contentProduct.content.id }) }}">{{ contentProduct.content.name }}</a>
+                </td>
             </tr>
             <tr>
                 <th>Delay</th>

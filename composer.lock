@@ -1117,6 +1117,59 @@
             "time": "2016-01-05 21:34:58"
         },
         {
+            "name": "egulias/email-validator",
+            "version": "1.2.11",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/egulias/EmailValidator.git",
+                "reference": "04c6cdf9871140b80947c87db7770c0dd9c75c7c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/egulias/EmailValidator/zipball/04c6cdf9871140b80947c87db7770c0dd9c75c7c",
+                "reference": "04c6cdf9871140b80947c87db7770c0dd9c75c7c",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/lexer": "~1.0,>=1.0.1",
+                "php": ">= 5.3.3"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.4",
+                "satooshi/php-coveralls": "dev-master"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Egulias\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Eduardo Gulias Davis"
+                }
+            ],
+            "description": "A library for validating emails",
+            "homepage": "https://github.com/egulias/EmailValidator",
+            "keywords": [
+                "email",
+                "emailvalidation",
+                "emailvalidator",
+                "validation",
+                "validator"
+            ],
+            "time": "2015-11-11 03:28:32"
+        },
+        {
             "name": "friendsofsymfony/rest-bundle",
             "version": "1.7.7",
             "target-dir": "FOS/RestBundle",
@@ -2913,16 +2966,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "5.1.6",
+            "version": "5.1.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "72e92139712e868c3888ed4dd4d3c3eb365b1bb7"
+                "reference": "d0f7ae467dcbe7a6ad050540c9d1d39a7aefff26"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/72e92139712e868c3888ed4dd4d3c3eb365b1bb7",
-                "reference": "72e92139712e868c3888ed4dd4d3c3eb365b1bb7",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/d0f7ae467dcbe7a6ad050540c9d1d39a7aefff26",
+                "reference": "d0f7ae467dcbe7a6ad050540c9d1d39a7aefff26",
                 "shasum": ""
             },
             "require": {
@@ -2983,7 +3036,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2016-01-29 09:19:36"
+            "time": "2016-02-02 09:03:29"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
@@ -4402,12 +4455,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/modpreneur/trinity.git",
-                "reference": "ce9f5c703ef449007046acc2161a644c3c43c7ac"
+                "reference": "ff006cb72c828950e9e63405a8ae6fde38493c0f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/modpreneur/trinity/zipball/ce9f5c703ef449007046acc2161a644c3c43c7ac",
-                "reference": "ce9f5c703ef449007046acc2161a644c3c43c7ac",
+                "url": "https://api.github.com/repos/modpreneur/trinity/zipball/ff006cb72c828950e9e63405a8ae6fde38493c0f",
+                "reference": "ff006cb72c828950e9e63405a8ae6fde38493c0f",
                 "shasum": ""
             },
             "require": {
@@ -4415,6 +4468,7 @@
                 "doctrine/doctrine-bundle": "~1.6",
                 "doctrine/doctrine-fixtures-bundle": "~2",
                 "doctrine/orm": "~2.5",
+                "egulias/email-validator": "~1.2",
                 "friendsofsymfony/user-bundle": "dev-master",
                 "knplabs/doctrine-behaviors": "~1.2",
                 "php": ">=5.6",
@@ -4449,7 +4503,7 @@
                 }
             ],
             "description": "Trinity Framework",
-            "time": "2016-02-01 09:37:12"
+            "time": "2016-02-02 15:56:43"
         },
         {
             "name": "trinity/grid",

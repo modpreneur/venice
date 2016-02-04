@@ -2,20 +2,21 @@
 /**
  * Created by PhpStorm.
  * User: Jakub Fajkus
- * Date: 29.11.15
- * Time: 16:33
+ * Date: 01.02.16
+ * Time: 17:57
  */
 
-namespace AppBundle\Form\Content;
+namespace AppBundle\Form\ContentProduct;
 
 
-use AppBundle\Form\BaseType;
+use AppBundle\Form\DataTransformer\EntityToNumberTransformer;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ContentProductType extends BaseType
+class ContentProductTypeWithHiddenProduct extends ContentProductType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -32,10 +33,12 @@ class ContentProductType extends BaseType
             )
             ->add(
                 "product",
-                EntityType::class,
+                HiddenType::class,
                 [
-                    "class" => "AppBundle\\Entity\\Product\\Product",
-                    "choice_label" => "name"
+                    // Uses model transformer
+                    "data" => $options["product"],
+                    "data_class" => null,
+                    "label" => null,
                 ]
             )
             ->add(
@@ -44,7 +47,6 @@ class ContentProductType extends BaseType
                 [
                     "required" => true,
                     "empty_data" => 0
-
                 ]
             )
             ->add(
@@ -56,14 +58,27 @@ class ContentProductType extends BaseType
                 ]
             );
 
+
+        $builder
+            ->get("product")
+            ->addModelTransformer(
+                new EntityToNumberTransformer(
+                    $this->entityManager,
+                    "AppBundle:Product\\Product"
+                )
+            );
+
     }
 
+    /**
+     * @param OptionsResolver $resolver
+     */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(
-            [
-                "data_class" => "AppBundle\\Entity\\ContentProduct"
-            ]
-        );
+        parent::configureOptions($resolver);
+
+        $resolver->setDefault("product", null);
     }
+
+
 }

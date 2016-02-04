@@ -9,13 +9,16 @@
 namespace AdminBundle\Controller;
 
 
+use AppBundle\Entity\ContentProduct;
 use AppBundle\Entity\Product\FreeProduct;
 use AppBundle\Entity\Product\Product;
 use AppBundle\Event\AppEvents;
 use AppBundle\Event\FreeProductCreatedEvent;
+use AppBundle\Form\ContentProduct\ContentProductTypeWithHiddenProduct;
 use Doctrine\DBAL\DBALException;
 use ReflectionException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -93,8 +96,6 @@ class ProductController extends BaseAdminController
 
 
     /**
-     * Display a form to create a new Product entity.
-     *
      * @Route("/new/{productType}",requirements={"productType": "\w+"}, name="admin_product_new")
      * @Method("GET")
      * @Security("is_granted('ROLE_ADMIN_PRODUCT_EDIT')")
@@ -137,8 +138,6 @@ class ProductController extends BaseAdminController
 
 
     /**
-     * Process a request to create a new Product entity.
-     *
      * @Route("/create/{productType}",requirements={"productType": "\w+"}, name="admin_product_create")
      * @Method("POST")
      * @Security("is_granted('ROLE_ADMIN_PRODUCT_EDIT')")
@@ -255,8 +254,6 @@ class ProductController extends BaseAdminController
 
 
     /**
-     * Process a request to update a Product entity.
-     *
      * @Route("/{id}/update", requirements={"id": "\d+"}, name="admin_product_update")
      * @Method("PUT")
      * @Security("is_granted('ROLE_ADMIN_PRODUCT_EDIT')")
@@ -345,6 +342,317 @@ class ProductController extends BaseAdminController
             [
                 "message" => "Product successfully deleted.",
                 "location" => $this->generateUrl("admin_product_index"),
+            ],
+            302
+        );
+    }
+
+
+    /**
+     * @Route("/{id}/content-product", name="admin_product_content_product_index")
+     *
+     * @param Product $product
+     *
+     * @return Response
+     */
+    public function contentProductIndexAction(Product $product)
+    {
+        return $this->render(
+            "AdminBundle:Product:contentProductIndex.html.twig",
+            [
+                "contentProducts" => $product->getContentProducts(),
+                "product" => $product
+            ]
+        );
+    }
+
+
+    /**
+     * @Route("/content-product/show/{id}", name="admin_product_content_product_show")
+     * @Method("GET")
+     * @Security("is_granted('ROLE_ADMIN_PRODUCT_VIEW')")
+     *
+     * @param Request $request
+     * @param ContentProduct $contentProduct
+     *
+     * @return Response
+     */
+    public function contentProductShowAction(Request $request, ContentProduct $contentProduct)
+    {
+        return $this->render(
+            "AdminBundle:ContentProduct:show.html.twig",
+            ["contentProduct" => $contentProduct]
+        );
+    }
+
+
+    /**
+     * @Route("/{id}/content-product/new", name="admin_product_content_product_new")
+     *
+     * @Method("GET")
+     * @Security("is_granted('ROLE_ADMIN_CONTENT_PRODUCT_EDIT')")
+     *
+     * @param Request $request
+     * @param Product $product
+     *
+     * @return Response
+     */
+    public function contentProductNewAction(Request $request, Product $product)
+    {
+        $this->getBreadcrumbs()
+            ->addRouteItem("Products", "admin_product_index")
+            ->addRouteItem(
+                $product->getName(),
+                "admin_product_tabs",
+                ["id" => $product->getId()]
+            )
+            ->addRouteItem(
+                "New association",
+                "admin_product_content_product_new",
+                ["id" => $product->getId()]
+            );
+
+        $form = $this->getFormCreator()
+            ->createCreateForm(
+                new ContentProduct(),
+                ContentProductTypeWithHiddenProduct::class,
+                "admin_product_content_product",
+                [],
+                ["product" => $product,]
+            );
+
+        return $this->render("AdminBundle:ContentProduct:new.html.twig",
+            ["form" => $form->createView(),]
+        );
+    }
+
+
+    /**
+     * @Route("/content-product/edit/{id}", requirements={"id": "\d+"}, name="admin_product_content_product_edit")
+     * @Method("GET")
+     * @Security("is_granted('ROLE_ADMIN_CONTENT_PRODUCT_EDIT')")
+     *
+     * @param ContentProduct $contentProduct
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function contentProductEditAction(ContentProduct $contentProduct)
+    {
+        $contentForm = $this->getFormCreator()
+            ->createEditForm(
+                $contentProduct,
+                ContentProductTypeWithHiddenProduct::class,
+                "admin_product_content_product",
+                ["id" => $contentProduct->getId(),],
+                ["product" => $contentProduct->getProduct()]
+            );
+
+        return $this->render(
+            "AdminBundle:ContentProduct:edit.html.twig",
+            [
+                "entity" => $contentProduct,
+                "form" => $contentForm->createView(),
+            ]
+        );
+    }
+
+
+    /**
+     * @Route("/content-product/{id}/update", requirements={"id": "\d+"}, name="admin_product_content_product_update")
+     * @Method("PUT")
+     * @Security("is_granted('ROLE_ADMIN_CONTENT_PRODUCT_EDIT')")
+     *
+     * @param Request $request
+     * @param ContentProduct $contentProduct
+     *
+     * @return JsonResponse
+     *
+     */
+    public function contentProductUpdateAction(Request $request, ContentProduct $contentProduct)
+    {
+        $form = $this->getFormCreator()
+            ->createEditForm(
+                $contentProduct,
+                ContentProductTypeWithHiddenProduct::class,
+                "admin_product_content_product",
+                ["id" => $contentProduct->getId(),],
+                ["product" => $contentProduct->getProduct()]
+            );
+
+        $em = $this->getEntityManager();
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $em->persist($contentProduct);
+
+            try {
+                $em->flush();
+            } catch (DBALException $e) {
+                return new JsonResponse(
+                    [
+                        "error" => ["db" => $e->getMessage(),],
+                    ], 400
+                );
+            }
+
+            return new JsonResponse(
+                ["message" => "Association successfully updated",]
+            );
+        } else {
+            return $this->returnFormErrorsJsonResponse($form);
+        }
+    }
+
+
+    /**
+     * @Route("/content-product/tabs/{id}", name="admin_product_content_product_tabs")
+     * @Method("GET")
+     *
+     * @Security("is_granted('ROLE_ADMIN_CONTENT_PRODUCT_VIEW')")
+     *
+     * @param ContentProduct $contentProduct
+     *
+     * @return Response
+     */
+    public function contentProductTabsAction(ContentProduct $contentProduct)
+    {
+        $this->getBreadcrumbs()
+            ->addRouteItem("Products", "admin_product_index")
+            ->addRouteItem(
+                $contentProduct->getProduct()->getName(),
+                "admin_product_tabs",
+                ["id" => $contentProduct->getProduct()->getId()]
+            )
+            ->addRouteItem(
+                "Association with ".$contentProduct->getContent()->getName(),
+                "admin_product_content_product_tabs",
+                ["id" => $contentProduct->getId()]
+            );
+
+        return $this->render(
+            "AdminBundle:Product:contentProductTabs.html.twig",
+            ["contentProduct" => $contentProduct,]
+        );
+    }
+
+    /**
+     * @Route("/content-product/create", name="admin_product_content_product_create")
+     * @Method("POST")
+     *
+     * @Security("is_granted('ROLE_ADMIN_CONTENT_PRODUCT_EDIT')")
+     *
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function contentProductCreateAction(Request $request)
+    {
+        $contentProduct = new ContentProduct();
+
+        $form = $this->getFormCreator()
+            ->createCreateForm(
+                $contentProduct,
+                ContentProductTypeWithHiddenProduct::class,
+                "admin_product_content_product"
+            );
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($contentProduct);
+
+            try {
+                $em->flush();
+            } catch (DBALException $e) {
+                return new JsonResponse(
+                    [
+                        "error" => ["db" => $e->getMessage(),],
+                    ],
+                    400
+                );
+            }
+
+            $url = $this->generateUrl(
+                    "admin_product_tabs",
+                    ["id" => $contentProduct->getProduct()->getId()]
+                )."#tab3";
+
+            return new JsonResponse(
+                [
+                    "message" => "Successfully created",
+                    "location" => $url
+                ],
+                302
+            );
+        } else {
+            return $this->returnFormErrorsJsonResponse($form);
+        }
+
+    }
+
+    /**
+     * @Route("/content-product/tab/{id}/delete", name="admin_product_content_product_delete_tab")
+     * @Method("GET")
+     * @Security("is_granted('ROLE_ADMIN_CONTENT_PRODUCT_EDIT')")
+     *
+     * @param ContentProduct $contentProduct
+     *
+     * @return Response
+     */
+    public function contentProductDeleteTabAction(ContentProduct $contentProduct)
+    {
+        $form = $this->getFormCreator()
+            ->createDeleteForm("admin_product_content_product", $contentProduct->getId());
+
+        return $this
+            ->render(
+                "AdminBundle:ContentProduct:tabDelete.html.twig",
+                [
+                    "form" => $form->createView()
+                ]
+            );
+    }
+
+
+    /**
+     * @Route("/content-product/{id}/delete", name="admin_product_content_product_delete")
+     * @Method("DELETE")
+     * @Security("is_granted('ROLE_ADMIN_CONTENT_PRODUCT_EDIT')")
+     *
+     * @param Request $request
+     * @param ContentProduct $contentProduct
+     *
+     * @return JsonResponse
+     */
+    public function contentProductDeleteAction(Request $request, ContentProduct $contentProduct)
+    {
+        $form = $this->getFormCreator()
+            ->createDeleteForm("admin_product_content_product", $contentProduct->getId());
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            try {
+                $em = $this->getEntityManager();
+                $em->remove($contentProduct);
+                $em->flush();
+            } catch (DBALException $e) {
+                return new JsonResponse(
+                    [
+                        "error" => ["db" => $e->getMessage(),],
+                        "message" => "Could not delete.",
+                    ],
+                    400
+                );
+            }
+        }
+
+        return new JsonResponse(
+            [
+                "message" => "Association successfully deleted.",
+                "location" => $this->generateUrl("admin_product_tabs", ["id" => $contentProduct->getProduct()->getId()]),
             ],
             302
         );

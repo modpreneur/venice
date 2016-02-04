@@ -57,12 +57,6 @@ class MenuListener
             ->setExtra('roles', ['ROLE_ADMIN_CONTENT_VIEW']);
 
         $menu
-            ->addChild('Associations', array('route' => 'admin_content_product_index'))
-            ->setAttribute('icon', 'tiecons tiecons-pin-right-negative')
-            ->setExtra('orderNumber', 3)
-            ->setExtra('roles', ['ROLE_ADMIN_CONTENT_PRODUCT_VIEW']);
-
-        $menu
             ->addChild('Blog articles', array('route' => 'admin_blog_article_index'))
             ->setAttribute('icon', 'tiecons tiecons-book-text')
             ->setExtra('orderNumber', 4)

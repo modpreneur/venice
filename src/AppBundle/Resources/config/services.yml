@@ -112,8 +112,15 @@ services:
         tags:
             - { name: form.type }
 
-    admin.form.content_product:
-        class: AppBundle\Form\Content\ContentProductType
+    admin.form.content_product_with_hidden_content:
+        class: AppBundle\Form\ContentProduct\ContentProductTypeWithHiddenContent
+        arguments:
+            - "@doctrine.orm.entity_manager"
+        tags:
+            - { name: form.type }
+
+    admin.form.content_product_with_hidden_product:
+        class: AppBundle\Form\ContentProduct\ContentProductTypeWithHiddenProduct
         arguments:
             - "@doctrine.orm.entity_manager"
         tags:
