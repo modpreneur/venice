@@ -84,6 +84,9 @@ services:
         tags:
             - { name: doctrine.event_listener, event: onFlush}
 
+    app.roles_loader:
+        class: AppBundle\Services\RolesLoader
+
     # TWIG EXTENSIONS #
 
     app.twig.extension.human_bool:
@@ -186,6 +189,14 @@ services:
         class: AppBundle\Form\User\UserType
         arguments:
             - "@doctrine.orm.entity_manager"
+        tags:
+            - { name: form.type }
+
+    admin.form.user.roles:
+        class: AppBundle\Form\User\RolesType
+        arguments:
+            - "@doctrine.orm.entity_manager"
+            - "@app.roles_loader"
         tags:
             - { name: form.type }
 

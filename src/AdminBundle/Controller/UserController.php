@@ -10,7 +10,9 @@ namespace AdminBundle\Controller;
 
 
 use AppBundle\Entity\User;
+use AppBundle\Form\User\RolesType;
 use AppBundle\Form\User\UserType;
+use AppBundle\Services\RolesManager;
 use Doctrine\DBAL\DBALException;
 use FOS\RestBundle\Controller\Annotations\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -329,5 +331,70 @@ class UserController extends BaseAdminController
             ],
             302
         );
+    }
+
+    /**
+     * @Route("/{id}/roles/edit", name="admin_user_roles_edit")
+     * @Method("GET")
+     *
+     * @Security("is_granted('ROLE_ADMIN_USER_EDIT')")
+     *
+     * @param User $user
+     *
+     * @return Response
+     */
+    public function rolesEditAction(User $user)
+    {
+        $form = $this->getFormCreator()
+            ->createEditForm(
+                $user,
+                RolesType::class,
+                "admin_user_roles",
+                ["id" => $user->getId()]
+            );
+
+        return $this->render(
+            "AdminBundle:User:roles.html.twig",
+            [
+                "form" => $form->createView()
+            ]
+        );
+    }
+
+
+    /**
+     * @Route("/{id}/roles/edit", name="admin_user_roles_update")
+     * @Method("PUT")
+     *
+     * @Security("is_granted('ROLE_ADMIN_USER_EDIT')")
+     *
+     * @param User $user
+     *
+     * @return Response
+     */
+    public function rolesUpdateAction(Request $request, User $user)
+    {
+        $userManager = $this->get("fos_user.user_manager");
+        $form = $this->getFormCreator()
+            ->createEditForm(
+                $user,
+                RolesType::class,
+                "admin_user_roles",
+                ["id" => $user->getId()]
+            );
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $userManager->updateUser($user);
+
+            return new JsonResponse(
+                [
+                    "message" => "Permissions successfully updated.",
+                ]
+            );
+        } else {
+            return $this->returnFormErrorsJsonResponse($form);
+        }
     }
 }

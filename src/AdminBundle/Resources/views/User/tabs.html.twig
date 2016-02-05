@@ -36,7 +36,10 @@
             <label for="tab3">Accesses</label>
 
             <input type="radio" name="tab" id="tab4" class="tab-head" />
-            <label for="tab4">Danger zone</label>
+            <label for="tab4">Permissions</label>
+
+            <input type="radio" name="tab" id="tab5" class="tab-head" />
+            <label for="tab5">Danger zone</label>
         {% endif %}
 
 
@@ -47,7 +50,8 @@
             {% if is_granted('ROLE_ADMIN_USER_EDIT') %}
                 <div id="tab-body-2" class="tab-body" data-source="{{ path('admin_user_edit', {'id': user.id}) }}"></div>
                 <div id="tab-body-3" class="tab-body" data-source="{{ path('admin_product_access_user_index', {'id': user.id}) }}"></div>
-                <div id="tab-body-4" class="tab-body" data-source="{{ path('admin_user_delete_tab', {'id': user.id}) }}"></div>
+                <div id="tab-body-4" class="tab-body" data-source="{{ path('admin_user_roles_edit', {'id': user.id}) }}"></div>
+                <div id="tab-body-5" class="tab-body" data-source="{{ path('admin_user_delete_tab', {'id': user.id}) }}"></div>
             {% endif %}
         </div>
     </div>
