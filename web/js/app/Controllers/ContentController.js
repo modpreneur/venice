@@ -8,6 +8,8 @@ import TrinityTab from 'trinity/components/TrinityTab';
 import Collection from 'trinity/Collection';
 import _ from 'lodash';
 import VeniceForm from '../Libraries/VeniceForm';
+import Gateway from 'trinity/Gateway';
+import Slugify from '../Libraries/Slugify';
 
 export default class ContetntController extends Controller {
 
@@ -20,21 +22,26 @@ export default class ContetntController extends Controller {
         $scope.trinityTab = new TrinityTab();
 
         //On tabs load
-        $scope.trinityTab.addListener('tab-load', function(e) {
+        $scope.trinityTab.addListener('tab-load', function (e) {
             let form = e.element.q('form');
-            if(form){
+            if (form) {
                 $scope.veniceForms = $scope.veniceForms || {};
                 $scope.veniceForms[e.id] = new VeniceForm(form);
             }
 
             //Edit tab
-            if(e.id === 'tab2'){
+            if (e.id === 'tab2') {
                 // Collection
-                $scope.collection = _.map(qAll('[data-prototype]'), (node)=>{
-                    return new Collection(node, {addFirst:false, label:true});
+                $scope.collection = _.map(qAll('[data-prototype]'), (node)=> {
+                    return new Collection(node, {addFirst: false, label: true});
                 });
+
+                this.handleHandleGeneration();
             }
+
+
         }, this);
+
     }
 
     /**
@@ -77,6 +84,7 @@ export default class ContetntController extends Controller {
      */
     newGroupAction($scope) {
         $scope.form = new VeniceForm(q('form[name="group_content"]'), VeniceForm.formType.NEW);
+        this.handleHandleGeneration();
     }
 
     /**
@@ -92,13 +100,24 @@ export default class ContetntController extends Controller {
         $scope.trinityTab = new TrinityTab();
 
         //On tabs load
-        $scope.trinityTab.addListener('tab-load', function(e) {
+        $scope.trinityTab.addListener('tab-load', function (e) {
             let form = e.element.q('form');
-            if(form){
+            if (form) {
                 $scope.veniceForms = $scope.veniceForms || {};
                 $scope.veniceForms[e.id] = new VeniceForm(form);
             }
 
         }, this);
+    }
+
+    handleHandleGeneration() {
+        var titleField = q.id('group_content_name');
+        var handleField = q.id('group_content_handle');
+
+        if (titleField && handleField) {
+            events.listen(titleField, 'input', function () {
+                Slugify.slugify(titleField, handleField);
+            });
+        }
     }
 }

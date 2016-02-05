@@ -13,21 +13,13 @@
         <div class="navigation-box row margin-top-20">
             <a class="new-entry" id="newEntryIcon" href="{{ path('admin_blog_article_new') }}">
                 <i class="trinity trinity-plus"></i>
-                <span class="hover-text">Create a new product</span>
+                <span class="hover-text">Create a new article</span>
             </a>
         </div>
     {% endif %}
 {% endblock %}
 
-{% block pageBody -%}
-    {% if is_granted('ROLE_ADMIN_BLOG_EDIT') %}
-        <div class="page-actions">
-            <div class="item">
-                <a href="{{ path('admin_blog_article_new') }}"><i class="tiecons tiecons-plus-radius-large"></i> Create new blog article</a>
-            </div>
-        </div>
-    {% endif %}
-
+{% block pageBody %}
     <div class="tabs-wrapper margin-top-20">
         <input type="radio" name="tab" id="tab1" class="tab-head" checked />
         <label for="tab1">Show</label>

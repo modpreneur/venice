@@ -22,6 +22,7 @@ class ProductType extends BaseType
     {
         $builder
             ->add("name", TextType::class)
+            ->add("handle", TextType::class)
             ->add("description", TextareaType::class, ["required" => false])
             ->add("image", TextType::class)
             ->add("enabled", CheckboxType::class)

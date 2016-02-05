@@ -7,6 +7,7 @@ import events from 'trinity/utils/closureEvents';
 import Controller from 'trinity/Controller';
 import VeniceForm from '../Libraries/VeniceForm';
 import TrinityTab from 'trinity/components/TrinityTab';
+import Slugify from '../Libraries/Slugify';
 
 export default class ProductController extends Controller {
     /**
@@ -16,6 +17,8 @@ export default class ProductController extends Controller {
     newFreeAction($scope) {
         //Attach VeniceForm
         $scope.form = new VeniceForm(q('form[name="free_product"]'), VeniceForm.formType.NEW);
+
+        this.handleHandleGeneration('free_product_name', 'free_product_handle');
     }
 
     /**
@@ -25,6 +28,9 @@ export default class ProductController extends Controller {
     newStandardAction($scope) {
         //Attach VeniceForm
         $scope.form = new VeniceForm(q('form[name="standard_product"]'), VeniceForm.formType.NEW);
+
+        this.handleHandleGeneration('standard_product_name', 'standard_product_handle');
+
     }
 
     tabsAction($scope) {
@@ -37,6 +43,9 @@ export default class ProductController extends Controller {
                 $scope.veniceForms = $scope.veniceForms || {};
                 $scope.veniceForms[e.id] = new VeniceForm(form);
             }
+
+            this.handleHandleGeneration('standard_product_name', 'standard_product_handle');
+            this.handleHandleGeneration('free_product_name', 'free_product_handle');
 
         }, this);
     }
@@ -64,4 +73,14 @@ export default class ProductController extends Controller {
         }, this);
     }
 
+    handleHandleGeneration(inputId, outputId) {
+        var titleField = q.id(inputId);
+        var handleField = q.id(outputId);
+
+        if (titleField && handleField) {
+            events.listen(titleField, 'input', function () {
+                Slugify.slugify(titleField, handleField);
+            });
+        }
+    }
 }

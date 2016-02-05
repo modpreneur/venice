@@ -4,6 +4,7 @@
 import events from 'trinity/utils/closureEvents';
 import Controller from 'trinity/Controller';
 import VeniceForm from '../Libraries/VeniceForm';
+import Slugify from '../Libraries/Slugify';
 import TrinityTab from 'trinity/components/TrinityTab';
 
 export default class BlogArticleController extends Controller {
@@ -17,11 +18,13 @@ export default class BlogArticleController extends Controller {
         $scope.trinityTab = new TrinityTab();
 
         //On tabs load
-        $scope.trinityTab.addListener('tab-load', function(e) {
+        $scope.trinityTab.addListener('tab-load', function (e) {
             let form = e.element.q('form');
-            if(form){
+            if (form) {
                 $scope.veniceForms = $scope.veniceForms || {};
                 $scope.veniceForms[e.id] = new VeniceForm(form);
+
+                this.handleHandleGeneration();
             }
 
         }, this);
@@ -33,5 +36,18 @@ export default class BlogArticleController extends Controller {
      */
     newAction($scope) {
         $scope.form = new VeniceForm(q('form[name="blog_article"]'), VeniceForm.formType.NEW);
+
+        this.handleHandleGeneration();
+    }
+
+    handleHandleGeneration() {
+        var titleField = q.id('blog_article_title');
+        var handleField = q.id('blog_article_handle');
+
+        if (titleField && handleField) {
+            events.listen(titleField, 'input', function () {
+                Slugify.slugify(titleField, handleField);
+            });
+        }
     }
 }

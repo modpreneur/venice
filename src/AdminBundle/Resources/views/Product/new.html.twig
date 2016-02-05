@@ -22,11 +22,10 @@
                 {{ form_start(form, {'attr': {'class': 'new-form'}} ) }}
                 {{ form_errors(form) }}
 
-                {{ form_row(form.name) }}
-                {{ form_row(form.description) }}
-                {{ form_row(form.image) }}
-                {{ form_row(form.enabled) }}
-                {{ form_row(form.orderNumber) }}
+                {# Render all form rows except the submit input #}
+                {% for key, item in form.children if key != "submit"%}
+                    {{ form_row(form[key]) }}
+                {% endfor %}
 
                 {{ form_row(form.submit, {'attr': {'class': 'button create'}} ) }}
 
