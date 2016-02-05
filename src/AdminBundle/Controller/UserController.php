@@ -91,10 +91,17 @@ class UserController extends BaseAdminController
             ->addRouteItem("Users", "admin_user_index")
             ->addRouteItem($user->getFullNameOrUsername(), "admin_user_tabs", ["id" => $user->getId()]);
 
+        $necktieUserShowUrl = null;
+
+        $necktieUserShowUrl = $this->getParameter("necktie_url").$this->getParameter("necktie_show_user_uri");
+        $necktieUserShowUrl = str_replace(":id", $user->getNecktieId(), $necktieUserShowUrl);
 
         return $this->render(
             'AdminBundle:User:tabs.html.twig',
-            ["user" => $user,]
+            [
+                "user" => $user,
+                "necktieUserShowUrl" => $necktieUserShowUrl
+            ]
         );
     }
 

@@ -8,6 +8,8 @@ parameters:
     bowtie_path: "%kernel.root_dir%/../vendor/modpreneur/bowtie/src/less"
     create_new_entity_on_necktie_notification: true
     app_version: 2.0.0
+    necktie_show_product_uri: /admin/product/:id
+    necktie_show_user_uri: /admin/user/:id
 
 trinity_notification:
     client:
@@ -88,6 +90,9 @@ assetic:
                 color-primary-inverse: "#fff"
 
     assets:
+        necktie_icons:
+           inputs:
+              - %kernel.root_dir%/../vendor/modpreneur/bowtie/administration/css/necktie-icons.css
         trinity_eot:
             inputs:
               - %kernel.root_dir%/../vendor/trinity/admin/AdminBundle/Resources/Public/fonts/trinity.eot

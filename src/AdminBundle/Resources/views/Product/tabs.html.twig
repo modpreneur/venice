@@ -8,6 +8,12 @@
     <i class="trinity trinity-page-list"></i>
 {% endblock %}
 
+{% block pageAction %}
+    {% if necktieProductShowUrl %}
+        <a href="{{ necktieProductShowUrl }}" target="_blank"><i class="necktie necktielogo2"></i></a>
+    {% endif %}
+{% endblock %}
+
 {% block pageBody -%}
 
     <div class="tabs-wrapper margin-top-20">

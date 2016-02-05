@@ -12,6 +12,7 @@ namespace AdminBundle\Controller;
 use AppBundle\Entity\ContentProduct;
 use AppBundle\Entity\Product\FreeProduct;
 use AppBundle\Entity\Product\Product;
+use AppBundle\Entity\Product\StandardProduct;
 use AppBundle\Event\AppEvents;
 use AppBundle\Event\FreeProductCreatedEvent;
 use AppBundle\Form\ContentProduct\ContentProductTypeWithHiddenProduct;
@@ -88,9 +89,19 @@ class ProductController extends BaseAdminController
             ->addRouteItem("Products", "admin_product_index")
             ->addRouteItem($product->getName(), "admin_product_tabs", ["id" => $product->getId()]);
 
+        $necktieProductShowUrl = null;
+
+        if($product instanceof StandardProduct) {
+            $necktieProductShowUrl = $this->getParameter("necktie_url").$this->getParameter("necktie_show_product_uri");
+            $necktieProductShowUrl = str_replace(":id", $product->getNecktieId(), $necktieProductShowUrl);
+        }
+
         return $this->render(
             "AdminBundle:Product:tabs.html.twig",
-            ["product" => $product,]
+            [
+                "product" => $product,
+                "necktieProductShowUrl" => $necktieProductShowUrl
+            ]
         );
     }
 
