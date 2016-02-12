@@ -8,6 +8,16 @@
     New user
 {% endblock %}
 
+{% block pageAction %}
+    {% if is_granted('ROLE_ADMIN_BLOG_EDIT') %}
+        <div class="navigation-box row margin-top-20">
+            <a class="new-entry" id="newEntryIcon" href="{{ path('admin_user_new') }}">
+                <i class="trinity trinity-plus"></i>
+            </a>
+        </div>
+    {% endif %}
+{% endblock %}
+
 {% block pageBody %}
     <div class="box box-new-form">
         <div class="row">
