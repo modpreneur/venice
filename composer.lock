@@ -57,7 +57,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cocur/slugify/zipball/5b9c427e09d5b14587b9c5d0643a8e61d05fe2e1",
+                "url": "https://api.github.com/repos/cocur/slugify/zipball/16cdd7e792657d524cde931ea666436623b23301",
                 "reference": "5b9c427e09d5b14587b9c5d0643a8e61d05fe2e1",
                 "shasum": ""
             },
@@ -1261,12 +1261,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfSymfony/FOSUserBundle.git",
-                "reference": "140cc28026304d3023c880f441689986f99b913b"
+                "reference": "e770bfa2fd0fc665f55cd7cfeb34bddeffb892f4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSUserBundle/zipball/140cc28026304d3023c880f441689986f99b913b",
-                "reference": "140cc28026304d3023c880f441689986f99b913b",
+                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSUserBundle/zipball/e770bfa2fd0fc665f55cd7cfeb34bddeffb892f4",
+                "reference": "e770bfa2fd0fc665f55cd7cfeb34bddeffb892f4",
                 "shasum": ""
             },
             "require": {
@@ -1322,7 +1322,7 @@
             "keywords": [
                 "User management"
             ],
-            "time": "2016-02-05 08:53:49"
+            "time": "2016-02-11 16:30:08"
         },
         {
             "name": "fzaninotto/faker",
@@ -2966,16 +2966,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "5.2.3",
+            "version": "5.2.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "6fdb1d3004ebc7071c4ac62f2881d67c5c11fb59"
+                "reference": "ebde9bac26b1138eb99e1aa841feaa51b4a08314"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/6fdb1d3004ebc7071c4ac62f2881d67c5c11fb59",
-                "reference": "6fdb1d3004ebc7071c4ac62f2881d67c5c11fb59",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/ebde9bac26b1138eb99e1aa841feaa51b4a08314",
+                "reference": "ebde9bac26b1138eb99e1aa841feaa51b4a08314",
                 "shasum": ""
             },
             "require": {
@@ -3036,7 +3036,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2016-02-08 12:15:53"
+            "time": "2016-02-11 14:58:25"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
@@ -4408,12 +4408,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/modpreneur/trinity-admin.git",
-                "reference": "99deabdbbcc62a8d045c7b70afb64d468f120c71"
+                "reference": "d790303393d8e12d3b9fc9201661438d6adc8d8e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/modpreneur/trinity-admin/zipball/99deabdbbcc62a8d045c7b70afb64d468f120c71",
-                "reference": "99deabdbbcc62a8d045c7b70afb64d468f120c71",
+                "url": "https://api.github.com/repos/modpreneur/trinity-admin/zipball/d790303393d8e12d3b9fc9201661438d6adc8d8e",
+                "reference": "d790303393d8e12d3b9fc9201661438d6adc8d8e",
                 "shasum": ""
             },
             "require": {
@@ -4421,6 +4421,7 @@
                 "nette/utils": "~2.3",
                 "php": ">=5.6",
                 "symfony/framework-bundle": "~2.8 | ~3.0",
+                "twig/twig": "~1.0",
                 "whiteoctober/breadcrumbs-bundle": "~1.2"
             },
             "require-dev": {
@@ -4455,7 +4456,7 @@
                 }
             ],
             "description": "Trinity Admin bundle",
-            "time": "2016-02-11 12:16:20"
+            "time": "2016-02-12 10:06:41"
         },
         {
             "name": "trinity/framework",
@@ -4519,12 +4520,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/modpreneur/trinity-grid.git",
-                "reference": "9ab73a694eac66b60335f559bbf8505107463c30"
+                "reference": "e5dbf07065c679018b78061631d389a0aab8cb99"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/modpreneur/trinity-grid/zipball/9ab73a694eac66b60335f559bbf8505107463c30",
-                "reference": "9ab73a694eac66b60335f559bbf8505107463c30",
+                "url": "https://api.github.com/repos/modpreneur/trinity-grid/zipball/e5dbf07065c679018b78061631d389a0aab8cb99",
+                "reference": "e5dbf07065c679018b78061631d389a0aab8cb99",
                 "shasum": ""
             },
             "require": {
@@ -4570,7 +4571,7 @@
                 }
             ],
             "description": "Trinity Grid bundle",
-            "time": "2016-01-27 12:25:36"
+            "time": "2016-02-11 15:28:18"
         },
         {
             "name": "trinity/notification",

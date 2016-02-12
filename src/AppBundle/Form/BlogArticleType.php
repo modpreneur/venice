@@ -9,6 +9,8 @@
 namespace AppBundle\Form;
 
 
+use AppBundle\Entity\Product\Product;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -21,7 +23,7 @@ class BlogArticleType extends BaseType
     {
         parent::buildForm($builder, $options);
 
-        $currentYear = (new \DateTime())->format("Y");
+        $currentYear = (int)(new \DateTime())->format("Y");
 
         $builder
             ->add(
@@ -44,6 +46,17 @@ class BlogArticleType extends BaseType
                 [
                     "required" => true,
                     "years" => [$currentYear, $currentYear+1, $currentYear+2, $currentYear+3]
+                ]
+            )
+            ->add(
+                "products",
+                EntityType::class,
+                [
+                    "class" => Product::class,
+                    "choice_label" => "name",
+                    "multiple" => true,
+                    "expanded" => true,
+                    "label" => "In products",
                 ]
             )
 

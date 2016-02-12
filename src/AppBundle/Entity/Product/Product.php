@@ -9,6 +9,7 @@
 namespace AppBundle\Entity\Product;
 
 
+use AppBundle\Entity\BlogArticle;
 use AppBundle\Entity\Content\Content;
 use AppBundle\Entity\ContentProduct;
 use AppBundle\Entity\ProductAccess;
@@ -96,11 +97,20 @@ abstract class Product extends TrinityProduct
     protected $contentProducts;
 
 
+    /**
+     * @var ArrayCollection<BlogArticle>
+     *
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\BlogArticle", mappedBy="products", cascade={"PERSIST"})
+     */
+    protected $articles;
+
+
     public function __construct()
     {
         $this->enabled = true;
         $this->productAccesses = new ArrayCollection();
         $this->orderNumber = 0;
+        $this->articles = new ArrayCollection();
     }
 
 
@@ -487,5 +497,44 @@ abstract class Product extends TrinityProduct
         // Reindex the array
         return array_values($content);
     }
+
+
+    /**
+     * @return ArrayCollection<BlogArticle>
+     */
+    public function getBlogArticles()
+    {
+        return $this->articles;
+    }
+
+
+    /**
+     * @param BlogArticle $blogArticle
+     * @return $this
+     */
+    public function addBlogArticle(BlogArticle $blogArticle)
+    {
+        if(!$this->articles->contains($blogArticle))
+        {
+            $blogArticle->addProduct($this);
+            $this->articles->add($blogArticle);
+        }
+
+        return $this;
+    }
+
+
+    /**
+     * @param BlogArticle $blogArticle
+     * @return $this
+     */
+    public function removeBlogArticle(BlogArticle $blogArticle)
+    {
+        $this->articles->remove($blogArticle);
+        $blogArticle->removeProduct($this);
+
+        return $this;
+    }
+
 
 }

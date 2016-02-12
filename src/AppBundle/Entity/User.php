@@ -21,6 +21,7 @@ use Trinity\FrameworkBundle\Entity\ClientInterface;
 use Trinity\NotificationBundle\Annotations as N;
 use Trinity\NotificationBundle\Entity\NotificationEntityInterface;
 
+
 /**
  * Class User
  *
@@ -88,7 +89,7 @@ class User extends TrinityUser implements NotificationEntityInterface
     /**
      * @var ArrayCollection<OAuthToken>
      *
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\OAuthToken", mappedBy="user", cascade={"remove", "persist"})
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\OAuthToken", mappedBy="user", cascade={"REMOVE", "PERSIST"})
      */
     protected $OAuthTokens;
 

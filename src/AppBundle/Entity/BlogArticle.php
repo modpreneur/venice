@@ -9,8 +9,10 @@
 namespace AppBundle\Entity;
 
 
+use AppBundle\Entity\Product\Product;
 use Cocur\Slugify\Slugify;
 use DateTime;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -106,12 +108,20 @@ class BlogArticle
      */
     protected $content;
 
+    /**
+     * @var ArrayCollection<Product>
+     *
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Product\Product", inversedBy="articles", cascade={"PERSIST"})
+     */
+    protected $products;
+
 
     function __construct()
     {
         $this->dateWritten = new DateTime();
         $this->published = false;
         $this->commentsOn = true;
+        $this->products = new ArrayCollection();
     }
 
 
@@ -346,4 +356,43 @@ class BlogArticle
         }
 
     }
+
+
+    /**
+     * @return ArrayCollection<Product>
+     */
+    public function getProducts()
+    {
+        return $this->products;
+    }
+
+
+    /**
+     * @param Product $product
+     * @return $this
+     */
+    public function addProduct(Product $product)
+    {
+        if(!$this->products->contains($product))
+        {
+            $product->addBlogArticle($this);
+            $this->products->add($product);
+        }
+
+        return $this;
+    }
+
+
+    /**
+     * @param Product $product
+     * @return $this
+     */
+    public function removeProduct(Product $product)
+    {
+        $this->products->remove($product);
+        $product->removeBlogArticle($this);
+
+        return $this;
+    }
+
 }
