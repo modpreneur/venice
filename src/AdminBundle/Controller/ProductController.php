@@ -17,6 +17,7 @@ use AppBundle\Event\AppEvents;
 use AppBundle\Event\FreeProductCreatedEvent;
 use AppBundle\Form\ContentProduct\ContentProductTypeWithHiddenProduct;
 use AppBundle\Form\Product\StandardProductType;
+use AppBundle\Services\GridConfigurationBuilder;
 use Doctrine\DBAL\DBALException;
 use ReflectionException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -47,13 +48,39 @@ class ProductController extends BaseAdminController
         $this->getBreadcrumbs()->addRouteItem("Products", "admin_product_index");
 
         $entityManager = $this->getEntityManager();
-        $products = $entityManager->getRepository("AppBundle:Product\\Product")->findAll();
 
+        $max = $entityManager->getRepository('AppBundle:Product\Product')->count();
+        $url = $this->generateUrl('grid_default', ['entity'=>'Product']);
+
+        $builder = new GridConfigurationBuilder(
+            $url,
+            $max
+        );
+
+        // Defining columns
+        $builder->addColumn('id', 'Id');
+        $builder->addColumn('name', 'Name');
+
+        return $this->render('AdminBundle:Product:index.html.twig', ['gridConfiguration'=>$builder->getJSON()]);
+    }
+
+
+    /**
+     * @Route("/{id}/articles", name="admin_product_articles_index")
+     * @Route("/")
+     * @Security("is_granted('ROLE_ADMIN_BLOG_VIEW')")
+     * @param Request $request
+     *
+     * @return string
+     */
+    public function blogArticleIndexAction(Request $request, Product $product)
+    {
         return $this->render(
-            "AdminBundle:Product:index.html.twig",
-            ["products" => $products,]
+            "AdminBundle:Product:articlesIndex.html.twig",
+            ["blogArticles" => $product->getBlogArticles(),]
         );
     }
+
 
 
     /**

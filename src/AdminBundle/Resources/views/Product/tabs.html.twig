@@ -40,7 +40,10 @@
             {% endif %}
 
             <input type="radio" name="tab" id="tab5" class="tab-head" />
-            <label for="tab5">Danger zone</label>
+            <label for="tab5">Blog articles</label>
+
+            <input type="radio" name="tab" id="tab6" class="tab-head" />
+            <label for="tab6">Danger zone</label>
 
         {% endif %}
 
@@ -52,7 +55,8 @@
                 {% if product.type == "standard" %}
                     <div id="tab-body-4" class="tab-body" data-source="{{ path('admin_billing_plan_product_index', {'id': product.id}) }}"></div>
                 {% endif %}
-                <div id="tab-body-5" class="tab-body" data-source="{{ path('admin_product_delete_tab', {'id': product.id}) }}"></div>
+                <div id="tab-body-5" class="tab-body" data-source="{{ path('admin_product_articles_index', {'id': product.id}) }}"></div>
+                <div id="tab-body-6" class="tab-body" data-source="{{ path('admin_product_delete_tab', {'id': product.id}) }}"></div>
             {% endif %}
         </div>
     </div>

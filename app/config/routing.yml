@@ -10,6 +10,10 @@ front:
     resource: "@FrontBundle/Controller"
     type:     annotation
 
+trinity_grid:
+    resource: "@GridBundle/Resources/config/routing.yml"
+    prefix:   "/admin"
+
 fos_user:
     resource: "@FOSUserBundle/Resources/config/routing/security.xml"
 

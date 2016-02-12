@@ -28,8 +28,6 @@ use Symfony\Component\HttpFoundation\Response;
 class BlogArticleController extends BaseAdminController
 {
     /**
-     * Display list of blog articles.
-     *
      * @Route("", name="admin_blog_article_index")
      * @Route("/")
      * @Security("is_granted('ROLE_ADMIN_BLOG_VIEW')")

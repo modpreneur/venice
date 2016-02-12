@@ -20,13 +20,8 @@
 
 
 {% block pageBody %}
-    <div class="wrapper-grid">
-        <ul>
-            {% for product in products %}
-                <li>
-                    <h4><a href="{{ path('admin_product_tabs', {'id': product.id}) }}"> {{ product.name }}</a></h4>
-                </li>
-            {% endfor %}
-        </ul>
+    <div class="box">
+        <div id="product-grid"  data-config="{{ gridConfiguration }}">
+        </div>
     </div>
 {% endblock %}
