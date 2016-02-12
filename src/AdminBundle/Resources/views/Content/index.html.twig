@@ -8,14 +8,19 @@
     Contents
 {% endblock %}
 
+{% block pageAction %}
+    {% if is_granted('ROLE_ADMIN_CONTENT_PRODUCT_EDIT') %}
+        <div class="navigation-box row margin-top-20">
+            <a class="new-entry" id="newEntryIcon" href="{{ path('admin_content_new') }}">
+                <i class="trinity trinity-plus"></i>
+            </a>
+        </div>
+    {% endif %}
+{% endblock %}
+
+
 {% block pageBody %}
     {% if is_granted('ROLE_ADMIN_CONTENT_PRODUCT_EDIT') %}
-        <a href="{{ path("admin_content_new", {"contentType":"pdf"}) }}" class="button">New pdf</a>
-        <a href="{{ path("admin_content_new", {"contentType":"iframe"}) }}" class="button">New Iframe</a>
-        <a href="{{ path("admin_content_new", {"contentType":"video"}) }}" class="button">New video</a>
-        <a href="{{ path("admin_content_new", {"contentType":"mp3"}) }}" class="button">New mp3</a>
-        <a href="{{ path("admin_content_new", {"contentType":"html"}) }}" class="button">New html</a>
-        <a href="{{ path("admin_content_new", {"contentType":"group"}) }}" class="button">New group</a>
     {% endif %}
 
     <div class="wrapper-grid">

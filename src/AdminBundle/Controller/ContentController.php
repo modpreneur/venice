@@ -12,9 +12,9 @@ namespace AdminBundle\Controller;
 use AppBundle\Entity\Content\Content;
 use AppBundle\Entity\Content\ContentInGroup;
 use AppBundle\Entity\Content\GroupContent;
+use AppBundle\Entity\Content\VideoContent;
 use AppBundle\Entity\ContentProduct;
 use AppBundle\Form\ContentProduct\ContentProductTypeWithHiddenContent;
-use AppBundle\Form\ContentProduct\ContentProductTypeWithHiddenProduct;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\DBAL\DBALException;
 use FOS\RestBundle\Controller\Annotations\Route;
@@ -120,41 +120,30 @@ class ContentController extends BaseAdminController
 
 
     /**
-     * Display a form to create a new Content entity.
-     *
-     * @Route("/new/{contentType}",requirements={"contentType": "\w+"}, name="admin_content_new")
+     * @Route("/new", name="admin_content_new")
      * @Method("GET")
      * @Security("is_granted('ROLE_ADMIN_CONTENT_EDIT')")
      *
      * @param Request $request
-     * @param         $contentType
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function newAction(Request $request, $contentType)
+    public function newAction(Request $request)
     {
         $this->getBreadcrumbs()
             ->addRouteItem("Contents", "admin_content_index")
-            ->addRouteItem("New content", "admin_content_new", ["contentType" => $contentType]);
-
-        try {
-            $content = Content::createContentByType($contentType);
-        } catch (ReflectionException $e) {
-            throw new NotFoundHttpException("Content type: ".$contentType." not found.");
-        }
+            ->addRouteItem("New content", "admin_content_new");
 
         $formOptions = [];
 
-        if($content instanceof GroupContent) {
-            $formOptions = ["groupContent" => ($content instanceof GroupContent)? $content : null,];
-        }
+        $content = new VideoContent();
 
         $form = $this->getFormCreator()
             ->createCreateForm(
                 $content,
                 $content->getFormTypeClass(),
                 "admin_content",
-                ["contentType" => $contentType],
+                ["contentType" => $content->getType()],
                 $formOptions
             );
         // Remove items field for now. todo: remove it in future?
@@ -168,6 +157,43 @@ class ContentController extends BaseAdminController
             [
                 'entity' => $content,
                 'form' => $form->createView()
+            ]
+        );
+    }
+
+
+    /**
+     * @Route("/new/{contentType}",requirements={"contentType": "\w+"}, name="admin_content_new_form")
+     * @Method("GET")
+     * @Security("is_granted('ROLE_ADMIN_PRODUCT_EDIT')")
+     *
+     * @param Request $request
+     * @param         $contentType
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     *
+     */
+    public function newFormAction(Request $request, $contentType)
+    {
+        try {
+            $content = Content::createContentByType($contentType);
+        } catch (ReflectionException $e) {
+            throw new NotFoundHttpException("Content type: ".$contentType." not found.");
+        }
+        $form = $this->getFormCreator()
+            ->createCreateForm(
+                $content,
+                $content->getFormTypeClass(),
+                "admin_content",
+                ["contentType" => $contentType,]
+            );
+
+        return $this->render(
+            'AdminBundle:Content:newForm.html.twig',
+            [
+                'content' => $content,
+                'form' => $form->createView(),
+                'contentType' => $contentType,
             ]
         );
     }
@@ -197,8 +223,8 @@ class ContentController extends BaseAdminController
 
         $formOptions = [];
 
-        if($content instanceof GroupContent) {
-            $formOptions = ["groupContent" => ($content instanceof GroupContent)? $content : null,];
+        if ($content instanceof GroupContent) {
+            $formOptions = ["groupContent" => ($content instanceof GroupContent) ? $content : null,];
         }
 
         $form = $this->getFormCreator()
@@ -250,8 +276,8 @@ class ContentController extends BaseAdminController
     {
         $formOptions = [];
 
-        if($content instanceof GroupContent) {
-            $formOptions = ["groupContent" => ($content instanceof GroupContent)? $content : null,];
+        if ($content instanceof GroupContent) {
+            $formOptions = ["groupContent" => ($content instanceof GroupContent) ? $content : null,];
         }
 
         $form = $this->getFormCreator()

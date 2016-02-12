@@ -8,6 +8,17 @@
     Content {{ content.name }}
 {% endblock %}
 
+{% block pageAction %}
+    {% if is_granted('ROLE_ADMIN_CONTENT_EDIT') %}
+        <div class="navigation-box row margin-top-20">
+            <a class="new-entry" id="newEntryIcon" href="{{ path('admin_content_new') }}">
+                <i class="trinity trinity-plus"></i>
+            </a>
+        </div>
+    {% endif %}
+{% endblock %}
+
+
 {% block pageBody -%}
 
     <div class="tabs-wrapper margin-top-20">

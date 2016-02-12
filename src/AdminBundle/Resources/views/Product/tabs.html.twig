@@ -12,6 +12,13 @@
     {% if necktieProductShowUrl %}
         <a href="{{ necktieProductShowUrl }}" target="_blank"><i class="necktie necktielogo2"></i></a>
     {% endif %}
+    {% if is_granted('ROLE_ADMIN_PRODUCT_EDIT') %}
+        <div class="navigation-box row margin-top-20">
+            <a class="new-entry" id="newEntryIcon" href="{{ path('admin_product_new') }}">
+                <i class="trinity trinity-plus"></i>
+            </a>
+        </div>
+    {% endif %}
 {% endblock %}
 
 {% block pageBody -%}

@@ -2,12 +2,12 @@
 
 {% block pageBody %}
     <div class="box box-new-form">
-
-        <h2 class="header-h2 form-title">
-            {%  block formTitle %}
-                New product
-            {% endblock %}
-        </h2>
+        <div class="select-style form-control choice edit-form">
+            <select name="entity_type_select" id="entity_type_select">
+                <option value="standard" selected>Standard</option>
+                <option value="free">Free</option>
+            </select>
+        </div>
 
         <div class="row">
             <div class="span-none-padding-medium-24">
@@ -17,20 +17,8 @@
             </div>
         </div>
 
-        <div class="row">
-            {% block formRow %}
-                {{ form_start(form, {'attr': {'class': 'new-form'}} ) }}
-                {{ form_errors(form) }}
-
-                {# Render all form rows except the submit input #}
-                {% for key, item in form.children if key != "submit"%}
-                    {{ form_row(form[key]) }}
-                {% endfor %}
-
-                {{ form_row(form.submit, {'attr': {'class': 'button create'}} ) }}
-
-                {{ form_end(form) }}
-            {% endblock %}
+        <div id="product_form" class="row">
+            {#insert form here#}
         </div>
     </div>
 

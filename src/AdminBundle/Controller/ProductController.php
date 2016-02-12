@@ -16,10 +16,10 @@ use AppBundle\Entity\Product\StandardProduct;
 use AppBundle\Event\AppEvents;
 use AppBundle\Event\FreeProductCreatedEvent;
 use AppBundle\Form\ContentProduct\ContentProductTypeWithHiddenProduct;
+use AppBundle\Form\Product\StandardProductType;
 use Doctrine\DBAL\DBALException;
 use ReflectionException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -91,7 +91,7 @@ class ProductController extends BaseAdminController
 
         $necktieProductShowUrl = null;
 
-        if($product instanceof StandardProduct) {
+        if ($product instanceof StandardProduct) {
             $necktieProductShowUrl = $this->getParameter("necktie_url").$this->getParameter("necktie_show_product_uri");
             $necktieProductShowUrl = str_replace(":id", $product->getNecktieId(), $necktieProductShowUrl);
         }
@@ -107,7 +107,42 @@ class ProductController extends BaseAdminController
 
 
     /**
-     * @Route("/new/{productType}",requirements={"productType": "\w+"}, name="admin_product_new")
+     * @Route("/new", name="admin_product_new")
+     * @Method("GET")
+     * @Security("is_granted('ROLE_ADMIN_PRODUCT_EDIT')")
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     *
+     */
+    public function newAction()
+    {
+        $this->getBreadcrumbs()
+            ->addRouteItem("Products", "admin_product_index")
+            ->addRouteItem("New product", "admin_product_new");
+
+        //Standard is defined in template, too
+        $product = new StandardProduct();
+
+        $form = $this->getFormCreator()
+            ->createCreateForm(
+                $product,
+                StandardProductType::class,
+                "admin_product",
+                ["productType" => $product->getType(),]
+            );
+
+        return $this->render(
+            'AdminBundle:Product:new.html.twig',
+            [
+                'product' => $product,
+                'form' => $form->createView()
+            ]
+        );
+    }
+
+
+    /**
+     * @Route("/new/{productType}",requirements={"productType": "\w+"}, name="admin_product_new_form")
      * @Method("GET")
      * @Security("is_granted('ROLE_ADMIN_PRODUCT_EDIT')")
      *
@@ -117,18 +152,13 @@ class ProductController extends BaseAdminController
      * @return \Symfony\Component\HttpFoundation\Response
      *
      */
-    public function newAction(Request $request, $productType)
+    public function newFormAction(Request $request, $productType)
     {
-        $this->getBreadcrumbs()
-            ->addRouteItem("Products", "admin_product_index")
-            ->addRouteItem("New product", "admin_product_new", ["productType" => $productType]);
-
         try {
             $product = Product::createProductByType($productType);
         } catch (ReflectionException $e) {
             throw new NotFoundHttpException("Product type: ".$productType." not found.");
         }
-
         $form = $this->getFormCreator()
             ->createCreateForm(
                 $product,
@@ -138,7 +168,7 @@ class ProductController extends BaseAdminController
             );
 
         return $this->render(
-            'AdminBundle:Product:new.html.twig',
+            'AdminBundle:Product:newForm.html.twig',
             [
                 'product' => $product,
                 'form' => $form->createView(),
@@ -295,17 +325,13 @@ class ProductController extends BaseAdminController
                 $em->flush();
             } catch (DBALException $e) {
                 return new JsonResponse(
-                    [
-                        "error" => ["db" => $e->getMessage(),]
-                    ],
+                    ["error" => ["db" => $e->getMessage(),]],
                     400
                 );
             }
 
             return new JsonResponse(
-                [
-                    "message" => "Product successfully updated",
-                ]
+                ["message" => "Product successfully updated",]
             );
         } else {
             return $this->returnFormErrorsJsonResponse($productForm);

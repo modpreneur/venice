@@ -3,11 +3,11 @@
  */
 import _ from 'lodash';
 import externalHelpers from 'babel/external-helpers';
-import 'trinity/devTools';
 import routes from './routes.js';
-import AppBuilder from 'trinity/App.js';
+import AppBuilder from 'trinity/App';
 import Controller from 'trinity/Controller';
 import Mousetrap from 'mousetrap';
+import Gateway from 'trinity/Gateway';
 
 
 // Add shortcuts @TODO: move it to some global controller
@@ -20,10 +20,11 @@ Mousetrap.bind('ctrl+alt+n', function() {
 
 window.settings = {
     environment: 'dev',
+    controllersPath: 'app/Controllers',
     debug: true
 };
 window.App = new AppBuilder(routes, null, settings);
-App.devStart('app/Controllers', function successCall(isRoute){
+App.start(function successCall(isRoute){
     console.log('App Loaded!');
     if(!isRoute){
         console.log('INFO: This route doesn\'t have any controller!');

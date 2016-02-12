@@ -10,18 +10,31 @@
 
 
 {% block pageBody %}
+
+    <div class="select-style form-control choice edit-form">
+        <select name="entity_type_select" id="entity_type_select">
+            <option value="group">Group</option>
+            <option value="html">Html</option>
+            <option value="iframe">IFrame</option>
+            <option value="mp3">MP3</option>
+            <option value="pdf">PDF</option>
+            <option value="video" selected>Video</option>
+        </select>
+    </div>
+
     <div class="box box-new-form">
+
         <div class="row">
-            {{ form_start(form, {'attr': {'class': 'new-form'}} ) }}
-            {{ form_errors(form) }}
+            <div class="span-none-padding-medium-24">
+                {% if error is defined %}
+                    <div id="error">{{ error }}</div>
+                {% endif %}
+            </div>
+        </div>
 
-            {# Render all form rows except the submit input #}
-            {% for key, item in form.children if key != "submit"%}
-                {{ form_row(form[key]) }}
-            {% endfor %}
-
-            {{ form_row(form.submit, {'attr': {'class': 'button new'}} ) }}
-            {{ form_end(form) }}
+        <div id="content_form" class="row">
+            {#insert form here#}
         </div>
     </div>
+
 {% endblock %}

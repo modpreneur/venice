@@ -17,6 +17,7 @@ use AppBundle\Interfaces\NecktieGatewayHelperInterface;
 use AppBundle\Interfaces\NecktieGatewayInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\ClientException;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\Routing\RouterInterface;
 
@@ -29,6 +30,7 @@ class NecktieGateway implements NecktieGatewayInterface
     const NECKTIE_PRODUCT_ACCESSES_URI = "api/v1/product-accesses";
     const NECKTIE_BILLING_PLAN_URI = "api/v1/billing-plan/{id}";
     const NECKTIE_PRODUCT_BILLING_PLANS_URI = "api/v1/product/{productId}/billing-plans";
+    const NECKTIE_PRODUCT_URI = "api/v1/product/{id}";
 
     const STATE_COOKIE_NAME = "state";
 
@@ -176,6 +178,33 @@ class NecktieGateway implements NecktieGatewayInterface
         }
 
         return null;
+    }
+
+
+    /**
+     * Check if a product with given id exists in necktie.
+     *
+     * @param User $user
+     * @param $necktieId
+     * @return bool
+     * @throws UnsuccessfulNecktieResponseException
+     */
+    public function productExists(User $user, $necktieId)
+    {
+        $this->refreshAccessTokenIfNeeded($user);
+
+        $uri = $necktieUrl = str_replace("{id}", $necktieId, self::NECKTIE_PRODUCT_URI);
+
+        try {
+            $response = $this->connector->getResponse($user, "GET", $uri);
+            if(!$response) {
+                return false;
+            }
+        } catch (ClientException $e) {
+            return false;
+        }
+
+        return true;
     }
 
 

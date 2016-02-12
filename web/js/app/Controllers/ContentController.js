@@ -10,21 +10,55 @@ import _ from 'lodash';
 import VeniceForm from '../Libraries/VeniceForm';
 import Gateway from 'trinity/Gateway';
 import Slugify from '../Libraries/Slugify';
+import BaseController from './BaseController';
+import FormChanger from '../Libraries/FormChanger';
 
-export default class ContetntController extends Controller {
+export default class ContetntController extends BaseController {
 
-    /**
-     * Content tab action
-     * @param $scope
-     */
+    newAction($scope) {
+        var formElementName = ":type_content";
+        var select = q.id('entity_type_select');
+        var oldType = select.options[select.selectedIndex].value;
+        var newType;
+        var controller = this;
+        var scope = $scope;
+        var formDiv = q.id("content_form");
+        var oldFormName = formElementName.replace(":type", oldType);
+
+        FormChanger.refreshForm(formDiv, "/admin/content/new/" + oldType, function () {
+            scope.form = new VeniceForm(q('form[name="'+oldFormName+'"]'), VeniceForm.formType.NEW);
+
+            controller.handleHandleGeneration(oldFormName + '_name', oldFormName + '_handle');
+        });
+
+        //save old value when user clicks the input
+        events.listen(select, 'click', function (e) {
+            oldType = select.options[select.selectedIndex].value;
+        });
+        //save old value when user uses keyboard
+        events.listen(select, 'keydown', function (e) {
+            oldType = select.options[select.selectedIndex].value;
+        });
+        //render new form after change
+        events.listen(select, 'change', function (e) {
+            newType = select.options[select.selectedIndex].value;
+            var newFormName = formElementName.replace(":type", newType);
+
+            FormChanger.refreshForm(formDiv, "/admin/content/new/" + newType, function () {
+                scope.form = new VeniceForm(q('form[name="'+newFormName+'"]'), VeniceForm.formType.NEW);
+
+                controller.handleHandleGeneration(newFormName + '_name', newFormName + '_handle');
+            });
+        });
+    }
+
     tabsAction($scope) {
-        //Tell trinity there is tab to be loaded
         $scope.trinityTab = new TrinityTab();
 
         //On tabs load
-        $scope.trinityTab.addListener('tab-load', function (e) {
+        $scope.trinityTab.addListener('tab-load', function(e) {
             let form = e.element.q('form');
-            if (form) {
+            if(form){
                 $scope.veniceForms = $scope.veniceForms || {};
                 $scope.veniceForms[e.id] = new VeniceForm(form);
             }
@@ -39,52 +73,10 @@ export default class ContetntController extends Controller {
                 this.handleHandleGeneration();
             }
 
+            //this.handleHandleGeneration('standard_product_name', 'standard_product_handle');
+            //this.handleHandleGeneration('free_product_name', 'free_product_handle');
 
         }, this);
-
-    }
-
-    /**
-     * @param $scope
-     */
-    newPdfAction($scope) {
-        $scope.form = new VeniceForm(q('form[name="pdf_content"]'), VeniceForm.formType.NEW);
-    }
-
-    /**
-     * @param $scope
-     */
-    newIframeAction($scope) {
-        $scope.form = new VeniceForm(q('form[name="iframe_content"]'), VeniceForm.formType.NEW);
-    }
-
-    /**
-     * @param $scope
-     */
-    newMp3Action($scope) {
-        $scope.form = new VeniceForm(q('form[name="mp3_content"]'), VeniceForm.formType.NEW);
-    }
-
-    /**
-     * @param $scope
-     */
-    newVideoAction($scope) {
-        $scope.form = new VeniceForm(q('form[name="video_content"]'), VeniceForm.formType.NEW);
-    }
-
-    /**
-     * @param $scope
-     */
-    newHtmlAction($scope) {
-        $scope.form = new VeniceForm(q('form[name="html_content"]'), VeniceForm.formType.NEW);
-    }
-
-    /**
-     * @param $scope
-     */
-    newGroupAction($scope) {
-        $scope.form = new VeniceForm(q('form[name="group_content"]'), VeniceForm.formType.NEW);
-        this.handleHandleGeneration();
     }
 
     /**
