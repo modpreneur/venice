@@ -10,13 +10,12 @@ import Slugify from '../Libraries/Slugify';
 import FormChanger from '../Libraries/FormChanger';
 import Gateway from 'trinity/Gateway';
 import BaseController from './BaseController';
-import GridBuilder from '../Libraries/NecktieGridBuilder';
 
 export default class ProductController extends BaseController {
 
-    indexAction($scope) {
-        $scope.productGrid = GridBuilder.build(q.id('product-grid'), this.request.query);
-    }
+    //indexAction($scope) {
+    //    $scope.productGrid = GridBuilder.build(q.id('product-grid'), this.request.query);
+    //}
 
 
     newAction($scope) {
