@@ -6,14 +6,8 @@
             <thead>
             <tr>
                 <th>Id</th>
-                {% if appLogic.displayNecktieFieldForBillingPlan %}
-                    <th>Necktie id</th>
-                {% endif %}
-                {% if appLogic.displayAmemberFieldForBillingPlan %}
-                    <th>Amember id</th>
-                {% endif %}
-                <th>Standard</th>
-                <th>Mobile</th>
+                <th>Necktie id</th>
+                <th>Default</th>
                 <th>Price</th>
             </tr>
             </thead>
@@ -32,38 +26,17 @@
 
                     </td>
                     {#Necktie id#}
-                    {% if appLogic.displayNecktieFieldForBillingPlan %}
-                        <td>
-                            {{ billingPlan.necktieId }}
-                        </td>
-                    {% endif %}
-
-                    {#Amember id#}
-                    {% if appLogic.displayAmemberFieldForBillingPlan %}
-                        <td>
-                            {{ billingPlan.amemberId }}
-                        </td>
-                    {% endif %}
-
-
-                    {#Desktop#}
                     <td>
-                        {% if billingPlan == product.desktopBillingPlan %}
-                            <i class="trinity trinity-yes"></i>
-
-                        {% else %}
-                            <a href="{{ path('admin_billing_plan_product_set', { 'purpose':"desktop" ,'id': billingPlan.id }) }}" title="set as desktop">
-                                <i class="trinity trinity-pin"></i>
-                            </a>
-                        {% endif %}
+                        {{ billingPlan.necktieId }}
                     </td>
 
-                    {#Mobile#}
+
+                    {#Default#}
                     <td>
-                        {% if billingPlan == product.mobileBillingPlan %}
+                        {% if billingPlan == product.defaultBillingPlan %}
                             <i class="trinity trinity-yes"></i>
                         {% else %}
-                            <a href="{{ path('admin_billing_plan_product_set', { 'purpose':"mobile" ,'id': billingPlan.id }) }}" title="set as mobile">
+                            <a href="{{ path('admin_billing_plan_product_set_default', { 'id': billingPlan.id }) }}" title="set as default">
                                 <i class="trinity trinity-pin"></i>
                             </a>
                         {% endif %}
@@ -71,7 +44,7 @@
 
                     {#price#}
                     <td>
-                        {{ billingPlan.price }}
+                        {{ billingPlan.price }} pp
                     </td>
                 </tr>
             {% endfor %}

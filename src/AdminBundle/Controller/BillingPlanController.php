@@ -109,34 +109,26 @@ class BillingPlanController extends BaseAdminController
 
 
     /**
-     * Set billing plan as desktop billing plan for product.
+     * Set billing plan as default for product.
      *
-     * @Route("/set-{purpose}/{id}", name="admin_billing_plan_product_set")
+     * @Route("/set-default/{id}", name="admin_billing_plan_product_set_default")
      *
      * @Security("is_granted('ROLE_ADMIN_PRODUCT_EDIT')")
      *
-     * @param Request $request
      * @param BillingPlan $billingPlan
-     * @param $purpose
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      *
      */
-    public function setDefaultBPAction(Request $request, $purpose, BillingPlan $billingPlan)
+    public function setDefaultBillingPlanAction(BillingPlan $billingPlan)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $product = $billingPlan->getProduct();
-        if ($purpose === "desktop") {
-            $product->setDesktopBillingPlan($billingPlan);
-        } else if ($purpose === "mobile") {
-            $product->setMobileBillingPlan($billingPlan);
-        } else {
-            return new JsonResponse(["error" => ["purpose has to be 'desktop' or 'mobile'"]]);
-        }
+        $billingPlan->setAsDefault();
 
         try {
-            $em->persist($product);
+            $em->persist($billingPlan);
+            $em->persist($billingPlan->getProduct());
             $em->flush();
         } catch (DBALException $e) {
             $this->get('session')->getFlashBag()->add('danger', $e->getMessage());
@@ -144,7 +136,7 @@ class BillingPlanController extends BaseAdminController
 
         return $this->redirect(
             $this->generateUrl('admin_product_tabs',
-                ['id' => $product->getId()])."#tab3"
+                ['id' => $billingPlan->getProduct()->getId()])."#tab4"
         );
     }
 
@@ -320,7 +312,7 @@ class BillingPlanController extends BaseAdminController
             return new JsonResponse(
                 [
                     "message" => "Billing plan successfully created",
-                    "location" => $this->generateUrl("admin_product_tabs", ["id" => $product->getId()])."#tab3",
+                    "location" => $this->generateUrl("admin_product_tabs", ["id" => $product->getId()])."#tab4",
                 ],
                 302
             );
@@ -390,7 +382,7 @@ class BillingPlanController extends BaseAdminController
         return new JsonResponse(
             [
                 "message" => "BillingPlan successfully deleted.",
-                "location" => $this->generateUrl("admin_product_tabs", ["id" => $product->getId()])."#tab3",
+                "location" => $this->generateUrl("admin_product_tabs", ["id" => $product->getId()])."#tab4",
             ],
             302
         );

@@ -21,6 +21,15 @@
 
 {% block pageBody %}
     <div class="box">
+        {#todo: tempoary... waitong for grid#}
+        <ul>
+            {% for product in products %}
+                <li>
+                    <a href="{{ path("admin_product_tabs", {'id':product.id}) }}">{{ product.name }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+
         <div id="product-grid"  data-config="{{ gridConfiguration }}">
         </div>
     </div>

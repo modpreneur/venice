@@ -47,6 +47,8 @@ class ProductController extends BaseAdminController
     {
         $this->getBreadcrumbs()->addRouteItem("Products", "admin_product_index");
 
+        $products = $this->getEntityManager()->getRepository("AppBundle:Product\\Product")->findAll();
+
         $entityManager = $this->getEntityManager();
 
         $max = $entityManager->getRepository('AppBundle:Product\Product')->count();
@@ -61,7 +63,7 @@ class ProductController extends BaseAdminController
         $builder->addColumn('id', 'Id');
         $builder->addColumn('name', 'Name');
 
-        return $this->render('AdminBundle:Product:index.html.twig', ['gridConfiguration'=>$builder->getJSON()]);
+        return $this->render('AdminBundle:Product:index.html.twig', ['gridConfiguration'=>$builder->getJSON(), "products" => $products]);
     }
 
 

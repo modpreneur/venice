@@ -24,19 +24,10 @@
                     <td>{{ product.necktieId }}</td>
                 </tr>
                 <tr>
-                    <th>Desktop billing plan</th>
+                    <th>Default billing plan</th>
                     <td>
-                        {% if product.desktopBillingPlan %}
-                           {{ product.desktopBillingPlan.price }}
-                        {% endif %}
-                    </td>
-                </tr>
-
-                <tr>
-                    <th>Mobile billing plan</th>
-                    <td>
-                        {% if product.mobileBillingPlan %}
-                            {{ product.mobileBillingPlan.price }}
+                        {% if product.defaultBillingPlan %}
+                            {{ product.defaultBillingPlan.price }}
                         {% endif %}
                     </td>
                 </tr>

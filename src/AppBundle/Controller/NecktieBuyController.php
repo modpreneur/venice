@@ -37,6 +37,7 @@ class NecktieBuyController extends Controller
     public function redirectToNecktieBuy(Request $request, StandardProduct $product)
     {
         $useStoredCC = $request->query->has("useStoredCC");
+        $billingPlanId = $request->query->get("billingPlanId");
 
         /** @var User $user */
         $user = $this->getUser();
@@ -49,11 +50,23 @@ class NecktieBuyController extends Controller
 
         $token = $user->getLastAccessToken();
         $productId = $product->getNecktieId();
+        $useStoredCC = ($useStoredCC)? "useStoredCC=true" : "";
+
+        $billingPlanIdString = null;
+
+        if($billingPlanId) {
+            foreach ($product->getBillingPlans() as $billingPlan) {
+                if ($billingPlanId == $billingPlan->getNecktieId()) {
+                    $billingPlanIdString = "billingPlanId=$billingPlanId";
+                    break;
+                }
+            }
+        }
 
         //todo add expected price to the string; format of the string?
 
         return new RedirectResponse(
-            $this->getParameter("necktie_url")."/payment/cb/ocb/{$productId}?access_token=$token&".(($useStoredCC) ? "useStoredCC=true" : ""),
+            $this->getParameter("necktie_url")."/payment/cb/ocb/{$productId}?access_token=$token&$useStoredCC&$billingPlanIdString",
             302
         );
     }

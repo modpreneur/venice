@@ -12,8 +12,9 @@
                     <a href="{{ path("front_product_demo", {"id": product.id}) }}">To demo</a>
                 {% elseif(product.type == "standard") %}
                     {{ product.name }}
-                    {% include "FrontBundle:Common:buyLink.html.twig" with {"url": urlGenerator.generateBuyUrl(product, false), "text": "Buy now" } %}
-                    {% include "FrontBundle:Common:buyLink.html.twig" with {"url": urlGenerator.generateBuyUrl(product, true), "text": "Buy now with stored credit card" } %}
+                    {% include "FrontBundle:Common:buyLink.html.twig" with {"url": urlGenerator.generateBuyUrl(product, null, false), "text": "Buy now" } %}
+                    {% include "FrontBundle:Common:buyLink.html.twig" with {"url": urlGenerator.generateBuyUrl(product, null, true), "text": "Buy now with stored credit card" } %}
+                    {% include "FrontBundle:Common:buyLink.html.twig" with {"url": urlGenerator.generateBuyUrl(product, 1, false), "text": "Buy now with non default billing plan" } %}
                 {% endif %}
             </li>
         {% endfor %}

@@ -22,7 +22,6 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @ORM\Table(name="billing_plan")
  *
  * @UniqueEntity("necktieId")
- * @UniqueEntity("amemberId")
  *
  * Class BillingPlan
  */
@@ -44,14 +43,6 @@ class BillingPlan
      * @ORM\Column(name="necktie_id", type="integer", nullable=true, unique=true)
      */
     protected $necktieId;
-
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="amember_id", type="integer", nullable=true, unique=true)
-     */
-    protected $amemberId;
 
 
     /**
@@ -97,13 +88,15 @@ class BillingPlan
     /**
      * @var StandardProduct
      *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Product\StandardProduct")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Product\StandardProduct", inversedBy="billingPlans", cascade={"PERSIST"})
      */
     protected $product;
 
 
     /**
-     * @var
+     * String which can be used for displaying the price of this billing plan
+     *
+     * @var string
      *
      * @ORM\Column(name="price", type="string", length=50)
      */
@@ -124,11 +117,19 @@ class BillingPlan
      * @PreUpdate
      *
      */
-    public function doStuffOnPrePersist()
+    public function onPrePersist()
     {
         $this->generateAndSetPriceString();
     }
 
+
+    /**
+     * Set current billing plan as default
+     */
+    public function setAsDefault()
+    {
+        $this->product->setDefaultBillingPlan($this);
+    }
 
     /**
      * @param int $id
@@ -269,15 +270,6 @@ class BillingPlan
         $this->necktieId = $necktieId;
 
         return $this;
-    }
-
-
-    /**
-     * @return int
-     */
-    public function getAmemberId()
-    {
-        return $this->amemberId;
     }
 
 

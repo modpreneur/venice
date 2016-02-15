@@ -30,14 +30,15 @@ class BuyUrlGenerator
      * Generate buy url
      *
      * @param StandardProduct $product
-     * @param $useStoredCreditCard
+     * @param int $billingPlanId
+     * @param bool $useStoredCreditCard
      * @return string
      * @throws \Exception
      */
-    public function generateBuyUrl(StandardProduct $product, bool $useStoredCreditCard = false) : string
+    public function generateBuyUrl(StandardProduct $product, int $billingPlanId = null, bool $useStoredCreditCard = false) : string
     {
         if ($this->necktieUrl) {
-            return $this->generateNecktieBuyUrl($product, $useStoredCreditCard);
+            return $this->generateNecktieBuyUrl($product, $billingPlanId, $useStoredCreditCard);
         }
         else {
             throw new \Exception("No method found to generate buy url when not connected to necktie");
@@ -47,10 +48,11 @@ class BuyUrlGenerator
 
     /**
      * @param StandardProduct $product
+     * @param int $billingPlanId
      * @param bool $useStoredCreditCard
      * @return string
      */
-    protected function generateNecktieBuyUrl(StandardProduct $product, bool $useStoredCreditCard = false) : string
+    protected function generateNecktieBuyUrl(StandardProduct $product, int $billingPlanId = null, bool $useStoredCreditCard = false) : string
     {
         $router = $this->router;
 
@@ -60,10 +62,14 @@ class BuyUrlGenerator
                 "id" => $product->getId(),
             ],
             $router::ABSOLUTE_URL
-        );
+        ) . "?";
+
+        if ($billingPlanId) {
+            $url .= "billingPlanId=$billingPlanId&";
+        }
 
         if ($useStoredCreditCard) {
-            $url .= ($useStoredCreditCard) ? "?useStoredCC" : "";
+            $url .= "useStoredCC";
         }
 
         return $url;

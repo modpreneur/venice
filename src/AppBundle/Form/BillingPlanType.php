@@ -23,12 +23,6 @@ class BillingPlanType extends BaseType
 
         $builder
             ->add(
-                "amemberId",
-                IntegerType::class
-            );
-
-        $builder
-            ->add(
                 "initialPrice",
                 IntegerType::class
             )
