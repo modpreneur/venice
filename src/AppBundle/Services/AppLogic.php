@@ -139,21 +139,6 @@ class AppLogic
 
 
     /**
-     * Display amember id field in ProductAccess template
-     *
-     * @return bool
-     */
-    public function displayAmemberFieldForBillingPlan():bool
-    {
-        if ($this->hasForceReturn()) {
-            return $this->forceReturn;
-        }
-
-        return !$this->connectedToNecktie;
-    }
-
-
-    /**
      * Display necktie id field in ProductAccess template
      *
      * @return bool

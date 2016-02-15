@@ -9,7 +9,7 @@ services:
         class: AppBundle\Services\AppLogic
         arguments:
           - "@service_container"
-          - true # if bool all methods will return the given bool! leave blank or set to null to ensure default behavior
+          - null # if bool all methods will return the given bool! leave blank or set to null to ensure default behavior
 
     app.services.necktie_gateway:
         class: AppBundle\Services\NecktieGateway

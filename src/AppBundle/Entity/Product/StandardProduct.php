@@ -130,39 +130,6 @@ class StandardProduct extends Product implements NotificationEntityInterface
     }
 
 
-
-
-//    /**
-//     * @param BillingPlan $billingPlan
-//     *
-//     * @return $this
-//     */
-//    public function setDesktopBillingPlan($billingPlan)
-//    {
-//        $this->desktopBillingPlan = $billingPlan;
-//
-//        return $this;
-//    }
-
-//
-//    /**
-//     * @return BillingPlan
-//     */
-//    public function getMobileBillingPlan()
-//    {
-//        return $this->mobileBillingPlan;
-//    }
-
-
-//    /**
-//     * @param BillingPlan $mobileBillingPlan
-//     */
-//    public function setMobileBillingPlan($mobileBillingPlan)
-//    {
-//        $this->mobileBillingPlan = $mobileBillingPlan;
-//    }
-
-
     public function getType()
     {
         return self::TYPE;
