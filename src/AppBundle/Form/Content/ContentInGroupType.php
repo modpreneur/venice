@@ -58,6 +58,7 @@ class ContentInGroupType extends BaseType
                 [
                     "empty_data" => 0,
                     "required" => false,
+                    "attr" => ["placeholder" => "Delay[hours]"]
                 ]
             )
             ->add(
@@ -66,6 +67,7 @@ class ContentInGroupType extends BaseType
                 [
                     "empty_data" => 0,
                     "required" => false,
+                    "attr" => ["placeholder" => "Order number"]
                 ]
             );
 

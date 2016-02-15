@@ -46,7 +46,8 @@ class ContentProductTypeWithHiddenContent extends ContentProductType
                 IntegerType::class,
                 [
                     "required" => true,
-                    "empty_data" => 0
+                    "empty_data" => 0,
+                    "attr" => ["placeholder" => "Delay[hours]"]
                 ]
             )
             ->add(
@@ -54,7 +55,8 @@ class ContentProductTypeWithHiddenContent extends ContentProductType
                 IntegerType::class,
                 [
                     "required" => true,
-                    "empty_data" => 0
+                    "empty_data" => 0,
+                    "attr" => ["placeholder" => "Order number"]
                 ]
             );
 
