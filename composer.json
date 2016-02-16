@@ -34,7 +34,9 @@
         "trinity/grid": "dev-master",
         "trinity/search": "dev-master",
         "modpreneur/bowtie": "dev-master",
-        "guzzlehttp/guzzle": "~6"
+        "guzzlehttp/guzzle": "~6",
+        "predis/predis": "~1.0",
+        "snc/redis-bundle" : "dev-master"
     },
     "require-dev": {
         "sensio/generator-bundle": "~3.0",

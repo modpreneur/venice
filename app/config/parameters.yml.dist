@@ -24,5 +24,7 @@ parameters:
     login_response_route: necktie_login_response
     primary_gateway_service: necktie
     secondary_gateway_service:
+    redis_dsn: 'redis://venice_pass@venice_redis_1'
+
 
 

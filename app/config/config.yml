@@ -49,7 +49,7 @@ framework:
     trusted_proxies: ~
     session:
         # handler_id set to null will use default session handler from php.ini
-        handler_id:  ~
+        handler_id:  snc_redis.session.handler
         name: vs #venice session
     fragments:       ~
     http_method_override: true
@@ -199,5 +199,23 @@ doctrine_migrations:
     namespace: AppBundle\DoctrineMigrations
     table_name: migration_versions
     name: Application Migrations
+
+
+snc_redis:
+    # Data are separated on redis databases:
+    # default 0 (dev doctrine cache and sessions)
+    # 1 (prod doctrine cache)
+    # for more see necktie github wiki
+    clients:
+        default:
+            type: predis
+            alias: default
+            dsn: %redis_dsn%
+            logging: false
+            options:
+                replication: true
+    session:
+        client: default
+        ttl: 1200
 
 trinity_settings:

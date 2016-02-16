@@ -20,7 +20,7 @@ class AppKernel extends Kernel
             new FOS\UserBundle\FOSUserBundle(),
             new FOS\RestBundle\FOSRestBundle(),
             new JMS\SerializerBundle\JMSSerializerBundle(),
-
+            new \Snc\RedisBundle\SncRedisBundle(),
 
             new \Knp\Bundle\MenuBundle\KnpMenuBundle(),
 
