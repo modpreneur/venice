@@ -63,3 +63,55 @@
 {#disable loading bar#}
 {% block page_loading %}
 {% endblock %}
+
+{% block sidebar_user %}
+
+    <div class="body-text margin-top-5">
+
+        <div class="user-photo">
+            <i class="trinity trinity-user"></i>
+        </div>
+
+        Logged user:
+        <a href="{{ path("admin_user_tabs", {'id': app.user.id }) }}">
+            {{ app.user.username}}
+        </a>
+    </div>
+
+    <div class="margin-top-10"> </div>
+
+    <h4> User info:</h4>
+
+    <ul class="tab-list">
+        {% if app.user.getFullName() %}
+            <li>
+                <i class="trinity-user"></i>
+                {{ app.user.getFullName() }}
+            </li>
+        {% endif %}
+
+        <li>
+            <i class="trinity trinity-mail"></i>
+            {{ app.user.email }}
+        </li>
+
+        <li>
+            <i class="trinity trinity-calendar"></i>
+            <strong>Registered: </strong> - {{ app.user.createdAt|date(get_setting('date')) }}
+        </li>
+        <li>
+            <i class="trinity trinity-calendar"></i>
+            <strong>Last login: </strong> - {{ app.user.lastLogin|date(get_setting('date')) }}
+        </li>
+    </ul>
+
+    <div class="alert alert-info margin-top-50">
+        <i class="trinity trinity-info alert-icon"></i>
+            <span class="alert-content">
+                If you want to change information,
+                <a href="{{ path("admin_user_tabs", {'id': app.user.id }) }}">
+                    click here.
+                </a>
+            </span>
+    </div>
+{% endblock %}
