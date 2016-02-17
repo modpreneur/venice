@@ -10,6 +10,7 @@ namespace AppBundle\Entity;
 
 use AppBundle\Entity\Product\Product;
 use AppBundle\Traits\HasNotificationStatusTrait;
+use AppBundle\Traits\Timestampable;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
@@ -38,6 +39,7 @@ use Trinity\NotificationBundle\Entity\NotificationEntityInterface;
 class User extends TrinityUser implements NotificationEntityInterface
 {
     use HasNotificationStatusTrait;
+    use Timestampable;
 
     const PREFERRED_UNITS_IMPERIAL = "imperial";
     const PREFERRED_UNITS_METRIC = "metric";
@@ -113,6 +115,7 @@ class User extends TrinityUser implements NotificationEntityInterface
         $this->preferredUnits = self::DEFAULT_PREFERRED_METRICS;
         $this->birthDate = new DateTime();
         $this->status = [];
+        $this->updateTimestamps();
     }
 
 
@@ -385,7 +388,6 @@ class User extends TrinityUser implements NotificationEntityInterface
 //     */
 //    public function giveAccessToProduct(Product $product, \DateTime $fromDate, \DateTime $toDate = null, $necktieId = null)
 //    {
-//        //todo: refactor and simplify
 //
 //        //create a new ProductAccess record
 //        if (!$this->hasAccessToProduct($product)) {
