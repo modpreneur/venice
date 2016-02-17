@@ -82,15 +82,16 @@ class NecktieLoginController extends Controller
                 $this->performNecktieCalls($necktieGateway, $user);
             }
 
+            $this->dispatchSuccessfulLoginEvent($user);
+
             $entityManager->persist($user);
             $entityManager->flush();
+
+            return $this->redirectToRoute("homepage");
+
         } else {
             return new Response("An error occurred. Please report it to the support.");
         }
-
-        $this->dispatchSuccessfulLoginEvent($user);
-
-        return $this->redirectToRoute("homepage");
     }
 
 
@@ -131,14 +132,14 @@ class NecktieLoginController extends Controller
      * @param NecktieGateway $necktieGateway
      * @param Request $request
      *
-     * @return Response
+     * @return Response|null
      */
     protected function validateCookie(NecktieGateway $necktieGateway, Request $request)
     {
         $cookieValue = $request->cookies->get($necktieGateway::STATE_COOKIE_NAME);
 
         if (!is_string($cookieValue)) {
-            return new Response("Please, enable cookies in your browser.");
+            return new AccessDeniedHttpException("Please, enable cookies in your browser.");
         }
 
         if ($cookieValue !== $request->get("state")) {

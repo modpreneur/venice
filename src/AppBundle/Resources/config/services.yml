@@ -84,6 +84,11 @@ services:
         tags:
             - { name: doctrine.event_listener, event: onFlush}
 
+    app.login_listener:
+        class: AppBundle\EventListener\LoginListener
+        tags:
+            - {name: "kernel.event_listener", event: "app.necktie_login_successful", method: "onSuccessfulLogin"}
+
     app.roles_loader:
         class: AppBundle\Services\RolesLoader
 
