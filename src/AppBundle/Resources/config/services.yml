@@ -60,6 +60,9 @@ services:
             - "@form.factory"
             - "@router"
 
+    app.roles_loader:
+        class: AppBundle\Services\RolesLoader
+
     # EVENT LISTENERS #
 
     app.event_listener.kernel_excetpion:
@@ -89,8 +92,12 @@ services:
         tags:
             - {name: "kernel.event_listener", event: "app.necktie_login_successful", method: "onSuccessfulLogin"}
 
-    app.roles_loader:
-        class: AppBundle\Services\RolesLoader
+    gedmo.listener.timestampable:
+        class: Gedmo\Timestampable\TimestampableListener
+        tags:
+            - { name: doctrine.event_subscriber, connection: default }
+        calls:
+            - [ "setAnnotationReader", [ "@annotation_reader" ] ]
 
     # TWIG EXTENSIONS #
 

@@ -11,6 +11,7 @@ namespace AppBundle\Entity\Content;
 
 use AppBundle\Entity\ContentProduct;
 use AppBundle\Entity\User;
+use AppBundle\Traits\Timestampable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\OrderBy;
@@ -31,6 +32,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 abstract class Content
 {
+    use Timestampable;
+
     /**
      * @var int
      *
@@ -87,6 +90,11 @@ abstract class Content
      */
     abstract public function getContent();
 
+
+    public function __construct()
+    {
+        $this->updateTimestamps();
+    }
 
     /**
      * @return string

@@ -10,6 +10,7 @@ namespace AppBundle\Traits;
 
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Knp\DoctrineBehaviors\Model\Timestampable\TimestampableMethods;
 
 
@@ -21,6 +22,7 @@ trait Timestampable
      * @var \DateTime
      *
      * @ORM\Column(name="created_at", type="datetime", nullable=false)
+     * @Gedmo\Timestampable(on="create")
      */
     protected $createdAt;
 
@@ -28,6 +30,7 @@ trait Timestampable
      * @var \DateTime
      *
      * @ORM\Column(name="updated_at", type="datetime", nullable=false)
+     * @Gedmo\Timestampable(on="update")
      */
     protected $updatedAt;
 
