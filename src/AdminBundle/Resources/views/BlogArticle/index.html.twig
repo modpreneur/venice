@@ -1,21 +1,7 @@
-{% extends('AdminBundle::adminBase.html.twig') %}
-
-{% block pageIcon %}
-    <i class="tiecons tiecons-book-text"></i>
-{% endblock %}
+{% extends('AdminBundle::BlogArticle/base.html.twig') %}
 
 {% block pageTitle %}
     Blog articles
-{% endblock %}
-
-{% block pageAction %}
-    {% if is_granted('ROLE_ADMIN_BLOG_EDIT') %}
-        <div class="navigation-box row margin-top-20">
-            <a class="new-entry" id="newEntryIcon" href="{{ path('admin_blog_article_new') }}">
-                <i class="trinity trinity-plus"></i>
-            </a>
-        </div>
-    {% endif %}
 {% endblock %}
 
 {% block pageBody %}

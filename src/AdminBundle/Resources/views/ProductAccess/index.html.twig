@@ -1,70 +1,65 @@
-{% extends('AppBundle::base.html.twig') %}
-
-{% block body %}
-    {% if productAccesses|length > 0 %}
-        <table class="grid">
-            <thead>
+{% if productAccesses|length > 0 %}
+    <table class="grid">
+        <thead>
+        <tr>
+            <th>Id</th>
+            {% if appLogic.displayNecktieFieldForProductAccess %}
+                <th>Necktie id</th>
+            {% endif %}
+            <th>Product</th>
+            <th>From date</th>
+            <th>To date</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for productAccess in productAccesses %}
             <tr>
-                <th>Id</th>
-                {% if appLogic.displayNecktieFieldForProductAccess %}
-                    <th>Necktie id</th>
-                {% endif %}
-                <th>Product</th>
-                <th>From date</th>
-                <th>To date</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for productAccess in productAccesses %}
-                <tr>
-                    <td>
-                        <div class="action-cell">
-                            <span class="content">
-                                <a href="{{ path('admin_product_access_tabs', {'id': productAccess.id}) }}">{{ productAccess.id }}</a>
-                            </span>
-                            <span class="actions">
-                                <a href="{{ path('admin_product_access_tabs', {'id': productAccess.id}) }}">Go to</a>
-                            </span>
-                        </div>
-
-                    </td>
-                    {#Necktie id#}
-                    {% if appLogic.displayNecktieFieldForProductAccess %}
-                        <td>
-                            {{ productAccess.necktieId }}
-                        </td>
-                    {% endif %}
-
-                    {#product#}
-                    <td>
-                        {{ productAccess.product.name }}
-                    </td>
-
-                    {#from date#}
-                    <td>
-                        {{ productAccess.fromDate|date("Y-m-d")  }}
-                    </td>
-
-                    {#to date#}
-                    <td>
-                        {{ productAccess.toDate|date("Y-m-d")  }}
-                    </td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-
-    {% else %}
-        <div class="row">
-            <div class="span-none-padding-xlarge-24 margin-auto">
-                <div class="span-none-xlarge-10 margin-top-20">
-                    <div class="info-empty-form">
-                        <div class="row"><i class="trinity-info"></i></div>
-                        <div class="row"><h2 class="warning">NO DATA</h2></div>
+                <td>
+                    <div class="action-cell">
+                        <span class="content">
+                            <a href="{{ path('admin_product_access_tabs', {'id': productAccess.id}) }}">{{ productAccess.id }}</a>
+                        </span>
+                        <span class="actions">
+                            <a href="{{ path('admin_product_access_tabs', {'id': productAccess.id}) }}">Go to</a>
+                        </span>
                     </div>
+
+                </td>
+                {#Necktie id#}
+                {% if appLogic.displayNecktieFieldForProductAccess %}
+                    <td>
+                        {{ productAccess.necktieId }}
+                    </td>
+                {% endif %}
+
+                {#product#}
+                <td>
+                    {{ productAccess.product.name }}
+                </td>
+
+                {#from date#}
+                <td>
+                    {{ productAccess.fromDate|date("Y-m-d")  }}
+                </td>
+
+                {#to date#}
+                <td>
+                    {{ productAccess.toDate|date("Y-m-d")  }}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% else %}
+    <div class="row">
+        <div class="span-none-padding-xlarge-24 margin-auto">
+            <div class="span-none-xlarge-10 margin-top-20">
+                <div class="info-empty-form">
+                    <div class="row"><i class="trinity-info"></i></div>
+                    <div class="row"><h2 class="warning">NO DATA</h2></div>
                 </div>
             </div>
         </div>
-    {% endif %}
-
-{% endblock %}
+    </div>
+{% endif %}

@@ -1,21 +1,7 @@
-{% extends('AdminBundle::adminBase.html.twig') %}
+{% extends('AdminBundle::Product/base.html.twig') %}
 
 {% block pageTitle %}
     New product
-{% endblock %}
-
-{% block pageIcon %}
-    <i class="trinity trinity-products"></i>
-{% endblock %}
-
-{% block pageAction %}
-    {% if is_granted('ROLE_ADMIN_PRODUCT_EDIT') %}
-        <div class="navigation-box row margin-top-20">
-            <a class="new-entry" id="newEntryIcon" href="{{ path('admin_product_new') }}">
-                <i class="trinity trinity-plus"></i>
-            </a>
-        </div>
-    {% endif %}
 {% endblock %}
 
 {% block pageBody %}
@@ -36,7 +22,7 @@
         </div>
 
         <div id="product_form" class="row">
-            {#insert form here#}
+            {#JS inserts form here#}
         </div>
     </div>
 

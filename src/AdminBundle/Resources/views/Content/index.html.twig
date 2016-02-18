@@ -1,28 +1,10 @@
-{% extends('AdminBundle::adminBase.html.twig') %}
-
-{% block pageIcon %}
-    <i class="tiecons tiecons-video"></i>
-{% endblock %}
+{% extends('AdminBundle::Content/base.html.twig') %}
 
 {% block pageTitle %}
     Contents
 {% endblock %}
 
-{% block pageAction %}
-    {% if is_granted('ROLE_ADMIN_CONTENT_PRODUCT_EDIT') %}
-        <div class="navigation-box row margin-top-20">
-            <a class="new-entry" id="newEntryIcon" href="{{ path('admin_content_new') }}">
-                <i class="trinity trinity-plus"></i>
-            </a>
-        </div>
-    {% endif %}
-{% endblock %}
-
-
 {% block pageBody %}
-    {% if is_granted('ROLE_ADMIN_CONTENT_PRODUCT_EDIT') %}
-    {% endif %}
-
     <div class="wrapper-grid">
         <ul>
             {% for content in contents %}

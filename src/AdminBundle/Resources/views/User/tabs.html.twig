@@ -4,23 +4,8 @@
     User {{ user.fullNameOrUsername }}
 {% endblock %}
 
-{% block pageIcon %}
-    <i class="trinity trinity-user"></i>
-{% endblock %}
-
 {% block pageAction %}
-    <div class="navigation-box row">
-        {% if is_granted('ROLE_ADMIN_USER_EDIT') %}
-            <div class="navigation-box row margin-top-20">
-                <a class="new-entry" id="newEntryIcon" href="{{ path('admin_user_new') }}">
-                    <i class="trinity trinity-plus"></i>
-                </a>
-            </div>
-        {% endif %}
-
-        <a href="{{ necktieUserShowUrl }}" target="_blank"><i class="necktie necktielogo2 padding-right-100"></i></a>
-    </div>
-    {#todo! #}
+    {% include "AdminBundle:Common:viewInNecktieAction.html.twig" with {"url": necktieUserShowUrl} %}
 {% endblock %}
 
 

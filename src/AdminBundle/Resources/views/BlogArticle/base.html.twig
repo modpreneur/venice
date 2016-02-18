@@ -1,0 +1,18 @@
+{% extends('AdminBundle::adminBase.html.twig') %}
+
+{% block pageIcon %}
+    <i class="tiecons tiecons-book-text"></i>
+{% endblock %}
+
+{% block pageAction %}
+    {% if is_granted('ROLE_ADMIN_BLOG_EDIT') %}
+        <span class="tooltip">
+            <span class="tooltip-hover">
+                <a class="new-entry" id="newEntryIcon" href="{{ path('admin_blog_article_new') }}">
+                    <i class="trinity trinity-plus"></i>
+                </a>
+                <div class="tooltip-bottom">Create a new blog article</div>
+            </span>
+        </span>
+    {% endif %}
+{% endblock %}
