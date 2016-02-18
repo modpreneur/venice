@@ -10,6 +10,7 @@ namespace AppBundle\Entity;
 
 
 use AppBundle\Entity\Product\Product;
+use AppBundle\Traits\Timestampable;
 use Cocur\Slugify\Slugify;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -27,16 +28,18 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class BlogArticle
 {
+    use Timestampable;
+
     /**
      * @var int Used for creating a preview
      */
-    private $lastAllowedDotPosition = 200;
+    protected $lastAllowedDotPosition = 200;
 
 
     /**
      * @var int Used for creating a preview
      */
-    private $maxCountOfCharacters = 400;
+    protected $maxCountOfCharacters = 400;
 
 
     /**
@@ -67,16 +70,6 @@ class BlogArticle
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=true)
      */
     protected $publisher;
-
-
-    /**
-     * @var DateTime
-     *
-     * @Assert\DateTime()
-     *
-     * @ORM\Column(name="date_written", type="datetime")
-     */
-    protected $dateWritten;
 
 
     /**
@@ -118,9 +111,7 @@ class BlogArticle
 
     function __construct()
     {
-        $this->dateWritten = new DateTime();
-        $this->published = false;
-        $this->commentsOn = true;
+        $this->updateTimestamps();
         $this->products = new ArrayCollection();
     }
 
@@ -188,31 +179,6 @@ class BlogArticle
     public function setPublisher(User $publisher)
     {
         $this->publisher = $publisher;
-
-        return $this;
-    }
-
-
-    /**
-     * Get dateWritten
-     *
-     * @return DateTime
-     */
-    public function getDateWritten()
-    {
-        return $this->dateWritten;
-    }
-
-
-    /**
-     * Set dateWritten
-     *
-     * @param DateTime $dateWritten
-     * @return BlogArticle
-     */
-    public function setDateWritten(DateTime $dateWritten)
-    {
-        $this->dateWritten = $dateWritten;
 
         return $this;
     }
@@ -296,7 +262,9 @@ class BlogArticle
 
 
     /**
-     * @param DateTime $dateTime
+     * Check if the article will be available in given DateTime.
+     *
+     * @param DateTime|null $dateTime If null check if the article is available now.
      *
      * @return bool
      */
