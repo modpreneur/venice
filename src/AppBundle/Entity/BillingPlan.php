@@ -12,8 +12,6 @@ use AppBundle\Entity\Product\StandardProduct;
 use AppBundle\Traits\Timestampable;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
-use Doctrine\ORM\Mapping\PrePersist;
-use Doctrine\ORM\Mapping\PreUpdate;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 
@@ -114,16 +112,6 @@ class BillingPlan
         $this->rebillTimes = 0;
         $this->price = "";
         $this->updateTimestamps();
-    }
-
-    /**
-     * @PrePersist
-     * @PreUpdate
-     *
-     */
-    public function onPrePersist()
-    {
-        $this->generateAndSetPriceString();
     }
 
 
@@ -331,35 +319,6 @@ class BillingPlan
         $this->price = $price;
 
         return $this;
-    }
-
-
-    /**
-     * Generate and set the price string.
-     *
-     * @return string price
-     */
-    public function generateAndSetPriceString()
-    {
-        $fullPrice = sprintf("$%.2f", $this->initialPrice);
-
-        if ($this->getType() === 'recurring') {
-            $fullPrice = $fullPrice.' and ';
-
-            if ($this->rebillTimes != 999) {
-                $fullPrice = $fullPrice.($this->rebillTimes - 1).' times ';
-            }
-
-            $fullPrice = $fullPrice.sprintf("$%.2f", $this->rebillPrice);
-
-            if ($this->rebillTimes == 999) {
-                $fullPrice = $fullPrice.' lifetime';
-            }
-        }
-
-        $this->price = $fullPrice;
-
-        return $fullPrice;
     }
 
 

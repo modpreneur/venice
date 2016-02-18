@@ -202,6 +202,9 @@ class BillingPlanController extends BaseAdminController
         $billingPlanForm->handleRequest($request);
 
         if ($billingPlanForm->isValid()) {
+            $priceGenerator = $this->get("trinity.services.price_string_generator");
+            $billingPlan->setPrice($priceGenerator->generateFullPriceStr($billingPlan));
+
             $em->persist($billingPlan);
 
             try {
@@ -299,6 +302,9 @@ class BillingPlanController extends BaseAdminController
         $form->handleRequest($request);
 
         if ($form->isValid()) {
+            $priceGenerator = $this->get("trinity.services.price_string_generator");
+            $billingPlan->setPrice($priceGenerator->generateFullPriceStr($billingPlan));
+
             $em->persist($billingPlan);
 
             try {

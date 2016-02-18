@@ -91,6 +91,10 @@ class NotificationController extends Controller
         ;
 
         if("DELETE" !== $request->getMethod()) {
+            // Generate price string
+            $priceGenerator = $this->get("trinity.services.price_string_generator");
+            $updatedBillingPlan->setPrice($priceGenerator->generateFullPriceStr($updatedBillingPlan));
+
             // The parser returns updated entity. In this case we have to set the updated billing plan to the product.
             $product = $updatedBillingPlan->getProduct();
             $product->setBillingPlan($updatedBillingPlan);
