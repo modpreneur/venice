@@ -4,6 +4,11 @@
     Content {{ content.name }}
 {% endblock %}
 
+{% block pageAction %}
+    {{ parent() }}
+    {% include "AdminBundle:Common:goUpAction.html.twig" with {"url": path("admin_content_index"), "tooltip": "Go back to content"} %}
+{% endblock %}
+
 {% block pageBody -%}
 
     <div class="tabs-wrapper margin-top-20">

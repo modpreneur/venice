@@ -4,6 +4,11 @@
     Content
 {% endblock %}
 
+{% block pageAction %}
+    {{ parent() }}
+    {% include "AdminBundle:Common:goUpAction.html.twig" with {"url": path("admin_content_index"), "tooltip": "Go back to content"} %}
+{% endblock %}
+
 {% block pageBody %}
 
     <div class="select-style form-control choice edit-form">

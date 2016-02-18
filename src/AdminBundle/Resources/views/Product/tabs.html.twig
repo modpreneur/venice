@@ -7,6 +7,7 @@
 {% block pageAction %}
     {{ parent() }}
     {% include "AdminBundle:Common:viewInNecktieAction.html.twig" with {"url": necktieProductShowUrl} %}
+    {% include "AdminBundle:Common:goUpAction.html.twig" with {"url": path("admin_product_index"), "tooltip": "Go back to products"} %}
 {% endblock %}
 
 {% block pageBody -%}
