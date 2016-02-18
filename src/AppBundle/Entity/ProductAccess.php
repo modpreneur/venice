@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use AppBundle\Entity\Product\Product;
+use AppBundle\Traits\Timestampable;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -18,6 +19,8 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  */
 class ProductAccess
 {
+    use Timestampable;
+
     /**
      * @var integer
      *
@@ -70,6 +73,7 @@ class ProductAccess
 
     public function __construct()
     {
+        $this->updateTimestamps();
     }
 
 

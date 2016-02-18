@@ -9,6 +9,7 @@
 namespace AppBundle\Entity;
 
 
+use AppBundle\Traits\Timestampable;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -21,6 +22,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class OAuthToken
 {
+    use Timestampable;
+
     /**
      * @var int
      *
@@ -71,6 +74,12 @@ class OAuthToken
      * @ORM\Column(type="scope", type="string", nullable=true)
      */
     protected $scope;
+
+
+    public function __construct()
+    {
+        $this->updateTimestamps();
+    }
 
 
     /**

@@ -9,6 +9,7 @@
 namespace AppBundle\Entity;
 
 use AppBundle\Entity\Product\StandardProduct;
+use AppBundle\Traits\Timestampable;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
 use Doctrine\ORM\Mapping\PrePersist;
@@ -27,6 +28,8 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  */
 class BillingPlan
 {
+    use Timestampable;
+
     /**
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -110,6 +113,7 @@ class BillingPlan
         $this->frequency = 0;
         $this->rebillTimes = 0;
         $this->price = "";
+        $this->updateTimestamps();
     }
 
     /**

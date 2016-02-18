@@ -16,6 +16,7 @@ use AppBundle\Entity\ProductAccess;
 use AppBundle\Entity\User;
 use AppBundle\Form\Product\FreeProductType;
 use AppBundle\Form\Product\StandardProductType;
+use AppBundle\Traits\Timestampable;
 use Cocur\Slugify\Slugify;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
@@ -40,6 +41,8 @@ use Trinity\FrameworkBundle\Entity\BaseProduct as TrinityProduct;
  */
 abstract class Product extends TrinityProduct
 {
+    use Timestampable;
+
     /**
      * @var string
      *
@@ -111,6 +114,7 @@ abstract class Product extends TrinityProduct
         $this->productAccesses = new ArrayCollection();
         $this->orderNumber = 0;
         $this->articles = new ArrayCollection();
+        $this->updateTimestamps();
     }
 
 

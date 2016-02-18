@@ -10,6 +10,7 @@ namespace AppBundle\Entity;
 
 use AppBundle\Entity\Content\Content;
 use AppBundle\Entity\Product\Product;
+use AppBundle\Traits\Timestampable;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -31,6 +32,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class ContentProduct
 {
+    use Timestampable;
+
     /**
      * @var int
      *
@@ -95,6 +98,7 @@ class ContentProduct
         $this->product = null;
         $this->delay = 0;
         $this->orderNumber = 0;
+        $this->updateTimestamps();
     }
 
 
