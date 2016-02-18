@@ -106,80 +106,80 @@ class UserController extends BaseAdminController
     }
 
 
-    /**
-     * @Route("/new", name="admin_user_new")
-     * @Method("GET")
-     *
-     * @Security("is_granted('ROLE_ADMIN_USER_EDIT')")
-     */
-    public function newAction()
-    {
-        $this->getBreadcrumbs()
-            ->addRouteItem("Users", "admin_user_index")
-            ->addRouteItem("New user", "admin_user_new");
+//    /**
+//     * @Route("/new", name="admin_user_new")
+//     * @Method("GET")
+//     *
+//     * @Security("is_granted('ROLE_ADMIN_USER_EDIT')")
+//     */
+//    public function newAction()
+//    {
+//        $this->getBreadcrumbs()
+//            ->addRouteItem("Users", "admin_user_index")
+//            ->addRouteItem("New user", "admin_user_new");
+//
+//        $user = new User();
+//        $form = $this->getFormCreator()
+//            ->createCreateForm(
+//                $user,
+//                UserType::class,
+//                "admin_user"
+//            );
+//
+//        return $this->render(
+//            'AdminBundle:User:new.html.twig',
+//            [
+//                'user' => $user,
+//                'form' => $form->createView(),
+//            ]
+//        );
+//    }
 
-        $user = new User();
-        $form = $this->getFormCreator()
-            ->createCreateForm(
-                $user,
-                UserType::class,
-                "admin_user"
-            );
 
-        return $this->render(
-            'AdminBundle:User:new.html.twig',
-            [
-                'user' => $user,
-                'form' => $form->createView(),
-            ]
-        );
-    }
-
-
-    /**
-     * @Route("/create", name="admin_user_create")
-     * @Method("POST")
-     *
-     * @Security("is_granted('ROLE_ADMIN_USER_EDIT')")
-     */
-    public function createAction(Request $request)
-    {
-        $user = new User();
-        $em = $this->getEntityManager();
-
-        $productForm = $this->getFormCreator()
-            ->createCreateForm(
-                $user,
-                UserType::class,
-                "admin_user"
-            );
-
-        $productForm->handleRequest($request);
-
-        if ($productForm->isValid()) {
-            $em->persist($user);
-
-            try {
-                $em->flush();
-            } catch (DBALException $e) {
-                return new JsonResponse(
-                    [
-                        'error' => ['db' => $e->getMessage(),]
-                    ],
-                    400);
-            }
-
-            return new JsonResponse(
-                [
-                    "message" => "Product successfully created",
-                    "location" => $this->generateUrl("admin_user_tabs", ["id" => $user->getId()]),
-                ],
-                302
-            );
-        } else {
-            return $this->returnFormErrorsJsonResponse($productForm);
-        }
-    }
+//    /**
+//     * @Route("/create", name="admin_user_create")
+//     * @Method("POST")
+//     *
+//     * @Security("is_granted('ROLE_ADMIN_USER_EDIT')")
+//     */
+//    public function createAction(Request $request)
+//    {
+//        $user = new User();
+//        $em = $this->getEntityManager();
+//
+//        $productForm = $this->getFormCreator()
+//            ->createCreateForm(
+//                $user,
+//                UserType::class,
+//                "admin_user"
+//            );
+//
+//        $productForm->handleRequest($request);
+//
+//        if ($productForm->isValid()) {
+//            $em->persist($user);
+//
+//            try {
+//                $em->flush();
+//            } catch (DBALException $e) {
+//                return new JsonResponse(
+//                    [
+//                        'error' => ['db' => $e->getMessage(),]
+//                    ],
+//                    400);
+//            }
+//
+//            return new JsonResponse(
+//                [
+//                    "message" => "Product successfully created",
+//                    "location" => $this->generateUrl("admin_user_tabs", ["id" => $user->getId()]),
+//                ],
+//                302
+//            );
+//        } else {
+//            return $this->returnFormErrorsJsonResponse($productForm);
+//        }
+//    }
 
 
     /**
