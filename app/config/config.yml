@@ -214,6 +214,6 @@ snc_redis:
                 replication: true
     session:
         client: default
-        ttl: 1200
+        ttl: 3600
 
 trinity_settings:
