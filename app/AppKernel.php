@@ -15,6 +15,7 @@ class AppKernel extends Kernel
             new Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle(),
             new Symfony\Bundle\AsseticBundle\AsseticBundle(),
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
+            new KMS\FroalaEditorBundle\KMSFroalaEditorBundle(),
             new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
@@ -30,6 +31,7 @@ class AppKernel extends Kernel
             new FrontBundle\FrontBundle(),
 
             new WhiteOctober\BreadcrumbsBundle\WhiteOctoberBreadcrumbsBundle(),
+            new Knp\Bundle\GaufretteBundle\KnpGaufretteBundle(),
 
             // Trinity
             new Trinity\FrameworkBundle\TrinityFrameworkBundle(),

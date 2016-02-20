@@ -58,19 +58,13 @@ security:
                 csrf_token_generator: security.csrf.token_manager
                 login_path: /login
                 check_path: /login_check
-#            remember_me:
-#                name: venice_auth
-#                lifetime: 31536000 # 365 days in seconds
-#                secure: false
-#                httponly: true
-#                always_remember_me: true
-#                key: "%secret%"
             logout:
                 success_handler: app.handler.logout_success_handler
 
 
     access_control:
         - { path: ^/public, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/froala, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin, role: ROLE_ADMIN }
         - { path: ^/login, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/login-response, role: IS_AUTHENTICATED_ANONYMOUSLY }

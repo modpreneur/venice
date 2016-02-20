@@ -1,26 +1,2 @@
-app:
-    resource: "@AppBundle/Controller"
-    type:     annotation
-
-admin:
-    resource: "@AdminBundle/Controller"
-    type:     annotation
-
-front:
-    resource: "@FrontBundle/Controller"
-    type:     annotation
-
-trinity_grid:
-    resource: "@GridBundle/Resources/config/routing.yml"
-    prefix:   "/admin"
-
-fos_user:
-    resource: "@FOSUserBundle/Resources/config/routing/security.xml"
-
-fos_user_security_login:
-    path: /login
-    defaults:
-        _controller: FrameworkBundle:Redirect:redirect
-        path: %login_route% # route name from parameters
-        permanent: true
-
+imports:
+    resource: "@AppBundle/Resources/config/routing.yml"

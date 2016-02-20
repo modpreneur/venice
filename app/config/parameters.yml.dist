@@ -1,6 +1,3 @@
-# This file is a "template" of what your parameters.yml file should look like
-# Set parameters here that may be different on each deployment target of the app, e.g. development, staging, production.
-# http://symfony.com/doc/current/best_practices/configuration.html#infrastructure-related-configuration
 parameters:
     database_host:     database
     database_port:     3306
@@ -25,6 +22,10 @@ parameters:
     primary_gateway_service: necktie
     secondary_gateway_service:
     redis_dsn: 'redis://venice_pass@venice_redis_1'
+    amazon_s3_bucket: ~
+    amazon_s3_key: ~
+    amazon_s3_secret: ~
+    amazon_s3_region: ~
 
 
 

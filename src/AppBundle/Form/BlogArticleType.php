@@ -10,9 +10,9 @@ namespace AppBundle\Form;
 
 
 use AppBundle\Entity\Product\Product;
+use KMS\FroalaEditorBundle\Form\Type\FroalaEditorType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -62,9 +62,12 @@ class BlogArticleType extends BaseType
 
             ->add(
                 "content",
-                TextareaType::class,
+                FroalaEditorType::class,
                 [
-                    "required" => true
+                    "required" => true,
+                    "toolbarInline" => true,
+                    "tableColors" => [ "#FFFFFF", "#FF0000" ],
+                    "saveParams" => [ "id" => "myEditorField" ],
                 ]
             )
         ;

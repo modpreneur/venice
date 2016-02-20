@@ -4,21 +4,75 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "d56b0b9b65a896e048c8b4f7ed89b11e",
-    "content-hash": "81f11a87d784980427f41d1be69f656e",
+    "hash": "d841157f35b9b7a30273bb27556d6524",
+    "content-hash": "d8001b526b774b5fed6803a4f610e632",
     "packages": [
         {
-            "name": "aws/aws-sdk-php",
-            "version": "3.15.2",
+            "name": "amazonwebservices/aws-sdk-for-php",
+            "version": "1.6.2",
             "source": {
                 "type": "git",
-                "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "ead3e25640df96705e6fb7d9137653dc75b191e0"
+                "url": "https://github.com/amazonwebservices/aws-sdk-for-php.git",
+                "reference": "65d6bc82d6e0cd095709c342a23c749dc2f3a012"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/ead3e25640df96705e6fb7d9137653dc75b191e0",
-                "reference": "ead3e25640df96705e6fb7d9137653dc75b191e0",
+                "url": "https://api.github.com/repos/amazonwebservices/aws-sdk-for-php/zipball/65d6bc82d6e0cd095709c342a23c749dc2f3a012",
+                "reference": "65d6bc82d6e0cd095709c342a23c749dc2f3a012",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.2.0"
+            },
+            "suggest": {
+                "aws/aws-sdk-php": "You should consider upgrading to version 2 of the AWS SDK for PHP"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "authentication/",
+                    "extensions/",
+                    "lib/",
+                    "services/",
+                    "utilities/",
+                    "sdk.class.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Amazon Web Services",
+                    "homepage": "http://aws.amazon.com"
+                }
+            ],
+            "description": "AWS SDK for PHP",
+            "homepage": "http://aws.amazon.com/sdkforphp/",
+            "keywords": [
+                "amazon",
+                "aws",
+                "dynamodb",
+                "ec2",
+                "s3",
+                "sdk"
+            ],
+            "abandoned": "aws/aws-sdk-php",
+            "time": "2013-03-15 19:43:06"
+        },
+        {
+            "name": "aws/aws-sdk-php",
+            "version": "3.15.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/aws/aws-sdk-php.git",
+                "reference": "db18f6c4653add0cc40d708f0916192f9ec67ac3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/db18f6c4653add0cc40d708f0916192f9ec67ac3",
+                "reference": "db18f6c4653add0cc40d708f0916192f9ec67ac3",
                 "shasum": ""
             },
             "require": {
@@ -85,7 +139,7 @@
                 "s3",
                 "sdk"
             ],
-            "time": "2016-02-17 00:04:30"
+            "time": "2016-02-18 23:32:29"
         },
         {
             "name": "behat/transliterator",
@@ -1458,16 +1512,16 @@
         },
         {
             "name": "gedmo/doctrine-extensions",
-            "version": "v2.4.12",
+            "version": "v2.4.13",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Atlantic18/DoctrineExtensions.git",
-                "reference": "2527d8f93779458e097447b5f92132bc65e672f4"
+                "reference": "5f4b6c848f0d6834a434a62a09a0935d147082e1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Atlantic18/DoctrineExtensions/zipball/2527d8f93779458e097447b5f92132bc65e672f4",
-                "reference": "2527d8f93779458e097447b5f92132bc65e672f4",
+                "url": "https://api.github.com/repos/Atlantic18/DoctrineExtensions/zipball/5f4b6c848f0d6834a434a62a09a0935d147082e1",
+                "reference": "5f4b6c848f0d6834a434a62a09a0935d147082e1",
                 "shasum": ""
             },
             "require": {
@@ -1533,7 +1587,7 @@
                 "tree",
                 "uploadable"
             ],
-            "time": "2016-01-28 10:00:33"
+            "time": "2016-02-18 15:33:43"
         },
         {
             "name": "guzzlehttp/guzzle",
@@ -1650,16 +1704,16 @@
         },
         {
             "name": "guzzlehttp/psr7",
-            "version": "1.2.2",
+            "version": "1.2.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/psr7.git",
-                "reference": "f5d04bdd2881ac89abde1fb78cc234bce24327bb"
+                "reference": "2e89629ff057ebb49492ba08e6995d3a6a80021b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/psr7/zipball/f5d04bdd2881ac89abde1fb78cc234bce24327bb",
-                "reference": "f5d04bdd2881ac89abde1fb78cc234bce24327bb",
+                "url": "https://api.github.com/repos/guzzle/psr7/zipball/2e89629ff057ebb49492ba08e6995d3a6a80021b",
+                "reference": "2e89629ff057ebb49492ba08e6995d3a6a80021b",
                 "shasum": ""
             },
             "require": {
@@ -1704,7 +1758,7 @@
                 "stream",
                 "uri"
             ],
-            "time": "2016-01-23 01:23:02"
+            "time": "2016-02-18 21:54:00"
         },
         {
             "name": "incenteev/composer-parameter-handler",
@@ -2038,6 +2092,58 @@
             "time": "2015-11-10 12:26:42"
         },
         {
+            "name": "kms/froala-editor-bundle",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/froala/KMSFroalaEditorBundle.git",
+                "reference": "2a0e517680e18615012636ab9a92629f2c700c07"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/froala/KMSFroalaEditorBundle/zipball/2a0e517680e18615012636ab9a92629f2c700c07",
+                "reference": "2a0e517680e18615012636ab9a92629f2c700c07",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^5.3.3|^7.0",
+                "symfony/form": "^2.3|^3.0",
+                "symfony/framework-bundle": "^2.3|^3.0",
+                "twig/twig": "^1.1"
+            },
+            "require-dev": {
+                "symfony/twig-bundle": "^2.3|^3.0",
+                "symfony/yaml": "^2.3|^3.0"
+            },
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-4": {
+                    "KMS\\FroalaEditorBundle\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Simon Guionniere",
+                    "email": "simon.guionniere@gmail.com"
+                },
+                {
+                    "name": "Stefan Neculai",
+                    "email": "stefan.neculai@gmail.com"
+                }
+            ],
+            "description": "Provides a Froala editor integration for Symfony 2/3.",
+            "keywords": [
+                "editor",
+                "froala",
+                "wysiwyg"
+            ],
+            "time": "2016-02-16 11:04:09"
+        },
+        {
             "name": "knplabs/doctrine-behaviors",
             "version": "1.3.0",
             "source": {
@@ -2102,6 +2208,148 @@
                 "tree"
             ],
             "time": "2015-12-18 13:42:46"
+        },
+        {
+            "name": "knplabs/gaufrette",
+            "version": "0.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/KnpLabs/Gaufrette.git",
+                "reference": "9d52413665284f9c96e0cef399fc14e68ac0aa5a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/KnpLabs/Gaufrette/zipball/9d52413665284f9c96e0cef399fc14e68ac0aa5a",
+                "reference": "9d52413665284f9c96e0cef399fc14e68ac0aa5a",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.2"
+            },
+            "require-dev": {
+                "amazonwebservices/aws-sdk-for-php": "1.5.*",
+                "aws/aws-sdk-php": "~2",
+                "doctrine/dbal": ">=2.3",
+                "dropbox-php/dropbox-php": "*",
+                "google/apiclient": "~1.1",
+                "herzult/php-ssh": "*",
+                "microsoft/windowsazure": "dev-master",
+                "mikey179/vfsstream": "~1.2.0",
+                "phpseclib/phpseclib": "dev-master",
+                "phpspec/phpspec": "2.0.*",
+                "phpunit/phpunit": "3.7.*",
+                "rackspace/php-opencloud": "1.9.*"
+            },
+            "suggest": {
+                "amazonwebservices/aws-sdk-for-php": "to use the legacy Amazon S3 adapters",
+                "aws/aws-sdk-php": "to use the Amazon S3 adapter",
+                "doctrine/dbal": "to use the Doctrine DBAL adapter",
+                "dropbox-php/dropbox-php": "to use the Dropbox adapter",
+                "ext-apc": "to use the APC adapter",
+                "ext-curl": "*",
+                "ext-fileinfo": "This extension is used to automatically detect the content-type of a file in the AwsS3, OpenCloud, AzureBlogStorage and GoogleCloudStorage adapters",
+                "ext-mbstring": "*",
+                "ext-mongo": "*",
+                "ext-zip": "to use the Zip adapter",
+                "google/apiclient": "to use GoogleCloudStorage adapter",
+                "herzult/php-ssh": "to use SFtp adapter",
+                "knplabs/knp-gaufrette-bundle": "to use with Symfony2",
+                "microsoft/windowsazure": "to use Microsoft Azure Blob Storage adapter",
+                "phpseclib/phpseclib": "to use PhpseclibSftp adapter",
+                "rackspace/php-opencloud": "to use Opencloud adapter"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.2.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Gaufrette": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "The contributors",
+                    "homepage": "http://github.com/knplabs/Gaufrette/contributors"
+                },
+                {
+                    "name": "KnpLabs Team",
+                    "homepage": "http://knplabs.com"
+                }
+            ],
+            "description": "PHP5 library that provides a filesystem abstraction layer",
+            "homepage": "http://knplabs.com",
+            "keywords": [
+                "abstraction",
+                "file",
+                "filesystem",
+                "media"
+            ],
+            "time": "2015-05-26 08:25:40"
+        },
+        {
+            "name": "knplabs/knp-gaufrette-bundle",
+            "version": "0.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/KnpLabs/KnpGaufretteBundle.git",
+                "reference": "44cf552e14031517516458b0e394f16dd36a131b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/KnpLabs/KnpGaufretteBundle/zipball/44cf552e14031517516458b0e394f16dd36a131b",
+                "reference": "44cf552e14031517516458b0e394f16dd36a131b",
+                "shasum": ""
+            },
+            "require": {
+                "knplabs/gaufrette": "~0.1.7|~0.2",
+                "symfony/framework-bundle": "~2.0|~3.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.2",
+                "symfony/console": "~2.0|~3.0",
+                "symfony/yaml": "~2.0|~3.0"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.4.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Knp\\Bundle\\GaufretteBundle\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "The contributors",
+                    "homepage": "https://github.com/knplabs/KnpGaufretteBundle/contributors"
+                },
+                {
+                    "name": "Antoine Hérault",
+                    "email": "antoine.herault@gmail.com"
+                }
+            ],
+            "description": "Allows to easily use the Gaufrette library in a Symfony project",
+            "homepage": "http://knplabs.com",
+            "keywords": [
+                "abstraction",
+                "file",
+                "filesystem",
+                "media"
+            ],
+            "time": "2016-01-16 00:12:11"
         },
         {
             "name": "knplabs/knp-menu",
@@ -3183,16 +3431,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "5.2.8",
+            "version": "5.2.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "0b2946c107cd2d8f0ec1244edffc37fceed96f5f"
+                "reference": "b12b9c37e382c096b93c3f26e7395775f59a5eea"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/0b2946c107cd2d8f0ec1244edffc37fceed96f5f",
-                "reference": "0b2946c107cd2d8f0ec1244edffc37fceed96f5f",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/b12b9c37e382c096b93c3f26e7395775f59a5eea",
+                "reference": "b12b9c37e382c096b93c3f26e7395775f59a5eea",
                 "shasum": ""
             },
             "require": {
@@ -3253,7 +3501,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2016-02-18 07:45:20"
+            "time": "2016-02-19 11:43:07"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
@@ -4846,12 +5094,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/modpreneur/trinity-admin.git",
-                "reference": "fe6479a84bce6f42e4725dd0ac350d8b9b848dc2"
+                "reference": "b91533dc7831df80f0d3c5f48d67ff720ad67c91"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/modpreneur/trinity-admin/zipball/fe6479a84bce6f42e4725dd0ac350d8b9b848dc2",
-                "reference": "fe6479a84bce6f42e4725dd0ac350d8b9b848dc2",
+                "url": "https://api.github.com/repos/modpreneur/trinity-admin/zipball/b91533dc7831df80f0d3c5f48d67ff720ad67c91",
+                "reference": "b91533dc7831df80f0d3c5f48d67ff720ad67c91",
                 "shasum": ""
             },
             "require": {
@@ -4894,7 +5142,7 @@
                 }
             ],
             "description": "Trinity Admin bundle",
-            "time": "2016-02-16 14:23:02"
+            "time": "2016-02-19 12:08:25"
         },
         {
             "name": "trinity/framework",
@@ -4959,12 +5207,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/modpreneur/trinity-grid.git",
-                "reference": "e5dbf07065c679018b78061631d389a0aab8cb99"
+                "reference": "3492d727162318d1eb94d936170e8e06a1523fd1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/modpreneur/trinity-grid/zipball/e5dbf07065c679018b78061631d389a0aab8cb99",
-                "reference": "e5dbf07065c679018b78061631d389a0aab8cb99",
+                "url": "https://api.github.com/repos/modpreneur/trinity-grid/zipball/3492d727162318d1eb94d936170e8e06a1523fd1",
+                "reference": "3492d727162318d1eb94d936170e8e06a1523fd1",
                 "shasum": ""
             },
             "require": {
@@ -5010,7 +5258,7 @@
                 }
             ],
             "description": "Trinity Grid bundle",
-            "time": "2016-02-11 15:28:18"
+            "time": "2016-02-19 14:07:15"
         },
         {
             "name": "trinity/notification",
@@ -5487,16 +5735,16 @@
         },
         {
             "name": "zendframework/zend-eventmanager",
-            "version": "3.0.0",
+            "version": "3.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/zend-eventmanager.git",
-                "reference": "8c9917f1595ff260f289439bdeb1f46500c65d62"
+                "reference": "5c80bdee0e952be112dcec0968bad770082c3a6e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zend-eventmanager/zipball/8c9917f1595ff260f289439bdeb1f46500c65d62",
-                "reference": "8c9917f1595ff260f289439bdeb1f46500c65d62",
+                "url": "https://api.github.com/repos/zendframework/zend-eventmanager/zipball/5c80bdee0e952be112dcec0968bad770082c3a6e",
+                "reference": "5c80bdee0e952be112dcec0968bad770082c3a6e",
                 "shasum": ""
             },
             "require": {
@@ -5507,11 +5755,11 @@
                 "container-interop/container-interop": "^1.1.0",
                 "phpunit/phpunit": "~4.0",
                 "squizlabs/php_codesniffer": "^2.0",
-                "zendframework/zend-stdlib": "^2.7.3"
+                "zendframework/zend-stdlib": "^2.7.3 || ^3.0"
             },
             "suggest": {
                 "container-interop/container-interop": "^1.1.0, to use the lazy listeners feature",
-                "zendframework/zend-stdlib": "^2.7.3, to use the FilterChain feature"
+                "zendframework/zend-stdlib": "^2.7.3 || ^3.0, to use the FilterChain feature"
             },
             "type": "library",
             "extra": {
@@ -5537,7 +5785,7 @@
                 "events",
                 "zf2"
             ],
-            "time": "2016-01-12 23:27:48"
+            "time": "2016-02-18 20:53:00"
         }
     ],
     "packages-dev": [
@@ -5598,6 +5846,7 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "friendsofsymfony/user-bundle": 20,
+        "kms/froala-editor-bundle": 20,
         "trinity/framework": 20,
         "trinity/notification": 20,
         "trinity/admin": 20,
