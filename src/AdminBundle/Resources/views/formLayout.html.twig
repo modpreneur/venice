@@ -1,1 +1,16 @@
 {% extends('@TrinityAdmin/Form/bowtie_form_layout.html.twig') %}
+
+{# overrides \KMS\FroalaEditorBundle\Form\Type\FroalaEditorType's template #}
+{% block froala_widget %}
+    {% if serialNumber is defined %}
+        {% set arrOption = arrOption|merge({"key": serialNumber}) %}
+    {% endif %}
+
+    {#Insetead of initializing editor just serialize editor's config and let javascript controller init the editor#}
+    <div class="froala-editor-widget">
+
+        {# Editor textarea. #}
+        <textarea {{ block( "widget_attributes" ) }} data-settings="{{ arrOption|json_encode }}">{{ value }}</textarea>
+    </div>
+
+{% endblock %}

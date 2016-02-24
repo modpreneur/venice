@@ -4,6 +4,17 @@
     Blog article {{ article.title }}
 {% endblock %}
 
+{% block stylesheets  %}
+    {% include("AdminBundle:Common:froalaEditorStylesheets.html.twig") %}
+
+{% endblock %}
+
+{% block headerJavascripts %}
+    {{ parent() }}
+
+    {% include("AdminBundle:Common:froalaEditorJavascripts.html.twig") %}
+{% endblock %}
+
 {% block pageAction %}
     {{ parent() }}
     {% include "AdminBundle:Common:goUpAction.html.twig" with {"url": path("admin_product_index"), "tooltip": "Go back to products"} %}

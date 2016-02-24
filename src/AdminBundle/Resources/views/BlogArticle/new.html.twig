@@ -1,5 +1,16 @@
 {% extends('AdminBundle::BlogArticle/base.html.twig') %}
 
+{% block stylesheets  %}
+  {% include("AdminBundle:Common:froalaEditorStylesheets.html.twig") %}
+
+{% endblock %}
+
+{% block headerJavascripts %}
+    {{ parent() }}
+
+    {% include("AdminBundle:Common:froalaEditorJavascripts.html.twig") %}
+{% endblock %}
+
 {% block pageTitle %}
     New blog article
 {% endblock %}
@@ -26,22 +37,24 @@
             </div>
         </div>
 
+        {{ form_start(form, {'attr': {'class': 'new-form'}} ) }}
         <div class="row">
             {% block formRow %}
-                {{ form_start(form, {'attr': {'class': 'new-form'}} ) }}
                 {{ form_errors(form) }}
 
                 {{ form_row(form.title) }}
                 {{ form_row(form.handle) }}
                 {{ form_row(form.dateToPublish, {'attr': {'class': 'dateSelect'}}) }}
                 {{ form_row(form.products) }}
-                {{ form_row(form.content) }}
 
-                {{ form_row(form.submit, {'attr': {'class': 'button create'}} ) }}
 
-                {{ form_end(form) }}
             {% endblock %}
         </div>
+        {{ form_widget(form.content) }}
+
+        {{ form_row(form.submit, {'attr': {'class': 'button create'}} ) }}
+        {{ form_end(form) }}
+
     </div>
 
 {% endblock %}

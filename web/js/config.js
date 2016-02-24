@@ -89,7 +89,7 @@ System.config({
     "babel-runtime": "npm:babel-runtime@5.8.35",
     "core-js": "npm:core-js@1.2.6",
     "flux": "npm:flux@2.1.1",
-    "jquery": "github:components/jquery@2.2.0",
+    "jquery": "github:components/jquery@2.2.1",
     "lodash": "npm:lodash@3.10.1",
     "mousetrap": "npm:mousetrap@1.5.3",
     "trinity": "github:modpreneur/trinityJS@master",

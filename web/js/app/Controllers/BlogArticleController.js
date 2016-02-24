@@ -19,14 +19,18 @@ export default class BlogArticleController extends Controller {
 
         //On tabs load
         $scope.trinityTab.addListener('tab-load', function (e) {
+
+        if(e.id == "tab2") {
             let form = e.element.q('form');
-            if (form) {
-                $scope.veniceForms = $scope.veniceForms || {};
-                $scope.veniceForms[e.id] = new VeniceForm(form);
 
-                this.handleHandleGeneration();
-            }
+            $scope.veniceForms = $scope.veniceForms || {};
+            $scope.veniceForms[e.id] = new VeniceForm(form);
 
+            let settingsString = q("#blog_article_content").getAttribute("data-settings");
+            $("#blog_article_content").froalaEditor(JSON.parse(settingsString));
+
+            this.handleHandleGeneration();
+        }
         }, this);
     }
 
@@ -36,6 +40,10 @@ export default class BlogArticleController extends Controller {
      */
     newAction($scope) {
         $scope.form = new VeniceForm(q('form[name="blog_article"]'), VeniceForm.formType.NEW);
+
+        let settingsString = q("#blog_article_content").getAttribute("data-settings");
+
+        $("#blog_article_content").froalaEditor(JSON.parse(settingsString));
 
         this.handleHandleGeneration();
     }

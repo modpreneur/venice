@@ -215,9 +215,8 @@ trinity_settings:
 kms_froala_editor:
     language: "en_gb"
     serialNumber: "eC5D6D3D3C2G2F1C8C1B1D6D2A1C1=="
-    pluginsDisabled: [ "save", "fullscreen" ]
     charCounterCount: false
-    toolbarInline: true
+#    pluginsDisabled: does not have an effect
     imageUploadURL: app_froala_upload_image
     fileUploadURL: app_froala_upload_file
     imageManagerDeleteURL: app_froala_delete_image

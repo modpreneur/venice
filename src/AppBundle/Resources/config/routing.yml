@@ -23,7 +23,3 @@ fos_user_security_login:
         _controller: FrameworkBundle:Redirect:redirect
         path: %login_route% # route name from parameters
         permanent: true
-
-kms_froala_editor:
-    resource: "@KMSFroalaEditorBundle/Resources/config/routing.yml"
-    prefix:   /froalaeditor

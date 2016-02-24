@@ -64,10 +64,7 @@ class BlogArticleType extends BaseType
                 "content",
                 FroalaEditorType::class,
                 [
-                    "required" => true,
-                    "toolbarInline" => true,
-                    "tableColors" => [ "#FFFFFF", "#FF0000" ],
-                    "saveParams" => [ "id" => "myEditorField" ],
+                    "required" => false,
                 ]
             )
         ;
