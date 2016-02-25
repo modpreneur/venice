@@ -4,3 +4,6 @@ imports:
     - { resource: services.yml }
 
     - { resource: "@AppBundle/Resources/config/config.yml" }
+
+# You can override default configuration here or in the enviroment files (config_dev, config_prod).
+# Confiruration in the enviroment files will override configuration defined here
