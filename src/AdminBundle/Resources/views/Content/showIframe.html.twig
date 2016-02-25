@@ -1,8 +1,7 @@
 {% extends "AdminBundle:Content:show.html.twig" %}
 
-{% block tableContent %}
-    <tr>
-        <th>Html</th>
-        <td>{{ content.html }}</td>
-    </tr>
+{% block afterTable %}
+    <div class="fr-view">
+        {{ content.html|raw}}
+    </div>
 {% endblock %}
