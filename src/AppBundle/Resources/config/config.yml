@@ -214,7 +214,7 @@ trinity_settings:
 
 kms_froala_editor:
     language: "en_gb"
-    serialNumber: "eC5D6D3D3C2G2F1C8C1B1D6D2A1C1=="
+    serialNumber: %froala_editor_key%
     charCounterCount: false
 #    pluginsDisabled: does not have an effect
     imageUploadURL: app_froala_upload_image
