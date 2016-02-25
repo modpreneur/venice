@@ -48,8 +48,6 @@ export default class ContetntController extends BaseController {
                 scope.form = new VeniceForm(q('form[name="'+newFormName+'"]'), VeniceForm.formType.NEW);
 
                 if(newType == "html" || newType == "iframe") {
-                    console.log(newType);
-                    console.log("#"+newType+"_content_html");
                     let settingsString = q("#"+newType+"_content_html").getAttribute("data-settings");
 
                     $("#"+newType+"_content_html").froalaEditor(JSON.parse(settingsString));
@@ -82,8 +80,6 @@ export default class ContetntController extends BaseController {
                 let contentType = formName.substr(0, formName.indexOf("_"));
 
                 if(contentType == "html" || contentType == "iframe") {
-                    console.log(contentType);
-                    console.log("#"+contentType+"_content_html");
                     let settingsString = q("#"+contentType+"_content_html").getAttribute("data-settings");
 
                     $("#"+contentType+"_content_html").froalaEditor(JSON.parse(settingsString));
