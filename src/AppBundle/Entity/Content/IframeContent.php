@@ -16,7 +16,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Class IFrameContent
  *
  * @ORM\Entity()
- * @ORM\Table(name="content_text")
+ * @ORM\Table(name="content_iframe")
  *
  * @package AppBundle\Entity\Content
  */
@@ -25,11 +25,9 @@ class IframeContent extends Content
     /**
      * @var string
      *
-     * @Assert\NotBlank()
-     *
-     * @ORM\Column(name="text", type="text", nullable=false)
+     * @ORM\Column(name="html", type="text", nullable=false)
      */
-    protected $text;
+    protected $html;
 
 
     /**
@@ -37,18 +35,18 @@ class IframeContent extends Content
      */
     public function getHtml()
     {
-        return $this->text;
+        return $this->html;
     }
 
 
     /**
-     * @param string $text
+     * @param string $html
      *
      * @return IFrameContent
      */
-    public function setHtml($text)
+    public function setHtml($html)
     {
-        $this->text = $text;
+        $this->html = $html;
 
         return $this;
     }
@@ -59,7 +57,7 @@ class IframeContent extends Content
      */
     public function getContent()
     {
-        return $this->text;
+        return $this->html;
     }
 
 

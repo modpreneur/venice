@@ -146,11 +146,6 @@ class ContentController extends BaseAdminController
                 ["contentType" => $content->getType()],
                 $formOptions
             );
-        // Remove items field for now. todo: remove it in future?
-        // Explanation:
-        // The ContentInGroupType requires group id to fill it in the hidden field. But when the group is creating, there is no id.
-        // This could be solved by saving the group first, getting it's id and then saving it's content.
-        $form->remove("items");
 
         return $this->render(
             'AdminBundle:Content:new.html.twig',
@@ -187,6 +182,12 @@ class ContentController extends BaseAdminController
                 "admin_content",
                 ["contentType" => $contentType,]
             );
+
+        // Remove items field for now. todo: remove it in future?
+        // Explanation:
+        // The ContentInGroupType requires group id to fill it in the hidden field. But when the group is creating, there is no id.
+        // This could be solved by saving the group first, getting it's id and then saving it's content.
+        $form->remove("items");
 
         return $this->render(
             'AdminBundle:Content:newForm.html.twig',

@@ -4,6 +4,17 @@
     Content
 {% endblock %}
 
+{% block stylesheets  %}
+    {% include("AdminBundle:Common:froalaEditorStylesheets.html.twig") %}
+
+{% endblock %}
+
+{% block headerJavascripts %}
+    {{ parent() }}
+
+    {% include("AdminBundle:Common:froalaEditorJavascripts.html.twig") %}
+{% endblock %}
+
 {% block pageAction %}
     {{ parent() }}
     {% include "AdminBundle:Common:goUpAction.html.twig" with {"url": path("admin_content_index"), "tooltip": "Go back to content"} %}
@@ -22,19 +33,8 @@
         </select>
     </div>
 
-    <div class="box box-new-form">
-
-        <div class="row">
-            <div class="span-none-padding-medium-24">
-                {% if error is defined %}
-                    <div id="error">{{ error }}</div>
-                {% endif %}
-            </div>
-        </div>
-
-        <div id="content_form" class="row">
-            {#Javascipt inserts form here#}
-        </div>
+    <div id="javascript-inserted-form">
+        {#Javascipt inserts form here#}
     </div>
 
 {% endblock %}

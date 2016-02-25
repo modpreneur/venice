@@ -22,7 +22,7 @@ export default class ContetntController extends BaseController {
         var newType;
         var controller = this;
         var scope = $scope;
-        var formDiv = q.id("content_form");
+        var formDiv = q.id("javascript-inserted-form");
         var oldFormName = formElementName.replace(":type", oldType);
 
         FormChanger.refreshForm(formDiv, "/admin/content/new/" + oldType, function () {
@@ -47,6 +47,14 @@ export default class ContetntController extends BaseController {
             FormChanger.refreshForm(formDiv, "/admin/content/new/" + newType, function () {
                 scope.form = new VeniceForm(q('form[name="'+newFormName+'"]'), VeniceForm.formType.NEW);
 
+                if(newType == "html" || newType == "iframe") {
+                    console.log(newType);
+                    console.log("#"+newType+"_content_html");
+                    let settingsString = q("#"+newType+"_content_html").getAttribute("data-settings");
+
+                    $("#"+newType+"_content_html").froalaEditor(JSON.parse(settingsString));
+                }
+
                 controller.handleHandleGeneration(newFormName + '_name', newFormName + '_handle');
             });
         });
@@ -70,11 +78,19 @@ export default class ContetntController extends BaseController {
                     return new Collection(node, {addFirst: false, label: true});
                 });
 
+                let formName = form.getAttribute("name");
+                let contentType = formName.substr(0, formName.indexOf("_"));
+
+                if(contentType == "html" || contentType == "iframe") {
+                    console.log(contentType);
+                    console.log("#"+contentType+"_content_html");
+                    let settingsString = q("#"+contentType+"_content_html").getAttribute("data-settings");
+
+                    $("#"+contentType+"_content_html").froalaEditor(JSON.parse(settingsString));
+                }
+
                 this.handleHandleGeneration();
             }
-
-            //this.handleHandleGeneration('standard_product_name', 'standard_product_handle');
-            //this.handleHandleGeneration('free_product_name', 'free_product_handle');
 
         }, this);
     }

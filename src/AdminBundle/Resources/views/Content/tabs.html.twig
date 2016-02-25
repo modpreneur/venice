@@ -1,7 +1,18 @@
 {% extends('AdminBundle::Content/base.html.twig') %}
 
 {% block pageTitle %}
-    Content {{ content.name }}
+    {{ content.type|capitalize }} content {{ content.name }}
+{% endblock %}
+
+{% block stylesheets  %}
+    {% include("AdminBundle:Common:froalaEditorStylesheets.html.twig") %}
+
+{% endblock %}
+
+{% block headerJavascripts %}
+    {{ parent() }}
+
+    {% include("AdminBundle:Common:froalaEditorJavascripts.html.twig") %}
 {% endblock %}
 
 {% block pageAction %}

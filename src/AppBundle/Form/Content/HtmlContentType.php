@@ -9,7 +9,7 @@
 namespace AppBundle\Form\Content;
 
 
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use KMS\FroalaEditorBundle\Form\Type\FroalaEditorType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 class HtmlContentType extends ContentType
@@ -19,7 +19,7 @@ class HtmlContentType extends ContentType
         parent::buildForm($builder, $options);
 
         $builder
-            ->add("html", TextAreaType::class);
+            ->add("html", FroalaEditorType::class, ["required" => false]);
     }
 
 }
