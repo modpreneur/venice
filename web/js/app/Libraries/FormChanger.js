@@ -25,7 +25,6 @@ var FormChanger = {
             // If the element already contains a form
             // Change the form to the new form and copy the data
             if (oldHtml.includes("<form")) {
-                console.log("form already there");
                 var oldForm = parentElement.getElementsByTagName("form")[0];
 
                 parentElement.innerHTML = response;
@@ -47,24 +46,18 @@ var FormChanger = {
     copyFormData(oldForm, newForm) {
         var oldInputs = this.getFormInputs(oldForm);
         var newInputs = this.getFormInputs(newForm);
-        console.log("copy data");
 
         for (var newFormInput of newInputs) {
-            console.log("first for");
             var newInputName = this.getShortInputName(newFormInput);
 
             for (var oldInput of oldInputs) {
-                console.log("second frm");
                 //if the input names are the same
                 if (newInputName !== "[_token]" && newInputName === this.getShortInputName(oldInput)) {
-                    console.log("names are the same"+newInputName);
                     if('checkbox' === newFormInput.getAttribute('type')) {
                         newFormInput.checked = oldInput.checked;
                     } else {
                         newFormInput.value = oldInput.value;
                     }
-                } else {
-                    console.log(newInputName +" !== "+ this.getShortInputName(oldInput));
                 }
             }
         }
