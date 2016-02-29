@@ -1,0 +1,40 @@
+{% extends('VeniceAdminBundle::Content/base.html.twig') %}
+
+{% block pageTitle %}
+    Content
+{% endblock %}
+
+{% block stylesheets  %}
+    {% include("VeniceAdminBundle:Common:froalaEditorStylesheets.html.twig") %}
+
+{% endblock %}
+
+{% block trinity_admin_script_footer %}
+    {{ parent() }}
+
+    {% include("VeniceAdminBundle:Common:froalaEditorJavascripts.html.twig") %}
+{% endblock %}
+
+{% block pageAction %}
+    {{ parent() }}
+    {% include "VeniceAdminBundle:Common:goUpAction.html.twig" with {"url": path("admin_content_index"), "tooltip": "Go back to content"} %}
+{% endblock %}
+
+{% block pageBody %}
+
+    <div class="select-style form-control choice edit-form">
+        <select name="entity_type_select" id="entity_type_select">
+            <option value="group">Group</option>
+            <option value="html">Html</option>
+            <option value="iframe">IFrame</option>
+            <option value="mp3">MP3</option>
+            <option value="pdf">PDF</option>
+            <option value="video" selected>Video</option>
+        </select>
+    </div>
+
+    <div id="javascript-inserted-form">
+        {#Javascipt inserts form here#}
+    </div>
+
+{% endblock %}

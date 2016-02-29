@@ -1,0 +1,17 @@
+{% extends('VeniceAdminBundle::BlogArticle/base.html.twig') %}
+
+{% block pageTitle %}
+    Blog articles
+{% endblock %}
+
+{% block pageBody %}
+    <div class="wrapper-grid">
+        <ul>
+            {% for blogArticle in blogArticles %}
+                <li>
+                    <h4><a href="{{ path('admin_blog_article_tabs', {'id': blogArticle.id}) }}">{{ blogArticle.title }}</a></h4>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends "VeniceAdminBundle::adminBase.html.twig" %}
+
+{% block pageTitle %}
+    Product access
+{% endblock %}
+
+{% block pageIcon %}
+    <i class="tiecons tiecons-share-negative"></i>
+{% endblock %}
+
+{% block pageBody %}
+
+    <div class="tabs-wrapper margin-top-20">
+        <input type="radio" name="tab" id="tab1" class="tab-head" checked />
+        <label for="tab1">Show</label>
+        <div class="tab-body-wrapper">
+            <div id="tab-body-1" class="tab-body" data-source="{{ path('admin_product_access_show', {'id': productAccess.id}) }}"></div>
+        </div>
+    </div>
+
+{% endblock %}
+

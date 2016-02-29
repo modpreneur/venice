@@ -1,0 +1,45 @@
+{% extends "VeniceAdminBundle::BlogArticle/base.html.twig" %}
+
+{% block pageTitle %}
+    Blog article {{ article.title }}
+{% endblock %}
+
+{% block stylesheets  %}
+    {% include("VeniceAdminBundle:Common:froalaEditorStylesheets.html.twig") %}
+
+{% endblock %}
+
+{% block trinity_admin_script_footer %}
+    {{ parent() }}
+
+    {% include("VeniceAdminBundle:Common:froalaEditorJavascripts.html.twig") %}
+{% endblock %}
+
+{% block pageAction %}
+    {{ parent() }}
+    {% include "VeniceAdminBundle:Common:goUpAction.html.twig" with {"url": path("admin_product_index"), "tooltip": "Go back to products"} %}
+{% endblock %}
+
+{% block pageBody %}
+    <div class="tabs-wrapper margin-top-20">
+        <input type="radio" name="tab" id="tab1" class="tab-head" checked />
+        <label for="tab1">Show</label>
+
+        {% if is_granted('ROLE_ADMIN_BLOG_EDIT') %}
+            <input type="radio" name="tab" id="tab2" class="tab-head" />
+            <label for="tab2">Edit</label>
+
+            <input type="radio" name="tab" id="tab3" class="tab-head" />
+            <label for="tab3">Danger zone</label>
+        {% endif %}
+
+        <div class="tab-body-wrapper">
+            <div id="tab-body-1" class="tab-body" data-source="{{ path('admin_blog_article_show', {'id': article.id}) }}"></div>
+            {% if is_granted('ROLE_ADMIN_BLOG_EDIT') %}
+                <div id="tab-body-2" class="tab-body" data-source="{{ path('admin_blog_article_edit', {'id': article.id}) }}"></div>
+                <div id="tab-body-3" class="tab-body" data-source="{{ path("admin_blog_article_delete_tab", {'id': article.id}) }}"></div>
+            {% endif %}
+        </div>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends('VeniceAdminBundle::User/base.html.twig') %}
+
+{% block pageTitle %}
+    Users
+{% endblock %}
+
+{% block pageBody %}
+    <div class="wrapper-grid">
+        <ul>
+            {% for user in users %}
+                <li>
+                    <a href="{{ path('admin_user_tabs', {'id': user.id}) }}">
+                        {{ user.fullNameOrUsername }}
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}
+
+

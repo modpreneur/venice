@@ -1,0 +1,8 @@
+services:
+    # TWIG EXTENSIONS #
+
+    front.twig.extension.render_default_content_template:
+        class: Venice\FrontBundle\Twig\RenderDefaultContentTemplateExtension
+        public: false
+        tags:
+            - { name: twig.extension }

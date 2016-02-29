@@ -1,0 +1,22 @@
+{% extends('VeniceAppBundle::base.html.twig') %}
+
+{% block body %}
+    {#Demo: content grouped by type. Seen at flofit#}
+
+    <h2>Video:</h2>
+    {% for video in product.availableContentByType(app.user, "video") %}
+        {{ video|renderDefault }}
+    {% endfor %}
+
+    <h2>Pdf:</h2>
+    {% for video in product.availableContentByType(app.user, "pdf") %}
+        {{ video|renderDefault }}
+    {% endfor %}
+
+    <h2>Mp3:</h2>
+    {% for video in product.availableContentByType(app.user, "mp3") %}
+        {{ video|renderDefault }}
+    {% endfor %}
+
+
+{% endblock %}

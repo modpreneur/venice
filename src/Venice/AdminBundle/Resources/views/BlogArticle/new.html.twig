@@ -1,0 +1,60 @@
+{% extends('VeniceAdminBundle::BlogArticle/base.html.twig') %}
+
+{% block stylesheets  %}
+  {% include("VeniceAdminBundle:Common:froalaEditorStylesheets.html.twig") %}
+
+{% endblock %}
+
+{% block trinity_admin_script_footer %}
+    {{ parent() }}
+
+    {% include("VeniceAdminBundle:Common:froalaEditorJavascripts.html.twig") %}
+{% endblock %}
+
+{% block pageTitle %}
+    New blog article
+{% endblock %}
+
+{% block pageAction %}
+    {{ parent() }}
+    {% include "VeniceAdminBundle:Common:goUpAction.html.twig" with {"url": path("admin_blog_article_index"), "tooltip": "Go back to blog articles"} %}
+{% endblock %}
+
+{% block pageBody %}
+    <div class="box box-new-form">
+
+        <h2 class="header-h2 form-title">
+            {%  block formTitle %}
+                New blog article
+            {% endblock %}
+        </h2>
+
+        <div class="row">
+            <div class="span-none-padding-medium-24">
+                {% if error is defined %}
+                    <div id="error">{{ error }}</div>
+                {% endif %}
+            </div>
+        </div>
+
+        {{ form_start(form, {'attr': {'class': 'new-form'}} ) }}
+        <div class="row">
+            {% block formRow %}
+                {{ form_errors(form) }}
+
+                {{ form_row(form.title) }}
+                {{ form_row(form.handle) }}
+                {{ form_row(form.dateToPublish, {'attr': {'class': 'dateSelect'}}) }}
+                {{ form_row(form.products) }}
+
+
+            {% endblock %}
+        </div>
+        {{ form_widget(form.content) }}
+
+        {{ form_row(form.submit, {'attr': {'class': 'button create'}} ) }}
+        {{ form_end(form) }}
+
+    </div>
+
+{% endblock %}

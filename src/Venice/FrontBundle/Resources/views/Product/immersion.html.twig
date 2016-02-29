@@ -1,0 +1,42 @@
+{% extends('VeniceAppBundle::base.html.twig') %}
+
+{% block stylesheets %}
+    {% stylesheets filter='lessphp' '@TrinityAdminBundle/Resources/Public/css/bowtie.less' %}
+    <link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}"/>
+    {% endstylesheets %}
+{% endblock %}
+
+
+{% block body %}
+    <h1>Demo: example of immersion - without content groups</h1>
+
+    <div class="timeline">
+        {% for index, contentProducts in immersion %}
+            <div class="event">
+                <input type="radio" id="time-0{{ index+1 }}" name="tl-group" {% if index == 0 %}checked{% endif %}/>
+                <label for="time-0{{ index+1 }}">Section {{ index+1 }}</label>
+
+                <div class="content-perspective">
+                    <div class="content-main">
+                        {% for contentProduct in contentProducts %}
+                            {% if contentProduct.isAvailableFor(app.user) %}
+                                <div class="content-inner">
+                                    {{ contentProduct.content|renderDefault }}
+                                </div>
+                                <hr/>
+                            {% else %}
+                                <div class="content-inner">
+                                    {{ contentProduct.content.name }}
+                                    Not available now - will be available in {{ contentProduct.willBeAvailableOn(app.user)|time_diff }}
+                                </div>
+                                <hr/>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
+
+

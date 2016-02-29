@@ -1,0 +1,17 @@
+{% extends('VeniceAdminBundle::Content/base.html.twig') %}
+
+{% block pageTitle %}
+    Contents
+{% endblock %}
+
+{% block pageBody %}
+    <div class="wrapper-grid">
+        <ul>
+            {% for content in contents %}
+                <li>
+                    {{ content.type }} <a href="{{ path('admin_content_tabs', {'id': content.id})}}"> {{ content.name}}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}

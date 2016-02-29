@@ -1,0 +1,252 @@
+services:
+
+    # SERVICES #
+
+    logic:
+         alias: app_logic
+
+    app_logic:
+        class: Venice\AppBundle\Services\AppLogic
+        arguments:
+          - "@service_container"
+          - null # if bool all methods will return the given bool! leave blank or set to null to ensure default behavior
+
+    app.services.necktie_gateway:
+        class: Venice\AppBundle\Services\NecktieGateway
+        arguments:
+            - "@doctrine.orm.entity_manager"
+            - "@router"
+            - "@app.services.necktie_gateway_helper"
+            - "@app.services.necktie_connector"
+            - %necktie_url%
+            - %necktie_client_id%
+            - %necktie_client_secret%
+            - %login_response_route%
+
+    necktie:
+        alias: app.services.necktie_gateway
+
+    app.services.necktie_connector:
+        class: Venice\AppBundle\Services\NecktieConnector
+
+    app.services.necktie_gateway_helper:
+        class: Venice\AppBundle\Services\NecktieGatewayHelper
+
+    app.services.connection_manager:
+        class: Venice\AppBundle\Services\ConnectionManager
+        arguments:
+            - "@service_container"
+            - %primary_gateway_service%
+            - %secondary_gateway_service%
+
+    form_error_serializer:
+        class: Venice\AppBundle\Services\FormErrorSerializer
+
+    app.handler.logout_success_handler:
+        class: Venice\AppBundle\Services\LogoutSuccessHandler
+        arguments:
+            - "@router.default"
+            - %necktie_url%
+
+    app.services.buy_url_generator:
+        class: Venice\AppBundle\Services\BuyUrlGenerator
+        arguments:
+            - "@router"
+            - %necktie_url%
+
+    admin.form_creator:
+        class: Venice\AppBundle\Services\FormCreator
+        arguments:
+            - "@form.factory"
+            - "@router"
+
+    app.roles_loader:
+        class: Venice\AppBundle\Services\RolesLoader
+
+    app.s3_client:
+        class: Aws\S3\S3Client
+        factory_class: Aws\S3\S3Client
+        factory_method: 'factory'
+        arguments:
+            -   version: latest
+                region: %amazon_s3_region%
+                credentials:
+                      secret: %amazon_s3_secret%
+                      key: %amazon_s3_key%
+
+    app.file_uploader:
+        class: Venice\AppBundle\Services\FileUploader
+        arguments:
+            - "@froala_editor_storage_filesystem"
+            - %amazon_s3_region%
+            - %amazon_s3_bucket%
+
+    # EVENT LISTENERS #
+
+    app.event_listener.kernel_excetpion:
+        class: Venice\AppBundle\EventListener\KernelExceptionListener
+        arguments:
+            - "@router"
+            - "@service_container"
+        tags:
+            - {name: "kernel.event_listener", event: "kernel.exception", method: "onKernelException"}
+
+    app.event_listener.free_product_created:
+        class: Venice\AppBundle\EventListener\AppLogicListener
+        arguments:
+            - "@doctrine"
+        tags:
+            - {name: "kernel.event_listener", event: app.free_product_created, method: "onFreeProductCreated"}
+
+    app.entity_listener:
+        class: Venice\AppBundle\EventListener\EntityListener
+        arguments:
+            - "@service_container"
+        tags:
+            - { name: doctrine.event_listener, event: onFlush}
+
+    app.login_listener:
+        class: Venice\AppBundle\EventListener\LoginListener
+        tags:
+            - {name: "kernel.event_listener", event: "app.necktie_login_successful", method: "onSuccessfulLogin"}
+
+    gedmo.listener.timestampable:
+        class: Gedmo\Timestampable\TimestampableListener
+        tags:
+            - { name: doctrine.event_subscriber, connection: default }
+        calls:
+            - [ "setAnnotationReader", [ "@annotation_reader" ] ]
+
+    # TWIG EXTENSIONS #
+
+    app.twig.extension.human_bool:
+        class: Venice\AppBundle\Twig\HumanBoolExtension
+        public: false
+        tags:
+            - { name: twig.extension }
+
+    twig.extension.date:
+         class: Twig_Extensions_Extension_Date
+         tags:
+             - { name: twig.extension }
+
+
+# ************   FORMS   ************
+
+    admin.form.custom_collection:
+        class: Venice\AppBundle\Form\Collection\CollectionType
+        tags:
+            - { name: form.type, alias: collection }
+
+    admin.form.content_in_group:
+        class: Venice\AppBundle\Form\Content\ContentInGroupType
+        arguments:
+            - "@doctrine.orm.entity_manager"
+        tags:
+            - { name: form.type }
+
+    admin.form.content_product_with_hidden_content:
+        class: Venice\AppBundle\Form\ContentProduct\ContentProductTypeWithHiddenContent
+        arguments:
+            - "@doctrine.orm.entity_manager"
+        tags:
+            - { name: form.type }
+
+    admin.form.content_product_with_hidden_product:
+        class: Venice\AppBundle\Form\ContentProduct\ContentProductTypeWithHiddenProduct
+        arguments:
+            - "@doctrine.orm.entity_manager"
+        tags:
+            - { name: form.type }
+
+    admin.form.group_content:
+        class: Venice\AppBundle\Form\Content\GroupContentType
+        arguments:
+            - "@doctrine.orm.entity_manager"
+        tags:
+            - { name: form.type }
+
+    admin.form.html_content:
+        class: Venice\AppBundle\Form\Content\HtmlContentType
+        arguments:
+            - "@doctrine.orm.entity_manager"
+        tags:
+            - { name: form.type }
+
+    admin.form.mp3_content:
+        class: Venice\AppBundle\Form\Content\Mp3ContentType
+        arguments:
+            - "@doctrine.orm.entity_manager"
+        tags:
+            - { name: form.type }
+
+    admin.form.pdf_content:
+        class: Venice\AppBundle\Form\Content\PdfContentType
+        arguments:
+            - "@doctrine.orm.entity_manager"
+        tags:
+            - { name: form.type }
+
+    admin.form.iframe_content:
+        class: Venice\AppBundle\Form\Content\IframeContentType
+        arguments:
+            - "@doctrine.orm.entity_manager"
+        tags:
+            - { name: form.type }
+
+    admin.form.video_content:
+        class: Venice\AppBundle\Form\Content\VideoContentType
+        arguments:
+            - "@doctrine.orm.entity_manager"
+        tags:
+            - { name: form.type }
+
+    admin.form.free_product:
+        class: Venice\AppBundle\Form\Product\FreeProductType
+        arguments:
+            - "@doctrine.orm.entity_manager"
+        tags:
+            - { name: form.type }
+
+    admin.form.standard_product:
+        class: Venice\AppBundle\Form\Product\StandardProductType
+        arguments:
+            - "@doctrine.orm.entity_manager"
+        tags:
+            - { name: form.type }
+
+    admin.form.user:
+        class: Venice\AppBundle\Form\User\UserType
+        arguments:
+            - "@doctrine.orm.entity_manager"
+        tags:
+            - { name: form.type }
+
+    admin.form.user.roles:
+        class: Venice\AppBundle\Form\User\RolesType
+        arguments:
+            - "@doctrine.orm.entity_manager"
+            - "@app.roles_loader"
+        tags:
+            - { name: form.type }
+
+    admin.form.billing_plan:
+        class: Venice\AppBundle\Form\BillingPlanType
+        arguments:
+            - "@doctrine.orm.entity_manager"
+        tags:
+            - { name: form.type }
+
+    admin.form.blog_article:
+        class: Venice\AppBundle\Form\BlogArticleType
+        arguments:
+            - "@doctrine.orm.entity_manager"
+        tags:
+            - { name: form.type }
+
+    admin.form.product_access:
+        class: Venice\AppBundle\Form\ProductAccessType
+        arguments:
+            - "@doctrine.orm.entity_manager"
+        tags:
+            - { name: form.type }

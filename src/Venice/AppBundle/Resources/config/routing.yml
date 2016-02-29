@@ -1,0 +1,13 @@
+app:
+    resource: "@VeniceAppBundle/Controller"
+    type:     annotation
+
+fos_user:
+    resource: "@FOSUserBundle/Resources/config/routing/security.xml"
+
+fos_user_security_login:
+    path: /login
+    defaults:
+        _controller: FrameworkBundle:Redirect:redirect
+        path: %login_route% # route name from parameters
+        permanent: true

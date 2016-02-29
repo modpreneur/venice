@@ -1,0 +1,7 @@
+admin:
+    resource: "@VeniceAdminBundle/Controller"
+    type:     annotation
+
+trinity_grid:
+    resource: "@GridBundle/Resources/config/routing.yml"
+    prefix:   "/admin"

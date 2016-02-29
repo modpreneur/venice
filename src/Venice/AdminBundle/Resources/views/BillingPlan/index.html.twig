@@ -1,0 +1,79 @@
+{% extends('VeniceAppBundle::base.html.twig') %}
+
+{% block body %}
+    {% if billingPlans|length > 0 %}
+        <table class="grid">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Necktie id</th>
+                <th>Default</th>
+                <th>Price</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for billingPlan in billingPlans %}
+                <tr>
+                    <td>
+                        <div class="action-cell">
+                            <span class="content">
+                                <a href="{{ path('admin_billing_plan_tabs', {'id': billingPlan.id}) }}">{{ billingPlan.id }}</a>
+                            </span>
+                            <span class="actions">
+                                <a href="{{ path('admin_billing_plan_tabs', {'id': billingPlan.id}) }}">Go to</a>
+                            </span>
+                        </div>
+
+                    </td>
+                    {#Necktie id#}
+                    <td>
+                        {{ billingPlan.necktieId }}
+                    </td>
+
+
+                    {#Default#}
+                    <td>
+                        {% if billingPlan == product.defaultBillingPlan %}
+                            <i class="trinity trinity-yes"></i>
+                        {% else %}
+                            <a href="{{ path('admin_billing_plan_product_set_default', { 'id': billingPlan.id }) }}" title="set as default">
+                                <i class="trinity trinity-pin"></i>
+                            </a>
+                        {% endif %}
+                    </td>
+
+                    {#price#}
+                    <td>
+                        {{ billingPlan.price }} pp
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+    {% else %}
+        <div class="row">
+            <div class="span-none-padding-xlarge-24 margin-auto">
+                <div class="span-none-xlarge-10 margin-top-20">
+                    <div class="info-empty-form">
+                        <div class="row"><i class="trinity-info"></i></div>
+                        <div class="row"><h2 class="warning">NO DATA</h2></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+
+    {% if(is_granted('ROLE_ADMIN_PRODUCT_EDIT') and is_granted('ROLE_ADMIN_BILLING_PLAN_EDIT') and appLogic.allowAddingNewBillingPlans ) %}
+        <div class="span-none-padding-xlarge-24 margin-auto">
+            <div class="row">
+                <div class="info-empty-form">
+                    <a class="button button-addNew" id="newIcon" href="{{ path('admin_billing_plan_new', { 'id':product.id }) }}">
+                        Add new billing plan
+                    </a>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}

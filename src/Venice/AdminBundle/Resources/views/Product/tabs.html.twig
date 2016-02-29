@@ -1,0 +1,54 @@
+{% extends('VeniceAdminBundle::Product/base.html.twig') %}
+
+{% block pageTitle %}
+    {{ product.type|capitalize }} product {{ product.name }}
+{% endblock %}
+
+{% block pageAction %}
+    {{ parent() }}
+    {% include "VeniceAdminBundle:Common:viewInNecktieAction.html.twig" with {"url": necktieProductShowUrl} %}
+    {% include "VeniceAdminBundle:Common:goUpAction.html.twig" with {"url": path("admin_product_index"), "tooltip": "Go back to products"} %}
+{% endblock %}
+
+{% block pageBody -%}
+
+    <div class="tabs-wrapper margin-top-20">
+        <input type="radio" name="tab" id="tab1" class="tab-head" checked />
+        <label for="tab1">Show</label>
+
+        {% if is_granted('ROLE_ADMIN_PRODUCT_EDIT') %}
+            <input type="radio" name="tab" id="tab2" class="tab-head" />
+            <label for="tab2">Edit</label>
+
+            <input type="radio" name="tab" id="tab3" class="tab-head" />
+            <label for="tab3">Contents</label>
+
+            {% if product.type == "standard" %}
+                <input type="radio" name="tab" id="tab4" class="tab-head" />
+                <label for="tab4">Billing plan</label>
+            {% endif %}
+
+            <input type="radio" name="tab" id="tab5" class="tab-head" />
+            <label for="tab5">Blog articles</label>
+
+            <input type="radio" name="tab" id="tab6" class="tab-head" />
+            <label for="tab6">Danger zone</label>
+
+        {% endif %}
+
+        <div class="tab-body-wrapper">
+            <div id="tab-body-1" class="tab-body" data-source="{{ path('admin_product_show', {'id': product.id}) }}"></div>
+            {% if is_granted('ROLE_ADMIN_PRODUCT_EDIT') %}
+                <div id="tab-body-2" class="tab-body" data-source="{{ path('admin_product_edit', {'id': product.id}) }}"></div>
+                <div id="tab-body-3" class="tab-body" data-source="{{ path('admin_product_content_product_index', {'id': product.id}) }}"></div>
+                {% if product.type == "standard" %}
+                    <div id="tab-body-4" class="tab-body" data-source="{{ path('admin_billing_plan_product_index', {'id': product.id}) }}"></div>
+                {% endif %}
+                <div id="tab-body-5" class="tab-body" data-source="{{ path('admin_product_articles_index', {'id': product.id}) }}"></div>
+                <div id="tab-body-6" class="tab-body" data-source="{{ path('admin_product_delete_tab', {'id': product.id}) }}"></div>
+            {% endif %}
+        </div>
+    </div>
+
+{% endblock %}
+

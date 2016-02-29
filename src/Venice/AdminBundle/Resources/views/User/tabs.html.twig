@@ -1,0 +1,49 @@
+{% extends "VeniceAdminBundle::adminBase.html.twig" %}
+
+{% block pageTitle %}
+    User {{ user.fullNameOrUsername }}
+{% endblock %}
+
+{% block pageAction %}
+    {% include "VeniceAdminBundle:Common:viewInNecktieAction.html.twig" with {"url": necktieUserShowUrl} %}
+{% endblock %}
+
+
+{% block pageBody %}
+
+    <div class="tabs-wrapper margin-top-20">
+
+        {% if is_granted('ROLE_ADMIN_USER_VIEW') %}
+            <input type="radio" name="tab" id="tab1" class="tab-head" checked />
+            <label for="tab1">Show</label>
+        {% endif %}
+        {% if is_granted('ROLE_ADMIN_USER_EDIT') %}
+            <input type="radio" name="tab" id="tab2" class="tab-head" />
+            <label for="tab2">Edit</label>
+
+            <input type="radio" name="tab" id="tab3" class="tab-head" />
+            <label for="tab3">Accesses</label>
+
+            <input type="radio" name="tab" id="tab4" class="tab-head" />
+            <label for="tab4">Permissions</label>
+
+            <input type="radio" name="tab" id="tab5" class="tab-head" />
+            <label for="tab5">Danger zone</label>
+        {% endif %}
+
+
+        <div class="tab-body-wrapper">
+            {% if is_granted('ROLE_ADMIN_USER_VIEW') %}
+                <div id="tab-body-1" class="tab-body" data-source="{{ path('admin_user_show', {'id': user.id}) }}"></div>
+            {% endif %}
+            {% if is_granted('ROLE_ADMIN_USER_EDIT') %}
+                <div id="tab-body-2" class="tab-body" data-source="{{ path('admin_user_edit', {'id': user.id}) }}"></div>
+                <div id="tab-body-3" class="tab-body" data-source="{{ path('admin_product_access_user_index', {'id': user.id}) }}"></div>
+                <div id="tab-body-4" class="tab-body" data-source="{{ path('admin_user_roles_edit', {'id': user.id}) }}"></div>
+                <div id="tab-body-5" class="tab-body" data-source="{{ path('admin_user_delete_tab', {'id': user.id}) }}"></div>
+            {% endif %}
+        </div>
+    </div>
+
+{% endblock %}
+
