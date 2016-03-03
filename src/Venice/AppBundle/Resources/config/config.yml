@@ -85,6 +85,14 @@ assetic:
                 color-primary-inverse: "#fff"
 
     assets:
+        necktie_ttf:
+            inputs:
+               - %kernel.root_dir%/../vendor/modpreneur/bowtie/administration/fonts/necktie.ttf
+            output: "fonts/necktie.ttf"
+        necktie_woff:
+            inputs:
+               - %kernel.root_dir%/../vendor/modpreneur/bowtie/administration/fonts/necktie.woff
+            output: "fonts/necktie.woff"
         necktie_icons:
            inputs:
               - %kernel.root_dir%/../vendor/modpreneur/bowtie/administration/css/necktie-icons.css
@@ -104,7 +112,6 @@ assetic:
             inputs:
                 - %kernel.root_dir%/../vendor/trinity/admin/AdminBundle/Resources/Public/fonts/trinity.svg
             output: "fonts/trinity.svg"
-
         ticones_eot:
             inputs:
                 - %kernel.root_dir%/../vendor/modpreneur/bowtie/src/fonts/tiecons/tiecons.eot
