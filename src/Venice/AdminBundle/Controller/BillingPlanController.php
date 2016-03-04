@@ -45,7 +45,7 @@ class BillingPlanController extends BaseAdminController
         $billingPlans = $entityManager->getRepository("VeniceAppBundle:BillingPlan")->findBy(["product" => $product]);
 
         return $this->render(
-            "VeniceVeniceAdminBundle:BillingPlan:index.html.twig",
+            "VeniceAdminBundle:BillingPlan:index.html.twig",
             [
                 "billingPlans" => $billingPlans,
                 "product" => $product
