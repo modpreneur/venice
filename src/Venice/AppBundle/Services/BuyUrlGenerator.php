@@ -9,6 +9,8 @@
 namespace Venice\AppBundle\Services;
 
 
+use Doctrine\ORM\EntityManagerInterface;
+use Venice\AppBundle\Entity\BillingPlan;
 use Venice\AppBundle\Entity\Product\StandardProduct;
 use Symfony\Component\Routing\RouterInterface;
 
@@ -20,9 +22,13 @@ class BuyUrlGenerator
     /** @var  RouterInterface */
     protected $router;
 
-    public function __construct(RouterInterface $router, $necktieUrl)
+    /** @var  EntityManagerInterface */
+    protected $entityManager;
+
+    public function __construct(RouterInterface $router, EntityManagerInterface $entityManager, $necktieUrl)
     {
         $this->router = $router;
+        $this->entityManager = $entityManager;
         $this->necktieUrl = $necktieUrl;
     }
 
@@ -39,8 +45,7 @@ class BuyUrlGenerator
     {
         if ($this->necktieUrl) {
             return $this->generateNecktieBuyUrl($product, $billingPlanId, $useStoredCreditCard);
-        }
-        else {
+        } else {
             throw new \Exception("No method found to generate buy url when not connected to necktie");
         }
     }
@@ -48,30 +53,48 @@ class BuyUrlGenerator
 
     /**
      * @param StandardProduct $product
-     * @param int $billingPlanId
+     * @param int $billingPlanVeniceId
      * @param bool $useStoredCreditCard
      * @return string
+     *
+     * @throws \Exception
      */
-    protected function generateNecktieBuyUrl(StandardProduct $product, int $billingPlanId = null, bool $useStoredCreditCard = false) : string
+    protected function generateNecktieBuyUrl(StandardProduct $product, int $billingPlanVeniceId = null, bool $useStoredCreditCard = false) : string
     {
         $router = $this->router;
+        $billingPlanNecktieId = null;
 
         $url = $router->generate(
-            "necktie_buy_product",
-            [
-                "id" => $product->getId(),
-            ],
-            $router::ABSOLUTE_URL
-        ) . "?";
+                "necktie_buy_product",
+                [
+                    "id" => $product->getId(),
+                ],
+                $router::ABSOLUTE_URL
+            )."?";
 
-        if ($billingPlanId) {
-            $url .= "billingPlanId=$billingPlanId&";
+        // Id not specified - use default
+        if ($billingPlanVeniceId === null) {
+            $billingPlanNecktieId = $product->getDefaultBillingPlan()->getNecktieId();
+        } else if ($billingPlan = $this->getBillingPlan($billingPlanVeniceId)) {
+            $billingPlanNecktieId = $billingPlan->getNecktieId();
+        } else {
+            throw new \Exception("No billing plan with venice id {$billingPlanVeniceId} found.");
         }
+        $url .= "billingPlanId=$billingPlanNecktieId";
 
         if ($useStoredCreditCard) {
-            $url .= "useStoredCC";
+            $url .= "&useStoredCC";
         }
 
         return $url;
+    }
+
+    /**
+     * @param $billingPlanVeniceId
+     * @return BillingPlan|null
+     */
+    protected function getBillingPlan($billingPlanVeniceId)
+    {
+        return $this->entityManager->getRepository("VeniceAppBundle:BillingPlan")->find($billingPlanVeniceId);
     }
 }

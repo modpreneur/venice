@@ -52,6 +52,7 @@ services:
         class: Venice\AppBundle\Services\BuyUrlGenerator
         arguments:
             - "@router"
+            - "@doctrine.orm.entity_manager"
             - %necktie_url%
 
     admin.form_creator:
