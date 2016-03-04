@@ -32,7 +32,7 @@ class ProductAccess
 
 
     /**
-     * @ORM\Column(name="necktie_id", type="integer", unique=true, nullable=true)
+     * @ORM\Column(name="necktie_id", type="integer", unique=true, nullable=false)
      *
      * @var integer
      */
