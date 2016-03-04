@@ -41,7 +41,7 @@ class BillingPlan
     /**
      * @var int
      *
-     * @ORM\Column(name="necktie_id", type="integer", nullable=true, unique=true)
+     * @ORM\Column(name="necktie_id", type="integer", nullable=false, unique=true)
      */
     protected $necktieId;
 
