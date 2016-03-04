@@ -91,7 +91,7 @@ class UserController extends BaseAdminController
 
         $necktieUserShowUrl = null;
 
-        $necktieUserShowUrl = $this->getParameter("necktie_url").$this->getParameter("necktie_show_user_uri");
+        $necktieUserShowUrl = $this->getParameter("necktie_url").$this->getParameter("necktie_show_user_url");
         $necktieUserShowUrl = str_replace(":id", $user->getNecktieId(), $necktieUserShowUrl);
 
         return $this->render(

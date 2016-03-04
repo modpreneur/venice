@@ -117,7 +117,7 @@ class ProductController extends BaseAdminController
         $necktieProductShowUrl = null;
 
         if ($product instanceof StandardProduct) {
-            $necktieProductShowUrl = $this->getParameter("necktie_url").$this->getParameter("necktie_show_product_uri");
+            $necktieProductShowUrl = $this->getParameter("necktie_url").$this->getParameter("necktie_show_product_url");
             $necktieProductShowUrl = str_replace(":id", $product->getNecktieId(), $necktieProductShowUrl);
         }
 

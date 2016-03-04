@@ -28,6 +28,9 @@
                 {#Necktie id#}
                 {% if appLogic.displayNecktieFieldForProductAccess %}
                     <td>
+                        {% include "VeniceAdminBundle:Common:viewInNecktieAction.html.twig" with
+                        {"url":necktieUrl|replace({":userId":user.necktieId, ":productAccessId":productAccess.necktieId})}
+                        %}
                         {{ productAccess.necktieId }}
                     </td>
                 {% endif %}

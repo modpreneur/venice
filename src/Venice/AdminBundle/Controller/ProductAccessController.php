@@ -39,11 +39,14 @@ class ProductAccessController extends BaseAdminController
         $entityManager = $this->getDoctrine()->getManager();
         $productAccesses = $entityManager->getRepository("VeniceAppBundle:ProductAccess")->findBy(["user" => $user]);
 
+        $necktieUrl = $this->getParameter("necktie_show_product_access_url");
+
         return $this->render(
             "VeniceAdminBundle:ProductAccess:index.html.twig",
             [
                 "productAccesses" => $productAccesses,
                 "user" => $user,
+                "necktieUrl" => $necktieUrl
             ]
         );
     }
