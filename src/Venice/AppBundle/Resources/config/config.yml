@@ -6,6 +6,7 @@ parameters:
     necktie_show_product_url: %necktie_url%/admin/product/:id
     necktie_show_user_url: %necktie_url%/admin/user/:id
     necktie_show_product_access_url: %necktie_url%/admin/user/:userId/product-access/:productAccessId
+    necktie_show_billing_plan_url: %necktie_url%/admin/product/:productId/billing-plan/:billingPlanId
 
 trinity_notification:
     client:
@@ -185,12 +186,6 @@ monolog:
             type:     stream
             path:     '%kernel.logs_dir%/emergency.log'
             channels:  ~
-
-doctrine_migrations:
-    dir_name: src/AppBundle/DoctrineMigrations
-    namespace: Venice\AppBundle\DoctrineMigrations
-    table_name: migration_versions
-    name: Application Migrations
 
 snc_redis:
     # Data are separated on redis databases:
