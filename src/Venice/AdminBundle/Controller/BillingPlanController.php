@@ -44,11 +44,14 @@ class BillingPlanController extends BaseAdminController
         $entityManager = $this->getDoctrine()->getManager();
         $billingPlans = $entityManager->getRepository("VeniceAppBundle:BillingPlan")->findBy(["product" => $product]);
 
+        $necktieBillingPlanShowUrl = $this->getParameter("necktie_show_billing_plan_url");
+
         return $this->render(
             "VeniceAdminBundle:BillingPlan:index.html.twig",
             [
                 "billingPlans" => $billingPlans,
-                "product" => $product
+                "product" => $product,
+                "necktieUrl" => $necktieBillingPlanShowUrl
             ]
         );
     }

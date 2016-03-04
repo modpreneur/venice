@@ -27,6 +27,8 @@
                     </td>
                     {#Necktie id#}
                     <td>
+                        {% include "VeniceAdminBundle:Common:viewInNecktieAction.html.twig"
+                            with {"url":necktieUrl|replace({":productId":billingPlan.product.necktieId, ":billingPlanId":billingPlan.necktieId})} %}
                         {{ billingPlan.necktieId }}
                     </td>
 

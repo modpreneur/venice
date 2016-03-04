@@ -125,7 +125,7 @@ class ProductController extends BaseAdminController
             "VeniceAdminBundle:Product:tabs.html.twig",
             [
                 "product" => $product,
-                "necktieProductShowUrl" => $necktieProductShowUrl
+                "necktieProductShowUrl" => $necktieProductShowUrl,
             ]
         );
     }
@@ -137,7 +137,6 @@ class ProductController extends BaseAdminController
      * @Security("is_granted('ROLE_ADMIN_PRODUCT_EDIT')")
      *
      * @return \Symfony\Component\HttpFoundation\Response
-     *
      */
     public function newAction()
     {
