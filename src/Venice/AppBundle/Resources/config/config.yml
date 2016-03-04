@@ -3,8 +3,9 @@ parameters:
     bowtie_path: "%kernel.root_dir%/../vendor/modpreneur/bowtie/src/less"
     create_new_entity_on_necktie_notification: true
     app_version: 2.0.0
-    necktie_show_product_uri: /admin/product/:id
-    necktie_show_user_uri: /admin/user/:id
+    necktie_show_product_url: %necktie_url%/admin/product/:id
+    necktie_show_user_url: %necktie_url%/admin/user/:id
+    necktie_show_product_access_url: %necktie_url%/admin/user/:userId/product-access/:productAccessId
 
 trinity_notification:
     client:
