@@ -45,7 +45,7 @@ class StandardProduct extends Product implements NotificationEntityInterface
     /**
      * @var integer
      *
-     * @ORM\Column(name="necktie_id", type="integer", nullable=true, unique=true)
+     * @ORM\Column(name="necktie_id", type="integer", nullable=false, unique=true)
      *
      * @SerializedName("id")
      */
