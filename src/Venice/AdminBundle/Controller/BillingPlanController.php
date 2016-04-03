@@ -100,10 +100,14 @@ class BillingPlanController extends BaseAdminController
                 ["id" => $billingPlan->getId()]
             );
 
+        $necktieBillingPlanShowUrl = $this->getParameter("necktie_show_product_url");
+        $necktieBillingPlanShowUrl = str_replace(":id", $billingPlan->getNecktieId(), $necktieBillingPlanShowUrl);
+
         return $this->render(
             "VeniceAdminBundle:BillingPlan:tabs.html.twig",
             [
                 "billingPlan" => $billingPlan,
+                "necktieBillingPlanShowUrl" => $necktieBillingPlanShowUrl
             ]
         );
     }

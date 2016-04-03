@@ -8,6 +8,12 @@
     <i class="trinity trinity-money"></i>
 {% endblock %}
 
+{% block pageAction %}
+    {{ parent() }}
+    {% include "VeniceAdminBundle:Common:viewInNecktieAction.html.twig" with {"url": necktieBillingPlanShowUrl} %}
+    {% include "VeniceAdminBundle:Common:goUpAction.html.twig" with {"url": path("admin_product_tabs", {"id": billingPlan.product.id}), "tooltip": "Go back to product"} %}
+{% endblock %}
+
 {% block pageBody -%}
 
     <div class="tabs-wrapper margin-top-20">
