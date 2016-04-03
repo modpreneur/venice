@@ -3,8 +3,9 @@
 namespace Venice\AppBundle\Kernel;
 
 use Symfony\Component\HttpKernel\Kernel;
+use Symfony\Component\HttpKernel\TerminableInterface;
 
-abstract class VeniceKernel extends Kernel
+abstract class VeniceKernel extends Kernel implements TerminableInterface
 {
     public function registerBundles()
     {
@@ -37,7 +38,7 @@ abstract class VeniceKernel extends Kernel
 
             // Trinity
             new \Trinity\FrameworkBundle\TrinityFrameworkBundle(),
-            new \Trinity\NotificationBundle\TrinityNotificationBundle(),
+//            new \Trinity\NotificationBundle\TrinityNotificationBundle(),
             new \Trinity\AdminBundle\TrinityAdminBundle(),
             new \Trinity\Bundle\SettingsBundle\SettingsBundle(),
             new \Trinity\Bundle\SearchBundle\SearchBundle(),

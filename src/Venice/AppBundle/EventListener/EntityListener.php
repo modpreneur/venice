@@ -9,7 +9,6 @@
 namespace Venice\AppBundle\EventListener;
 
 
-
 use Doctrine\ORM\Event\OnFlushEventArgs;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Validator\ConstraintViolationInterface;
@@ -31,6 +30,15 @@ class EntityListener
 
     public function onFlush(OnFlushEventArgs $args)
     {
+        $this->processChanges($args);
+    }
+
+
+    /**
+     * @param OnFlushEventArgs $args
+     */
+    public function processChanges(OnFlushEventArgs $args)
+    {
         $em = $args->getEntityManager();
         $uow = $em->getUnitOfWork();
 
@@ -49,7 +57,6 @@ class EntityListener
         }
     }
 
-
     /**
      * Check validation on entity
      *
@@ -60,7 +67,7 @@ class EntityListener
         $violations = $this->container->get("validator")->validate($entity);
         $message = "";
 
-        if($violations->count() !== 0) {
+        if ($violations->count() !== 0) {
             /** @var ConstraintViolationInterface $violation */
             foreach ($violations as $violation) {
                 $message .= $violation->getPropertyPath().": ".$violation->getMessage().";";

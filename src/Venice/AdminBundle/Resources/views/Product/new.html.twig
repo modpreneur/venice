@@ -1,7 +1,7 @@
 {% extends('VeniceAdminBundle::Product/base.html.twig') %}
 
 {% block pageTitle %}
-    New product
+    New free product
 {% endblock %}
 
 {% block pageAction %}
@@ -12,10 +12,9 @@
 
 {% block pageBody %}
     <div class="box box-new-form">
-        <div class="select-style form-control choice edit-form">
+        <div class="select-style form-control choice edit-form hidden">
             <select name="entity_type_select" id="entity_type_select">
-                <option value="standard" selected>Standard</option>
-                <option value="free">Free</option>
+                <option value="free" selected>Free</option>
             </select>
         </div>
 

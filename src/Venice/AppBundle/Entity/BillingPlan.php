@@ -61,7 +61,7 @@ class BillingPlan
      *
      * @var float
      *
-     * @ORM\Column(name="rebill_price", type="float", nullable=false)
+     * @ORM\Column(name="rebill_price", type="float", nullable=true)
      */
     protected $rebillPrice;
 
@@ -71,7 +71,7 @@ class BillingPlan
      *
      * @var int
      *
-     * @ORM\Column(name="frequency", type="integer", nullable=false)
+     * @ORM\Column(name="frequency", type="integer", nullable=true)
      */
     protected $frequency;
 
@@ -81,7 +81,7 @@ class BillingPlan
      *
      * @var int
      *
-     * @ORM\Column(name="rebill_times", type="integer", nullable=false)
+     * @ORM\Column(name="rebill_times", type="integer", nullable=true)
      */
     protected $rebillTimes;
 

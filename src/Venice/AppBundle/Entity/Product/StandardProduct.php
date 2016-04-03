@@ -28,7 +28,8 @@ use Trinity\NotificationBundle\Entity\NotificationEntityInterface;
  * @ORM\HasLifecycleCallbacks
  *
  * @N\Source(columns="necktieId, name, description")
- * @N\Methods(types={"put", "post", "delete"})
+ * Creating products on client is not allowed because creating billing plans is not allowed
+ * @N\Methods(types={"put", "delete"})
  * @N\Url(postfix="product")
  *
  * @UniqueEntity(fields={"necktieId"})

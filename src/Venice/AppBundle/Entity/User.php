@@ -31,7 +31,8 @@ use Trinity\NotificationBundle\Entity\NotificationEntityInterface;
  *
  * @ORM\HasLifecycleCallbacks()
  *
- * @N\Source(columns="necktieId, username, email, firstName, lastName, avatar, locked")
+ * @N\Source(columns="necktieId, username, email, firstName, lastName, avatar, locked, phoneNumber, website, country, region, city, addressLine1, addressLine2, postalCode")
+ * Users cannot be created on client so there is no need to use POST
  * @N\Methods(types={"put", "delete"})
  *
  * @package Venice\AppBundle\Entity

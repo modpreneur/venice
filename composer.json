@@ -30,7 +30,7 @@
         "jms/serializer-bundle": "~1.1",
         "oyejorge/less.php": "~1.7",
         "trinity/framework": "dev-master",
-        "trinity/notification": "dev-master",
+        "trinity/notification": "dev-feature-rabbitmq",
         "trinity/admin": "dev-master",
         "trinity/settings": "dev-master",
         "trinity/grid": "dev-master",
