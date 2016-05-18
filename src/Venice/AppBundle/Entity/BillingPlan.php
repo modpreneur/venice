@@ -238,7 +238,7 @@ class BillingPlan
      */
     public function isRecurring()
     {
-        return $this->frequency === 0;
+        return $this->frequency !== 0;
 
     }
 
