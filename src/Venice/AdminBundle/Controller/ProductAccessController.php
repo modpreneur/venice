@@ -93,12 +93,17 @@ class ProductAccessController extends BaseAdminController
                 ["id" => $productAccess->getId()]
             );
 
+        $necktieUrl = $this->getParameter("necktie_show_product_access_url");
+        $necktieUrl = str_replace(":userId", $user->getNecktieId(), $necktieUrl);
+        $necktieUrl = str_replace(":productAccessId", $productAccess->getNecktieId(), $necktieUrl);
+
         return $this->render(
             "VeniceAdminBundle:ProductAccess:tabs.html.twig",
             [
                 "productAccess" => $productAccess,
                 "displayEditTab" => $this->getLogic()->displayEditTabForProductAccess(),
-                "displayDeleteTab" => $this->getLogic()->displayDeleteTabForProductAccess()
+                "displayDeleteTab" => $this->getLogic()->displayDeleteTabForProductAccess(),
+                "necktieProductAccessShowUrl" => $necktieUrl
             ]
         );
     }

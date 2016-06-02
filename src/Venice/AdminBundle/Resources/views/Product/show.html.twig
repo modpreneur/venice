@@ -28,6 +28,8 @@
                     <td>
                         {% if product.defaultBillingPlan %}
                             {{ product.defaultBillingPlan.price }}
+                        {% else %}
+                            No billing plan
                         {% endif %}
                     </td>
                 </tr>

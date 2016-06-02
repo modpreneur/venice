@@ -8,6 +8,10 @@
     <i class="tiecons tiecons-share-negative"></i>
 {% endblock %}
 
+{% block pageAction %}
+    {% include "VeniceAdminBundle:Common:viewInNecktieAction.html.twig" with {"url": necktieProductAccessShowUrl} %}
+{% endblock %}
+
 {% block pageBody %}
 
     <div class="tabs-wrapper margin-top-20">
