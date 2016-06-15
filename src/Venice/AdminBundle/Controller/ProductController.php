@@ -9,6 +9,8 @@
 namespace Venice\AdminBundle\Controller;
 
 
+//3-358
+
 use Venice\AppBundle\Entity\ContentProduct;
 use Venice\AppBundle\Entity\Product\FreeProduct;
 use Venice\AppBundle\Entity\Product\Product;
@@ -377,14 +379,6 @@ class ProductController extends BaseAdminController
     {
         //remove all billing plans
         $entityManager = $this->getDoctrine()->getManager();
-
-        $billingPlans = $entityManager->getRepository('VeniceAppBundle:BillingPlan')->findBy(["product" => $product]);
-
-        foreach ($billingPlans as $billingPlan) {
-            $entityManager->remove($billingPlan);
-        }
-
-        $entityManager->flush();
 
         try {
             $entityManager->remove($product);

@@ -8,15 +8,20 @@ parameters:
     necktie_show_product_access_url: %necktie_url%/admin/user/:userId/product-access/:productAccessId
     necktie_show_billing_plan_url: %necktie_url%/admin/product/:productId/billing-plan/:billingPlanId
 
-#trinity_notification:
-#    client:
-#        drivers: ["trinity.notification.driver.client_api"]
-#        entity_id_field: necktieId
-#        server_notify_url: %necktie_url%/api/notify
-#        server_oauth_url: %necktie_url%/oauth/v2/token
-#        server_client_id: %necktie_client_id%
-#        server_client_secret: %necktie_client_secret%
-#        create_new_entity: %create_new_entity_on_necktie_notification%
+trinity_messages:
+    sender_identification: "%client_identification%"
+    message_user_provider: "@venice.bunny.message_user_provider"
+    secret_key_provider: "@app.client_secret_provider"
+
+bunny:
+    host: "%rabbit_url%"
+    port: "%rabbit_port%"
+    vhost: "/"
+    user: "%rabbit_user%"
+    password: "%rabbit_password%"
+
+    # make heartbeat as long as longest message processing time in any consumer might take
+    heartbeat: 120 # in seconds = 2 minutes, default: 60 seconds
 
 trinity_notification:
     drivers: ["trinity.notification.driver.rabbit.client"]
@@ -25,12 +30,15 @@ trinity_notification:
         product: Venice\AppBundle\Entity\Product\StandardProduct
         billing-plan: Venice\AppBundle\Entity\BillingPlan
         user: Venice\AppBundle\Entity\User
+        product-access: Venice\AppBundle\Entity\ProductAccess
     mode: client
-    client_output_exchange_name: clients.to.server.notifications
     client_id: %necktie_client_short_id%
-    client_secret:  %necktie_client_secret%
-    error_messages_exchange_name: server.to.clients.dead.notifications.error.messages
-    listening_queue_name: %rabbit_listening_queue_name%
+    client_secret_provider: "@app.client_secret_provider"
+    forms:
+        product: Venice\AppBundle\Form\Notification\ProductType
+        billing-plan: Venice\AppBundle\Form\Notification\BillingPlanType
+        user: Venice\AppBundle\Form\Notification\UserType
+        product-access: Venice\AppBundle\Form\Notification\ProductAccessType
 
 fos_user:
     db_driver: orm
@@ -219,6 +227,8 @@ snc_redis:
         ttl: 3600
 
 trinity_settings:
+  settings:
+     currency: 'USD'
 
 kms_froala_editor:
     language: "en_gb"

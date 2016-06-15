@@ -5,7 +5,7 @@ namespace Venice\AppBundle\Kernel;
 use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\HttpKernel\TerminableInterface;
 
-abstract class VeniceKernel extends Kernel implements TerminableInterface
+abstract class VeniceKernel extends Kernel
 {
     public function registerBundles()
     {
@@ -32,17 +32,21 @@ abstract class VeniceKernel extends Kernel implements TerminableInterface
             new \Venice\AppBundle\VeniceAppBundle(),
             new \Venice\AdminBundle\VeniceAdminBundle(),
             new \Venice\FrontBundle\VeniceFrontBundle(),
+            new \Venice\BunnyBundle\VeniceBunnyBundle(),
 
             new \WhiteOctober\BreadcrumbsBundle\WhiteOctoberBreadcrumbsBundle(),
             new \Knp\Bundle\GaufretteBundle\KnpGaufretteBundle(),
 
             // Trinity
             new \Trinity\FrameworkBundle\TrinityFrameworkBundle(),
-//            new \Trinity\NotificationBundle\TrinityNotificationBundle(),
+            new \Trinity\NotificationBundle\TrinityNotificationBundle(),
+            new \Trinity\Bundle\MessagesBundle\TrinityMessagesBundle(),
             new \Trinity\AdminBundle\TrinityAdminBundle(),
             new \Trinity\Bundle\SettingsBundle\SettingsBundle(),
             new \Trinity\Bundle\SearchBundle\SearchBundle(),
             new \Trinity\Bundle\GridBundle\GridBundle(),
+            new \Trinity\Bundle\BunnyBundle\TrinityBunnyBundle(),
+            new \Trinity\Bundle\LoggerBundle\LoggerBundle()
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'])) {

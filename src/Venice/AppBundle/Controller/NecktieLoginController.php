@@ -9,16 +9,17 @@
 namespace Venice\AppBundle\Controller;
 
 
-use Venice\AppBundle\Entity\OAuthToken;
-use Venice\AppBundle\Event\AppEvents;
-use Venice\AppBundle\Event\NecktieLoginSuccessfulEvent;
-use Venice\AppBundle\Exceptions\UnsuccessfulNecktieResponseException;
-use Venice\AppBundle\Services\NecktieGateway;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Venice\AppBundle\Entity\OAuthToken;
+use Venice\AppBundle\Event\AppEvents;
+use Venice\AppBundle\Event\NecktieLoginSuccessfulEvent;
+use Venice\AppBundle\Exceptions\UnsuccessfulNecktieResponseException;
+use Venice\AppBundle\Services\NecktieGateway;
 
 /**
  *
@@ -69,7 +70,7 @@ class NecktieLoginController extends Controller
             try {
                 $user = $this->getAndLoginUser($necktieGateway, $request, $necktieToken);
             } catch (UnsuccessfulNecktieResponseException $e) {
-                throw new UnsuccessfulNecktieResponseException("Could not get user from necktie.".$e->getMessage());
+                throw new UnsuccessfulNecktieResponseException("Could not get user from necktie." . $e->getMessage());
             }
 
             try {
@@ -116,6 +117,11 @@ class NecktieLoginController extends Controller
     protected function getAndLoginUser(NecktieGateway $necktieGateway, Request $request, OAuthToken $necktieToken)
     {
         $user = $necktieGateway->getUserByAccessToken($request->query->get("access_token"), true);
+
+        if ($user === null) {
+
+            throw new NotFoundHttpException("User not found!");
+        }
 
         $this->getLoginManager()->logInUser("main", $user);
 

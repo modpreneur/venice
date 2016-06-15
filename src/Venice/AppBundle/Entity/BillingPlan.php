@@ -8,11 +8,16 @@
 
 namespace Venice\AppBundle\Entity;
 
+use Trinity\FrameworkBundle\Entity\BaseBillingPlan;
+use Trinity\FrameworkBundle\Entity\ClientInterface;
+use Trinity\NotificationBundle\Entity\NotificationEntityInterface;
 use Venice\AppBundle\Entity\Product\StandardProduct;
 use Venice\AppBundle\Traits\Timestampable;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Trinity\NotificationBundle\Annotations as N;
+use Symfony\Component\Validator\Constraints as Assert;
 
 
 /**
@@ -24,18 +29,9 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *
  * Class BillingPlan
  */
-class BillingPlan
+class BillingPlan extends BaseBillingPlan implements NotificationEntityInterface
 {
     use Timestampable;
-
-    /**
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     *
-     * @var int
-     */
-    protected $id;
 
 
     /**
@@ -47,49 +43,12 @@ class BillingPlan
 
 
     /**
-     * Price which will be paid at the start.
-     *
-     * @var float
-     *
-     * @ORM\Column(name="initial_price", type="float", nullable=false)
-     */
-    protected $initialPrice;
-
-
-    /**
-     * Price which will be paid periodically in case of recurring.
-     *
-     * @var float
-     *
-     * @ORM\Column(name="rebill_price", type="float", nullable=true)
-     */
-    protected $rebillPrice;
-
-
-    /**
-     * Time between payments(rebillPrice).
-     *
-     * @var int
-     *
-     * @ORM\Column(name="frequency", type="integer", nullable=true)
-     */
-    protected $frequency;
-
-
-    /**
-     * Count of all payments for this product(including initial price)
-     *
-     * @var int
-     *
-     * @ORM\Column(name="rebill_times", type="integer", nullable=true)
-     */
-    protected $rebillTimes;
-
-
-    /**
      * @var StandardProduct
      *
-     * @ORM\ManyToOne(targetEntity="Venice\AppBundle\Entity\Product\StandardProduct", inversedBy="billingPlans", cascade={"PERSIST"})
+     * @ORM\ManyToOne(targetEntity="Venice\AppBundle\Entity\Product\StandardProduct", inversedBy="billingPlans", cascade={"persist"})
+     * @ORM\JoinColumn(referencedColumnName="id", onDelete="CASCADE")
+     *
+     * @Assert\NotBlank()
      */
     protected $product;
 
@@ -110,137 +69,10 @@ class BillingPlan
         $this->rebillPrice = 0;
         $this->frequency = 0;
         $this->rebillTimes = 0;
-        $this->price = "";
+        $this->price = '';
         $this->updateTimestamps();
     }
 
-
-    /**
-     * Set current billing plan as default
-     */
-    public function setAsDefault()
-    {
-        $this->product->setDefaultBillingPlan($this);
-    }
-
-    /**
-     * @param int $id
-     *
-     * @return BillingPlan
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-
-        return $this;
-    }
-
-
-    /**
-     * @return int
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-
-    /**
-     * @return float
-     */
-    public function getInitialPrice()
-    {
-        return $this->initialPrice;
-    }
-
-
-    /**
-     * @param float $initialPrice
-     *
-     * @return BillingPlan
-     */
-    public function setInitialPrice($initialPrice)
-    {
-        $this->initialPrice = $initialPrice;
-
-        return $this;
-    }
-
-
-    /**
-     * @return float
-     */
-    public function getRebillPrice()
-    {
-        return $this->rebillPrice;
-    }
-
-
-    /**
-     * @param float $rebillPrice
-     *
-     * @return BillingPlan
-     */
-    public function setRebillPrice($rebillPrice)
-    {
-        $this->rebillPrice = $rebillPrice;
-
-        return $this;
-    }
-
-
-    /**
-     * @return int
-     */
-    public function getFrequency()
-    {
-        return $this->frequency;
-    }
-
-
-    /**
-     * @param int $frequency
-     *
-     * @return BillingPlan
-     */
-    public function setFrequency($frequency)
-    {
-        $this->frequency = $frequency;
-
-        return $this;
-    }
-
-
-    /**
-     * @return int
-     */
-    public function getRebillTimes()
-    {
-        return $this->rebillTimes;
-    }
-
-
-    /**
-     * @param int $rebilTimes
-     *
-     * @return BillingPlan
-     */
-    public function setRebillTimes($rebilTimes)
-    {
-        $this->rebillTimes = $rebilTimes;
-
-        return $this;
-    }
-
-
-    /**
-     * @return bool
-     */
-    public function isRecurring()
-    {
-        return $this->frequency !== 0;
-
-    }
 
 
     /**
@@ -266,19 +98,8 @@ class BillingPlan
 
 
     /**
-     * @param int $amemberId
+     * @N\AssociationGetter()
      *
-     * @return BillingPlan
-     */
-    public function setAmemberId($amemberId)
-    {
-        $this->amemberId = $amemberId;
-
-        return $this;
-    }
-
-
-    /**
      * @return StandardProduct
      */
     public function getProduct()
@@ -288,11 +109,13 @@ class BillingPlan
 
 
     /**
-     * @param StandardProduct $product
+     * @N\AssociationSetter(targetEntity="Venice\AppBundle\Entity\Product\StandardProduct")
+     *
+     * @param StandardProduct $product Specifying the parameter type is essential for trinity/notifications!
      *
      * @return BillingPlan
      */
-    public function setProduct(StandardProduct $product)
+    public function setProduct($product)
     {
         $this->product = $product;
 
@@ -322,13 +145,19 @@ class BillingPlan
     }
 
 
-    /**
-     * Get type of the billing plan - check rebillTimes.
-     *
-     * @return bool
-     */
-    public function getType()
+    /** @return ClientInterface[] */
+    public function getClients()
     {
-        return ($this->rebillTimes == 0) ? "standard" : "recurring";
+       return [];
+    }
+
+
+    /**
+     * @param ClientInterface $client
+     * @param string $status
+     * @return void
+     */
+    public function setNotificationStatus(ClientInterface $client, $status)
+    {
     }
 }

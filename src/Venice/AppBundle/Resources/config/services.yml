@@ -82,6 +82,11 @@ services:
             - %amazon_s3_region%
             - %amazon_s3_bucket%
 
+    app.client_secret_provider:
+        class: Venice\AppBundle\Services\ClientSecretProvider
+        arguments:
+            - "%necktie_client_secret%"
+
     # EVENT LISTENERS #
 
     app.event_listener.kernel_excetpion:
@@ -117,6 +122,14 @@ services:
             - { name: doctrine.event_subscriber, connection: default }
         calls:
             - [ "setAnnotationReader", [ "@annotation_reader" ] ]
+
+    app.notification_listener:
+        class: Venice\AppBundle\EventListener\NotificationListener
+        arguments:
+            - "@trinity.services.price_string_generator"
+            - "@doctrine.orm.entity_manager"
+        tags:
+            - {name: "kernel.event_listener", event: "trinity.notifications.changesDone", method: "onChangesDone"}
 
     # TWIG EXTENSIONS #
 
@@ -247,6 +260,34 @@ services:
 
     admin.form.product_access:
         class: Venice\AppBundle\Form\ProductAccessType
+        arguments:
+            - "@doctrine.orm.entity_manager"
+        tags:
+            - { name: form.type }
+
+    app.notification.form.product_access:
+        class: Venice\AppBundle\Form\Notification\ProductAccessType
+        arguments:
+            - "@doctrine.orm.entity_manager"
+        tags:
+            - { name: form.type }
+
+    app.notification.form.product:
+        class: Venice\AppBundle\Form\Notification\ProductType
+        arguments:
+            - "@doctrine.orm.entity_manager"
+        tags:
+            - { name: form.type }
+
+    app.notification.form.user:
+        class: Venice\AppBundle\Form\Notification\UserType
+        arguments:
+            - "@doctrine.orm.entity_manager"
+        tags:
+            - { name: form.type }
+
+    app.notification.form.billing_plan:
+        class: Venice\AppBundle\Form\Notification\BillingPlanType
         arguments:
             - "@doctrine.orm.entity_manager"
         tags:

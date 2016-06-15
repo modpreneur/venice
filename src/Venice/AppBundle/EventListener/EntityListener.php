@@ -70,7 +70,7 @@ class EntityListener
         if ($violations->count() !== 0) {
             /** @var ConstraintViolationInterface $violation */
             foreach ($violations as $violation) {
-                $message .= $violation->getPropertyPath().": ".$violation->getMessage().";";
+                $message .= "Validation failed for entity: ".get_class($entity)." at property: ".$violation->getPropertyPath().": ".$violation->getMessage()."The value is:".$violation->getInvalidValue();
             }
 
             throw new ValidatorException($message);

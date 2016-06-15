@@ -1,0 +1,25 @@
+services:
+
+    venice.bunny.messages_event_listener:
+        class: Venice\BunnyBundle\EventListener\MessagesEventListener
+        arguments:
+            - "@kernel"
+        tags:
+            - { name: kernel.event_listener, event: trinity.messages.sendMessage, method: onSendMessage}
+
+    venice.bunny.message_user_provider:
+        class: Venice\BunnyBundle\Services\MessageUserProvider
+        arguments:
+            - "@security.token_storage"
+            - "%client_identification%"
+
+    venice.bunny.messages_consumer:
+        class: Venice\BunnyBundle\MessagesConsumer
+        arguments:
+            - "@event_dispatcher"
+
+    venice.bunny.messages_producer:
+        class: Venice\BunnyBundle\MessagesProducer
+
+    venice.bunny.notifications_producer:
+        class: Venice\BunnyBundle\NotificationsProducer

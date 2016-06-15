@@ -27,7 +27,7 @@ use Trinity\NotificationBundle\Entity\NotificationEntityInterface;
  *
  * @ORM\HasLifecycleCallbacks
  *
- * @N\Source(columns="necktieId, name, description")
+ * @N\Source(columns="necktieId, name, description, defaultBillingPlan")
  * Creating products on client is not allowed because creating billing plans is not allowed
  * @N\Methods(types={"put", "delete"})
  * @N\Url(postfix="product")
@@ -62,7 +62,7 @@ class StandardProduct extends Product implements NotificationEntityInterface
 
 
     /**
-     * @var BillingPlan
+     * @var BillingPlan Billing plan of the product
      *
      * @ORM\OneToOne(targetEntity="Venice\AppBundle\Entity\BillingPlan", cascade={"persist", "remove"})
      */
@@ -78,6 +78,8 @@ class StandardProduct extends Product implements NotificationEntityInterface
 
 
     /**
+     * @N\AssociationGetter
+     * 
      * @return BillingPlan
      */
     public function getDefaultBillingPlan()
@@ -87,6 +89,8 @@ class StandardProduct extends Product implements NotificationEntityInterface
 
 
     /**
+     * @N\AssociationSetter(targetEntity="Venice\AppBundle\Entity\BillingPlan")
+     * 
      * @param BillingPlan $defaultBillingPlan
      */
     public function setDefaultBillingPlan(BillingPlan $defaultBillingPlan)
@@ -94,41 +98,6 @@ class StandardProduct extends Product implements NotificationEntityInterface
         $this->defaultBillingPlan = $defaultBillingPlan;
     }
 
-
-    /**
-     * @return ArrayCollection<BillingPlan>
-     */
-    public function getBillingPlans()
-    {
-        return $this->billingPlans;
-    }
-
-
-    /**
-     * @param BillingPlan $billingPlan
-     * @return $this
-     */
-    public function addBillingPlan(BillingPlan $billingPlan)
-    {
-        if(!$this->billingPlans->contains($billingPlan))
-        {
-            $this->billingPlans->add($billingPlan);
-        }
-
-        return $this;
-    }
-
-
-    /**
-     * @param BillingPlan $billingPlan
-     * @return $this
-     */
-    public function removeBillingPlan(BillingPlan $billingPlan)
-    {
-        $this->billingPlans->remove($billingPlan);
-
-        return $this;
-    }
 
 
     public function getType()
@@ -164,5 +133,41 @@ class StandardProduct extends Product implements NotificationEntityInterface
     {
         return [];
     }
+    
+    /**
+     * @return ArrayCollection<BillingPlan>
+     */
+    public function getBillingPlans()
+    {
+        return $this->billingPlans;
+    }
+    
+    
+    /**
+     * @param BillingPlan $billingPlan
+     * @return $this
+     */
+    public function addBillingPlan(BillingPlan $billingPlan)
+    {
+        if(!$this->billingPlans->contains($billingPlan))
+        {
+            $this->billingPlans->add($billingPlan);
+        }
+        
+        return $this;
+    }
+    
+    
+    /**
+     * @param BillingPlan $billingPlan
+     * @return $this
+     */
+    public function removeBillingPlan(BillingPlan $billingPlan)
+    {
+        $this->billingPlans->remove($billingPlan);
+        
+        return $this;
+    }
+       
 
 }

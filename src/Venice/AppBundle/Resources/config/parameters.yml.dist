@@ -32,4 +32,5 @@ parameters:
     rabbit_port: ~
     rabbit_user: ~
     rabbit_password: ~
-    rabbit_listening_queue_name: client_
+    rabbit_listening_queues: ["client_"]
+    client_identification: "client_"

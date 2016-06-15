@@ -129,7 +129,7 @@ class BillingPlanController extends BaseAdminController
     {
         $em = $this->getDoctrine()->getManager();
 
-        $billingPlan->setAsDefault();
+        $billingPlan->getProduct()->setDefaultBillingPlan($billingPlan);
 
         try {
             $em->persist($billingPlan);

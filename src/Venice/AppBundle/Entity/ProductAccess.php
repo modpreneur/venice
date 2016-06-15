@@ -2,12 +2,15 @@
 
 namespace Venice\AppBundle\Entity;
 
+use Trinity\FrameworkBundle\Entity\ClientInterface;
+use Trinity\NotificationBundle\Entity\NotificationEntityInterface;
 use Venice\AppBundle\Entity\Product\Product;
 use Venice\AppBundle\Traits\Timestampable;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
+use Trinity\NotificationBundle\Annotations as N;
 
 /**
  * ProductAccess
@@ -17,7 +20,7 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  *
  * @UniqueEntity(fields={"user", "product"}, errorPath="product")
  */
-class ProductAccess
+class ProductAccess implements NotificationEntityInterface
 {
     use Timestampable;
 
@@ -107,6 +110,8 @@ class ProductAccess
     /**
      * Set user
      *
+     * @N\AssociationSetter(targetEntity="Venice\AppBundle\Entity\User")
+     *
      * @param User $user
      *
      * @return ProductAccess
@@ -122,6 +127,8 @@ class ProductAccess
     /**
      * Get user
      *
+     * @N\AssociationGetter
+     *
      * @return User
      */
     public function getUser()
@@ -132,6 +139,8 @@ class ProductAccess
 
     /**
      * Set product
+     *
+     * @N\AssociationSetter(targetEntity="Venice\AppBundle\Entity\Product\Product")
      *
      * @param Product $product
      *
@@ -147,6 +156,8 @@ class ProductAccess
 
     /**
      * Get product
+     *
+     * @N\AssociationGetter
      *
      * @return Product
      */
@@ -229,5 +240,19 @@ class ProductAccess
         return $this;
     }
 
+    /** @return ClientInterface[] */
+    public function getClients()
+    {
+        return [];
+    }
+
+    /**
+     * @param ClientInterface $client
+     * @param string $status
+     * @return void
+     */
+    public function setNotificationStatus(ClientInterface $client, $status)
+    {
+    }
 }
 
