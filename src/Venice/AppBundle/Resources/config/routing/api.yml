@@ -1,0 +1,9 @@
+api_product_necktie_exists:
+    path: '/api/product/{id}/necktie-exists'
+    defaults: { _controller: 'VeniceAppBundle:Api\Product:necktieProductExists' }
+    options: { compiler_class: Symfony\Component\Routing\RouteCompiler }
+
+api_slugify:
+    path: /api/slugify
+    defaults: { _controller: 'VeniceAppBundle:Api\Slugify:slugify' }
+    options: { compiler_class: Symfony\Component\Routing\RouteCompiler }

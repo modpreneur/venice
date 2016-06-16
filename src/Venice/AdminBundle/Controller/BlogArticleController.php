@@ -26,9 +26,8 @@ use Symfony\Component\HttpFoundation\Response;
 class BlogArticleController extends BaseAdminController
 {
     /**
-     * @Route("/admin/blogArticle", name="admin_blog_article_index")
-     * @Route("/admin/blogArticle/")
      * @Security("is_granted('ROLE_ADMIN_BLOG_VIEW')")
+     *
      * @param Request $request
      *
      * @return string
@@ -50,8 +49,6 @@ class BlogArticleController extends BaseAdminController
     /**
      * Render page for blog article tabs.
      *
-     * @Route("/admin/blogArticle/tabs/{id}", name="admin_blog_article_tabs")
-     * @Method("GET")
      * @Security("is_granted('ROLE_ADMIN_BLOG_VIEW')")
      *
      * @param BlogArticle $article
@@ -75,8 +72,6 @@ class BlogArticleController extends BaseAdminController
 
 
     /**
-     * @Route("/admin/blogArticle/show/{id}", name="admin_blog_article_show")
-     * @Method("GET")
      * @Security("is_granted('ROLE_ADMIN_BLOG_VIEW')")
      *
      * @param Request $request
@@ -96,8 +91,6 @@ class BlogArticleController extends BaseAdminController
     /**
      * Display a form to create a new BlogArticle entity.
      *
-     * @Route("/admin/blogArticle/new", name="admin_blog_article_new")
-     * @Method("GET")
      * @Security("is_granted('ROLE_ADMIN_BLOG_EDIT')")
      *
      * @param Request $request
@@ -128,8 +121,6 @@ class BlogArticleController extends BaseAdminController
     /**
      * Process a request to create a new BlogArticle entity.
      *
-     * @Route("/admin/blogArticle/create", name="admin_blog_article_create")
-     * @Method("POST")
      * @Security("is_granted('ROLE_ADMIN_BLOG_EDIT')")
      *
      * @param Request $request
@@ -175,8 +166,6 @@ class BlogArticleController extends BaseAdminController
     /**
      * Display a form to edit a BlogArticle entity.
      *
-     * @Route("/admin/blogArticle/edit/{id}", requirements={"id": "\d+"}, name="admin_blog_article_edit")
-     * @Method("GET")
      * @Security("is_granted('ROLE_ADMIN_BLOG_EDIT')")
      *
      * @param Request $request
@@ -206,8 +195,6 @@ class BlogArticleController extends BaseAdminController
     /**
      * Process a request to update a BlogArticle entity.
      *
-     * @Route("/admin/blogArticle/{id}/update", requirements={"id": "\d+"}, name="admin_blog_article_update")
-     * @Method("PUT")
      * @Security("is_granted('ROLE_ADMIN_BLOG_EDIT')")
      *
      * @param Request $request
@@ -251,8 +238,6 @@ class BlogArticleController extends BaseAdminController
     }
 
     /**
-     * @Route("/admin/blogArticle/tab/{id}/delete", name="admin_blog_article_delete_tab")
-     * @Method("GET")
      * @Security("is_granted('ROLE_ADMIN_BLOG_EDIT')")
      *
      * @param BlogArticle $blogArticle
@@ -275,8 +260,6 @@ class BlogArticleController extends BaseAdminController
     }
 
     /**
-     * @Route("/admin/blogArticle/{id}/delete", name="admin_blog_article_delete")
-     * @Method("DELETE")
      * @Security("is_granted('ROLE_ADMIN_BLOG_EDIT')")
      *
      * @param Request $request

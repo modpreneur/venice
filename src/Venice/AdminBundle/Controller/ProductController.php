@@ -33,9 +33,6 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class ProductController extends BaseAdminController
 {
     /**
-     * @Route("/admin/product", name="admin_product_index")
-     * @Route("/admin/product/")
-     * @Method("GET")
      * @Security("is_granted('ROLE_ADMIN_PRODUCT_VIEW')")
      *
      * @param Request $request
@@ -67,8 +64,8 @@ class ProductController extends BaseAdminController
 
 
     /**
-     * @Route("/admin/product/{id}/articles", name="admin_product_articles_index")
      * @Security("is_granted('ROLE_ADMIN_BLOG_VIEW')")
+     * 
      * @param Request $request
      *
      * @return string
@@ -84,8 +81,6 @@ class ProductController extends BaseAdminController
 
 
     /**
-     * @Route("/admin/product/show/{id}", name="admin_product_show")
-     * @Method("GET")
      * @Security("is_granted('ROLE_ADMIN_PRODUCT_VIEW')")
      *
      * @param Request $request
@@ -103,7 +98,6 @@ class ProductController extends BaseAdminController
 
 
     /**
-     * @Route("/admin/product/tabs/{id}", name="admin_product_tabs")
      * @Security("is_granted('ROLE_ADMIN_PRODUCT_VIEW')")
      *
      * @param Product $product
@@ -134,8 +128,6 @@ class ProductController extends BaseAdminController
 
 
     /**
-     * @Route("/admin/product/new", name="admin_product_new")
-     * @Method("GET")
      * @Security("is_granted('ROLE_ADMIN_PRODUCT_EDIT')")
      *
      * @return \Symfony\Component\HttpFoundation\Response
@@ -168,8 +160,6 @@ class ProductController extends BaseAdminController
 
 
     /**
-     * @Route("/admin/product/new/{productType}",requirements={"productType": "\w+"}, name="admin_product_new_form")
-     * @Method("GET")
      * @Security("is_granted('ROLE_ADMIN_PRODUCT_EDIT')")
      *
      * @param Request $request
@@ -205,8 +195,6 @@ class ProductController extends BaseAdminController
 
 
     /**
-     * @Route("/admin/product/create/{productType}",requirements={"productType": "\w+"}, name="admin_product_create")
-     * @Method("POST")
      * @Security("is_granted('ROLE_ADMIN_PRODUCT_EDIT')")
      *
      * @param Request $request
@@ -268,9 +256,8 @@ class ProductController extends BaseAdminController
     /**
      * Display a form to edit a Product entity.
      *
-     * @Route("/admin/product/edit/{id}", requirements={"id": "\d+"}, name="admin_product_edit")
-     * @Method("GET")
      * @Security("is_granted('ROLE_ADMIN_PRODUCT_EDIT')")
+     * 
      * @param Request $request
      * @param Product $product
      *
@@ -298,14 +285,11 @@ class ProductController extends BaseAdminController
 
 
     /**
-     * @Route("/admin/product/tab/{id}/delete", name="admin_product_delete_tab")
-     * @Method("GET")
      * @Security("is_granted('ROLE_ADMIN_PRODUCT_EDIT')")
      *
      * @param Product $product
      *
      * @return Response
-     *
      */
     public function deleteTabAction(Product $product)
     {
@@ -321,8 +305,6 @@ class ProductController extends BaseAdminController
 
 
     /**
-     * @Route("/admin/product/{id}/update", requirements={"id": "\d+"}, name="admin_product_update")
-     * @Method("PUT")
      * @Security("is_granted('ROLE_ADMIN_PRODUCT_EDIT')")
      *
      * @param Request $request
@@ -366,8 +348,6 @@ class ProductController extends BaseAdminController
 
 
     /**
-     * @Route("/admin/product/{id}/delete", name="admin_product_delete")
-     * @Method("DELETE")
      * @Security("is_granted('ROLE_ADMIN_PRODUCT_EDIT')")
      *
      * @param Request $request
@@ -404,8 +384,6 @@ class ProductController extends BaseAdminController
 
 
     /**
-     * @Route("/admin/product/{id}/content-product", name="admin_product_content_product_index")
-     *
      * @param Product $product
      *
      * @return Response
@@ -423,8 +401,6 @@ class ProductController extends BaseAdminController
 
 
     /**
-     * @Route("/admin/product/content-product/show/{id}", name="admin_product_content_product_show")
-     * @Method("GET")
      * @Security("is_granted('ROLE_ADMIN_PRODUCT_VIEW')")
      *
      * @param Request $request
@@ -442,8 +418,6 @@ class ProductController extends BaseAdminController
 
 
     /**
-     * @Route("/admin/product/{id}/content-product/new", name="admin_product_content_product_new")
-     *
      * @Method("GET")
      * @Security("is_granted('ROLE_ADMIN_CONTENT_PRODUCT_EDIT')")
      *
@@ -483,8 +457,6 @@ class ProductController extends BaseAdminController
 
 
     /**
-     * @Route("/admin/product/content-product/edit/{id}", requirements={"id": "\d+"}, name="admin_product_content_product_edit")
-     * @Method("GET")
      * @Security("is_granted('ROLE_ADMIN_CONTENT_PRODUCT_EDIT')")
      *
      * @param ContentProduct $contentProduct
@@ -513,8 +485,6 @@ class ProductController extends BaseAdminController
 
 
     /**
-     * @Route("/admin/product/content-product/{id}/update", requirements={"id": "\d+"}, name="admin_product_content_product_update")
-     * @Method("PUT")
      * @Security("is_granted('ROLE_ADMIN_CONTENT_PRODUCT_EDIT')")
      *
      * @param Request $request
@@ -561,9 +531,6 @@ class ProductController extends BaseAdminController
 
 
     /**
-     * @Route("/admin/product/content-product/tabs/{id}", name="admin_product_content_product_tabs")
-     * @Method("GET")
-     *
      * @Security("is_granted('ROLE_ADMIN_CONTENT_PRODUCT_VIEW')")
      *
      * @param ContentProduct $contentProduct
@@ -592,9 +559,6 @@ class ProductController extends BaseAdminController
     }
 
     /**
-     * @Route("/admin/product/content-product/create", name="admin_product_content_product_create")
-     * @Method("POST")
-     *
      * @Security("is_granted('ROLE_ADMIN_CONTENT_PRODUCT_EDIT')")
      *
      * @param Request $request
@@ -648,8 +612,6 @@ class ProductController extends BaseAdminController
     }
 
     /**
-     * @Route("/admin/product/content-product/tab/{id}/delete", name="admin_product_content_product_delete_tab")
-     * @Method("GET")
      * @Security("is_granted('ROLE_ADMIN_CONTENT_PRODUCT_EDIT')")
      *
      * @param ContentProduct $contentProduct
@@ -672,8 +634,6 @@ class ProductController extends BaseAdminController
 
 
     /**
-     * @Route("/admin/product/content-product/{id}/delete", name="admin_product_content_product_delete")
-     * @Method("DELETE")
      * @Security("is_granted('ROLE_ADMIN_CONTENT_PRODUCT_EDIT')")
      *
      * @param Request $request

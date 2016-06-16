@@ -26,10 +26,6 @@ class ProductAccessController extends BaseAdminController
     /**
      * Get all accesses of user
      *
-     * @Route("/admin/product-access/user/{id}", name="admin_product_access_user_index")
-     * @Method("GET")
-     * @View()
-     *
      * @param User $user
      *
      * @return array
@@ -53,8 +49,6 @@ class ProductAccessController extends BaseAdminController
 
 
     /**
-     * @Route("/admin/product-access/show/{id}", name="admin_product_access_show")
-     * @Method("GET")
      * @Security("is_granted('ROLE_ADMIN_PRODUCT_ACCESS_VIEW')")
      *
      * @param ProductAccess $productAccess
@@ -73,7 +67,6 @@ class ProductAccessController extends BaseAdminController
 
 
     /**
-     * @Route("/admin/product-access/tabs/{id}", name="admin_product_access_tabs")
      * @Security("is_granted('ROLE_ADMIN_PRODUCT_ACCESS_VIEW')")
      *
      * @param ProductAccess $productAccess

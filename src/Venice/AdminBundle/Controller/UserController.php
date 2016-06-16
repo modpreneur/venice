@@ -28,10 +28,6 @@ class UserController extends BaseAdminController
 {
 
     /**
-     * @Route("/admin/user", name="admin_user_index")
-     * @Route("/admin/user/")
-     * @Method("GET")
-     *
      * @Security("is_granted('ROLE_ADMIN_USER_VIEW')")
      *
      * @param Request $request
@@ -54,9 +50,6 @@ class UserController extends BaseAdminController
 
 
     /**
-     * @Route("/admin/user/show/{id}", name="admin_user_show")
-     * @Method("GET")
-     *
      * @Security("is_granted('ROLE_ADMIN_USER_VIEW')")
      *
      * @param Request $request
@@ -74,9 +67,6 @@ class UserController extends BaseAdminController
 
 
     /**
-     * @Route("/admin/user/tabs/{id}", name="admin_user_tabs")
-     * @Method("GET")
-     *
      * @Security("is_granted('ROLE_ADMIN_USER_VIEW')")
      *
      * @param User $user
@@ -105,9 +95,6 @@ class UserController extends BaseAdminController
 
 
 //    /**
-//     * @Route("/admin/user/new", name="admin_user_new")
-//     * @Method("GET")
-//     *
 //     * @Security("is_granted('ROLE_ADMIN_USER_EDIT')")
 //     */
 //    public function newAction()
@@ -135,9 +122,6 @@ class UserController extends BaseAdminController
 
 
 //    /**
-//     * @Route("/admin/user/create", name="admin_user_create")
-//     * @Method("POST")
-//     *
 //     * @Security("is_granted('ROLE_ADMIN_USER_EDIT')")
 //     */
 //    public function createAction(Request $request)
@@ -181,9 +165,6 @@ class UserController extends BaseAdminController
 
 
     /**
-     * @Route("/admin/user/edit/{id}", name="admin_user_edit")
-     * @Method("GET")
-     *
      * @Security("is_granted('ROLE_ADMIN_USER_EDIT')")
      *
      * @param User $user
@@ -211,9 +192,6 @@ class UserController extends BaseAdminController
 
 
     /**
-     * @Route("/admin/user/update/{id}", name="admin_user_update")
-     * @Method("PUT")
-     *
      * @Security("is_granted('ROLE_ADMIN_USER_EDIT')")
      *
      * @param Request $request
@@ -273,8 +251,6 @@ class UserController extends BaseAdminController
     }
 
     /**
-     * @Route("/admin/user/tab/{id}/delete", name="admin_user_delete_tab")
-     * @Method("GET")
      * @Security("is_granted('ROLE_ADMIN_USER_EDIT')")
      *
      * @param User $user
@@ -296,9 +272,6 @@ class UserController extends BaseAdminController
 
 
     /**
-     * @Route("/admin/user/{id}/delete", name="admin_user_delete")
-     * @Method("DELETE")
-     *
      * @Security("is_granted('ROLE_ADMIN_USER_EDIT')")
      *
      * @param Request $request
@@ -339,9 +312,6 @@ class UserController extends BaseAdminController
     }
 
     /**
-     * @Route("/admin/user/{id}/roles/edit", name="admin_user_roles_edit")
-     * @Method("GET")
-     *
      * @Security("is_granted('ROLE_ADMIN_USER_EDIT')")
      *
      * @param User $user
@@ -368,9 +338,6 @@ class UserController extends BaseAdminController
 
 
     /**
-     * @Route("/admin/user/{id}/roles/edit", name="admin_user_roles_update")
-     * @Method("PUT")
-     *
      * @Security("is_granted('ROLE_ADMIN_USER_EDIT')")
      *
      * @param User $user

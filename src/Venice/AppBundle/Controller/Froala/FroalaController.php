@@ -22,8 +22,6 @@ use Symfony\Component\HttpFoundation\Response;
 class FroalaController extends Controller
 {
     /**
-     * @Route("/froala/upload/file", name="app_froala_upload_file")
-     *
      * @param Request $request
      *
      * @return JsonResponse
@@ -41,9 +39,8 @@ class FroalaController extends Controller
     }
 
     /**
-     * @Route("/froala/upload/image", name="app_froala_upload_image")
-     *
      * @param Request $request
+     * 
      * @return JsonResponse
      */
     public function uploadImageAction(Request $request)
@@ -59,8 +56,8 @@ class FroalaController extends Controller
     }
 
     /**
-     * @Route("/froala/delete/image", name="app_froala_delete_image")
      * @param Request $request
+     * 
      * @return Response
      */
     public function deleteImageAction(Request $request)
@@ -69,9 +66,8 @@ class FroalaController extends Controller
     }
 
     /**
-     * @Route("/froala/delete/image", name="app_froala_load_images")
-     *
      * @param Request $request
+     * 
      * @return JsonResponse
      */
     public function loadImagesAction(Request $request)

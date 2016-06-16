@@ -15,10 +15,6 @@ use Symfony\Component\HttpFoundation\Request;
 class DashboardController extends BaseAdminController
 {
     /**
-     *
-     * @Route("/admin", name="admin_dashboard")
-     * @Route("/admin/")
-     *
      * @param Request $request
      *
      * @return \Symfony\Component\HttpFoundation\Response

@@ -19,9 +19,6 @@ use Symfony\Component\HttpFoundation\Response;
 class PublicController extends Controller
 {
     /**
-     * @Route("/public", name="public")
-     * @Route("/public/")
-     *
      * @return Response
      */
     public function publicAction()

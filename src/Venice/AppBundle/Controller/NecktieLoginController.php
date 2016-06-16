@@ -29,8 +29,6 @@ use Venice\AppBundle\Services\NecktieGateway;
 class NecktieLoginController extends Controller
 {
     /**
-     * @Route("/login", name="necktie_login")
-     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function redirectToNecktieLoginAction()
@@ -48,7 +46,6 @@ class NecktieLoginController extends Controller
 
 
     /**
-     * @Route("/login-response", name="necktie_login_response")
      * @param Request $request
      *
      * @return Response
@@ -112,6 +109,7 @@ class NecktieLoginController extends Controller
      * @param NecktieGateway $necktieGateway
      * @param Request $request
      * @param OAuthToken $necktieToken
+     * 
      * @return \Venice\AppBundle\Entity\User|null
      */
     protected function getAndLoginUser(NecktieGateway $necktieGateway, Request $request, OAuthToken $necktieToken)

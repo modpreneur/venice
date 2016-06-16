@@ -1,3 +1,43 @@
 front:
     resource: "@VeniceFrontBundle/Controller"
     type:     annotation
+
+front_index:
+    path: /front/
+    defaults: { _controller: 'VeniceFrontBundle:Front:index' }
+    options: { compiler_class: Symfony\Component\Routing\RouteCompiler }
+
+front_group_show:
+    path: '/front/group/{id}'
+    defaults: { _controller: 'VeniceFrontBundle:Group:showGroup' }
+    options: { compiler_class: Symfony\Component\Routing\RouteCompiler }
+
+front_product_index:
+    path: /front/product
+    defaults: { _controller: 'VeniceFrontBundle:Product:index' }
+    options: { compiler_class: Symfony\Component\Routing\RouteCompiler }
+
+front_product_show:
+    path: '/front/product/show/{id}'
+    defaults: { _controller: 'VeniceFrontBundle:Product:show' }
+    options: { compiler_class: Symfony\Component\Routing\RouteCompiler }
+
+front_product_demo:
+    path: '/front/product/demo/{id}'
+    defaults: { _controller: 'VeniceFrontBundle:Product:demo' }
+    options: { compiler_class: Symfony\Component\Routing\RouteCompiler }
+
+front_product_immersion_index:
+    path: /front/product/immersionIndex
+    defaults: { _controller: 'VeniceFrontBundle:Product:immersionIndex' }
+    options: { compiler_class: Symfony\Component\Routing\RouteCompiler }
+
+front_product_immersion:
+    path: '/front/product/immersion/{id}'
+    defaults: { _controller: 'VeniceFrontBundle:Product:immersion' }
+    options: { compiler_class: Symfony\Component\Routing\RouteCompiler }
+
+front_product_immersion2:
+    path: '/front/product/immersion2/{id}'
+    defaults: { _controller: 'VeniceFrontBundle:Product:immersion2' }
+    options: { compiler_class: Symfony\Component\Routing\RouteCompiler }

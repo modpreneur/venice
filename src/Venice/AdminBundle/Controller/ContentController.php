@@ -34,9 +34,6 @@ class ContentController extends BaseAdminController
 {
 
     /**
-     * @Route("/admin/content", name="admin_content_index")
-     * @Route("/admin/content/")
-     * @Method("GET")
      * @Security("is_granted('ROLE_ADMIN_CONTENT_VIEW')")
      *
      * @param Request $request
@@ -58,8 +55,6 @@ class ContentController extends BaseAdminController
 
 
     /**
-     * @Route("/admin/content/{id}/content-product", name="admin_content_content_product_index")
-     *
      * @param Content $content
      *
      * @return Response
@@ -79,8 +74,6 @@ class ContentController extends BaseAdminController
 
 
     /**
-     * @Route("/admin/content/show/{id}", name="admin_content_show")
-     * @Method("GET")
      * @Security("is_granted('ROLE_ADMIN_CONTENT_VIEW')")
      *
      * @param Request $request
@@ -98,8 +91,6 @@ class ContentController extends BaseAdminController
 
 
     /**
-     * @Route("/admin/content/tabs/{id}", name="admin_content_tabs")
-     * @Method("GET")
      * @Security("is_granted('ROLE_ADMIN_CONTENT_VIEW')")
      *
      * @param Request $request
@@ -118,8 +109,6 @@ class ContentController extends BaseAdminController
 
 
     /**
-     * @Route("/admin/content/new", name="admin_content_new")
-     * @Method("GET")
      * @Security("is_granted('ROLE_ADMIN_CONTENT_EDIT')")
      *
      * @param Request $request
@@ -156,8 +145,6 @@ class ContentController extends BaseAdminController
 
 
     /**
-     * @Route("/admin/content/new/{contentType}",requirements={"contentType": "\w+"}, name="admin_content_new_form")
-     * @Method("GET")
      * @Security("is_granted('ROLE_ADMIN_PRODUCT_EDIT')")
      *
      * @param Request $request
@@ -201,8 +188,6 @@ class ContentController extends BaseAdminController
     /**
      * Process a request to create a new Content entity.
      *
-     * @Route("/admin/content/create/{contentType}",requirements={"contentType": "\w+"}, name="admin_content_create")
-     * @Method("POST")
      * @Security("is_granted('ROLE_ADMIN_CONTENT_EDIT')")
      *
      * @param Request $request
@@ -262,8 +247,6 @@ class ContentController extends BaseAdminController
     /**
      * Display a form to edit a Content entity.
      *
-     * @Route("/admin/content/edit/{id}", requirements={"id": "\d+"}, name="admin_content_edit")
-     * @Method("GET")
      * @Security("is_granted('ROLE_ADMIN_CONTENT_EDIT')")
      *
      * @param Request $request
@@ -301,8 +284,6 @@ class ContentController extends BaseAdminController
     /**
      * Process a request to update a Content entity.
      *
-     * @Route("/admin/content/{id}/update", requirements={"id": "\d+"}, name="admin_content_update")
-     * @Method("PUT")
      * @Security("is_granted('ROLE_ADMIN_CONTENT_EDIT')")
      *
      * @param Request $request
@@ -418,8 +399,6 @@ class ContentController extends BaseAdminController
 
 
     /**
-     * @Route("/admin/content/tab/{id}/delete", name="admin_content_delete_tab")
-     * @Method("GET")
      * @Security("is_granted('ROLE_ADMIN_CONTENT_EDIT')")
      *
      * @param Content $content
@@ -443,9 +422,6 @@ class ContentController extends BaseAdminController
 
 
     /**
-     * @Route("/admin/content/{id}/delete", name="admin_content_delete")
-     * @Method("DELETE")
-     *
      * @Security("is_granted('ROLE_ADMIN_CONTENT_EDIT')")
      *
      * @param Request $request
@@ -496,8 +472,6 @@ class ContentController extends BaseAdminController
 
 
     /**
-     * @Route("/admin/content/{id}/content-product", name="admin_content_content_product_index")
-     *
      * @param Content $content
      *
      * @return Response
@@ -515,9 +489,6 @@ class ContentController extends BaseAdminController
 
 
     /**
-     * @Route("/admin/content/{id}/content-product/new", name="admin_content_content_product_new")
-     *
-     * @Method("GET")
      * @Security("is_granted('ROLE_ADMIN_CONTENT_PRODUCT_EDIT')")
      *
      * @param Request $request
@@ -556,9 +527,6 @@ class ContentController extends BaseAdminController
 
 
     /**
-     * @Route("/admin/content/content-product/new", name="admin_content_content_product_create")
-     * @Method("POST")
-     *
      * @Security("is_granted('ROLE_ADMIN_CONTENT_PRODUCT_EDIT')")
      *
      * @param Request $request
@@ -613,8 +581,6 @@ class ContentController extends BaseAdminController
 
 
     /**
-     * @Route("/admin/content/content-product/edit/{id}", requirements={"id": "\d+"}, name="admin_content_content_product_edit")
-     * @Method("GET")
      * @Security("is_granted('ROLE_ADMIN_CONTENT_PRODUCT_EDIT')")
      *
      * @param ContentProduct $contentProduct
@@ -643,8 +609,6 @@ class ContentController extends BaseAdminController
 
 
     /**
-     * @Route("/admin/content/content-product/{id}/update", requirements={"id": "\d+"}, name="admin_content_content_product_update")
-     * @Method("PUT")
      * @Security("is_granted('ROLE_ADMIN_CONTENT_PRODUCT_EDIT')")
      *
      * @param Request $request
@@ -691,9 +655,6 @@ class ContentController extends BaseAdminController
 
 
     /**
-     * @Route("/admin/content/content-product/tabs/{id}", name="admin_content_content_product_tabs")
-     * @Method("GET")
-     *
      * @Security("is_granted('ROLE_ADMIN_CONTENT_PRODUCT_VIEW')")
      *
      * @param ContentProduct $contentProduct
@@ -723,8 +684,6 @@ class ContentController extends BaseAdminController
 
 
     /**
-     * @Route("/admin/content/content-product/tab/{id}/delete", name="admin_content_content_product_delete_tab")
-     * @Method("GET")
      * @Security("is_granted('ROLE_ADMIN_CONTENT_PRODUCT_EDIT')")
      *
      * @param ContentProduct $contentProduct
@@ -747,8 +706,6 @@ class ContentController extends BaseAdminController
 
 
     /**
-     * @Route("/admin/content/content-product/{id}/delete", name="admin_content_content_product_delete")
-     * @Method("DELETE")
      * @Security("is_granted('ROLE_ADMIN_CONTENT_PRODUCT_EDIT')")
      *
      * @param Request $request

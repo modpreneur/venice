@@ -1,0 +1,14 @@
+necktie_buy_product:
+    path: '/buy/product/{id}'
+    defaults: { _controller: 'Venice\AppBundle\Controller\NecktieBuyController::redirectToNecktieBuy' }
+    options: { compiler_class: Symfony\Component\Routing\RouteCompiler }
+
+necktie_login:
+    path: /login
+    defaults: { _controller: 'VeniceAppBundle:NecktieLogin:redirectToNecktieLogin' }
+    options: { compiler_class: Symfony\Component\Routing\RouteCompiler }
+
+necktie_login_response:
+    path: /login-response
+    defaults: { _controller: 'VeniceAppBundle:NecktieLogin:processNecktieLoginResponse' }
+    options: { compiler_class: Symfony\Component\Routing\RouteCompiler }

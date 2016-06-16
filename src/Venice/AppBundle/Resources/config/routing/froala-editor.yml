@@ -1,0 +1,19 @@
+app_froala_upload_file:
+    path: /froala/upload/file
+    defaults: { _controller: 'VeniceAppBundle:Froala\Froala:uploadFile' }
+    options: { compiler_class: Symfony\Component\Routing\RouteCompiler }
+
+app_froala_upload_image:
+    path: /froala/upload/image
+    defaults: { _controller: 'VeniceAppBundle:Froala\Froala:uploadImage' }
+    options: { compiler_class: Symfony\Component\Routing\RouteCompiler }
+
+app_froala_delete_image:
+    path: /froala/delete/image
+    defaults: { _controller: 'VeniceAppBundle:Froala\Froala:deleteImage' }
+    options: { compiler_class: Symfony\Component\Routing\RouteCompiler }
+
+app_froala_load_images:
+    path: /froala/delete/image
+    defaults: { _controller: 'VeniceAppBundle:Froala\Froala:loadImages' }
+    options: { compiler_class: Symfony\Component\Routing\RouteCompiler }

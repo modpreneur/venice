@@ -1,0 +1,9 @@
+admin_dashboard:
+    path: /admin
+    defaults: { _controller: 'AdminBundle:Dashboard:index' }
+    options: { compiler_class: Symfony\Component\Routing\RouteCompiler }
+
+admin_dashboard_dashboardextended:
+    path: /admin/dashboard-extended
+    defaults: { _controller: 'AdminBundle:Dashboard:dashboardExtended' }
+    options: { compiler_class: Symfony\Component\Routing\RouteCompiler }

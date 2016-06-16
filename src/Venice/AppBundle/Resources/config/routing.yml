@@ -1,6 +1,14 @@
-app:
-    resource: "@VeniceAppBundle/Controller"
-    type:     annotation
+app_api:
+    resource: "routing/api.yml"
+    type:     yml
+
+app_froala_editor:
+    resource: "routing/froala-editor.yml"
+    type:     yml
+
+app_necktie:
+    resource: "routing/necktie.yml"
+    type:     yml
 
 fos_user:
     resource: "@FOSUserBundle/Resources/config/routing/security.xml"
@@ -11,3 +19,13 @@ fos_user_security_login:
         _controller: FrameworkBundle:Redirect:redirect
         path: %login_route% # route name from parameters
         permanent: true
+
+homepage:
+    path: /
+    defaults: { _controller: 'VeniceAppBundle:Default:index' }
+    options: { compiler_class: Symfony\Component\Routing\RouteCompiler }
+
+public:
+    path: /public
+    defaults: { _controller: 'VeniceAppBundle:Public:public' }
+    options: { compiler_class: Symfony\Component\Routing\RouteCompiler }

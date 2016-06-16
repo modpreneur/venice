@@ -13,15 +13,11 @@ use FOS\RestBundle\Controller\Annotations\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 /**
- * @Route("/front")
- *
  * Class FrontController
  */
 class FrontController extends Controller
 {
     /**
-     * @Route("/", name="front_index")
-     *
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function indexAction()

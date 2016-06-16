@@ -30,10 +30,6 @@ class BillingPlanController extends BaseAdminController
     /**
      * Get information about billing plan of given product.
      *
-     * @Route("/admin/billing-plan/product/{id}", name="admin_billing_plan_product_index")
-     * @Method("GET")
-     * @View()
-     *
      * @param Request $request
      * @param StandardProduct $product
      *
@@ -58,8 +54,6 @@ class BillingPlanController extends BaseAdminController
 
 
     /**
-     * @Route("/admin/billing-plan/show/{id}", name="admin_billing_plan_show")
-     * @Method("GET")
      * @Security("is_granted('ROLE_ADMIN_BILLING_PLAN_VIEW')")
      *
      * @param Request $request
@@ -77,7 +71,6 @@ class BillingPlanController extends BaseAdminController
 
 
     /**
-     * @Route("/admin/billing-plan/tabs/{id}", name="admin_billing_plan_tabs")
      * @Security("is_granted('ROLE_ADMIN_BILLING_PLAN_VIEW')")
      *
      * @param Request $request
@@ -116,8 +109,6 @@ class BillingPlanController extends BaseAdminController
     /**
      * Set billing plan as default for product.
      *
-     * @Route("/admin/billing-plan/set-default/{id}", name="admin_billing_plan_product_set_default")
-     *
      * @Security("is_granted('ROLE_ADMIN_PRODUCT_EDIT')")
      *
      * @param BillingPlan $billingPlan
@@ -149,9 +140,8 @@ class BillingPlanController extends BaseAdminController
     /**
      * Display a form to edit a BillingPlan entity.
      *
-     * @Route("/admin/billing-plan/edit/{id}", requirements={"id": "\d+"}, name="admin_billing_plan_edit")
-     * @Method("GET")
      * @Security("is_granted('ROLE_ADMIN_BILLING_PLAN_EDIT')")
+     *
      * @param Request $request
      * @param BillingPlan $billingPlan
      *
@@ -182,8 +172,6 @@ class BillingPlanController extends BaseAdminController
     /**
      * Process a request to update a BillingPlan entity.
      *
-     * @Route("/admin/billing-plan/{id}/update", requirements={"id": "\d+"}, name="admin_billing_plan_update")
-     * @Method("PUT")
      * @Security("is_granted('ROLE_ADMIN_BILLING_PLAN_EDIT')")
      *
      * @param Request $request
@@ -233,8 +221,6 @@ class BillingPlanController extends BaseAdminController
     /**
      * Display a form to create a new BillingPlan entity.
      *
-     * @Route("/admin/billing-plan/new/{id}", name="admin_billing_plan_new")
-     * @Method("GET")
      * @Security("is_granted('ROLE_ADMIN_BILLING_PLAN_EDIT')")
      *
      * @param Request $request
@@ -281,8 +267,6 @@ class BillingPlanController extends BaseAdminController
     /**
      * Process a request to create a new BillingPlan entity.
      *
-     * @Route("/admin/billing-plan/create/{id}", name="admin_billing_plan_create")
-     * @Method("POST")
      * @Security("is_granted('ROLE_ADMIN_BILLING_PLAN_EDIT')")
      *
      * @param Request $request
@@ -334,8 +318,6 @@ class BillingPlanController extends BaseAdminController
 
 
     /**
-     * @Route("/admin/billing-plan/tab/{id}/delete", name="admin_billing_plan_delete_tab")
-     * @Method("GET")
      * @Security("is_granted('ROLE_ADMIN_BILLING_PLAN_EDIT')")
      *
      * @param BillingPlan $billingPlan
@@ -357,8 +339,6 @@ class BillingPlanController extends BaseAdminController
 
 
     /**
-     * @Route("/admin/billing-plan/{id}/delete", name="admin_billing_plan_delete")
-     * @Method("DELETE")
      * @Security("is_granted('ROLE_ADMIN_BILLING_PLAN_EDIT')")
      *
      * @param Request $request
@@ -389,7 +369,7 @@ class BillingPlanController extends BaseAdminController
                 );
             }
         }
-
+//todo: variable $product
         return new JsonResponse(
             [
                 "message" => "BillingPlan successfully deleted.",

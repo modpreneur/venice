@@ -14,15 +14,11 @@ use FOS\RestBundle\Controller\Annotations\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 /**
- * @Route("front/group")
- *
  * Class GroupController
  */
 class GroupController extends Controller
 {
     /**
-     * @Route("/{id}", name="front_group_show")
-     *
      * @param GroupContent $group
      *
      * @return \Symfony\Component\HttpFoundation\Response

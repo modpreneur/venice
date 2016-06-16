@@ -21,9 +21,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 class ProductController extends Controller
 {
     /**
-     * @Route("", name="front_product_index")
-     * @Route("/")
-     *
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function indexAction()
@@ -41,8 +38,6 @@ class ProductController extends Controller
     }
 
     /**
-     * @Route("/show/{id}", name="front_product_show")
-     *
      * @param Product $product
      * @return \Symfony\Component\HttpFoundation\Response
      */
@@ -52,8 +47,6 @@ class ProductController extends Controller
     }
 
     /**
-     * @Route("/demo/{id}", name="front_product_demo")
-     *
      * @param Product $product
      *
      * @return \Symfony\Component\HttpFoundation\Response
@@ -65,8 +58,6 @@ class ProductController extends Controller
 
 
     /**
-     * @Route("/immersionIndex", name="front_product_immersion_index")
-     *
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function immersionIndexAction()
@@ -76,8 +67,6 @@ class ProductController extends Controller
 
 
     /**
-     * @Route("/immersion/{id}", name="front_product_immersion")
-     *
      * @param Product $product
      *
      * @return \Symfony\Component\HttpFoundation\Response
@@ -91,8 +80,6 @@ class ProductController extends Controller
 
 
     /**
-     * @Route("/immersion2/{id}", name="front_product_immersion2")
-     *
      * @param Product $product
      *
      * @return \Symfony\Component\HttpFoundation\Response

@@ -21,8 +21,6 @@ use Symfony\Component\HttpFoundation\Request;
 class SlugifyController extends Controller
 {
     /**
-     * @Route("/api/slugify", name="api_slugify")
-     *
      * @param Request $request
      *
      * @return JsonResponse

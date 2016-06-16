@@ -16,8 +16,6 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 class ProductController extends Controller
 {
     /**
-     * @Route("/api/product/{id}/necktie-exists", name="api_product_necktie_exists")
-     *
      * @param $id
      *
      * @return JsonResponse

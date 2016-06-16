@@ -1,0 +1,128 @@
+admin_product_index:
+    path: /admin/product
+    defaults: { _controller: 'AdminBundle:Product:index' }
+    options: { compiler_class: Symfony\Component\Routing\RouteCompiler }
+    methods: [GET]
+
+admin_product_index_1:
+    path: /admin/product/
+    defaults: { _controller: 'AdminBundle:Product:index' }
+    options: { compiler_class: Symfony\Component\Routing\RouteCompiler }
+    methods: [GET]
+
+admin_product_articles_index:
+    path: '/admin/product/{id}/articles'
+    defaults: { _controller: 'AdminBundle:Product:blogArticleIndex' }
+    options: { compiler_class: Symfony\Component\Routing\RouteCompiler }
+
+admin_product_show:
+    path: '/admin/product/show/{id}'
+    defaults: { _controller: 'AdminBundle:Product:show' }
+    options: { compiler_class: Symfony\Component\Routing\RouteCompiler }
+    methods: [GET]
+
+admin_product_tabs:
+    path: '/admin/product/tabs/{id}'
+    defaults: { _controller: 'AdminBundle:Product:tabs' }
+    options: { compiler_class: Symfony\Component\Routing\RouteCompiler }
+
+admin_product_new:
+    path: /admin/product/new
+    defaults: { _controller: 'AdminBundle:Product:new' }
+    options: { compiler_class: Symfony\Component\Routing\RouteCompiler }
+    methods: [GET]
+
+admin_product_new_form:
+    path: '/admin/product/new/{productType}'
+    defaults: { _controller: 'AdminBundle:Product:newForm' }
+    requirements: { productType: \w+ }
+    options: { compiler_class: Symfony\Component\Routing\RouteCompiler }
+    methods: [GET]
+
+admin_product_create:
+    path: '/admin/product/create/{productType}'
+    defaults: { _controller: 'AdminBundle:Product:create' }
+    requirements: { productType: \w+ }
+    options: { compiler_class: Symfony\Component\Routing\RouteCompiler }
+    methods: [POST]
+
+admin_product_edit:
+    path: '/admin/product/edit/{id}'
+    defaults: { _controller: 'AdminBundle:Product:edit' }
+    requirements: { id: \d+ }
+    options: { compiler_class: Symfony\Component\Routing\RouteCompiler }
+    methods: [GET]
+
+admin_product_delete_tab:
+    path: '/admin/product/tab/{id}/delete'
+    defaults: { _controller: 'AdminBundle:Product:deleteTab' }
+    options: { compiler_class: Symfony\Component\Routing\RouteCompiler }
+    methods: [GET]
+
+admin_product_update:
+    path: '/admin/product/{id}/update'
+    defaults: { _controller: 'AdminBundle:Product:update' }
+    requirements: { id: \d+ }
+    options: { compiler_class: Symfony\Component\Routing\RouteCompiler }
+    methods: [PUT]
+
+admin_product_delete:
+    path: '/admin/product/{id}/delete'
+    defaults: { _controller: 'AdminBundle:Product:delete' }
+    options: { compiler_class: Symfony\Component\Routing\RouteCompiler }
+    methods: [DELETE]
+
+admin_product_content_product_index:
+    path: '/admin/product/{id}/content-product'
+    defaults: { _controller: 'AdminBundle:Product:contentProductIndex' }
+    options: { compiler_class: Symfony\Component\Routing\RouteCompiler }
+
+admin_product_content_product_show:
+    path: '/admin/product/content-product/show/{id}'
+    defaults: { _controller: 'AdminBundle:Product:contentProductShow' }
+    options: { compiler_class: Symfony\Component\Routing\RouteCompiler }
+    methods: [GET]
+
+admin_product_content_product_new:
+    path: '/admin/product/{id}/content-product/new'
+    defaults: { _controller: 'AdminBundle:Product:contentProductNew' }
+    options: { compiler_class: Symfony\Component\Routing\RouteCompiler }
+    methods: [GET]
+
+admin_product_content_product_edit:
+    path: '/admin/product/content-product/edit/{id}'
+    defaults: { _controller: 'AdminBundle:Product:contentProductEdit' }
+    requirements: { id: \d+ }
+    options: { compiler_class: Symfony\Component\Routing\RouteCompiler }
+    methods: [GET]
+
+admin_product_content_product_update:
+    path: '/admin/product/content-product/{id}/update'
+    defaults: { _controller: 'AdminBundle:Product:contentProductUpdate' }
+    requirements: { id: \d+ }
+    options: { compiler_class: Symfony\Component\Routing\RouteCompiler }
+    methods: [PUT]
+
+admin_product_content_product_tabs:
+    path: '/admin/product/content-product/tabs/{id}'
+    defaults: { _controller: 'AdminBundle:Product:contentProductTabs' }
+    options: { compiler_class: Symfony\Component\Routing\RouteCompiler }
+    methods: [GET]
+
+admin_product_content_product_create:
+    path: /admin/product/content-product/create
+    defaults: { _controller: 'AdminBundle:Product:contentProductCreate' }
+    options: { compiler_class: Symfony\Component\Routing\RouteCompiler }
+    methods: [POST]
+
+admin_product_content_product_delete_tab:
+    path: '/admin/product/content-product/tab/{id}/delete'
+    defaults: { _controller: 'AdminBundle:Product:contentProductDeleteTab' }
+    options: { compiler_class: Symfony\Component\Routing\RouteCompiler }
+    methods: [GET]
+
+admin_product_content_product_delete:
+    path: '/admin/product/content-product/{id}/delete'
+    defaults: { _controller: 'AdminBundle:Product:contentProductDelete' }
+    options: { compiler_class: Symfony\Component\Routing\RouteCompiler }
+    methods: [DELETE]

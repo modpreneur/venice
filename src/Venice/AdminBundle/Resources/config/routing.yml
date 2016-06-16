@@ -1,7 +1,27 @@
-admin:
-    resource: "@VeniceAdminBundle/Controller"
-    type:     annotation
+admin_billing-plan:
+    resource: "routing/billing-plan.yml"
+    type:     yml
 
-trinity_grid:
-    resource: "@GridBundle/Resources/config/routing.yml"
-    prefix:   "/admin"
+admin_blog-artilce:
+    resource: "routing/blog-article.yml.yml"
+    type:     yml
+
+admin_content:
+    resource: "routing/content.yml"
+    type:     yml
+
+admin_dashboard:
+    resource: "routing/dashboard.yml"
+    type:     yml
+
+admin_product:
+    resource: "routing/product.yml"
+    type:     yml
+
+admin_product-access:
+    resource: "routing/product-access.yml"
+    type:     yml
+
+admin_user:
+    resource: "routing/user.yml"
+    type:     yml

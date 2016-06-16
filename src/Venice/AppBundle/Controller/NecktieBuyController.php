@@ -22,15 +22,10 @@ use Symfony\Component\HttpFoundation\Request;
 class NecktieBuyController extends Controller
 {
     /**
-     * @Route("/buy/product/{id}", name="necktie_buy_product")
-     *
      * @param Request $request
      * @param StandardProduct $product
      *
      * @return RedirectResponse
-     *
-     * @internal param bool $useStoredCC Use stored credit card
-     *
      */
     public function redirectToNecktieBuy(Request $request, StandardProduct $product)
     {

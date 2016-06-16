@@ -1,0 +1,54 @@
+admin_blog_article_index:
+    path: /admin/blogArticle
+    defaults: { _controller: 'AdminBundle:BlogArticle:index' }
+    options: { compiler_class: Symfony\Component\Routing\RouteCompiler }
+
+admin_blog_article_tabs:
+    path: '/admin/blogArticle/tabs/{id}'
+    defaults: { _controller: 'AdminBundle:BlogArticle:tabs' }
+    options: { compiler_class: Symfony\Component\Routing\RouteCompiler }
+    methods: [GET]
+
+admin_blog_article_show:
+    path: '/admin/blogArticle/show/{id}'
+    defaults: { _controller: 'AdminBundle:BlogArticle:show' }
+    options: { compiler_class: Symfony\Component\Routing\RouteCompiler }
+    methods: [GET]
+
+admin_blog_article_new:
+    path: /admin/blogArticle/new
+    defaults: { _controller: 'AdminBundle:BlogArticle:new' }
+    options: { compiler_class: Symfony\Component\Routing\RouteCompiler }
+    methods: [GET]
+
+admin_blog_article_create:
+    path: /admin/blogArticle/create
+    defaults: { _controller: 'AdminBundle:BlogArticle:create' }
+    options: { compiler_class: Symfony\Component\Routing\RouteCompiler }
+    methods: [POST]
+
+admin_blog_article_edit:
+    path: '/admin/blogArticle/edit/{id}'
+    defaults: { _controller: 'AdminBundle:BlogArticle:edit' }
+    requirements: { id: \d+ }
+    options: { compiler_class: Symfony\Component\Routing\RouteCompiler }
+    methods: [GET]
+
+admin_blog_article_update:
+    path: '/admin/blogArticle/{id}/update'
+    defaults: { _controller: 'AdminBundle:BlogArticle:update' }
+    requirements: { id: \d+ }
+    options: { compiler_class: Symfony\Component\Routing\RouteCompiler }
+    methods: [PUT]
+
+admin_blog_article_delete_tab:
+    path: '/admin/blogArticle/tab/{id}/delete'
+    defaults: { _controller: 'AdminBundle:BlogArticle:deleteTab' }
+    options: { compiler_class: Symfony\Component\Routing\RouteCompiler }
+    methods: [GET]
+
+admin_blog_article_delete:
+    path: '/admin/blogArticle/{id}/delete'
+    defaults: { _controller: 'AdminBundle:BlogArticle:delete' }
+    options: { compiler_class: Symfony\Component\Routing\RouteCompiler }
+    methods: [DELETE]
