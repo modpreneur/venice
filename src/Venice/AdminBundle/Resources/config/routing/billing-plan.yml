@@ -1,59 +1,59 @@
 admin_billing_plan_product_index:
     path: '/admin/billing-plan/product/{id}'
-    defaults: { _controller: 'AdminBundle:BillingPlan:index' }
+    defaults: { _controller: 'VeniceAdminBundle:BillingPlan:index' }
     options: { compiler_class: Symfony\Component\Routing\RouteCompiler }
     methods: [GET]
 
 admin_billing_plan_show:
     path: '/admin/billing-plan/show/{id}'
-    defaults: { _controller: 'AdminBundle:BillingPlan:show' }
+    defaults: { _controller: 'VeniceAdminBundle:BillingPlan:show' }
     options: { compiler_class: Symfony\Component\Routing\RouteCompiler }
     methods: [GET]
 
 admin_billing_plan_tabs:
     path: '/admin/billing-plan/tabs/{id}'
-    defaults: { _controller: 'AdminBundle:BillingPlan:tabs' }
+    defaults: { _controller: 'VeniceAdminBundle:BillingPlan:tabs' }
     options: { compiler_class: Symfony\Component\Routing\RouteCompiler }
 
 admin_billing_plan_product_set_default:
     path: '/admin/billing-plan/set-default/{id}'
-    defaults: { _controller: 'AdminBundle:BillingPlan:setDefaultBillingPlan' }
+    defaults: { _controller: 'VeniceAdminBundle:BillingPlan:setDefaultBillingPlan' }
     options: { compiler_class: Symfony\Component\Routing\RouteCompiler }
 
 admin_billing_plan_edit:
     path: '/admin/billing-plan/edit/{id}'
-    defaults: { _controller: 'AdminBundle:BillingPlan:edit' }
+    defaults: { _controller: 'VeniceAdminBundle:BillingPlan:edit' }
     requirements: { id: \d+ }
     options: { compiler_class: Symfony\Component\Routing\RouteCompiler }
     methods: [GET]
 
 admin_billing_plan_update:
     path: '/admin/billing-plan/{id}/update'
-    defaults: { _controller: 'AdminBundle:BillingPlan:update' }
+    defaults: { _controller: 'VeniceAdminBundle:BillingPlan:update' }
     requirements: { id: \d+ }
     options: { compiler_class: Symfony\Component\Routing\RouteCompiler }
     methods: [PUT]
 
 admin_billing_plan_new:
     path: '/admin/billing-plan/new/{id}'
-    defaults: { _controller: 'AdminBundle:BillingPlan:new' }
+    defaults: { _controller: 'VeniceAdminBundle:BillingPlan:new' }
     options: { compiler_class: Symfony\Component\Routing\RouteCompiler }
     methods: [GET]
 
 admin_billing_plan_create:
     path: '/admin/billing-plan/create/{id}'
-    defaults: { _controller: 'AdminBundle:BillingPlan:create' }
+    defaults: { _controller: 'VeniceAdminBundle:BillingPlan:create' }
     options: { compiler_class: Symfony\Component\Routing\RouteCompiler }
     methods: [POST]
 
 admin_billing_plan_delete_tab:
     path: '/admin/billing-plan/tab/{id}/delete'
-    defaults: { _controller: 'AdminBundle:BillingPlan:deleteTab' }
+    defaults: { _controller: 'VeniceAdminBundle:BillingPlan:deleteTab' }
     options: { compiler_class: Symfony\Component\Routing\RouteCompiler }
     methods: [GET]
 
 admin_billing_plan_delete:
     path: '/admin/billing-plan/{id}/delete'
-    defaults: { _controller: 'AdminBundle:BillingPlan:delete' }
+    defaults: { _controller: 'VeniceAdminBundle:BillingPlan:delete' }
     options: { compiler_class: Symfony\Component\Routing\RouteCompiler }
     methods: [DELETE]

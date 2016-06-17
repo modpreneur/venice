@@ -1,53 +1,53 @@
 admin_user_index:
     path: /admin/user/
-    defaults: { _controller: 'AdminBundle:User:index' }
+    defaults: { _controller: 'VeniceAdminBundle:User:index' }
     options: { compiler_class: Symfony\Component\Routing\RouteCompiler }
     methods: [GET]
 
 admin_user_show:
     path: '/admin/user/show/{id}'
-    defaults: { _controller: 'AdminBundle:User:show' }
+    defaults: { _controller: 'VeniceAdminBundle:User:show' }
     options: { compiler_class: Symfony\Component\Routing\RouteCompiler }
     methods: [GET]
 
 admin_user_tabs:
     path: '/admin/user/tabs/{id}'
-    defaults: { _controller: 'AdminBundle:User:tabs' }
+    defaults: { _controller: 'VeniceAdminBundle:User:tabs' }
     options: { compiler_class: Symfony\Component\Routing\RouteCompiler }
     methods: [GET]
 
 admin_user_edit:
     path: '/admin/user/edit/{id}'
-    defaults: { _controller: 'AdminBundle:User:edit' }
+    defaults: { _controller: 'VeniceAdminBundle:User:edit' }
     options: { compiler_class: Symfony\Component\Routing\RouteCompiler }
     methods: [GET]
 
 admin_user_update:
     path: '/admin/user/update/{id}'
-    defaults: { _controller: 'AdminBundle:User:update' }
+    defaults: { _controller: 'VeniceAdminBundle:User:update' }
     options: { compiler_class: Symfony\Component\Routing\RouteCompiler }
     methods: [PUT]
 
 admin_user_delete_tab:
     path: '/admin/user/tab/{id}/delete'
-    defaults: { _controller: 'AdminBundle:User:deleteTab' }
+    defaults: { _controller: 'VeniceAdminBundle:User:deleteTab' }
     options: { compiler_class: Symfony\Component\Routing\RouteCompiler }
     methods: [GET]
 
 admin_user_delete:
     path: '/admin/user/{id}/delete'
-    defaults: { _controller: 'AdminBundle:User:delete' }
+    defaults: { _controller: 'VeniceAdminBundle:User:delete' }
     options: { compiler_class: Symfony\Component\Routing\RouteCompiler }
     methods: [DELETE]
 
 admin_user_roles_edit:
     path: '/admin/user/{id}/roles/edit'
-    defaults: { _controller: 'AdminBundle:User:rolesEdit' }
+    defaults: { _controller: 'VeniceAdminBundle:User:rolesEdit' }
     options: { compiler_class: Symfony\Component\Routing\RouteCompiler }
     methods: [GET]
 
 admin_user_roles_update:
     path: '/admin/user/{id}/roles/edit'
-    defaults: { _controller: 'AdminBundle:User:rolesUpdate' }
+    defaults: { _controller: 'VeniceAdminBundle:User:rolesUpdate' }
     options: { compiler_class: Symfony\Component\Routing\RouteCompiler }
     methods: [PUT]

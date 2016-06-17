@@ -1,17 +1,21 @@
 app_api:
-    resource: "routing/api.yml"
-    type:     yml
+    resource: "@VeniceAppBundle/Resources/config/routing/api.yml"
+    type:     yaml
 
 app_froala_editor:
-    resource: "routing/froala-editor.yml"
-    type:     yml
+    resource: "@VeniceAppBundle/Resources/config/routing/froala-editor.yml"
+    type:     yaml
 
 app_necktie:
-    resource: "routing/necktie.yml"
-    type:     yml
+    resource: "@VeniceAppBundle/Resources/config/routing/necktie.yml"
+    type:     yaml
 
 fos_user:
     resource: "@FOSUserBundle/Resources/config/routing/security.xml"
+
+grid:
+  resource: "@GridBundle/Resources/config/routing.yml"
+  prefix: "/admin"
 
 fos_user_security_login:
     path: /login

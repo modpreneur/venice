@@ -1,112 +1,112 @@
 admin_content_index:
     path: /admin/content/
-    defaults: { _controller: 'AdminBundle:Content:index' }
+    defaults: { _controller: 'VeniceAdminBundle:Content:index' }
     options: { compiler_class: Symfony\Component\Routing\RouteCompiler }
     methods: [GET]
 
 admin_content_show:
     path: '/admin/content/show/{id}'
-    defaults: { _controller: 'AdminBundle:Content:show' }
+    defaults: { _controller: 'VeniceAdminBundle:Content:show' }
     options: { compiler_class: Symfony\Component\Routing\RouteCompiler }
     methods: [GET]
 
 admin_content_tabs:
     path: '/admin/content/tabs/{id}'
-    defaults: { _controller: 'AdminBundle:Content:tabs' }
+    defaults: { _controller: 'VeniceAdminBundle:Content:tabs' }
     options: { compiler_class: Symfony\Component\Routing\RouteCompiler }
     methods: [GET]
 
 admin_content_new:
     path: /admin/content/new
-    defaults: { _controller: 'AdminBundle:Content:new' }
+    defaults: { _controller: 'VeniceAdminBundle:Content:new' }
     options: { compiler_class: Symfony\Component\Routing\RouteCompiler }
     methods: [GET]
 
 admin_content_new_form:
     path: '/admin/content/new/{contentType}'
-    defaults: { _controller: 'AdminBundle:Content:newForm' }
+    defaults: { _controller: 'VeniceAdminBundle:Content:newForm' }
     requirements: { contentType: \w+ }
     options: { compiler_class: Symfony\Component\Routing\RouteCompiler }
     methods: [GET]
 
 admin_content_create:
     path: '/admin/content/create/{contentType}'
-    defaults: { _controller: 'AdminBundle:Content:create' }
+    defaults: { _controller: 'VeniceAdminBundle:Content:create' }
     requirements: { contentType: \w+ }
     options: { compiler_class: Symfony\Component\Routing\RouteCompiler }
     methods: [POST]
 
 admin_content_edit:
     path: '/admin/content/edit/{id}'
-    defaults: { _controller: 'AdminBundle:Content:edit' }
+    defaults: { _controller: 'VeniceAdminBundle:Content:edit' }
     requirements: { id: \d+ }
     options: { compiler_class: Symfony\Component\Routing\RouteCompiler }
     methods: [GET]
 
 admin_content_update:
     path: '/admin/content/{id}/update'
-    defaults: { _controller: 'AdminBundle:Content:update' }
+    defaults: { _controller: 'VeniceAdminBundle:Content:update' }
     requirements: { id: \d+ }
     options: { compiler_class: Symfony\Component\Routing\RouteCompiler }
     methods: [PUT]
 
 admin_content_delete_tab:
     path: '/admin/content/tab/{id}/delete'
-    defaults: { _controller: 'AdminBundle:Content:deleteTab' }
+    defaults: { _controller: 'VeniceAdminBundle:Content:deleteTab' }
     options: { compiler_class: Symfony\Component\Routing\RouteCompiler }
     methods: [GET]
 
 admin_content_delete:
     path: '/admin/content/{id}/delete'
-    defaults: { _controller: 'AdminBundle:Content:delete' }
+    defaults: { _controller: 'VeniceAdminBundle:Content:delete' }
     options: { compiler_class: Symfony\Component\Routing\RouteCompiler }
     methods: [DELETE]
 
 admin_content_content_product_index:
     path: '/admin/content/{id}/content-product'
-    defaults: { _controller: 'AdminBundle:Content:contentProductIndex' }
+    defaults: { _controller: 'VeniceAdminBundle:Content:contentProductIndex' }
     options: { compiler_class: Symfony\Component\Routing\RouteCompiler }
 
 admin_content_content_product_new:
     path: '/admin/content/{id}/content-product/new'
-    defaults: { _controller: 'AdminBundle:Content:contentProductNew' }
+    defaults: { _controller: 'VeniceAdminBundle:Content:contentProductNew' }
     options: { compiler_class: Symfony\Component\Routing\RouteCompiler }
     methods: [GET]
 
 admin_content_content_product_create:
     path: /admin/content/content-product/new
-    defaults: { _controller: 'AdminBundle:Content:contentProductCreate' }
+    defaults: { _controller: 'VeniceAdminBundle:Content:contentProductCreate' }
     options: { compiler_class: Symfony\Component\Routing\RouteCompiler }
     methods: [POST]
 
 admin_content_content_product_edit:
     path: '/admin/content/content-product/edit/{id}'
-    defaults: { _controller: 'AdminBundle:Content:contentProductEdit' }
+    defaults: { _controller: 'VeniceAdminBundle:Content:contentProductEdit' }
     requirements: { id: \d+ }
     options: { compiler_class: Symfony\Component\Routing\RouteCompiler }
     methods: [GET]
 
 admin_content_content_product_update:
     path: '/admin/content/content-product/{id}/update'
-    defaults: { _controller: 'AdminBundle:Content:contentProductUpdate' }
+    defaults: { _controller: 'VeniceAdminBundle:Content:contentProductUpdate' }
     requirements: { id: \d+ }
     options: { compiler_class: Symfony\Component\Routing\RouteCompiler }
     methods: [PUT]
 
 admin_content_content_product_tabs:
     path: '/admin/content/content-product/tabs/{id}'
-    defaults: { _controller: 'AdminBundle:Content:contentProductTabs' }
+    defaults: { _controller: 'VeniceAdminBundle:Content:contentProductTabs' }
     options: { compiler_class: Symfony\Component\Routing\RouteCompiler }
     methods: [GET]
 
 admin_content_content_product_delete_tab:
     path: '/admin/content/content-product/tab/{id}/delete'
-    defaults: { _controller: 'AdminBundle:Content:contentProductDeleteTab' }
+    defaults: { _controller: 'VeniceAdminBundle:Content:contentProductDeleteTab' }
     options: { compiler_class: Symfony\Component\Routing\RouteCompiler }
     methods: [GET]
 
 admin_content_content_product_delete:
     path: '/admin/content/content-product/{id}/delete'
-    defaults: { _controller: 'AdminBundle:Content:contentProductDelete' }
+    defaults: { _controller: 'VeniceAdminBundle:Content:contentProductDelete' }
     options: { compiler_class: Symfony\Component\Routing\RouteCompiler }
     methods: [DELETE]

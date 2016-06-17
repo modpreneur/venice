@@ -1,16 +1,16 @@
 admin_product_access_user_index:
     path: '/admin/product-access/user/{id}'
-    defaults: { _controller: 'AdminBundle:ProductAccess:index' }
+    defaults: { _controller: 'VeniceAdminBundle:ProductAccess:index' }
     options: { compiler_class: Symfony\Component\Routing\RouteCompiler }
     methods: [GET]
 
 admin_product_access_show:
     path: '/admin/product-access/show/{id}'
-    defaults: { _controller: 'AdminBundle:ProductAccess:show' }
+    defaults: { _controller: 'VeniceAdminBundle:ProductAccess:show' }
     options: { compiler_class: Symfony\Component\Routing\RouteCompiler }
     methods: [GET]
 
 admin_product_access_tabs:
     path: '/admin/product-access/tabs/{id}'
-    defaults: { _controller: 'AdminBundle:ProductAccess:tabs' }
+    defaults: { _controller: 'VeniceAdminBundle:ProductAccess:tabs' }
     options: { compiler_class: Symfony\Component\Routing\RouteCompiler }

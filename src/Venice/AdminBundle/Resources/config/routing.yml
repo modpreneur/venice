@@ -1,27 +1,27 @@
 admin_billing-plan:
-    resource: "routing/billing-plan.yml"
-    type:     yml
+    resource: "@VeniceAdminBundle/Resources/config/routing/billing-plan.yml"
+    type:     yaml
 
-admin_blog-artilce:
-    resource: "routing/blog-article.yml.yml"
-    type:     yml
+admin_blog-article:
+    resource: "@VeniceAdminBundle/Resources/config/routing/blog-article.yml"
+    type:     yaml
 
 admin_content:
-    resource: "routing/content.yml"
-    type:     yml
+    resource: "@VeniceAdminBundle/Resources/config/routing/content.yml"
+    type:     yaml
 
 admin_dashboard:
-    resource: "routing/dashboard.yml"
-    type:     yml
+    resource: "@VeniceAdminBundle/Resources/config/routing/dashboard.yml"
+    type:     yaml
 
 admin_product:
-    resource: "routing/product.yml"
-    type:     yml
+    resource: "@VeniceAdminBundle/Resources/config/routing/product.yml"
+    type:     yaml
 
 admin_product-access:
-    resource: "routing/product-access.yml"
-    type:     yml
+    resource: "@VeniceAdminBundle/Resources/config/routing/product-access.yml"
+    type:     yaml
 
 admin_user:
-    resource: "routing/user.yml"
-    type:     yml
+    resource: "@VeniceAdminBundle/Resources/config/routing/user.yml"
+    type:     yaml
