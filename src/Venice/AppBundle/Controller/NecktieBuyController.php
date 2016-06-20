@@ -48,7 +48,7 @@ class NecktieBuyController extends Controller
         $billingPlanIdString = null;
 
         if($billingPlanId) {
-            foreach ($product->getBillingPlans() as $billingPlan) {
+            foreach ($em->getRepository("VeniceAppBundle:BillingPlan")->findByProductId($product->getId()) as $billingPlan) {
                 if ($billingPlanId == $billingPlan->getNecktieId()) {
                     $billingPlanIdString = "billingPlanId=$billingPlanId";
                     break;

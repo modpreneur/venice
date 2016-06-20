@@ -11,6 +11,7 @@ namespace Venice\AppBundle\EventListener;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Trinity\FrameworkBundle\Services\PriceStringGenerator;
+use Trinity\NotificationBundle\Event\BeforeDeleteEntityEvent;
 use Trinity\NotificationBundle\Event\ChangesDoneEvent;
 use Venice\AppBundle\Entity\BillingPlan;
 
@@ -19,14 +20,13 @@ class NotificationListener
     /** @var  PriceStringGenerator */
     protected $priceStringGenerator;
 
-
     /** @var  EntityManagerInterface */
     protected $entityManager;
 
-
     /**
      * NotificationListener constructor.
-     * @param PriceStringGenerator $priceStringGenerator
+     *
+     * @param PriceStringGenerator   $priceStringGenerator
      * @param EntityManagerInterface $entityManager
      */
     public function __construct(PriceStringGenerator $priceStringGenerator, EntityManagerInterface $entityManager)
@@ -34,7 +34,6 @@ class NotificationListener
         $this->priceStringGenerator = $priceStringGenerator;
         $this->entityManager = $entityManager;
     }
-
 
     /**
      * @param ChangesDoneEvent $event
@@ -50,5 +49,18 @@ class NotificationListener
         }
 
         $this->entityManager->flush();
+    }
+
+    /**
+     * @param BeforeDeleteEntityEvent $event
+     */
+    public function onBeforeDeleteEntity(BeforeDeleteEntityEvent $event)
+    {
+        $entity = $event->getEntity();
+
+        if ($entity instanceof BillingPlan) {
+            /** @var $entity BillingPlan */
+            $entity->setProduct(null);
+        }
     }
 }

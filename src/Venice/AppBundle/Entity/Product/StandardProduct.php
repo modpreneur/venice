@@ -54,17 +54,10 @@ class StandardProduct extends Product implements NotificationEntityInterface
 
 
     /**
-     * @var ArrayCollection<BillingPlan>
-     *
-     * @ORM\OneToMany(targetEntity="Venice\AppBundle\Entity\BillingPlan", mappedBy="product", cascade={"persist", "remove"})
-     */
-    protected $billingPlans;
-
-
-    /**
      * @var BillingPlan Billing plan of the product
      *
      * @ORM\OneToOne(targetEntity="Venice\AppBundle\Entity\BillingPlan", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(referencedColumnName="id", onDelete="SET NULL")
      */
     protected $defaultBillingPlan;
 
@@ -133,41 +126,4 @@ class StandardProduct extends Product implements NotificationEntityInterface
     {
         return [];
     }
-    
-    /**
-     * @return ArrayCollection<BillingPlan>
-     */
-    public function getBillingPlans()
-    {
-        return $this->billingPlans;
-    }
-    
-    
-    /**
-     * @param BillingPlan $billingPlan
-     * @return $this
-     */
-    public function addBillingPlan(BillingPlan $billingPlan)
-    {
-        if(!$this->billingPlans->contains($billingPlan))
-        {
-            $this->billingPlans->add($billingPlan);
-        }
-        
-        return $this;
-    }
-    
-    
-    /**
-     * @param BillingPlan $billingPlan
-     * @return $this
-     */
-    public function removeBillingPlan(BillingPlan $billingPlan)
-    {
-        $this->billingPlans->remove($billingPlan);
-        
-        return $this;
-    }
-       
-
 }

@@ -45,7 +45,7 @@ class BillingPlan extends BaseBillingPlan implements NotificationEntityInterface
     /**
      * @var StandardProduct
      *
-     * @ORM\ManyToOne(targetEntity="Venice\AppBundle\Entity\Product\StandardProduct", inversedBy="billingPlans", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="Venice\AppBundle\Entity\Product\StandardProduct", cascade={"persist"})
      * @ORM\JoinColumn(referencedColumnName="id", onDelete="CASCADE")
      *
      * @Assert\NotBlank()

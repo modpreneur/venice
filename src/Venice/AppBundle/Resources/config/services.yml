@@ -130,6 +130,7 @@ services:
             - "@doctrine.orm.entity_manager"
         tags:
             - {name: "kernel.event_listener", event: "trinity.notifications.changesDone", method: "onChangesDone"}
+            - {name: "kernel.event_listener", event: "trinity.notifications.beforeDeleteEntity", method: "onBeforeDeleteEntity"}
 
     # TWIG EXTENSIONS #
 

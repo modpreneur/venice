@@ -35,4 +35,25 @@ class BillingPlanRepository extends EntityRepository implements NotificationEnti
 
         return $query->getOneOrNullResult();
     }
+
+    /**
+     * Find by product id.
+     *
+     *
+     * @param $id
+     *
+     * @return BillingPlan[]
+     */
+    public function findByProductId($id)
+    {
+        $query = $this->getEntityManager()->createQuery('
+              SELECT bp
+              FROM VeniceAppBundle:BillingPlan AS bp
+              JOIN bp.product product
+              WHERE product.id = :id
+            ')
+            ->setParameter('id', $id);
+
+        return $query->getResult();
+    }
 }
