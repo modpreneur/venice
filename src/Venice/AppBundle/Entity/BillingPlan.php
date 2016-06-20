@@ -21,7 +21,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 
 /**
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="BillingPlanRepository")
  * @HasLifecycleCallbacks
  * @ORM\Table(name="billing_plan")
  *
@@ -111,7 +111,7 @@ class BillingPlan extends BaseBillingPlan implements NotificationEntityInterface
     /**
      * @N\AssociationSetter(targetEntity="Venice\AppBundle\Entity\Product\StandardProduct")
      *
-     * @param StandardProduct $product Specifying the parameter type is essential for trinity/notifications!
+     * @param StandardProduct $product
      *
      * @return BillingPlan
      */

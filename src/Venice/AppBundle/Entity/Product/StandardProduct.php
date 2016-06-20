@@ -22,7 +22,7 @@ use Trinity\NotificationBundle\Entity\NotificationEntityInterface;
 
 
 /**
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="StandardProductRepository")
  * @ORM\Table(name="product_standard")
  *
  * @ORM\HasLifecycleCallbacks
