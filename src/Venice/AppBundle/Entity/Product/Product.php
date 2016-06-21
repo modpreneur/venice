@@ -41,8 +41,6 @@ use Trinity\FrameworkBundle\Entity\BaseProduct as TrinityProduct;
  */
 abstract class Product extends TrinityProduct
 {
-    use Timestampable;
-
     /**
      * @var string
      *
