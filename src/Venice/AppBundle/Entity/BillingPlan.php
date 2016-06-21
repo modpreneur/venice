@@ -31,9 +31,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class BillingPlan extends BaseBillingPlan implements NotificationEntityInterface
 {
-    use Timestampable;
-
-
     /**
      * @var int
      *
