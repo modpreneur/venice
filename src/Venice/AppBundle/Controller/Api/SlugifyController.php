@@ -30,6 +30,6 @@ class SlugifyController extends Controller
         $string = $request->request->get("string");
         $slugify = new Slugify();
 
-        return new JsonResponse($slugify->slugify($string));
+        return new JsonResponse(['handle'=>$slugify->slugify($string)],200);
     }
 }

@@ -21,7 +21,7 @@
 {% endblock %}
 
 {% block pageBody %}
-    <div class="box box-new-form">
+    <div class="box box-new-form" id="blog-article-form" data-slugify="{{ path('api_slugify')}}">
 
         <h2 class="header-h2 form-title">
             {%  block formTitle %}

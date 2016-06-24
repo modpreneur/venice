@@ -22,7 +22,7 @@
 
 {% block pageBody %}
 
-    <div class="select-style form-control choice edit-form">
+    <div class="select-style form-control choice edit-form" >
         <select name="entity_type_select" id="entity_type_select">
             <option value="group">Group</option>
             <option value="html">Html</option>
@@ -33,7 +33,7 @@
         </select>
     </div>
 
-    <div id="javascript-inserted-form">
+    <div id="javascript-inserted-form" data-slugify="{{ path('api_slugify')}}" data-changer = {{ path('admin_content_new_form',{'contentType':'contentType'}) }}>
         {#Javascipt inserts form here#}
     </div>
 

@@ -15,6 +15,7 @@ use Venice\AppBundle\Entity\Product\StandardProduct;
 use Venice\AppBundle\Event\AppEvents;
 use Venice\AppBundle\Event\FreeProductCreatedEvent;
 use Venice\AppBundle\Form\ContentProduct\ContentProductTypeWithHiddenProduct;
+use Venice\AppBundle\Form\Product\FreeProductType;
 use Venice\AppBundle\Form\Product\StandardProductType;
 use Venice\AppBundle\Services\GridConfigurationBuilder;
 use Doctrine\DBAL\DBALException;
@@ -135,13 +136,12 @@ class ProductController extends BaseAdminController
             ->addRouteItem("Products", "admin_product_index")
             ->addRouteItem("New product", "admin_product_new");
 
-        //Standard is defined in template, too
-        $product = new StandardProduct();
+        $product = new FreeProduct();
 
         $form = $this->getFormCreator()
             ->createCreateForm(
                 $product,
-                StandardProductType::class,
+                FreeProductType::class,
                 "admin_product",
                 ["productType" => $product->getType(),]
             );
@@ -154,42 +154,6 @@ class ProductController extends BaseAdminController
             ]
         );
     }
-
-
-    /**
-     * @Security("is_granted('ROLE_ADMIN_PRODUCT_EDIT')")
-     *
-     * @param Request $request
-     * @param         $productType
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
-     *
-     */
-    public function newFormAction(Request $request, $productType)
-    {
-        try {
-            $product = Product::createProductByType($productType);
-        } catch (ReflectionException $e) {
-            throw new NotFoundHttpException("Product type: ".$productType." not found.");
-        }
-        $form = $this->getFormCreator()
-            ->createCreateForm(
-                $product,
-                $product->getFormTypeClass(),
-                "admin_product",
-                ["productType" => $productType,]
-            );
-
-        return $this->render(
-            'VeniceAdminBundle:Product:newForm.html.twig',
-            [
-                'product' => $product,
-                'form' => $form->createView(),
-                'productType' => $productType,
-            ]
-        );
-    }
-
 
     /**
      * @Security("is_granted('ROLE_ADMIN_PRODUCT_EDIT')")
@@ -239,8 +203,8 @@ class ProductController extends BaseAdminController
 
             return new JsonResponse(
                 [
-                    "message" => "Product successfully created",
-                    "location" => $this->generateUrl("admin_product_tabs", ["id" => $product->getId()]),
+                    'location' => $this->generateUrl('admin_product_tabs', ['id' => $product->getId()]),
+                    'message' => $this->getParameter('flash_msg')['success_create']
                 ],
                 302
             );

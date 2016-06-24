@@ -17,31 +17,21 @@
     {% block necktieJavascript %}
         <script type="text/javascript" src="https://www.google.com/jsapi"></script>
         {#Necktie JS#}
-        {% if app.environment is same as('dev') %}
+        {% if app.environment is same as('dev') or app.environment is same as('test') %}
             {#Uncompiled#}
-            <script src="{{ asset('js/jspm_packages/system.js') }}"></script>
-            <script type="application/javascript">
-                // Source config
-                System.config({"baseURL": "{{ asset('js') }}"});
-            </script>
-            <script src="{{ asset('js/config.js') }}"></script>
-            <script src="{{ asset('js/bundles/babel.bundle.min.js') }}"></script>
-            <script src="{{ asset('js/bundles/vendor.bundle.min.js') }}"></script>
-            <script src="{{ asset('js/bundles/trinity.bundle.js') }}"></script>
-            <script type="application/javascript">
-                //Start load app
-                System.import("{{ asset('js/app/mainDev.js') }}").catch(function(e){
-                    // If something gets wrong - change loader color to red
-                    console.error(e);
-                    var bar = q('.header-loader .bar');
-                    if(bar){
-                        bar.style.backgroundColor = "#f00";
-                    }
-                });
-            </script>
+            <script src="{{ asset('js/node_modules/lodash/lodash.js') }}"></script>
+            <script src="{{ asset('js/node_modules/jquery/dist/jquery.js') }}"></script>
+            <script src="{{ asset('js/node_modules/react/dist/react.js') }}"></script>
+            <script src="{{ asset('js/node_modules/react-dom/dist/react-dom.js') }}"></script>
+            <script src="{{ asset('js/node_modules/flux/dist/Flux.js') }}"></script>
+            {#<script src="{{ asset('js/node_modules/dragula/dist/dragula.js') }}"></script>#}
+            <script src="{{ asset('js/node_modules/history/umd/History.js') }}"></script>
+            <script src="{{ asset('js/node_modules/moment/moment.js') }}"></script>
+            <script src="{{ asset('js/dist/venice.bundle.js') }}"></script>
         {% else %}
             {#Compiled#}
-            <script src="{{ asset('js/venice.bundle.min.js') }}"></script>
+            <script src="{{ asset('js/dist/venice.bundle.min.js') }}"></script>
+            {#<script src="{{ asset('js/dist/necktie.styles.min.css') }}"></script>#}
         {% endif %}
 
         {#@todo Fisa delete#}
@@ -50,11 +40,11 @@
         {#<script src="{{ asset('js/lib/Sortable.min.js') }}"></script>#}
 
         {# WEBSHIMS - Needed for HTML5 form features in older browsers#}
-        <script src="//cdn.jsdelivr.net/webshim/1.14.5/polyfiller.js"></script>
-        <script>
-            webshims.setOptions('forms-ext', {types: 'date'});
-            webshims.polyfill('forms forms-ext');
-        </script>
+        {#<script src="//cdn.jsdelivr.net/webshim/1.14.5/polyfiller.js"></script>#}
+        {#<script>#}
+        {#//  webshims.setOptions('forms-ext', {types: 'date'});#}
+        {#// webshims.polyfill('forms forms-ext');#}
+        {#</script>#}
     {% endblock %}
 
     {{ parent() }}

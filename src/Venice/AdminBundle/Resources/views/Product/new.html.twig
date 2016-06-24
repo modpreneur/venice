@@ -12,12 +12,6 @@
 
 {% block pageBody %}
     <div class="box box-new-form">
-        <div class="select-style form-control choice edit-form hidden">
-            <select name="entity_type_select" id="entity_type_select">
-                <option value="free" selected>Free</option>
-            </select>
-        </div>
-
         <div class="row">
             <div class="span-none-padding-medium-24">
                 {% if error is defined %}
@@ -26,8 +20,18 @@
             </div>
         </div>
 
-        <div id="product_form" class="row">
-            {#JS inserts form here#}
+        <div id="product_form" class="row"  data-slugify="{{ path('api_slugify') }}">
+            {{ form_start(form, {'attr': {'class': 'new-form'}} ) }}
+            {{ form_errors(form) }}
+
+            {# Render all form rows except the submit input #}
+            {% for key, item in form.children if key != "submit"%}
+                {{ form_row(form[key]) }}
+            {% endfor %}
+
+            {{ form_row(form.submit, {'attr': {'class': 'button create'}} ) }}
+
+            {{ form_end(form) }}
         </div>
     </div>
 
