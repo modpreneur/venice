@@ -4,6 +4,7 @@ namespace Venice\AppBundle\Entity;
 
 use Trinity\FrameworkBundle\Entity\ClientInterface;
 use Trinity\NotificationBundle\Entity\NotificationEntityInterface;
+use Trinity\NotificationBundle\Entity\NotificationStatusTrait;
 use Venice\AppBundle\Entity\Product\Product;
 use Venice\AppBundle\Traits\Timestampable;
 use Doctrine\ORM\Mapping as ORM;
@@ -23,6 +24,7 @@ use Trinity\NotificationBundle\Annotations as N;
 class ProductAccess implements NotificationEntityInterface
 {
     use Timestampable;
+    use NotificationStatusTrait;
 
     /**
      * @var integer
@@ -246,13 +248,5 @@ class ProductAccess implements NotificationEntityInterface
         return [];
     }
 
-    /**
-     * @param ClientInterface $client
-     * @param string $status
-     * @return void
-     */
-    public function setNotificationStatus(ClientInterface $client, $status)
-    {
-    }
 }
 

@@ -12,13 +12,12 @@ use Trinity\FrameworkBundle\Entity\BaseBillingPlan;
 use Trinity\FrameworkBundle\Entity\ClientInterface;
 use Trinity\NotificationBundle\Entity\NotificationEntityInterface;
 use Venice\AppBundle\Entity\Product\StandardProduct;
-use Venice\AppBundle\Traits\Timestampable;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Trinity\NotificationBundle\Annotations as N;
 use Symfony\Component\Validator\Constraints as Assert;
-
+use Trinity\NotificationBundle\Entity\NotificationStatusTrait;
 
 /**
  * @ORM\Entity(repositoryClass="BillingPlanRepository")
@@ -31,6 +30,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class BillingPlan extends BaseBillingPlan implements NotificationEntityInterface
 {
+    use NotificationStatusTrait;
+    
     /**
      * @var int
      *
@@ -146,15 +147,5 @@ class BillingPlan extends BaseBillingPlan implements NotificationEntityInterface
     public function getClients()
     {
        return [];
-    }
-
-
-    /**
-     * @param ClientInterface $client
-     * @param string $status
-     * @return void
-     */
-    public function setNotificationStatus(ClientInterface $client, $status)
-    {
     }
 }

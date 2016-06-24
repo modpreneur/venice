@@ -8,9 +8,6 @@
 
 namespace Venice\AdminBundle\Controller;
 
-
-//3-358
-
 use Venice\AppBundle\Entity\ContentProduct;
 use Venice\AppBundle\Entity\Product\FreeProduct;
 use Venice\AppBundle\Entity\Product\Product;

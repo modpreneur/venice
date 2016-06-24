@@ -9,7 +9,6 @@
 namespace Venice\AppBundle\Entity;
 
 use Venice\AppBundle\Entity\Product\Product;
-use Venice\AppBundle\Traits\HasNotificationStatusTrait;
 use Venice\AppBundle\Traits\Timestampable;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -21,6 +20,7 @@ use Trinity\FrameworkBundle\Entity\BaseUser as TrinityUser;
 use Trinity\FrameworkBundle\Entity\ClientInterface;
 use Trinity\NotificationBundle\Annotations as N;
 use Trinity\NotificationBundle\Entity\NotificationEntityInterface;
+use Trinity\NotificationBundle\Entity\NotificationStatusTrait;
 
 
 /**
@@ -39,7 +39,7 @@ use Trinity\NotificationBundle\Entity\NotificationEntityInterface;
  */
 class User extends TrinityUser implements NotificationEntityInterface
 {
-    use HasNotificationStatusTrait;
+    use NotificationStatusTrait;
     use Timestampable;
 
     const PREFERRED_UNITS_IMPERIAL = "imperial";
