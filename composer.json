@@ -40,6 +40,7 @@
         "trinity/utils": "dev-master@dev",
         "trinity/bunny-bundle": "dev-master@dev",
         "trinity/core-entities": "dev-master",
+        "trinity/core-interfaces": "dev-master",
         "modpreneur/bowtie": "dev-master@dev",
         "guzzlehttp/guzzle": "~6",
         "predis/predis": "~1.0",

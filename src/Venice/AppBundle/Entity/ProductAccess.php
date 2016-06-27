@@ -2,7 +2,7 @@
 
 namespace Venice\AppBundle\Entity;
 
-use Trinity\FrameworkBundle\Entity\ClientInterface;
+use Trinity\Component\Core\Interfaces\ClientInterface;
 use Trinity\NotificationBundle\Entity\NotificationEntityInterface;
 use Trinity\NotificationBundle\Entity\NotificationStatusTrait;
 use Venice\AppBundle\Entity\Product\Product;
@@ -24,7 +24,6 @@ use Trinity\NotificationBundle\Annotations as N;
 class ProductAccess implements NotificationEntityInterface
 {
     use Timestampable;
-    use NotificationStatusTrait;
 
     /**
      * @var integer

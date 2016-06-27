@@ -8,14 +8,12 @@
 
 namespace Venice\AppBundle\Entity\Product;
 
-
-use Trinity\NotificationBundle\Entity\NotificationStatusTrait;
 use Venice\AppBundle\Entity\BillingPlan;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation\SerializedName;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
-use Trinity\FrameworkBundle\Entity\ClientInterface;
+use Trinity\Component\Core\Interfaces\ClientInterface;
 use Trinity\NotificationBundle\Annotations as N;
 use Trinity\NotificationBundle\Entity\NotificationEntityInterface;
 
@@ -37,8 +35,6 @@ use Trinity\NotificationBundle\Entity\NotificationEntityInterface;
  */
 class StandardProduct extends Product implements NotificationEntityInterface
 {
-    use NotificationStatusTrait;
-
     const TYPE = "standard";
 
     /**

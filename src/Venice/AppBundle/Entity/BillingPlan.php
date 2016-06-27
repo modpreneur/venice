@@ -8,8 +8,9 @@
 
 namespace Venice\AppBundle\Entity;
 
-use Trinity\FrameworkBundle\Entity\BaseBillingPlan;
-use Trinity\FrameworkBundle\Entity\ClientInterface;
+use Trinity\Component\Core\Interfaces\ProductInterface;
+use Trinity\Component\EntityCore\Entity\BaseBillingPlan;
+use Trinity\Component\Core\Interfaces\ClientInterface;
 use Trinity\NotificationBundle\Entity\NotificationEntityInterface;
 use Venice\AppBundle\Entity\Product\StandardProduct;
 use Doctrine\ORM\Mapping as ORM;
@@ -17,7 +18,6 @@ use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Trinity\NotificationBundle\Annotations as N;
 use Symfony\Component\Validator\Constraints as Assert;
-use Trinity\NotificationBundle\Entity\NotificationStatusTrait;
 
 /**
  * @ORM\Entity(repositoryClass="BillingPlanRepository")
@@ -30,8 +30,6 @@ use Trinity\NotificationBundle\Entity\NotificationStatusTrait;
  */
 class BillingPlan extends BaseBillingPlan implements NotificationEntityInterface
 {
-    use NotificationStatusTrait;
-    
     /**
      * @var int
      *
@@ -98,9 +96,9 @@ class BillingPlan extends BaseBillingPlan implements NotificationEntityInterface
     /**
      * @N\AssociationGetter()
      *
-     * @return StandardProduct
+     * @return ProductInterface
      */
-    public function getProduct()
+    public function getProduct() : ProductInterface
     {
         return $this->product;
     }

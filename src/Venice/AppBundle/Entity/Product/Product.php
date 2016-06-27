@@ -9,6 +9,7 @@
 namespace Venice\AppBundle\Entity\Product;
 
 
+use Trinity\Component\EntityCore\Entity\BaseProduct;
 use Venice\AppBundle\Entity\BlogArticle;
 use Venice\AppBundle\Entity\Content\Content;
 use Venice\AppBundle\Entity\ContentProduct;
@@ -16,14 +17,12 @@ use Venice\AppBundle\Entity\ProductAccess;
 use Venice\AppBundle\Entity\User;
 use Venice\AppBundle\Form\Product\FreeProductType;
 use Venice\AppBundle\Form\Product\StandardProductType;
-use Venice\AppBundle\Traits\Timestampable;
 use Cocur\Slugify\Slugify;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\OrderBy;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
-use Trinity\FrameworkBundle\Entity\BaseProduct as TrinityProduct;
 
 /**
  * Class BaseProduct
@@ -39,7 +38,7 @@ use Trinity\FrameworkBundle\Entity\BaseProduct as TrinityProduct;
  *
  * @package Venice\AppBundle\Entity\Product
  */
-abstract class Product extends TrinityProduct
+abstract class Product extends BaseProduct
 {
     /**
      * @var string

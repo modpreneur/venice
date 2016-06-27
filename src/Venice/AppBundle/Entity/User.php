@@ -8,6 +8,8 @@
 
 namespace Venice\AppBundle\Entity;
 
+use Trinity\Component\Core\Interfaces\ClientInterface;
+use Trinity\Component\EntityCore\Entity\BaseUser;
 use Venice\AppBundle\Entity\Product\Product;
 use Venice\AppBundle\Traits\Timestampable;
 use DateTime;
@@ -16,12 +18,8 @@ use Doctrine\ORM\Mapping as ORM;
 use InvalidArgumentException;
 use JMS\Serializer\Annotation\SerializedName;
 use Symfony\Component\Validator\Constraints as Assert;
-use Trinity\FrameworkBundle\Entity\BaseUser as TrinityUser;
-use Trinity\FrameworkBundle\Entity\ClientInterface;
 use Trinity\NotificationBundle\Annotations as N;
 use Trinity\NotificationBundle\Entity\NotificationEntityInterface;
-use Trinity\NotificationBundle\Entity\NotificationStatusTrait;
-
 
 /**
  * Class User
@@ -37,9 +35,8 @@ use Trinity\NotificationBundle\Entity\NotificationStatusTrait;
  *
  * @package Venice\AppBundle\Entity
  */
-class User extends TrinityUser implements NotificationEntityInterface
+class User extends BaseUser implements NotificationEntityInterface
 {
-    use NotificationStatusTrait;
     use Timestampable;
 
     const PREFERRED_UNITS_IMPERIAL = "imperial";
@@ -477,16 +474,6 @@ class User extends TrinityUser implements NotificationEntityInterface
     public function getClients()
     {
         return [];
-    }
-
-    /**
-     * @param ClientInterface $client
-     * @param string $status
-     * @return void
-     */
-    public function setSyncStatus(ClientInterface $client, $status)
-    {
-        $this->status[$client->getId()] = $status;
     }
 
 

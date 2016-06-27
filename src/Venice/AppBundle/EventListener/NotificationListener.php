@@ -10,7 +10,7 @@ namespace Venice\AppBundle\EventListener;
 
 
 use Doctrine\ORM\EntityManagerInterface;
-use Trinity\FrameworkBundle\Services\PriceStringGenerator;
+use Trinity\Component\Utils\Services\PriceStringGenerator;
 use Trinity\NotificationBundle\Event\BeforeDeleteEntityEvent;
 use Trinity\NotificationBundle\Event\ChangesDoneEvent;
 use Venice\AppBundle\Entity\BillingPlan;
