@@ -128,12 +128,13 @@ class BillingPlanController extends BaseAdminController
             $em->flush();
         } catch (DBALException $e) {
             $this->get('session')->getFlashBag()->add('danger', $e->getMessage());
+            return new JsonResponse(
+                ['status'=>'error','error' => ['db' => $e->getMessage()], 'message'=>'Default billing plan could not be changed.'],
+                400
+            );
         }
 
-        return $this->redirect(
-            $this->generateUrl('admin_product_tabs',
-                ['id' => $billingPlan->getProduct()->getId()])."#tab4"
-        );
+        return new JsonResponse(['status'=>'success', 'message'=>'Successfully changed'], 200);
     }
 
 

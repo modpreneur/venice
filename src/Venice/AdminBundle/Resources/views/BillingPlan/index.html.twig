@@ -36,12 +36,31 @@
                     {#Default#}
                     <td>
                         {% if billingPlan == product.defaultBillingPlan %}
-                            <i class="trinity trinity-yes"></i>
-                        {% else %}
-                            <a href="{{ path('admin_billing_plan_product_set_default', { 'id': billingPlan.id }) }}" title="set as default">
+
+                            <div class="is-default" id="is-default-id-{{ billingPlan.id }}" style="display: block" >
+                                <i class="trinity trinity-yes"></i>
+                            </div>
+
+                            <div onclick="window.setAsDefault('set-default-id-{{ billingPlan.id }}');" class="set-default" id="set-default-id-{{ billingPlan.id }}" data-href="{{ path('admin_billing_plan_product_set_default', { 'id': billingPlan.id }) }}" style="display: none; cursor: pointer;"  title="set as default">
                                 <i class="trinity trinity-pin"></i>
-                            </a>
+                            </div>
+
+                        {% else %}
+
+                            <div onclick="window.setAsDefault('set-default-id-{{ billingPlan.id }}');" class="set-default" id="set-default-id-{{ billingPlan.id }}" data-href="{{ path('admin_billing_plan_product_set_default', { 'id': billingPlan.id }) }}" style="display: block; cursor: pointer;" title="set as default">
+                                <i class="trinity trinity-pin"></i>
+                            </div>
+
+                            <div class="is-default" id="is-default-id-{{ billingPlan.id }}" style="display: none">
+                                <i class="trinity trinity-yes"></i>
+                            </div>
+
                         {% endif %}
+
+                        <div class="loading-icon-for-default" id="loading-icon-for-default-id-{{ billingPlan.id }}" style="display: none">
+                            <i class="tiecons tiecons-loading"></i>
+                        </div>
+
                     </td>
 
                     {#price#}
