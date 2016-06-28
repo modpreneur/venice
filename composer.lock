@@ -60,16 +60,16 @@
         },
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.18.20",
+            "version": "3.18.21",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "e5a901dd3a42d0c46a90ee37a174938cd0ce55bf"
+                "reference": "db88adc1569789e7d680809f51a62d2bd3410216"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/e5a901dd3a42d0c46a90ee37a174938cd0ce55bf",
-                "reference": "e5a901dd3a42d0c46a90ee37a174938cd0ce55bf",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/db88adc1569789e7d680809f51a62d2bd3410216",
+                "reference": "db88adc1569789e7d680809f51a62d2bd3410216",
                 "shasum": ""
             },
             "require": {
@@ -136,7 +136,7 @@
                 "s3",
                 "sdk"
             ],
-            "time": "2016-06-23 23:17:52"
+            "time": "2016-06-27 22:52:29"
         },
         {
             "name": "behat/transliterator",
@@ -5846,12 +5846,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/modpreneur/trinity-admin.git",
-                "reference": "fd9e9953d1ebecb930347ca930942eb9b71434f2"
+                "reference": "7067a7d69be6ae1a133297f051b79265ca070ccb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/modpreneur/trinity-admin/zipball/fd9e9953d1ebecb930347ca930942eb9b71434f2",
-                "reference": "fd9e9953d1ebecb930347ca930942eb9b71434f2",
+                "url": "https://api.github.com/repos/modpreneur/trinity-admin/zipball/7067a7d69be6ae1a133297f051b79265ca070ccb",
+                "reference": "7067a7d69be6ae1a133297f051b79265ca070ccb",
                 "shasum": ""
             },
             "require": {
@@ -5896,7 +5896,7 @@
                 }
             ],
             "description": "Trinity Admin bundle",
-            "time": "2016-06-27 13:58:51"
+            "time": "2016-06-28 10:19:49"
         },
         {
             "name": "trinity/bunny-bundle",
@@ -5942,12 +5942,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/modpreneur/trinity-core-entities.git",
-                "reference": "f01768470289f8fccca66cc00072df1f5ba291df"
+                "reference": "9dc5e100248571c9cbc32d98980a2f9a30fa75a6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/modpreneur/trinity-core-entities/zipball/f01768470289f8fccca66cc00072df1f5ba291df",
-                "reference": "f01768470289f8fccca66cc00072df1f5ba291df",
+                "url": "https://api.github.com/repos/modpreneur/trinity-core-entities/zipball/9dc5e100248571c9cbc32d98980a2f9a30fa75a6",
+                "reference": "9dc5e100248571c9cbc32d98980a2f9a30fa75a6",
                 "shasum": ""
             },
             "require": {
@@ -5987,7 +5987,7 @@
                 }
             ],
             "description": "Trinity Framework",
-            "time": "2016-06-27 11:55:38"
+            "time": "2016-06-28 13:11:47"
         },
         {
             "name": "trinity/core-interfaces",
@@ -5995,12 +5995,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/modpreneur/trinity-core-interfaces.git",
-                "reference": "b70068b15451320a122175d16dbbd58a624423cd"
+                "reference": "d5d07ed57527f15c482e55a0e6673bf69bc297ed"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/modpreneur/trinity-core-interfaces/zipball/b70068b15451320a122175d16dbbd58a624423cd",
-                "reference": "b70068b15451320a122175d16dbbd58a624423cd",
+                "url": "https://api.github.com/repos/modpreneur/trinity-core-interfaces/zipball/d5d07ed57527f15c482e55a0e6673bf69bc297ed",
+                "reference": "d5d07ed57527f15c482e55a0e6673bf69bc297ed",
                 "shasum": ""
             },
             "require": {
@@ -6034,7 +6034,7 @@
                 }
             ],
             "description": "Trinity Framework",
-            "time": "2016-06-27 13:51:42"
+            "time": "2016-06-28 13:06:04"
         },
         {
             "name": "trinity/framework",
@@ -6268,12 +6268,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/modpreneur/trinity-notifications.git",
-                "reference": "5df014802e75a5bd5d3819c1f72546842db376ca"
+                "reference": "903814bf442d29c5a1407867aa575e6e756d4008"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/modpreneur/trinity-notifications/zipball/5df014802e75a5bd5d3819c1f72546842db376ca",
-                "reference": "5df014802e75a5bd5d3819c1f72546842db376ca",
+                "url": "https://api.github.com/repos/modpreneur/trinity-notifications/zipball/903814bf442d29c5a1407867aa575e6e756d4008",
+                "reference": "903814bf442d29c5a1407867aa575e6e756d4008",
                 "shasum": ""
             },
             "require": {
@@ -6329,7 +6329,7 @@
                 }
             ],
             "description": "Trinity Notification bundle",
-            "time": "2016-06-27 12:25:35"
+            "time": "2016-06-28 06:45:00"
         },
         {
             "name": "trinity/search",
@@ -6815,16 +6815,16 @@
         },
         {
             "name": "zendframework/zend-code",
-            "version": "3.0.2",
+            "version": "3.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zendframework/zend-code.git",
-                "reference": "57cfbcf794a79985278d6308325bc86060af588c"
+                "reference": "cdd9d0ff36c09772ca787c9c54318115f65d4fab"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zend-code/zipball/57cfbcf794a79985278d6308325bc86060af588c",
-                "reference": "57cfbcf794a79985278d6308325bc86060af588c",
+                "url": "https://api.github.com/repos/zendframework/zend-code/zipball/cdd9d0ff36c09772ca787c9c54318115f65d4fab",
+                "reference": "cdd9d0ff36c09772ca787c9c54318115f65d4fab",
                 "shasum": ""
             },
             "require": {
@@ -6864,7 +6864,7 @@
                 "code",
                 "zf2"
             ],
-            "time": "2016-04-20 17:34:49"
+            "time": "2016-06-27 22:07:15"
         },
         {
             "name": "zendframework/zend-eventmanager",

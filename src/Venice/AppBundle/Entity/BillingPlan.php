@@ -98,7 +98,7 @@ class BillingPlan extends BaseBillingPlan implements NotificationEntityInterface
      *
      * @return ProductInterface
      */
-    public function getProduct() : ProductInterface
+    public function getProduct()
     {
         return $this->product;
     }

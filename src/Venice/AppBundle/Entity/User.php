@@ -53,14 +53,6 @@ class User extends BaseUser implements NotificationEntityInterface
 
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="amember_id", type="integer", unique=true, nullable=true)
-     */
-    protected $amemberId;
-
-
-    /**
      * @var string
      *
      * @ORM\Column(name="preferred_units", type="string", length=10)
@@ -208,19 +200,6 @@ class User extends BaseUser implements NotificationEntityInterface
     public function setBirthDate(DateTime $birthDate)
     {
         $this->birthDate = $birthDate;
-
-        return $this;
-    }
-
-
-    /**
-     * @param int $amemberId
-     *
-     * @return User
-     */
-    public function setAmemberId($amemberId)
-    {
-        $this->amemberId = $amemberId;
 
         return $this;
     }
