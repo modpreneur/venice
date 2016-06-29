@@ -66,7 +66,7 @@ class BillingPlanType extends BaseType implements NotificationTypeInterface
                 new NotificationTransformer(
                     $this->entityManager,
                     StandardProduct::class,
-                    'setNecktieId'
+                    'necktieId'
                 )
             );
     }
