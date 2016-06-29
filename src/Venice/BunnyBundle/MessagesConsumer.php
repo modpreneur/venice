@@ -54,6 +54,9 @@ class MessagesConsumer
 
             $channel->ack($message);
         } catch (\Throwable $error) {
+            if (function_exists('dump')) {
+            dump($error->getMessage(), $error->getFile(), $error->getTraceAsString());
+        }
             $channel->nack($message, false, false);
         }
 

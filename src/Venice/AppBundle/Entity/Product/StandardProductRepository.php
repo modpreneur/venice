@@ -24,7 +24,7 @@ class StandardProductRepository extends EntityRepository implements Notification
     {
         $query = $this->getEntityManager()->createQuery('
             SELECT product
-            FROM VeniceAppBundle:Product AS product
+            FROM VeniceAppBundle:Product\StandardProduct AS product
             WHERE product.id = :id
         ')
             ->setParameter('id', $id);
