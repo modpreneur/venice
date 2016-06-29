@@ -47,7 +47,11 @@
 
                 {#to date#}
                 <td>
-                    {{ productAccess.toDate|date("Y-m-d")  }}
+                    {% if productAccess.toDate is null %}
+                        Lifetime
+                    {% else %}
+                        {{ productAccess.toDate|date("Y-m-d")  }}
+                    {% endif %}
                 </td>
             </tr>
         {% endfor %}
