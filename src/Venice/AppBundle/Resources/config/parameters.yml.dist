@@ -34,3 +34,5 @@ parameters:
     rabbit_password: ~
     rabbit_listening_queues: ["client_"]
     client_identification: "client_"
+
+    elasticsearch_host: "elasticsearch:9201"

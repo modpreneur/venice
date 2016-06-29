@@ -43,12 +43,20 @@ class MessagesConsumer
 
     public function readMessage($data, Message $message, Channel $channel, Client $client)
     {
-        dump($data, $message);
+        if (function_exists('dump')) {
+            dump($data, $message);
+        }
 
-        //todo: get "client_3" from parameters
-        $event = new UnpackMessageEvent($data, 'client_3');
-        $this->dispatcher->dispatch(Events::UNPACK_MESSAGE, $event);
+        try {
+            //todo: get "client_3" from parameters
+            $event = new UnpackMessageEvent($data, 'client_3');
+            $this->dispatcher->dispatch(Events::UNPACK_MESSAGE, $event);
 
-        $channel->ack($message);
+            $channel->ack($message);
+        } catch (\Throwable $error) {
+            $channel->nack($message, false, false);
+        }
+
+
     }
 }
