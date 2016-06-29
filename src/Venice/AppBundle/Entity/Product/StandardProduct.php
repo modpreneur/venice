@@ -58,8 +58,6 @@ class StandardProduct extends Product implements NotificationEntityInterface
     public function __construct()
     {
         parent::__construct();
-
-        $this->notificationStatus = [];
     }
 
 
