@@ -29,7 +29,6 @@ use Trinity\NotificationBundle\Entity\NotificationEntityInterface;
  * @N\Url(postfix="product")
  *
  * @UniqueEntity(fields={"necktieId"})
- * @UniqueEntity(fields={"defaultBillingPlan"})
  *
  * Class StandardProduct
  */
