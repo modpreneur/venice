@@ -17,7 +17,6 @@ class UserRepository extends EntityRepository implements NotificationEntityRepos
 {
     /**
      * Select entity by id. Set fetch mode to "EAGER" to load all data.
-     * todo: possible performance issue...
      *
      * @param $id
      *

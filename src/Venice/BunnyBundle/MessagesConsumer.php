@@ -31,12 +31,16 @@ class MessagesConsumer
     /** @var  EventDispatcherInterface */
     protected $dispatcher;
 
+    /** @var  string */
+    protected $clientIdentification;
+
     /**
      * MessagesConsumer constructor.
      *
      * @param EventDispatcherInterface $dispatcher
+     * @param string                   $clientIdentification
      */
-    public function __construct(EventDispatcherInterface $dispatcher)
+    public function __construct(EventDispatcherInterface $dispatcher, string $clientIdentification)
     {
         $this->dispatcher = $dispatcher;
     }
@@ -48,8 +52,7 @@ class MessagesConsumer
         }
 
         try {
-            //todo: get "client_3" from parameters
-            $event = new UnpackMessageEvent($data, 'client_3');
+            $event = new UnpackMessageEvent($data, $this->clientIdentification);
             $this->dispatcher->dispatch(Events::UNPACK_MESSAGE, $event);
 
             $channel->ack($message);

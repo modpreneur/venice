@@ -12,7 +12,6 @@ class StandardProductRepository extends EntityRepository implements Notification
 {
     /**
      * Select entity by id. Set fetch mode to "EAGER" to load all data.
-     * todo: possible performance issue...
      *
      * @param $id
      *
