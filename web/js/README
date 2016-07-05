@@ -1,4 +1,0 @@
-Before Production notes:
-
-* IMPORTANT!! - Somehow disable access to js folder or move dev dependencies into another folder
-js folder is public - this is not acceptable, only one file should be exposed in production

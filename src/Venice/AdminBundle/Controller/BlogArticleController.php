@@ -284,7 +284,8 @@ class BlogArticleController extends BaseAdminController
                     [
                         "errors" => ["db" => $e->getMessage(),],
                         "message" => "Could not delete."
-                    ]
+                    ],
+                    400
                 );
             }
         }
