@@ -44,8 +44,9 @@ class BlogArticleType extends BaseType
                 "dateToPublish",
                 DateTimeType::class,
                 [
+                    'widget' => 'single_text',
                     "required" => true,
-                    "years" => [$currentYear, $currentYear+1, $currentYear+2, $currentYear+3]
+                    'attr' => ['data-limit' => json_encode(['min' =>'now','max'=>['year'=>$currentYear+4]])],
                 ]
             )
             ->add(

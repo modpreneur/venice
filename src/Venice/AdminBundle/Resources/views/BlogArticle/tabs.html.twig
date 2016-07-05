@@ -6,7 +6,8 @@
 
 {% block stylesheets  %}
     {% include("VeniceAdminBundle:Common:froalaEditorStylesheets.html.twig") %}
-
+    <link rel="stylesheet" type="text/css" media="screen" href="/js/node_modules/react-widgets/dist/css/react-widgets.css"/>
+    {{ parent() }}
 {% endblock %}
 
 {% block trinity_admin_script_footer %}

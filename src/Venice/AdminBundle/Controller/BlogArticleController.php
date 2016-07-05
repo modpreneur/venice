@@ -110,10 +110,14 @@ class BlogArticleController extends BaseAdminController
                 BlogArticleType::class,
                 "admin_blog_article"
             );
-
+//        $dateFormat = $this->get('trinity.settings')->get('date');
+        $dateFormat = 'y-m-d';
         return $this->render(
             'VeniceAdminBundle:BlogArticle:new.html.twig',
-            ['form' => $form->createView(),]
+            [
+                'form' => $form->createView(),
+                'dateFormat' => $dateFormat,
+            ]
         );
     }
 
@@ -181,12 +185,15 @@ class BlogArticleController extends BaseAdminController
                 BlogArticleType::class,
                 'admin_blog_article', ["id",]
             );
-
+        //        $dateFormat = $this->get('trinity.settings')->get('date');
+        $dateFormat = 'y-m-d';
         return $this->render(
             "VeniceAdminBundle:BlogArticle:edit.html.twig",
             [
                 "entity" => $blogArticle,
                 "form" => $form->createView(),
+                'dateFormat' => $dateFormat,
+                'dateVal' => $blogArticle->getDateToPublish()->getTimestamp(),
             ]
         );
     }
