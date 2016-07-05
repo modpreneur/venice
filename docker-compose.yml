@@ -3,6 +3,7 @@ web:
   links:
     - mysql:database
     - redis:redis
+    - elasticsearch:elasticsearch
   ports:
     - "8888:80"
   expose:
@@ -27,3 +28,10 @@ redis:
   volumes:
     - ./docker/redis/redis.conf:/usr/local/etc/redis/redis.conf
   restart: always
+
+elasticsearch:
+  image: elasticsearch:latest
+#  build: ./docker/elasticSearch
+  ports:
+#    - 9300:9300
+    - 9201:9200

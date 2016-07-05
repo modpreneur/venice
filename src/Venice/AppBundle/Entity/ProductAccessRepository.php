@@ -16,7 +16,6 @@ class ProductAccessRepository extends EntityRepository implements NotificationEn
 {
     /**
      * Select entity by id. Set fetch mode to "EAGER" to load all data.
-     * todo: possible performance issue...
      *
      * @param $id
      *

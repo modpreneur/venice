@@ -41,6 +41,10 @@ trinity_notification:
         user: Venice\AppBundle\Form\Notification\UserType
         product-access: Venice\AppBundle\Form\Notification\ProductAccessType
 
+trinity_logger:
+    elastic_logs:
+        elastic_host: '%elasticsearch_host%'
+
 fos_user:
     db_driver: orm
     firewall_name: main

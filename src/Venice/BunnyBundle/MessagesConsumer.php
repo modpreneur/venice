@@ -31,24 +31,38 @@ class MessagesConsumer
     /** @var  EventDispatcherInterface */
     protected $dispatcher;
 
+    /** @var  string */
+    protected $clientIdentification;
+
     /**
      * MessagesConsumer constructor.
      *
      * @param EventDispatcherInterface $dispatcher
+     * @param string                   $clientIdentification
      */
-    public function __construct(EventDispatcherInterface $dispatcher)
+    public function __construct(EventDispatcherInterface $dispatcher, string $clientIdentification)
     {
         $this->dispatcher = $dispatcher;
     }
 
     public function readMessage($data, Message $message, Channel $channel, Client $client)
     {
-        dump($data, $message);
+        if (function_exists('dump')) {
+            dump($data, $message);
+        }
 
-        //todo: get "client_3" from parameters
-        $event = new UnpackMessageEvent($data, 'client_3');
-        $this->dispatcher->dispatch(Events::UNPACK_MESSAGE, $event);
+        try {
+            $event = new UnpackMessageEvent($data, $this->clientIdentification);
+            $this->dispatcher->dispatch(Events::UNPACK_MESSAGE, $event);
 
-        $channel->ack($message);
+            $channel->ack($message);
+        } catch (\Throwable $error) {
+            if (function_exists('dump')) {
+            dump($error->getMessage(), $error->getFile(), $error->getTraceAsString());
+        }
+            $channel->nack($message, false, false);
+        }
+
+
     }
 }

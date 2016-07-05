@@ -78,7 +78,7 @@ class   ProductAccessType extends BaseType implements NotificationTypeInterface
                 new NotificationTransformer(
                     $this->entityManager,
                     StandardProduct::class,
-                    'setNecktieId'
+                    'necktieId'
                 )
             );
 
@@ -87,7 +87,7 @@ class   ProductAccessType extends BaseType implements NotificationTypeInterface
                 new NotificationTransformer(
                     $this->entityManager,
                     User::class,
-                    'setNecktieId'
+                    'necktieId'
                 )
             );
     }

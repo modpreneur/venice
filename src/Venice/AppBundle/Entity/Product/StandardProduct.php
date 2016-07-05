@@ -29,7 +29,6 @@ use Trinity\NotificationBundle\Entity\NotificationEntityInterface;
  * @N\Url(postfix="product")
  *
  * @UniqueEntity(fields={"necktieId"})
- * @UniqueEntity(fields={"defaultBillingPlan"})
  *
  * Class StandardProduct
  */
@@ -59,8 +58,6 @@ class StandardProduct extends Product implements NotificationEntityInterface
     public function __construct()
     {
         parent::__construct();
-
-        $this->notificationStatus = [];
     }
 
 

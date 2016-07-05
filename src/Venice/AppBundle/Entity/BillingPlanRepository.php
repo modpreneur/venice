@@ -16,7 +16,6 @@ class BillingPlanRepository extends EntityRepository implements NotificationEnti
 {
     /**
      * Select entity by id. Set fetch mode to "EAGER" to load all data.
-     * todo: possible performance issue...
      *
      * @param $id
      *

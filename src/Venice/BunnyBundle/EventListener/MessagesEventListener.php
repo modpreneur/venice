@@ -55,8 +55,6 @@ class MessagesEventListener
         $application->run($input, $output);
 
         $response = $output->fetch();
-        // todo - log outout !!!
-        dump($response);
 
         return new Response($response);
     }

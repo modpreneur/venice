@@ -4,7 +4,6 @@ namespace Venice\AppBundle\Entity;
 
 use Trinity\Component\Core\Interfaces\ClientInterface;
 use Trinity\NotificationBundle\Entity\NotificationEntityInterface;
-use Trinity\NotificationBundle\Entity\NotificationStatusTrait;
 use Venice\AppBundle\Entity\Product\Product;
 use Venice\AppBundle\Traits\Timestampable;
 use Doctrine\ORM\Mapping as ORM;

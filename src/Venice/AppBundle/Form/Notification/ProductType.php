@@ -46,7 +46,7 @@ class ProductType extends BaseType implements NotificationTypeInterface
                 new NotificationTransformer(
                     $this->entityManager,
                     BillingPlan::class,
-                    'setNecktieId'
+                    'necktieId'
                 )
             );
     }

@@ -12,7 +12,6 @@ class StandardProductRepository extends EntityRepository implements Notification
 {
     /**
      * Select entity by id. Set fetch mode to "EAGER" to load all data.
-     * todo: possible performance issue...
      *
      * @param $id
      *
@@ -24,7 +23,7 @@ class StandardProductRepository extends EntityRepository implements Notification
     {
         $query = $this->getEntityManager()->createQuery('
             SELECT product
-            FROM VeniceAppBundle:Product AS product
+            FROM VeniceAppBundle:Product\StandardProduct AS product
             WHERE product.id = :id
         ')
             ->setParameter('id', $id);
