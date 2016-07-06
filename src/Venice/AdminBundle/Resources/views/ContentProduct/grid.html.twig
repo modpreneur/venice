@@ -1,0 +1,28 @@
+{% block cell__id %}
+    {{ row.getId() }}
+{% endblock %}
+
+{% block cell_id %}
+    {{ value }}
+{% endblock %}
+
+{% block cell_product_name %}
+    <a href="{{ path("admin_product_tabs", {"id": row.product.id}) }}">{{ value }}</a>
+{% endblock %}
+
+{% block cell_content_name %}
+    <a href="{{ path("admin_content_tabs", {"id": row.content.id}) }}">{{ value }}</a>
+{% endblock %}
+
+{% block cell_orderNumber %}
+    {{ value }}
+{% endblock %}
+
+{% block cell_delay %}
+    {{ value }}
+{% endblock %}
+
+{% block cell_details %}
+    <a href="{{ path("admin_content_content_product_tabs", {"id": row.getId()}) }}"
+       class="button-small  margin-none-all">Get details</a>
+{% endblock %}

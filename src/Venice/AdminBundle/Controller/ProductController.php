@@ -17,7 +17,6 @@ use Venice\AppBundle\Event\FreeProductCreatedEvent;
 use Venice\AppBundle\Form\ContentProduct\ContentProductTypeWithHiddenProduct;
 use Venice\AppBundle\Form\Product\FreeProductType;
 use Venice\AppBundle\Form\Product\StandardProductType;
-use Venice\AppBundle\Services\GridConfigurationBuilder;
 use Doctrine\DBAL\DBALException;
 use ReflectionException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -40,24 +39,30 @@ class ProductController extends BaseAdminController
     public function indexAction(Request $request)
     {
         $this->getBreadcrumbs()->addRouteItem("Products", "admin_product_index");
-
-        $products = $this->getEntityManager()->getRepository("VeniceAppBundle:Product\\Product")->findAll();
-
+        
         $entityManager = $this->getEntityManager();
 
         $max = $entityManager->getRepository('VeniceAppBundle:Product\Product')->count();
         $url = $this->generateUrl('grid_default', ['entity'=>'Product']);
 
-        $builder = new GridConfigurationBuilder(
+        $gridConfBuilder =  $this->get('trinity.grid.grid_configuration_service')->createGridConfigurationBuilder(
             $url,
-            $max
+            $max,
+            15
         );
 
         // Defining columns
-        $builder->addColumn('id', 'Id');
-        $builder->addColumn('name', 'Name');
+        $gridConfBuilder->addColumn('id', 'Id');
+        $gridConfBuilder->addColumn('name', 'Name');
+        $gridConfBuilder->addColumn('defaultBillingPlan:initialPrice', 'Price', ['type' => 'double']);
+        $gridConfBuilder->addColumn('type', 'Type');
+//        $gridConfBuilder->addColumn('updatedAt', 'Updated At', ['type' => 'date']);
+        $gridConfBuilder->addColumn('details', ' ', ['allowOrder' => false]);
 
-        return $this->render('VeniceAdminBundle:Product:index.html.twig', ['gridConfiguration'=>$builder->getJSON(), "products" => $products]);
+        return $this->render('VeniceAdminBundle:Product:index.html.twig', [
+            'gridConfiguration'=>$gridConfBuilder->getJSON(),
+            'count' => $max
+        ]);
     }
 
 
@@ -70,9 +75,31 @@ class ProductController extends BaseAdminController
      */
     public function blogArticleIndexAction(Request $request, Product $product)
     {
+        $max = count($product->getBlogArticles());
+        $url = $this->generateUrl('grid_default', ['entity'=>'BlogArticle']);
+
+        $gridConfBuilder =  $this->get('trinity.grid.grid_configuration_service')->createGridConfigurationBuilder(
+            $url,
+            $max,
+            15
+        );
+
+        // Defining columns
+        $gridConfBuilder->addColumn('id', 'Id');
+        $gridConfBuilder->addColumn('title', 'Title');
+        $gridConfBuilder->addColumn('handle', 'Handle');
+        $gridConfBuilder->addColumn('details', ' ', ['allowOrder' => false]);
+
+//        $gridConfBuilder->setProperty('filter', 'products='.);
+//        TODO @JakubFajkus could you try set the filter? produts are array, so i have no id how to do this
+
+
         return $this->render(
             "VeniceAdminBundle:Product:articlesIndex.html.twig",
-            ["blogArticles" => $product->getBlogArticles(),]
+            [
+                'gridConfiguration'=>$gridConfBuilder->getJSON(),
+                'count' => $max
+            ]
         );
     }
 
@@ -351,11 +378,30 @@ class ProductController extends BaseAdminController
      */
     public function contentProductIndexAction(Product $product)
     {
+        $url = $this->generateUrl('grid_default', ['entity'=>'ContentProduct']);
+        $count =  count($product->getContentProducts());//TODO @JakubFajkus remake this to pleace (I didn't know how to make it differently)
+
+        $gridConfBuilder =  $this->get('trinity.grid.grid_configuration_service')->createGridConfigurationBuilder(
+            $url,
+            $count,
+            15
+        );
+
+        // Defining columns
+        $gridConfBuilder->addColumn('id', 'Id');
+        $gridConfBuilder->addColumn('content:name', 'Content');
+        $gridConfBuilder->addColumn('orderNumber', 'Order number');
+        $gridConfBuilder->addColumn('delay', 'Delay[hours]');
+        $gridConfBuilder->addColumn('details', ' ', ['allowOrder' => false]);
+
+        $gridConfBuilder->setProperty('filter', 'product=' . $product->getId());
+
         return $this->render(
-            "VeniceAdminBundle:Product:contentProductIndex.html.twig",
+            'VeniceAdminBundle:Product:contentProductIndex.html.twig',
             [
-                "contentProducts" => $product->getContentProducts(),
-                "product" => $product
+                'gridConfiguration'=>$gridConfBuilder->getJSON(),
+                'count' => $count,
+                'product' => $product
             ]
         );
     }

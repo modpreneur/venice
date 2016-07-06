@@ -1,24 +1,15 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Jakub Fajkus
- * Date: 31.01.16
- * Time: 10:50
- */
 
 namespace Venice\AdminBundle\Grid;
 
 use Trinity\Bundle\GridBundle\Grid\BaseGrid;
 
 /**
- * Class ProductGrid
- *
+ * Class billingPlanGrid
  * @package Venice\AdminBundle\Grid
  */
-class ProductGrid extends BaseGrid
+class BillingPlanGrid extends BaseGrid
 {
-
-
     /**
      * Set up grid (template)
      *
@@ -26,6 +17,6 @@ class ProductGrid extends BaseGrid
      */
     public function setUp()
     {
-        $this->addTemplate('VeniceAdminBundle:Product:grid.html.twig');
+        $this->addTemplate('VeniceAdminBundle:BillingPlan:grid.html.twig');
     }
 }

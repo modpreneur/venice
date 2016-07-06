@@ -35,4 +35,17 @@ class UserRepository extends EntityRepository implements NotificationEntityRepos
 
         return $query->getOneOrNullResult();
     }
+
+    /**
+     * @return int
+     */
+    public function count()
+    {
+        $query = $this->getEntityManager()->createQuery('
+              SELECT COUNT(user)
+              FROM  VeniceAppBundle:User AS user
+            ')
+        ;
+        return $query->getSingleScalarResult();
+    }
 }

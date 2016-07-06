@@ -46,10 +46,29 @@ class ContentController extends BaseAdminController
             ->addRouteItem("Contents", "admin_content_index");
 
         $contents = $this->getEntityManager()->getRepository("VeniceAppBundle:Content\\Content")->findAll();
+        
+//       TODO @JakubFajkus i have couldn't find the reposytory file, so please could you remake this after me?
+        $max = count($contents);
+        $url = $this->generateUrl('grid_default', ['entity'=>'Content']);
+
+        $gridConfBuilder = $this->get('trinity.grid.grid_configuration_service')->createGridConfigurationBuilder(
+            $url,
+            $max,
+            15
+        );
+
+        // Defining columns
+        $gridConfBuilder->addColumn('id', 'Id');
+        $gridConfBuilder->addColumn('name', 'Name');
+        $gridConfBuilder->addColumn('type', 'Type');
+        $gridConfBuilder->addColumn('details', ' ', ['allowOrder' => false]);
 
         return $this->render(
             "VeniceAdminBundle:Content:index.html.twig",
-            ["contents" => $contents,]
+            [
+                'gridConfiguration'=>$gridConfBuilder->getJSON(),
+                'count' => $max
+            ]
         );
     }
 
@@ -478,11 +497,30 @@ class ContentController extends BaseAdminController
      */
     public function contentProductIndexAction(Content $content)
     {
+        $url = $this->generateUrl('grid_default', ['entity'=>'ContentProduct']);
+        $count =  count($content->getContentProducts());//TODO @JakubFajkus remake this to pleace (I didn't know how to make it differently)
+
+        $gridConfBuilder =  $this->get('trinity.grid.grid_configuration_service')->createGridConfigurationBuilder(
+            $url,
+            $count,
+            15
+        );
+
+        // Defining columns
+        $gridConfBuilder->addColumn('id', 'Id');
+        $gridConfBuilder->addColumn('product:name', 'Product');
+        $gridConfBuilder->addColumn('orderNumber', 'Order number');
+        $gridConfBuilder->addColumn('delay', 'Delay[hours]');
+        $gridConfBuilder->addColumn('details', ' ', ['allowOrder' => false]);
+
+        $gridConfBuilder->setProperty('filter', 'content=' . $content->getId());
+
         return $this->render(
             "VeniceAdminBundle:Content:contentProductIndex.html.twig",
             [
-                "contentProducts" => $content->getContentProducts(),
-                "content" => $content
+                'gridConfiguration'=>$gridConfBuilder->getJSON(),
+                'count' => $count,
+                'content' => $content
             ]
         );
     }

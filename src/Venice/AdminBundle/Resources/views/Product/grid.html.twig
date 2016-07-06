@@ -1,5 +1,33 @@
-{% extends('base.html.twig') %}
+{% block cell__id %}
+    {{ row.getId() }}
+{% endblock %}
 
-{% block body %}
+{% block cell_id %}
+    {{ value }}
+{% endblock %}
 
+{% block cell_name %}
+    <a title="Go to {{ value }}" href="{{ path('admin_product_tabs',{'id':row.getId()}) }}" class="uppercase">{{ value }}</a>
+{% endblock %}
+
+{% block cell_defaultBillingPlan_initialPrice %}
+    {% if row.type == "standard" %}
+        {% if row.defaultBillingPlan %}
+            {{ row.defaultBillingPlan.price }}
+        {% else %}
+            No billing plan
+        {% endif %}
+    {% else %}
+        No billing plan
+    {% endif %}
+{% endblock %}
+
+
+{% block cell_type %}
+    {{ value }}
+{% endblock %}
+
+
+{% block cell_details %}
+    <a href="{{ path('admin_product_tabs',{'id':row.getId()}) }}" class="button-small  margin-none-all">Get details</a>
 {% endblock %}

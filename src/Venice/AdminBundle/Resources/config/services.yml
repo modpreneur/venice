@@ -16,7 +16,47 @@ services:
         tags:
             - { name: knp_menu.menu, alias: sidebar }
 
+    admin.grid.standardproduct:
+        class: Venice\AdminBundle\Grid\ProductGrid
+        tags:
+          - { name: trinity.grid, alias: standardproduct }
+
     admin.grid.product:
-      class: Venice\AdminBundle\Grid\ProductGrid
-      tags:
+        class: Venice\AdminBundle\Grid\ProductGrid
+        tags:
           - { name: trinity.grid, alias: product }
+
+    admin.grid.content_product:
+            class: Venice\AdminBundle\Grid\ContentProductGrid
+            tags:
+              - { name: trinity.grid, alias: contentproduct }
+
+    admin.grid.user:
+        class: Venice\AdminBundle\Grid\UserGrid
+        tags:
+           - { name: trinity.grid, alias: user }
+
+    admin.grid.product_access:
+        class: Venice\AdminBundle\Grid\ProductAccessGrid
+        tags:
+           - { name: trinity.grid, alias: productaccess }
+
+    admin.grid.billing_plan:
+        class: Venice\AdminBundle\Grid\BillingPlanGrid
+        tags:
+           - { name: trinity.grid, alias: billingplan }
+
+    admin.grid.content:
+        class: Venice\AdminBundle\Grid\ContentGrid
+        tags:
+           - { name: trinity.grid, alias: content }
+
+    admin.grid.group_content:
+        class: Venice\AdminBundle\Grid\ContentGrid
+        tags:
+           - { name: trinity.grid, alias: groupcontent }
+
+    admin.grid.blog_article:
+        class: Venice\AdminBundle\Grid\BlogArticleGrid
+        tags:
+           - { name: trinity.grid, alias: blogarticle }

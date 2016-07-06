@@ -8,7 +8,6 @@
 
 namespace Venice\AppBundle\Entity;
 
-
 use Venice\AppBundle\Entity\Product\Product;
 use Venice\AppBundle\Traits\Timestampable;
 use Cocur\Slugify\Slugify;

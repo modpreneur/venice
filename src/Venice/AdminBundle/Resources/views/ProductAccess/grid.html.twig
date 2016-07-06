@@ -1,0 +1,38 @@
+{% block cell__id %}
+    {{ row.getId() }}
+{% endblock %}
+
+{% block cell_id %}
+
+    {% if(is_granted('ROLE_ADMIN_PRODUCT_ACCESS_VIEW')) %}
+        <a title="Go to the product access" href="{{ path('admin_product_access_tabs', { 'userId':row.getUser().getId() ,'id': row.getId() }) }}">{{ value }}</a>
+    {% else %}
+        {{ value }}
+    {% endif %}
+
+{% endblock %}
+
+
+{% block cell_product %}
+    {% if(is_granted('ROLE_ADMIN_PRODUCT_VIEW')) %}
+        <a title="Go to {{ value.getName }}" href="{{ path('admin_product_tabs',{'id':value.getId()}) }}">{{ value.getName() }}</a>
+    {% else %}
+        {{ value.getName() }}
+    {% endif %}
+{% endblock %}
+
+{% block cell_fromDate %}
+    {{ value|date(get_setting('date_time')) }}
+{% endblock %}
+
+{% block cell_toDate %}
+    {{ value|date(get_setting('date_time')) }}
+{% endblock %}
+
+{% block cell_details %}
+    {% if(is_granted('ROLE_ADMIN_PRODUCT_ACCESS_VIEW')) %}
+        <a title="Go to the product access"
+           href="{{ path('admin_product_access_tabs', { 'userId':row.getUser().getId() ,'id': row.getId() }) }}"
+           class="button-small  margin-none-all">Get details</a>
+    {% endif %}
+{% endblock %}

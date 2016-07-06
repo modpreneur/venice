@@ -39,9 +39,30 @@ class BlogArticleController extends BaseAdminController
 
         $blogArticles = $this->getEntityManager()->getRepository("VeniceAppBundle:BlogArticle")->findAll();
 
+        $max = count($blogArticles);
+        $url = $this->generateUrl('grid_default', ['entity'=>'BlogArticle']);
+
+        $gridConfBuilder =  $this->get('trinity.grid.grid_configuration_service')->createGridConfigurationBuilder(
+            $url,
+            $max,
+            15
+        // TODO @JakubFajkus  add limit_on_page to venice (trinity settings)
+        );
+
+        // Defining columns
+        $gridConfBuilder->addColumn('id', 'Id');
+        $gridConfBuilder->addColumn('title', 'Title');
+        $gridConfBuilder->addColumn('handle', 'Handle');
+        $gridConfBuilder->addColumn('details', ' ', ['allowOrder' => false]);
+
+        
+
         return $this->render(
             "VeniceAdminBundle:BlogArticle:index.html.twig",
-            ["blogArticles" => $blogArticles,]
+            [
+                'gridConfiguration'=>$gridConfBuilder->getJSON(),
+                'count' => $max
+            ]
         );
     }
 

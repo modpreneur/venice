@@ -1,63 +1,6 @@
-{% if productAccesses|length > 0 %}
-    <table class="grid">
-        <thead>
-        <tr>
-            <th>Id</th>
-            {% if appLogic.displayNecktieFieldForProductAccess %}
-                <th>Necktie id</th>
-            {% endif %}
-            <th>Product</th>
-            <th>From date</th>
-            <th>To date</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for productAccess in productAccesses %}
-            <tr>
-                <td>
-                    <div class="action-cell">
-                        <span class="content">
-                            <a href="{{ path('admin_product_access_tabs', {'id': productAccess.id}) }}">{{ productAccess.id }}</a>
-                        </span>
-                        <span class="actions">
-                            <a href="{{ path('admin_product_access_tabs', {'id': productAccess.id}) }}">Go to</a>
-                        </span>
-                    </div>
-
-                </td>
-                {#Necktie id#}
-                {% if appLogic.displayNecktieFieldForProductAccess %}
-                    <td>
-                        {% include "VeniceAdminBundle:Common:viewInNecktieAction.html.twig" with
-                        {"url":necktieUrl|replace({":userId":user.necktieId, ":productAccessId":productAccess.necktieId})}
-                        %}
-                        {{ productAccess.necktieId }}
-                    </td>
-                {% endif %}
-
-                {#product#}
-                <td>
-                    {{ productAccess.product.name }}
-                </td>
-
-                {#from date#}
-                <td>
-                    {{ productAccess.fromDate|date("Y-m-d")  }}
-                </td>
-
-                {#to date#}
-                <td>
-                    {% if productAccess.toDate is null %}
-                        Lifetime
-                    {% else %}
-                        {{ productAccess.toDate|date("Y-m-d")  }}
-                    {% endif %}
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
+{% if count > 0 %}
+    <div id="product-access-grid"  data-config="{{ gridConfiguration }}">
+    </div>
 {% else %}
     <div class="row">
         <div class="span-none-padding-xlarge-24 margin-auto">

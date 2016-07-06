@@ -1,25 +1,21 @@
 <div class="contentProduct-productIndex">
-    <table class="grid">
-        <thead>
-        <tr>
-            <th>Product</th>
-            <th>Order number</th>
-            <th>Delay[hours]</th>
-            <th>Edit</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for contentProduct in contentProducts %}
-            <tr>
-                <td><a href="{{ path("admin_product_tabs", {"id": contentProduct.product.id}) }}#tab2">{{ contentProduct.product.name }}</a></td>
-                <td>{{ contentProduct.orderNumber }}</td>
-                <td>{{ contentProduct.delay }}</td>
-                <td><a href="{{ path("admin_content_content_product_tabs", {"id": contentProduct.id}) }}#tab2">Edit</a></td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
+    {% if count>0 %}
+        <div class="box">
+            <div id="product-grid"  data-config="{{ gridConfiguration }}">
+            </div>
+        </div>
+    {% else %}
+        <div class="row">
+            <div class="span-none-padding-xlarge-24 margin-auto">
+                <div class="span-none-xlarge-10 margin-top-20">
+                    <div class="info-empty-form">
+                        <div class="row"><i class="trinity-info"></i></div>
+                        <div class="row"><h2 class="warning">NO DATA</h2></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
     {% if(is_granted('ROLE_ADMIN_CONTENT_PRODUCT_EDIT')) %}
         <div class="span-none-padding-xlarge-24 margin-auto">
             <div class="row">

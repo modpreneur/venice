@@ -31,23 +31,43 @@ class BillingPlanController extends BaseAdminController
      * Get information about billing plan of given product.
      *
      * @param Request $request
-     * @param StandardProduct $product
+     * @param int $id
      *
      * @return array
      */
-    public function indexAction(Request $request, StandardProduct $product)
+    public function indexAction(Request $request, int $id)
     {
-        $entityManager = $this->getDoctrine()->getManager();
-        $billingPlans = $entityManager->getRepository("VeniceAppBundle:BillingPlan")->findBy(["product" => $product]);
+//        $entityManager = $this->getDoctrine()->getManager();
+//        $billingPlans = $entityManager->getRepository("VeniceAppBundle:BillingPlan")->findBy(["product" => $product]);
+//
+//        $necktieBillingPlanShowUrl = $this->getParameter("necktie_show_billing_plan_url");
 
-        $necktieBillingPlanShowUrl = $this->getParameter("necktie_show_billing_plan_url");
+        $count = $this->getDoctrine()->getRepository('VeniceAppBundle:BillingPlan')->count($id);
+        $url = $this->generateUrl('grid_default', ['entity' => 'BillingPlan']);
+
+
+        $gridConfBuilder = $this->get('trinity.grid.grid_configuration_service')->createGridConfigurationBuilder(
+            $url,
+            $count,
+            15
+        );
+        // Defining columns
+        $gridConfBuilder->addColumn('id', 'Id');
+        $gridConfBuilder->addColumn('default', 'Default');
+        $gridConfBuilder->addColumn('type', 'Type');
+        $gridConfBuilder->addColumn('initialPrice', 'Price');
+        $gridConfBuilder->addColumn('frequency', 'Frequency');
+        $gridConfBuilder->addColumn('trial', 'Trial');
+        $gridConfBuilder->addColumn('details', ' ', ['allowOrder' => false]);
+
+
+        $gridConfBuilder->setProperty('filter', 'product=' . $id);
 
         return $this->render(
-            "VeniceAdminBundle:BillingPlan:index.html.twig",
+            'VeniceAdminBundle:BillingPlan:index.html.twig',
             [
-                "billingPlans" => $billingPlans,
-                "product" => $product,
-                "necktieUrl" => $necktieBillingPlanShowUrl
+                'count' => $count,
+                'gridConfiguration' => $gridConfBuilder->getJSON()
             ]
         );
     }

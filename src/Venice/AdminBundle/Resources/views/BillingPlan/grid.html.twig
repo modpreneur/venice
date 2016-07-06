@@ -1,0 +1,48 @@
+{% block cell__id %}
+    {{ row.getId() }}
+{% endblock %}
+
+{% block cell_id %}
+    {{ value }}
+{% endblock %}
+
+{% block cell_default %}
+    {% if row.getProduct().getDefaultBillingPlan() and row.getId() == row.getProduct().getDefaultBillingPlan().getId %}
+        <div class="is-default" id="is-default-id-{{ row.getId()}}" style="display: block" >
+        <i class="trinity trinity-yes"></i>
+        </div>
+
+        <div onclick="window.setAsDefault('set-default-id-{{ row.getId() }}');" class="set-default" id="set-default-id-{{ row.getId() }}" data-href="{{ path('admin_billing_plan_product_set_default', { 'id': row.getId() }) }}" style="display: none; cursor: pointer;"  title="set as default">
+        <i class="trinity trinity-pin"></i>
+        </div>
+
+        <div  class="loading-icon-for-default" id="loading-icon-for-default-id-{{ row.getId() }}" style="display: none">
+            <i class="tiecons tiecons-loading tiecons-rotate"></i>
+        </div>
+
+    {% else %}
+
+        <div onclick="window.setAsDefault('set-default-id-{{ row.getId() }}');" class="set-default" id="set-default-id-{{ row.getId() }}" data-href="{{ path('admin_billing_plan_product_set_default', { 'id': row.getId() }) }}" style="display: block; cursor: pointer;" title="set as default">
+        <i class="trinity trinity-pin"></i>
+        </div>
+
+        <div class="is-default" id="is-default-id-{{ row.getId() }}" style="display: none">
+        <i class="trinity trinity-yes"></i>
+        </div>
+
+
+        <div class="loading-icon-for-default" id="loading-icon-for-default-id-{{ row.getId() }}" style="display: none">
+            <i class="tiecons tiecons-loading"></i>
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block cell_initialPrice %}
+    {{ value }}
+    {# TODO @RichardBures @JakubFajkus ...localizedcurrency does not exist, why? (shouild get from twig extensions Intl)#}
+    {#{{ value|localizedcurrency(get_setting('currency')) }}#}
+{% endblock %}
+
+{% block cell_details %}
+ <a href="{{ path('admin_billing_plan_tabs',{'productId':row.getProduct().getId(),'id':row.getId()}) }}" class="button-small margin-none-all">Get details</a>
+{% endblock %}

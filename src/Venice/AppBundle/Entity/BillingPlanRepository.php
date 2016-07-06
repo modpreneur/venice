@@ -55,4 +55,17 @@ class BillingPlanRepository extends EntityRepository implements NotificationEnti
 
         return $query->getResult();
     }
+
+    public function count($id)
+    {
+        $query = $this->getEntityManager()->createQuery('
+              SELECT COUNT(bp)
+              FROM VeniceAppBundle:BillingPlan AS bp
+              JOIN bp.product product
+              WHERE product.id = :id
+            ')
+            ->setParameter('id', $id);
+
+        return $query->getSingleScalarResult();
+    }
 }

@@ -34,4 +34,18 @@ class ProductAccessRepository extends EntityRepository implements NotificationEn
 
         return $query->getOneOrNullResult();
     }
+
+
+//   TODO @JakubFajkus
+    public function count($userId)
+    {
+        $query = $this->getEntityManager()->createQuery('
+            SELECT COUNT(pa)
+            FROM VeniceAppBundle:ProductAccess AS pa
+            WHERE pa.user = :userId
+        ')
+            ->setParameter('userId', $userId);
+
+        return $query->getSingleScalarResult();
+    }
 }

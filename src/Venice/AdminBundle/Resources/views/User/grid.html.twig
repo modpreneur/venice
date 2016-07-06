@@ -1,0 +1,15 @@
+{% block cell__id %}
+    {{ row.getId() }}
+{% endblock %}
+
+{% block cell_id %}
+    {{ value }}
+{% endblock %}
+
+{% block cell_username %}
+    <a title="Go to {{ value }}" href="{{ path('admin_user_tabs',{'id':row.getId()}) }}" class="uppercase">{{ value }}</a>
+{% endblock %}
+
+{% block cell_details %}
+    <a href="{{ path('admin_user_tabs',{'id':row.getId()}) }}" class="button-small margin-none-all">Get details</a>
+{% endblock %}

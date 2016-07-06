@@ -39,12 +39,26 @@ class UserController extends BaseAdminController
         $this->getBreadcrumbs()
             ->addRouteItem("Users", "admin_user_index");
 
-        $entityManager = $this->getEntityManager();
-        $users = $entityManager->getRepository("VeniceAppBundle:User")->findAll();
+        $count = $this->getDoctrine()->getRepository('VeniceAppBundle:User')->count();
+
+        $url = $this->generateUrl('grid_default', array('entity' => 'User'));
+
+        $gridConfBuilder = $this->get('trinity.grid.grid_configuration_service')->createGridConfigurationBuilder(
+            $url,
+            $count,
+            15
+        );
+
+        $gridConfBuilder->addColumn('id', 'Id');
+        $gridConfBuilder->addColumn('username', 'User Name');
+        $gridConfBuilder->addColumn('email', 'Email');
+        $gridConfBuilder->addColumn('fullName', 'Full Name');
+        $gridConfBuilder->addColumn('details', ' ', ['allowOrder' => false]);
+
 
         return $this->render(
             "VeniceAdminBundle:User:index.html.twig",
-            ["users" => $users,]
+            ['gridConfiguration'=>$gridConfBuilder->getJSON(), 'count'=>$count]
         );
     }
 

@@ -1,0 +1,19 @@
+{% block cell__id %}
+    {{ row.getId() }}
+{% endblock %}
+
+{% block cell_id %}
+    {{ value }}
+{% endblock %}
+
+{% block cell_title %}
+    {{ value }}
+{% endblock %}
+
+{% block cell_handle %}
+    {{ value }}
+{% endblock %}
+
+{% block cell_details %}
+    <a href="{{ path('admin_blog_article_tabs',{'id':row.getId()}) }}" class="button-small  margin-none-all">Get details</a>
+{% endblock %}

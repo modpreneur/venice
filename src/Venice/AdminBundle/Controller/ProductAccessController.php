@@ -26,22 +26,37 @@ class ProductAccessController extends BaseAdminController
     /**
      * Get all accesses of user
      *
-     * @param User $user
+     * @param int $id
      *
      * @return array
      */
-    public function indexAction(User $user)
+    public function indexAction(int $id)
     {
         $entityManager = $this->getDoctrine()->getManager();
-        $productAccesses = $entityManager->getRepository("VeniceAppBundle:ProductAccess")->findBy(["user" => $user]);
+//        $productAccesses = $entityManager->getRepository("VeniceAppBundle:ProductAccess")->findBy(["user" => $user]);
 
         $necktieUrl = $this->getParameter("necktie_show_product_access_url");
 
+        $count = $entityManager->getRepository('VeniceAppBundle:ProductAccess')->count($id);
+        $url = $this->generateUrl('grid_default', ['entity'=>'ProductAccess']);
+        $gridConfBuilder = $this->get('trinity.grid.grid_configuration_service')->createGridConfigurationBuilder(
+            $url,
+            $count,
+            15
+        );
+
+        // Defining columns
+        $gridConfBuilder->addColumn('id', 'Id');
+        $gridConfBuilder->addColumn('product', 'Product');
+        $gridConfBuilder->addColumn('fromDate', 'From Date');
+        $gridConfBuilder->addColumn('toDate', 'To Date');
+        $gridConfBuilder->addColumn('details', ' ', ['allowOrder' => false]);
+        
         return $this->render(
-            "VeniceAdminBundle:ProductAccess:index.html.twig",
+            'VeniceAdminBundle:ProductAccess:index.html.twig',
             [
-                "productAccesses" => $productAccesses,
-                "user" => $user,
+                'gridConfiguration' => $gridConfBuilder->getJSON(),
+                'userId' => $id,'count'=>$count,
                 "necktieUrl" => $necktieUrl
             ]
         );

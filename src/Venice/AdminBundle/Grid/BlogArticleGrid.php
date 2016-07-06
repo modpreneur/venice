@@ -15,10 +15,8 @@ use Trinity\Bundle\GridBundle\Grid\BaseGrid;
  *
  * @package Venice\AdminBundle\Grid
  */
-class ProductGrid extends BaseGrid
+class BlogArticleGrid extends BaseGrid
 {
-
-
     /**
      * Set up grid (template)
      *
@@ -26,6 +24,6 @@ class ProductGrid extends BaseGrid
      */
     public function setUp()
     {
-        $this->addTemplate('VeniceAdminBundle:Product:grid.html.twig');
+        $this->addTemplate('VeniceAdminBundle:BlogArticle:grid.html.twig');
     }
 }
