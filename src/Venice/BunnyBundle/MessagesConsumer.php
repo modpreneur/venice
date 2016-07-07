@@ -43,6 +43,7 @@ class MessagesConsumer
     public function __construct(EventDispatcherInterface $dispatcher, string $clientIdentification)
     {
         $this->dispatcher = $dispatcher;
+        $this->clientIdentification = $clientIdentification;
     }
 
     public function readMessage($data, Message $message, Channel $channel, Client $client)
