@@ -10,9 +10,6 @@ use Doctrine\ORM\EntityRepository;
 class ProductRepository extends EntityRepository
 {
     /**
-     * Get One product by pay system id and itemId.
-     *
-     *
      * @return int
      */
     public function count()

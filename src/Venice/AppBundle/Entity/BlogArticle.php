@@ -8,6 +8,7 @@
 
 namespace Venice\AppBundle\Entity;
 
+use Trinity\Component\Core\Interfaces\EntityInterface;
 use Venice\AppBundle\Entity\Product\Product;
 use Venice\AppBundle\Traits\Timestampable;
 use Cocur\Slugify\Slugify;
@@ -18,14 +19,14 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="BlogArticleRepository")
  * @ORM\Table(name="blog_article")
  *
  * @UniqueEntity("handle")
  *
  * Class BlogArticle
  */
-class BlogArticle
+class BlogArticle implements EntityInterface
 {
     use Timestampable;
 
@@ -362,4 +363,11 @@ class BlogArticle
         return $this;
     }
 
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->title;
+    }
 }

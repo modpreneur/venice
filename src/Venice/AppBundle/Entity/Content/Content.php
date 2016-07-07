@@ -22,7 +22,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Class AbstractContent
  *
  * @ORM\Table(name="content")
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="ContentRepository")
  * @ORM\InheritanceType("JOINED")
  * @ORM\DiscriminatorColumn(name="type", type="string")
  *

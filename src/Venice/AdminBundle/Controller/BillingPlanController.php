@@ -390,7 +390,7 @@ class BillingPlanController extends BaseAdminController
                 );
             }
         }
-//todo: variable $product
+//todo: variable $product? is deleting allowed?
         return new JsonResponse(
             [
                 "message" => "BillingPlan successfully deleted.",

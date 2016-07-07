@@ -37,9 +37,7 @@ class BlogArticleController extends BaseAdminController
         $this->getBreadcrumbs()
             ->addRouteItem("Blog articles", "admin_blog_article_index");
 
-        $blogArticles = $this->getEntityManager()->getRepository("VeniceAppBundle:BlogArticle")->findAll();
-
-        $max = count($blogArticles);
+        $max = $this->getEntityManager()->getRepository('VeniceAppBundle:BlogArticle')->count();
         $url = $this->generateUrl('grid_default', ['entity'=>'BlogArticle']);
 
         $gridConfBuilder =  $this->get('trinity.grid.grid_configuration_service')->createGridConfigurationBuilder(

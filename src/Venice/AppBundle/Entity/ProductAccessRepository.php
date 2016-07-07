@@ -35,8 +35,11 @@ class ProductAccessRepository extends EntityRepository implements NotificationEn
         return $query->getOneOrNullResult();
     }
 
-
-//   TODO @JakubFajkus
+    /**
+     * @param $userId
+     *
+     * @return int
+     */
     public function count($userId)
     {
         $query = $this->getEntityManager()->createQuery('

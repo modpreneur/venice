@@ -28,7 +28,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Class BaseProduct
  *
  * @ORM\Table(name="product")
- * @ORM\Entity(repositoryClass="ProductRepository", )
+ * @ORM\Entity(repositoryClass="ProductRepository")
  *
  * @ORM\InheritanceType("JOINED")
  * @ORM\DiscriminatorColumn(name="type", type="string")

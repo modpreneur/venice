@@ -75,7 +75,8 @@ class ProductController extends BaseAdminController
      */
     public function blogArticleIndexAction(Request $request, Product $product)
     {
-        $max = count($product->getBlogArticles());
+        $max = $this->getEntityManager()->getRepository("VeniceAppBundle:BlogArticle")
+            ->getCountByProduct($product->getId());
         $url = $this->generateUrl('grid_default', ['entity'=>'BlogArticle']);
 
         $gridConfBuilder =  $this->get('trinity.grid.grid_configuration_service')->createGridConfigurationBuilder(
@@ -379,7 +380,8 @@ class ProductController extends BaseAdminController
     public function contentProductIndexAction(Product $product)
     {
         $url = $this->generateUrl('grid_default', ['entity'=>'ContentProduct']);
-        $count =  count($product->getContentProducts());//TODO @JakubFajkus remake this to pleace (I didn't know how to make it differently)
+        $count =  $this->getEntityManager()->getRepository('VeniceAppBundle:ContentProduct')
+            ->getCountByProduct($product->getId());
 
         $gridConfBuilder =  $this->get('trinity.grid.grid_configuration_service')->createGridConfigurationBuilder(
             $url,

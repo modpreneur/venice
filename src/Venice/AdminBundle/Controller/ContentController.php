@@ -45,10 +45,7 @@ class ContentController extends BaseAdminController
         $this->getBreadcrumbs()
             ->addRouteItem("Contents", "admin_content_index");
 
-        $contents = $this->getEntityManager()->getRepository("VeniceAppBundle:Content\\Content")->findAll();
-        
-//       TODO @JakubFajkus i have couldn't find the reposytory file, so please could you remake this after me?
-        $max = count($contents);
+        $max = $this->getEntityManager()->getRepository('VeniceAppBundle:Content\Content')->count();
         $url = $this->generateUrl('grid_default', ['entity'=>'Content']);
 
         $gridConfBuilder = $this->get('trinity.grid.grid_configuration_service')->createGridConfigurationBuilder(
@@ -498,7 +495,8 @@ class ContentController extends BaseAdminController
     public function contentProductIndexAction(Content $content)
     {
         $url = $this->generateUrl('grid_default', ['entity'=>'ContentProduct']);
-        $count =  count($content->getContentProducts());//TODO @JakubFajkus remake this to pleace (I didn't know how to make it differently)
+        $count = $this->getEntityManager()->getRepository('VeniceAppBundle:ContentProduct')
+            ->getCountByContent($content->getId());
 
         $gridConfBuilder =  $this->get('trinity.grid.grid_configuration_service')->createGridConfigurationBuilder(
             $url,
