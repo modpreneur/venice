@@ -446,7 +446,7 @@ class NecktieGatewayTest extends BaseTest
         $this->entityManagerMock
             ->expects($this->once())
             ->method("getRepository")
-            ->with("AppBundle:User")
+            ->with("VeniceAppBundle:User")
             ->will($this->returnValue($repositoryMock));
 
         $foundUser = $this->getUserByAccessToken(
