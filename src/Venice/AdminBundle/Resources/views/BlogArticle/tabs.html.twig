@@ -10,12 +10,6 @@
     {{ parent() }}
 {% endblock %}
 
-{% block trinity_admin_script_footer %}
-    {{ parent() }}
-
-    {% include("VeniceAdminBundle:Common:froalaEditorJavascripts.html.twig") %}
-{% endblock %}
-
 {% block pageAction %}
     {{ parent() }}
     {% include "VeniceAdminBundle:Common:goUpAction.html.twig" with {"url": path("admin_product_index"), "tooltip": "Go back to products"} %}

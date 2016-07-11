@@ -1,15 +1,8 @@
 {% extends('VeniceAdminBundle::BlogArticle/base.html.twig') %}
 
 {% block stylesheets  %}
-  {% include("VeniceAdminBundle:Common:froalaEditorStylesheets.html.twig") %}
+    {% include("VeniceAdminBundle:Common:froalaEditorStylesheets.html.twig") %}
     <link rel="stylesheet" type="text/css" media="screen" href="/js/node_modules/react-widgets/dist/css/react-widgets.css"/>
-    {{ parent() }}
-{% endblock %}
-
-{% block trinity_admin_script_footer %}
-    <!-- Include jQuery. -->
-    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-    {% include("VeniceAdminBundle:Common:froalaEditorJavascripts.html.twig") %}
     {{ parent() }}
 {% endblock %}
 
