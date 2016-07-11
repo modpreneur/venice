@@ -21,6 +21,11 @@ services:
         tags:
           - { name: trinity.grid, alias: standardproduct }
 
+    admin.grid.freeproduct:
+        class: Venice\AdminBundle\Grid\ProductGrid
+        tags:
+          - { name: trinity.grid, alias: freeproduct }
+
     admin.grid.product:
         class: Venice\AdminBundle\Grid\ProductGrid
         tags:

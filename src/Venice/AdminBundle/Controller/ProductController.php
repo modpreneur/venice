@@ -54,8 +54,8 @@ class ProductController extends BaseAdminController
         // Defining columns
         $gridConfBuilder->addColumn('id', 'Id');
         $gridConfBuilder->addColumn('name', 'Name');
-        $gridConfBuilder->addColumn('defaultBillingPlan:initialPrice', 'Price', ['type' => 'double']);
-        $gridConfBuilder->addColumn('type', 'Type');
+        $gridConfBuilder->addColumn('defaultBillingPlan:initialPrice', 'Price', ['type' => 'double', 'allowOrder' => false]);
+        $gridConfBuilder->addColumn('type', 'Type', ['allowOrder' => false]);
 //        $gridConfBuilder->addColumn('updatedAt', 'Updated At', ['type' => 'date']);
         $gridConfBuilder->addColumn('details', ' ', ['allowOrder' => false]);
 
