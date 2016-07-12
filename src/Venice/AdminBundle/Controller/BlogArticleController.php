@@ -43,8 +43,7 @@ class BlogArticleController extends BaseAdminController
         $gridConfBuilder =  $this->get('trinity.grid.grid_configuration_service')->createGridConfigurationBuilder(
             $url,
             $max,
-            15
-        // TODO @JakubFajkus  add limit_on_page to venice (trinity settings)
+            $this->get('trinity.settings')->get('items_on_page')
         );
 
         // Defining columns

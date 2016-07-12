@@ -234,6 +234,7 @@ snc_redis:
 trinity_settings:
   settings:
      currency: 'USD'
+     items_on_page: 20
 
 kms_froala_editor:
     language: "en_gb"
