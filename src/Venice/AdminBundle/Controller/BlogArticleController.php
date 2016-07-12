@@ -42,8 +42,7 @@ class BlogArticleController extends BaseAdminController
 
         $gridConfBuilder =  $this->get('trinity.grid.grid_configuration_service')->createGridConfigurationBuilder(
             $url,
-            $max,
-            $this->get('trinity.settings')->get('items_on_page')
+            $max
         );
 
         // Defining columns

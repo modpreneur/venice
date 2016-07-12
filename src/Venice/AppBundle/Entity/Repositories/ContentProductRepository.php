@@ -5,10 +5,9 @@ namespace Venice\AppBundle\Entity;
 use Doctrine\ORM\EntityRepository;
 
 /**
- * BlogArticleRepository
- *
+ * ContentProductRepository
  */
-class BlogArticleRepository extends EntityRepository
+class ContentProductRepository extends EntityRepository
 {
     /**
      * @param int $productId
@@ -18,9 +17,10 @@ class BlogArticleRepository extends EntityRepository
     public function getCountByProduct(int $productId)
     {
         $query = $this->getEntityManager()->createQuery('
-              SELECT COUNT(article)
-              FROM  VeniceAppBundle:BlogArticle AS article
-              WHERE article.product.id == :productId
+              SELECT COUNT(cp)
+              FROM  VeniceAppBundle:ContentProduct AS cp
+              JOIN cp.product product
+              WHERE product.id = :productId
             ')
             ->setParameter('productId', $productId)
         ;
@@ -28,14 +28,19 @@ class BlogArticleRepository extends EntityRepository
     }
 
     /**
+     * @param int $contentId
+     *
      * @return int
      */
-    public function count()
+    public function getCountByContent(int $contentId)
     {
         $query = $this->getEntityManager()->createQuery('
-              SELECT COUNT(article)
-              FROM  VeniceAppBundle:BlogArticle AS article
+              SELECT COUNT(cp)
+              FROM  VeniceAppBundle:ContentProduct AS cp
+              JOIN cp.content content
+              WHERE cp.content.id = :contentId
             ')
+            ->setParameter('contentId', $contentId)
         ;
         return $query->getSingleScalarResult();
     }

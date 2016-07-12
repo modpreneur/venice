@@ -50,8 +50,7 @@ class ContentController extends BaseAdminController
 
         $gridConfBuilder = $this->get('trinity.grid.grid_configuration_service')->createGridConfigurationBuilder(
             $url,
-            $max,
-            15
+            $max
         );
 
         // Defining columns
@@ -500,8 +499,7 @@ class ContentController extends BaseAdminController
 
         $gridConfBuilder =  $this->get('trinity.grid.grid_configuration_service')->createGridConfigurationBuilder(
             $url,
-            $count,
-            15
+            $count
         );
 
         // Defining columns

@@ -45,8 +45,7 @@ class UserController extends BaseAdminController
 
         $gridConfBuilder = $this->get('trinity.grid.grid_configuration_service')->createGridConfigurationBuilder(
             $url,
-            $count,
-            15
+            $count
         );
 
         $gridConfBuilder->addColumn('id', 'Id');

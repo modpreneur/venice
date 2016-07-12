@@ -48,8 +48,7 @@ class BillingPlanController extends BaseAdminController
 
         $gridConfBuilder = $this->get('trinity.grid.grid_configuration_service')->createGridConfigurationBuilder(
             $url,
-            $count,
-            15
+            $count
         );
         // Defining columns
         $gridConfBuilder->addColumn('id', 'Id');
@@ -59,7 +58,6 @@ class BillingPlanController extends BaseAdminController
         $gridConfBuilder->addColumn('frequency', 'Frequency');
         $gridConfBuilder->addColumn('trial', 'Trial');
         $gridConfBuilder->addColumn('details', ' ', ['allowOrder' => false]);
-
 
         $gridConfBuilder->setProperty('filter', 'product=' . $id);
 

@@ -41,8 +41,7 @@ class ProductAccessController extends BaseAdminController
         $url = $this->generateUrl('grid_default', ['entity'=>'ProductAccess']);
         $gridConfBuilder = $this->get('trinity.grid.grid_configuration_service')->createGridConfigurationBuilder(
             $url,
-            $count,
-            15
+            $count
         );
 
         // Defining columns
