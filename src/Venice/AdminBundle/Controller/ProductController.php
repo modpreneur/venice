@@ -94,7 +94,6 @@ class ProductController extends BaseAdminController
 //        $gridConfBuilder->setProperty('filter', 'products='.);
 //        TODO @JakubFajkus could you try set the filter? produts are array, so i have no id how to do this
 
-
         return $this->render(
             "VeniceAdminBundle:Product:articlesIndex.html.twig",
             [

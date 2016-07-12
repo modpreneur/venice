@@ -54,13 +54,13 @@ class MessagesConsumer
 
         try {
             $event = new UnpackMessageEvent($data, $this->clientIdentification);
-            $this->dispatcher->dispatch(Events::UNPACK_MESSAGE, $event);
+            $this->dispatcher->dispatch(UnpackMessageEvent::NAME, $event);
 
             $channel->ack($message);
         } catch (\Throwable $error) {
             if (function_exists('dump')) {
-            dump($error->getMessage(), $error->getFile(), $error->getTraceAsString());
-        }
+                dump($error->getMessage(), $error->getFile(), $error->getTraceAsString());
+            }
             $channel->nack($message, false, false);
         }
 
