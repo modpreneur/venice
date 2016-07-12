@@ -60,7 +60,6 @@ class NecktieBuyController extends Controller
         }
 
         if ($billingPlanId) {
-            //todo: @JakubFajkus send to url: /payment/cb/ocb/billing/{billingPlanId}?access_token=$token&$useStoredCC
             $billingPlan = $em->getRepository('VeniceAppBundle:BillingPlan')->findOneBy(['necktieId' => $billingPlanId]);
             if (!$billingPlan) {
                 throw new NotFoundHttpException('No billing plan found');
