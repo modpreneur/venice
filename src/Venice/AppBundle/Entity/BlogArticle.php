@@ -96,6 +96,7 @@ class BlogArticle implements EntityInterface
      * @var string
      *
      * @Assert\Length(min = 10)
+     * @Assert\NotBlank()
      *
      * @ORM\Column(name="content", type="text")
      */
@@ -109,7 +110,7 @@ class BlogArticle implements EntityInterface
     protected $products;
 
 
-    function __construct()
+    public function __construct()
     {
         $this->updateTimestamps();
         $this->products = new ArrayCollection();
