@@ -7,4 +7,6 @@
     {% set class = "" %}
 {% endif %}
 
-<a id="{{ id }}" class="{{ class }}" href="{{ url }}">{{ text }}</a>
+{% if url is not empty %}
+    <a id="{{ id }}" class="{{ class }}" href="{{ url }}">{{ text }}</a>
+{% endif %}

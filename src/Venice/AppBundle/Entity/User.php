@@ -253,7 +253,13 @@ class User extends BaseUser implements NotificationEntityInterface
      */
     public function getLastRefreshToken()
     {
-        return $this->OAuthTokens->last()->getRefreshToken();
+        $token = $this->OAuthTokens->last();
+
+        if(false !== $token) {
+            return $token->getRefreshToken();
+        }
+
+        return null;
     }
 
 

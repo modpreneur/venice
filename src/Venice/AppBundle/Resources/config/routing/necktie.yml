@@ -1,6 +1,11 @@
 necktie_buy_product:
-    path: '/buy/product/{id}'
+    path: '/buy/product/{id}/{paySystem}'
     defaults: { _controller: 'Venice\AppBundle\Controller\NecktieBuyController::redirectToNecktieBuy' }
+    options: { compiler_class: Symfony\Component\Routing\RouteCompiler }
+
+thank_you:
+    path: '/thank-you/{necktieProductId}'
+    defaults: { _controller: 'Venice\AppBundle\Controller\ThankYouController::thankYouAction' }
     options: { compiler_class: Symfony\Component\Routing\RouteCompiler }
 
 necktie_login:
