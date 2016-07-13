@@ -19,7 +19,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * Class ContentProduct
  *
- * @ORM\Entity(repositoryClass="ContentProductRepository")
+ * @ORM\Entity(repositoryClass="Venice\AppBundle\Entity\Repositories\ContentProductRepository")
  * @ORM\Table(name="contents_products")
  *
  * @UniqueEntity(

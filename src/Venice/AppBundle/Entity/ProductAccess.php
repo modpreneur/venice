@@ -16,7 +16,7 @@ use Trinity\NotificationBundle\Annotations as N;
  * ProductAccess
  *
  * @ORM\Table(name="product_access")
- * @ORM\Entity(repositoryClass="ProductAccessRepository")
+ * @ORM\Entity(repositoryClass="Venice\AppBundle\Entity\Repositories\ProductAccessRepository")
  *
  * @UniqueEntity(fields={"user", "product"}, errorPath="product")
  */

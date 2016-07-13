@@ -1,6 +1,6 @@
 <?php
 
-namespace Venice\AppBundle\Entity;
+namespace Venice\AppBundle\Entity\Repositories;
 
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\NonUniqueResultException;

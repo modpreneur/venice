@@ -19,7 +19,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity(repositoryClass="BlogArticleRepository")
+ * @ORM\Entity(repositoryClass="Venice\AppBundle\Entity\Repositories\BlogArticleRepository")
  * @ORM\Table(name="blog_article")
  *
  * @UniqueEntity("handle")

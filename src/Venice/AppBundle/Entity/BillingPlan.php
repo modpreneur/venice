@@ -20,7 +20,7 @@ use Trinity\NotificationBundle\Annotations as N;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity(repositoryClass="BillingPlanRepository")
+ * @ORM\Entity(repositoryClass="Venice\AppBundle\Entity\Repositories\BillingPlanRepository")
  * @HasLifecycleCallbacks
  * @ORM\Table(name="billing_plan")
  *
