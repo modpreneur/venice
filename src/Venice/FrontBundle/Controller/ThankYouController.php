@@ -6,7 +6,7 @@
  * Time: 15:53
  */
 
-namespace Venice\AppBundle\Controller;
+namespace Venice\FrontBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,7 +15,7 @@ use Venice\AppBundle\Entity\Product\StandardProduct;
 
 /**
  * Class ThankYouController
- * @package Venice\AppBundle\Controller
+ * @package Venice\FrontBundle\Controller
  */
 class ThankYouController extends Controller
 {
@@ -35,7 +35,7 @@ class ThankYouController extends Controller
         if (!$product) {
             throw new NotFoundHttpException("No StandardProduct with id {$necktieProductId} found.");
         }
-        
-        return $this->redirectToRoute('front_product_show', ['id' => $product->getId()]);
+
+        return $this->render('VeniceFrontBundle:ThankYou:thankYou.html.twig', ['product' => $product]);
     }
 }

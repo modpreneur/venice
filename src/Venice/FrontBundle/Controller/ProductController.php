@@ -15,8 +15,6 @@ use Venice\AppBundle\Entity\Product\Product;
 use Venice\AppBundle\Entity\User;
 
 /**
- * @Route("/front/product")
- *
  * Class ProductController
  */
 class ProductController extends Controller

@@ -1,6 +1,7 @@
-front:
-    resource: "@VeniceFrontBundle/Controller"
-    type:     annotation
+thank_you:
+    path: '/front/thank-you/{necktieProductId}'
+    defaults: { _controller: 'Venice\FrontBundle\Controller\ThankYouController::thankYouAction' }
+    options: { compiler_class: Symfony\Component\Routing\RouteCompiler }
 
 front_index:
     path: /front/

@@ -1,0 +1,6 @@
+{% extends('VeniceAppBundle::base.html.twig') %}
+
+{% block body %}
+    <h1>Thank you for buying {{ product.name }}</h1>
+    <p>You can see the content of the product <a href="{{ path('front_product_show', {'id': product.id}) }}">HERE!</a></p>
+{% endblock %}
