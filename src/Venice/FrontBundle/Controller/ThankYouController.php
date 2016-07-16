@@ -31,8 +31,7 @@ class ThankYouController extends Controller
         $product = null;
 
         if($productId !== null)
-        $product = $this->getDoctrine()->getRepository('VeniceAppBundle:Product\StandardProduct')
-            ->find($productId);
+            $product = $this->getDoctrine()->getRepository('VeniceAppBundle:Product\StandardProduct')->find($productId);
 
         return $this->render('VeniceFrontBundle:ThankYou:thankYou.html.twig', ['product' => $product]);
     }
