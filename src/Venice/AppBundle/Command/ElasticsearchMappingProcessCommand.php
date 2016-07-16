@@ -66,7 +66,7 @@ class ElasticsearchMappingProcessCommand extends ContainerAwareCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $output->writeln("NOT IMPLEMENTED YET!");
-        return 1;
+        return 0;
 
         $this->create();
         $new = $this->getConfig();
