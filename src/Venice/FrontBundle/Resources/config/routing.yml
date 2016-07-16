@@ -1,5 +1,5 @@
-thank_you:
-    path: '/front/thank-you/{necktieProductId}'
+front_thank_you:
+    path: '/front/thank-you/{productId}'
     defaults: { _controller: 'Venice\FrontBundle\Controller\ThankYouController::thankYouAction' }
     options: { compiler_class: Symfony\Component\Routing\RouteCompiler }
 

@@ -1,6 +1,12 @@
 {% extends('VeniceAppBundle::base.html.twig') %}
 
 {% block body %}
-    <h1>Thank you for buying {{ product.name }}</h1>
-    <p>You can see the content of the product <a href="{{ path('front_product_show', {'id': product.id}) }}">HERE!</a></p>
+    {% if product is not null %}
+        <h1>Thank you for buying {{ product.name }}</h1>
+        <p>You can see the content of the product <a href="{{ path('front_product_show', {'id': product.id}) }}">HERE!</a></p>
+    {% else %}
+        {#if the product was not found, display generic page instead of 404 error page...#}
+        <h1>Thank you for your purchase</h1>
+        <p>You can see all your products <a href="{{ path('front_product_index') }}">HERE!</a></p>
+    {% endif %}
 {% endblock %}

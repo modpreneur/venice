@@ -6,33 +6,36 @@
  * Time: 15:53
  */
 
-namespace Venice\FrontBundle\Controller;
+namespace Venice\AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Venice\AppBundle\Entity\Product\Product;
 use Venice\AppBundle\Entity\Product\StandardProduct;
 
 /**
  * Class ThankYouController
- * @package Venice\FrontBundle\Controller
+ * @package Venice\AppBundle\Controller
  */
 class ThankYouController extends Controller
 {
     /**
      * @param Request $request
-     * @param Product $product
+     * @param         $necktieProductId
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     * @internal param $necktieProductId
      *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      */
-    public function thankYouAction(Request $request, $productId)
+    public function thankYouAction(Request $request, $necktieProductId)
     {
         $product = $this->getDoctrine()->getRepository('VeniceAppBundle:Product\StandardProduct')
-            ->find($productId);
+            ->findOneBy(['necktieId' => $necktieProductId]);
 
-        return $this->render('VeniceFrontBundle:ThankYou:thankYou.html.twig', ['product' => $product]);
+        if (!$product) {
+            throw new NotFoundHttpException("No Product with id {$necktieProductId} found.");
+        }
+
+        return $this->redirectToRoute('front_thank_you', ['productId' => $product->getId()]);
     }
 }
