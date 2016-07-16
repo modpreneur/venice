@@ -88,9 +88,9 @@ class ProductController extends BaseAdminController
         $gridConfBuilder->addColumn('title', 'Title');
         $gridConfBuilder->addColumn('handle', 'Handle');
         $gridConfBuilder->addColumn('details', ' ', ['allowOrder' => false]);
+        $gridConfBuilder->addColumn('products');
 
-//        $gridConfBuilder->setProperty('filter', 'products='.);
-//        TODO @JakubFajkus could you try set the filter? produts are array, so i have no id how to do this
+        $gridConfBuilder->setProperty('filter', 'products:id = ' . $product->getId());
 
         return $this->render(
             "VeniceAdminBundle:Product:articlesIndex.html.twig",
@@ -391,8 +391,9 @@ class ProductController extends BaseAdminController
         $gridConfBuilder->addColumn('orderNumber', 'Order number');
         $gridConfBuilder->addColumn('delay', 'Delay[hours]');
         $gridConfBuilder->addColumn('details', ' ', ['allowOrder' => false]);
+        $gridConfBuilder->addColumn('products');
 
-        $gridConfBuilder->setProperty('filter', 'product=' . $product->getId());
+        $gridConfBuilder->setProperty('filter', 'product:id = ' . $product->getId());
 
         return $this->render(
             'VeniceAdminBundle:Product:contentProductIndex.html.twig',
