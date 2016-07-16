@@ -27,6 +27,5 @@ class MessagesProducer extends AbstractProducer
      */
     public function preProcessMessage($message)
     {
-        dump("preprocess:", $message);
     }
 }
