@@ -21,21 +21,18 @@ class ThankYouController extends Controller
 {
     /**
      * @param Request $request
-     * @param         $necktieProductId
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     *
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      */
-    public function thankYouAction(Request $request, $necktieProductId)
+    public function thankYouAction(Request $request)
     {
-        $product = $this->getDoctrine()->getRepository('VeniceAppBundle:Product\StandardProduct')
-            ->findOneBy(['necktieId' => $necktieProductId]);
-
-        if (!$product) {
-            throw new NotFoundHttpException("No Product with id {$necktieProductId} found.");
+        $productId = $request->get('productId');
+        $product = null;
+        if($productId !== null) {
+            $product = $this->getDoctrine()->getRepository('VeniceAppBundle:Product\StandardProduct')
+                ->findOneBy(['necktieId' => $productId]);
         }
 
-        return $this->redirectToRoute('front_thank_you', ['productId' => $product->getId()]);
+        return $this->redirectToRoute('front_thank_you', ['productId' => ($product !== null)? $product->getId() : null]);
     }
 }

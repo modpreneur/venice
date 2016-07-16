@@ -4,7 +4,7 @@ necktie_buy_product:
     options: { compiler_class: Symfony\Component\Routing\RouteCompiler }
 
 necktie_thank_you:
-    path: '/thank-you/{necktieProductId}'
+    path: '/thank-you'
     defaults: { _controller: 'Venice\AppBundle\Controller\ThankYouController::thankYouAction' }
     options: { compiler_class: Symfony\Component\Routing\RouteCompiler }
 

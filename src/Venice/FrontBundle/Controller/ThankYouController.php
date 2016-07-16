@@ -22,14 +22,15 @@ class ThankYouController extends Controller
 {
     /**
      * @param Request $request
-     * @param Product $product
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     * @internal param $necktieProductId
-     *
      */
-    public function thankYouAction(Request $request, $productId)
+    public function thankYouAction(Request $request)
     {
+        $productId = $request->get('productId');
+        $product = null;
+
+        if($productId !== null)
         $product = $this->getDoctrine()->getRepository('VeniceAppBundle:Product\StandardProduct')
             ->find($productId);
 
