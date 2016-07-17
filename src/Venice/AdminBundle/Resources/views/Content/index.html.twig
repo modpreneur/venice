@@ -21,7 +21,7 @@
                     </div>
                 </div>
             </div>
-            {% if (is_granted('ROLE_ADMIN_PRODUCT_EDIT')) %}
+            {% if (is_granted('ROLE_ADMIN_CONTENT_EDIT')) %}
                 <div class="info-empty-form">
                     <a class="button button-addNew" id="newIcon" href="{{ path('admin_content_new') }}">
                         Add new Content
