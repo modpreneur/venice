@@ -5,16 +5,11 @@
     <ul>
         {% for product in products if product.enabled %}
             <li>
-                {% if app.user.hasAccessToProduct(product) %}
-                    <a href="{{ path('front_product_show', {'id': product.id}) }}">
-                        {{ product.name }}
-                    </a>
-                    <a href="{{ path("front_product_demo", {"id": product.id}) }}">To demo</a>
-                {% elseif(product.type == "standard") %}
+                <a href="{{ path('front_product_show', {'id': product.id}) }}">
                     {{ product.name }}
-                    {% include "VeniceFrontBundle:Common:buyLink.html.twig" with {"url": urlGenerator.generateBuyUrl(product, null, false, 'cb'), "text": "ClickBank" } %}
-                    {% include "VeniceFrontBundle:Common:buyLink.html.twig" with {"url": urlGenerator.generateBuyUrl(product, null, true, 'cb'), "text": "ClickBank storedCC" } %}
-                    {% include "VeniceFrontBundle:Common:buyLink.html.twig" with {"url": urlGenerator.generateBuyUrl(product, null, false, 'braintree'), "text": "Braintree" } %}
+                </a>
+                {% if app.user.hasAccessToProduct(product) %}
+                    <a href="{{ path("front_product_demo", {"id": product.id}) }}">To demo</a>
                 {% endif %}
             </li>
         {% endfor %}
