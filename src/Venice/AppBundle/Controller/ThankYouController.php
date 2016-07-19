@@ -10,7 +10,6 @@ namespace Venice\AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Venice\AppBundle\Entity\Product\StandardProduct;
 
 /**
@@ -23,16 +22,21 @@ class ThankYouController extends Controller
      * @param Request $request
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @throws \LogicException
      */
     public function thankYouAction(Request $request)
     {
+        //@todo @JakubFajkus
         $productId = $request->get('productId');
         $product = null;
-        if($productId !== null) {
-            $product = $this->getDoctrine()->getRepository('VeniceAppBundle:Product\StandardProduct')
+        if ($productId !== null) {
+            $product = $this->getDoctrine()->getRepository(StandardProduct::class)
                 ->findOneBy(['necktieId' => $productId]);
         }
 
-        return $this->redirectToRoute('front_thank_you', ['productId' => ($product !== null)? $product->getId() : null]);
+        return $this->redirectToRoute(
+            'front_thank_you',
+            ['productId' => ($product !== null)? $product->getId() : null]
+        );
     }
 }
