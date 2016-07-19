@@ -1,0 +1,91 @@
+Venice\AppBundle\Entity\Content\Content:
+    type: entity
+    table: content
+    inheritanceType: JOINED
+    discriminatorColumn:
+        name: type
+        type: string
+        length: null
+        columnDefinition: null
+        fieldName: type
+    discriminatorMap:
+        content: Venice\AppBundle\Entity\Content\Content
+        groupcontent: Venice\AppBundle\Entity\Content\GroupContent
+        htmlcontent: Venice\AppBundle\Entity\Content\HtmlContent
+        iframecontent: Venice\AppBundle\Entity\Content\IframeContent
+        mp3content: Venice\AppBundle\Entity\Content\Mp3Content
+        pdfcontent: Venice\AppBundle\Entity\Content\PdfContent
+        videocontent: Venice\AppBundle\Entity\Content\VideoContent
+    repositoryClass: Venice\AppBundle\Entity\Repositories\ContentRepository
+    id:
+        id:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        name:
+            type: string
+            scale: 0
+            length: 255
+            unique: true
+            nullable: false
+            precision: 0
+        createdAt:
+            type: datetime
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            column: created_at
+        updatedAt:
+            type: datetime
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            column: updated_at
+    oneToMany:
+        contentProducts:
+            targetEntity: Venice\AppBundle\Entity\ContentProduct
+            orderBy: { 'orderNumber': 'ASC' }
+            cascade:
+                - remove
+                - persist
+            fetch: LAZY
+            mappedBy: content
+            inversedBy: null
+            orphanRemoval: false
+            orderBy:
+                orderNumber: ASC
+        contentsInGroup:
+            targetEntity: Venice\AppBundle\Entity\Content\ContentInGroup
+            orderBy: { 'orderNumber': 'ASC' }
+            cascade:
+                - remove
+                - persist
+            fetch: LAZY
+            mappedBy: content
+            inversedBy: null
+            orphanRemoval: false
+            orderBy:
+                orderNumber: ASC
+    manyToOne:
+        author:
+            targetEntity: Venice\AppBundle\Entity\User
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                author_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Venice\AppBundle\Entity\Content;
+namespace Venice\AppBundle\Entity\Repositories;
 
 use Doctrine\ORM\EntityRepository;
 
@@ -9,6 +9,20 @@ use Doctrine\ORM\EntityRepository;
  */
 class ContentRepository extends EntityRepository
 {
+    /**
+     * @see http://jayroman.com/blog/symfony2-quirks-with-doctrine-inheritance-and-unique-constraints
+     *
+     * @param string[] $criteria format: array('user' => <user_id>, 'name' => <name>)
+     */
+    public function findByUniqueCriteria(array $criteria)
+    {
+        /*
+         * The findByName method must explicitly query the main entity,
+         * otherwise you will check a the uniqueness only for that type (name = ? AND type = ?)
+         */
+        return $this->getEntityManager()->getRepository('VeniceAppBundle:Content\Content')->findBy($criteria);
+    }
+
     /**
      * @param int $productId
      *

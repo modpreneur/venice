@@ -8,15 +8,10 @@
 
 namespace Venice\AppBundle\Entity\Content;
 
-
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Class PdfContent
- *
- * @ORM\Entity()
- * @ORM\Table(name="content_pdf")
  *
  * @package Venice\AppBundle\Entity\Content
  */
@@ -24,11 +19,6 @@ class PdfContent extends Content
 {
     /**
      * @var string Url address to the file.
-     *
-     * @Assert\Url()
-     * @Assert\NotBlank()
-     *
-     * @ORM\Column(name="link", type="string", length=255, nullable=false)
      */
     protected $link;
 

@@ -1,0 +1,64 @@
+Venice\AppBundle\Entity\Content\Content:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+            fields: name
+            repositoryMethod: "findByUniqueCriteria"
+    properties:
+        name:
+            - NotBlank: ~
+            - Length:
+                min: 3
+
+Venice\AppBundle\Entity\Content\ContentInGroup:
+    properties:
+        group:
+            - NotBlank: ~
+        content:
+            - NotBlank: ~
+        delay:
+            - Range:
+                min: 0
+                max: 10000
+        orderNumber:
+            - Range:
+                min: 0
+                max: 1000
+
+Venice\AppBundle\Entity\Content\GroupContent:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: handle
+    properties:
+        items:
+            - Valid: ~
+
+Venice\AppBundle\Entity\Content\Mp3Content:
+    properties:
+        link:
+            - NotBlank: ~
+            - Url: ~
+        duration:
+            - Range:
+                min: 1
+
+Venice\AppBundle\Entity\Content\PdfContent:
+    properties:
+        link:
+            - NotBlank: ~
+            - Url: ~
+
+Venice\AppBundle\Entity\Content\VideoContent:
+    properties:
+        previewImage:
+            - Url: ~
+            - NotBlank: ~
+        videoMobile:
+            - Url: ~
+        videoLq:
+            - Url: ~
+        videoHq:
+            - Url: ~
+        videoHd:
+            - Url: ~
+        duration:
+            - Range:
+                min: 1

@@ -14,37 +14,23 @@ use Trinity\Component\Core\Interfaces\ClientInterface;
 use Trinity\NotificationBundle\Entity\NotificationEntityInterface;
 use Venice\AppBundle\Entity\Product\StandardProduct;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Trinity\NotificationBundle\Annotations as N;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity(repositoryClass="Venice\AppBundle\Entity\Repositories\BillingPlanRepository")
- * @HasLifecycleCallbacks
- * @ORM\Table(name="billing_plan")
- *
- * @UniqueEntity("necktieId")
- *
  * Class BillingPlan
  */
 class BillingPlan extends BaseBillingPlan implements NotificationEntityInterface
 {
     /**
      * @var int
-     *
-     * @ORM\Column(name="necktie_id", type="integer", nullable=false, unique=true)
      */
     protected $necktieId;
 
 
     /**
      * @var StandardProduct
-     *
-     * @ORM\ManyToOne(targetEntity="Venice\AppBundle\Entity\Product\StandardProduct", cascade={"persist"})
-     * @ORM\JoinColumn(referencedColumnName="id", onDelete="CASCADE")
-     *
-     * @Assert\NotBlank()
      */
     protected $product;
 
@@ -53,8 +39,6 @@ class BillingPlan extends BaseBillingPlan implements NotificationEntityInterface
      * String which can be used for displaying the price of this billing plan
      *
      * @var string
-     *
-     * @ORM\Column(name="price", type="string", length=50)
      */
     protected $price;
 

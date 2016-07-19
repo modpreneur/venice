@@ -13,9 +13,6 @@ use Doctrine\ORM\Mapping as ORM;
 
 
 /**
- * @ORM\Entity()
- * @ORM\Table(name="product_free")
- *
  * Class FreeProduct
  * @package Venice\AppBundle\Entity\Product
  */

@@ -14,16 +14,8 @@ use Venice\AppBundle\Traits\Timestampable;
 use Cocur\Slugify\Slugify;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\Mapping as ORM;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity(repositoryClass="Venice\AppBundle\Entity\Repositories\BlogArticleRepository")
- * @ORM\Table(name="blog_article")
- *
- * @UniqueEntity("handle")
- *
  * Class BlogArticle
  */
 class BlogArticle implements EntityInterface
@@ -44,68 +36,41 @@ class BlogArticle implements EntityInterface
 
     /**
      * @var int
-     *
-     * @ORM\Column(type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     protected $id;
 
 
     /**
      * @var string
-     *
-     * @Assert\NotBlank()
-     *
-     * @ORM\Column(name="handle", type="string", unique=true)
-     *
      */
     protected $handle;
 
 
     /**
      * @var User
-     *
-     * @ORM\ManyToOne(targetEntity="Venice\AppBundle\Entity\User")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=true)
      */
     protected $publisher;
 
 
     /**
      * @var DateTime
-     *
-     * @Assert\DateTime()
-     *
-     * @ORM\Column(name="date_to_publish", type="datetime", nullable=true)
      */
     protected $dateToPublish;
 
 
     /**
      * @var string
-     *
-     * @Assert\NotBlank()
-     *
-     * @ORM\Column(name="title", type="string", length=255)
      */
     protected $title;
 
 
     /**
      * @var string
-     *
-     * @Assert\Length(min = 10)
-     * @Assert\NotBlank()
-     *
-     * @ORM\Column(name="content", type="text")
      */
     protected $content;
 
     /**
      * @var ArrayCollection<Product>
-     *
-     * @ORM\ManyToMany(targetEntity="Venice\AppBundle\Entity\Product\Product", inversedBy="articles", cascade={"PERSIST"})
      */
     protected $products;
 

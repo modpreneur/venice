@@ -1,14 +1,15 @@
 <?php
 
-namespace Venice\AppBundle\Entity\Product;
+namespace Venice\AppBundle\Entity\Repositories;
 
 use Doctrine\ORM\EntityRepository;
 use Trinity\NotificationBundle\Interfaces\NotificationEntityRepositoryInterface;
+use Venice\AppBundle\Entity\Product\Product;
 
 /**
  * StandardProductRepository
  */
-class StandardProductRepository extends EntityRepository implements NotificationEntityRepositoryInterface
+class StandardProductRepository extends ProductRepository implements NotificationEntityRepositoryInterface
 {
     /**
      * Select entity by id. Set fetch mode to "EAGER" to load all data.

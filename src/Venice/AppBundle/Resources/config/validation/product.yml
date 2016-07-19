@@ -1,0 +1,25 @@
+Venice\AppBundle\Entity\Product\Product:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+            fields: handle
+            repositoryMethod: "findByUniqueCriteria"
+    properties:
+        image:
+            - Url: ~
+        orderNumber:
+            - Range:
+                min: 0
+                max: 10000
+
+Venice\AppBundle\Entity\Product\StandardProduct:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+            fields: necktieId
+            repositoryMethod: "findByUniqueCriteria"
+    properties:
+        image:
+            - Url: ~
+        orderNumber:
+            - Range:
+                min: 0
+                max: 10000

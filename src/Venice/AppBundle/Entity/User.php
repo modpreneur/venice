@@ -14,20 +14,13 @@ use Venice\AppBundle\Entity\Product\Product;
 use Venice\AppBundle\Traits\Timestampable;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\Mapping as ORM;
 use InvalidArgumentException;
 use JMS\Serializer\Annotation\SerializedName;
-use Symfony\Component\Validator\Constraints as Assert;
 use Trinity\NotificationBundle\Annotations as N;
 use Trinity\NotificationBundle\Entity\NotificationEntityInterface;
 
 /**
  * Class User
- *
- * @ORM\Entity(repositoryClass="Venice\AppBundle\Entity\Repositories\UserRepository")
- * @ORM\Table(name="user")
- *
- * @ORM\HasLifecycleCallbacks()
  *
  * @N\Source(columns="necktieId, username, email, firstName, lastName, avatar, locked, phoneNumber, website, country, region, city, addressLine1, addressLine2, postalCode")
  * Users cannot be created on client so there is no need to use POST
@@ -46,7 +39,6 @@ class User extends BaseUser implements NotificationEntityInterface
     /**
      * @var integer
      *
-     * @ORM\Column(name="necktie_id", type="integer", unique=true, nullable=true)
      * @SerializedName("id")
      */
     protected $necktieId;
@@ -54,42 +46,30 @@ class User extends BaseUser implements NotificationEntityInterface
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="preferred_units", type="string", length=10)
      */
     protected $preferredUnits;
 
 
     /**
      * @var ArrayCollection<ProductAccess>
-     *
-     * @ORM\OneToMany(targetEntity="Venice\AppBundle\Entity\ProductAccess", mappedBy="user", cascade={"REMOVE", "PERSIST"})
      */
     protected $productAccesses;
 
 
     /**
      * @var DateTime
-     *
-     * @Assert\DateTime()
-     *
-     * @ORM\Column(name="date_of_birth", type="date")
      */
     protected $birthDate;
 
 
     /**
      * @var ArrayCollection<OAuthToken>
-     *
-     * @ORM\OneToMany(targetEntity="Venice\AppBundle\Entity\OAuthToken", mappedBy="user", cascade={"REMOVE", "PERSIST"})
      */
     protected $OAuthTokens;
 
 
     /**
      * @var []
-     *
-     * @ORM\Column(type="array", nullable=true)
      */
     protected $status;
 

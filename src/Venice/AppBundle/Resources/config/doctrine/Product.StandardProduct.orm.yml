@@ -1,0 +1,28 @@
+Venice\AppBundle\Entity\Product\StandardProduct:
+    type: entity
+    table: product_standard
+    repositoryClass: Venice\AppBundle\Entity\Repositories\StandardProductRepository
+    fields:
+        necktieId:
+            type: integer
+            scale: 0
+            length: null
+            unique: true
+            nullable: false
+            precision: 0
+            column: necktie_id
+    oneToOne:
+        defaultBillingPlan:
+            targetEntity: Venice\AppBundle\Entity\BillingPlan
+            cascade:
+                - remove
+                - persist
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                default_billing_plan_id:
+                    referencedColumnName: id
+                    onDelete: 'SET NULL'
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

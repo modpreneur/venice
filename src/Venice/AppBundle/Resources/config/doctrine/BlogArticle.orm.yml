@@ -1,0 +1,94 @@
+Venice\AppBundle\Entity\BlogArticle:
+    type: entity
+    table: blog_article
+    repositoryClass: Venice\AppBundle\Entity\Repositories\BlogArticleRepository
+    id:
+        id:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        handle:
+            type: string
+            scale: 0
+            length: null
+            unique: true
+            nullable: false
+            precision: 0
+        dateToPublish:
+            type: datetime
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+            column: date_to_publish
+        title:
+            type: string
+            scale: 0
+            length: 255
+            unique: false
+            nullable: false
+            precision: 0
+        content:
+            type: text
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+        createdAt:
+            type: datetime
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            column: created_at
+        updatedAt:
+            type: datetime
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            column: updated_at
+    manyToOne:
+        publisher:
+            targetEntity: Venice\AppBundle\Entity\User
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                user_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    manyToMany:
+        products:
+            targetEntity: Venice\AppBundle\Entity\Product\Product
+            cascade:
+                - persist
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: articles
+            joinTable:
+                name: blog_article_product
+                joinColumns:
+                    -
+                        name: blog_article_id
+                        referencedColumnName: id
+                        onDelete: CASCADE
+                inverseJoinColumns:
+                    -
+                        name: product_id
+                        referencedColumnName: id
+                        onDelete: CASCADE
+            orderBy: null
+    lifecycleCallbacks: {  }

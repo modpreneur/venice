@@ -8,15 +8,10 @@
 
 namespace Venice\AppBundle\Entity\Content;
 
-
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Class Mp3Content
- *
- * @ORM\Entity()
- * @ORM\Table(name="content_mp3")
  *
  * @package Venice\AppBundle\Entity\Content
  */
@@ -24,11 +19,6 @@ class Mp3Content extends AbstractPlayableContent
 {
     /**
      * @var string Url address to the file.
-     *
-     * @Assert\Url()
-     * @Assert\NotBlank()
-     *
-     * @ORM\Column(name="link", type="string", length=255)
      */
     protected $link;
 

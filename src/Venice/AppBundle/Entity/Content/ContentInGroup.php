@@ -10,15 +10,8 @@ namespace Venice\AppBundle\Entity\Content;
 
 use Venice\AppBundle\Entity\Product\Product;
 use Venice\AppBundle\Entity\User;
-use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\Mapping\JoinColumn;
-use Symfony\Component\Validator\Constraints as Assert;
-
 
 /**
- * @ORM\Entity()
- * @ORM\Table(name = "content_in_group")
- *
  * Class ContentInGroup
  * @package Venice\AppBundle\Entity\Content
  */
@@ -26,58 +19,30 @@ class ContentInGroup
 {
     /**
      * @var int
-     *
-     * @ORM\Id()
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     *
      */
     protected $id;
 
 
     /**
      * @var GroupContent
-     *
-     * @Assert\NotBlank()
-     *
-     * @ORM\ManyToOne(targetEntity="Venice\AppBundle\Entity\Content\GroupContent", inversedBy="items")
-     * @JoinColumn(name="group_id", referencedColumnName="id")
      */
     protected $group;
 
 
     /**
      * @var Content
-     *
-     * @Assert\NotBlank()
-     *
-     * @ORM\ManyToOne(targetEntity="Venice\AppBundle\Entity\Content\Content", inversedBy="contentsInGroup")
      */
     protected $content;
 
 
     /**
      * @var int
-     *
-     * @Assert\Range(
-     *     min = 0,
-     *     max = 10000
-     *     )
-     *
-     * @ORM\Column(name="delay", type="integer", nullable=false)
      */
     protected $delay;
 
 
     /**
      * @var int
-     *
-     * @Assert\Range(
-     *     min = 0,
-     *     max = 1000
-     *     )
-     *
-     * @ORM\Column(name="order_number", type="integer", nullable=false)
      */
     protected $orderNumber;
 

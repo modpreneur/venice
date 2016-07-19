@@ -1,0 +1,12 @@
+Venice\AppBundle\Entity\ProductAccess:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+            fields:
+                - user
+                - product
+            errorPath: product
+       - Callback: [validate]
+    properties:
+        toDate:
+            - Type: \DateTime
+            - GreaterThanOrEqual: "now"

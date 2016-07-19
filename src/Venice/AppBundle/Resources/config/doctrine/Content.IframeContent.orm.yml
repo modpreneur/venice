@@ -1,0 +1,13 @@
+Venice\AppBundle\Entity\Content\IframeContent:
+    type: entity
+    repositoryClass: Venice\AppBundle\Entity\Repositories\IframeContentRepository
+    table: content_iframe
+    fields:
+        html:
+            type: text
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+    lifecycleCallbacks: {  }

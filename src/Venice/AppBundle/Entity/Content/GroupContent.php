@@ -11,36 +11,21 @@ namespace Venice\AppBundle\Entity\Content;
 use Cocur\Slugify\Slugify;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\Mapping\OrderBy;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
- * @ORM\Entity()
- * @ORM\Table(name="content_group")
- *
- * @UniqueEntity("handle")
- *
  * Class GroupContent
  */
 class GroupContent extends Content
 {
     /**
      * @var ArrayCollection<ContentInGroup>
-     *
-     * @Assert\Valid()
-     *
-     * @ORM\OneToMany(targetEntity="Venice\AppBundle\Entity\Content\ContentInGroup", mappedBy="group", cascade={"PERSIST", "REMOVE"})
-     * @OrderBy({"delay" = "ASC", "orderNumber" = "ASC"})
      */
     protected $items;
 
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="handle", type="string", unique=true)
      */
     protected $handle;
 

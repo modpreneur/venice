@@ -13,20 +13,9 @@ use Venice\AppBundle\Entity\ContentProduct;
 use Venice\AppBundle\Entity\User;
 use Venice\AppBundle\Traits\Timestampable;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\Mapping\OrderBy;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Class AbstractContent
- *
- * @ORM\Table(name="content")
- * @ORM\Entity(repositoryClass="ContentRepository")
- * @ORM\InheritanceType("JOINED")
- * @ORM\DiscriminatorColumn(name="type", type="string")
- *
- * @UniqueEntity("name")
  *
  * @package Venice\AppBundle\Entity\Content
  */
@@ -36,49 +25,30 @@ abstract class Content
 
     /**
      * @var int
-     *
-     * @ORM\Id()
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     *
      */
     protected $id;
 
 
     /**
      * @var string
-     *
-     * @Assert\Length(min = 3)
-     * @Assert\NotBlank()
-     *
-     * @ORM\Column(name="name", type="string", length=255, nullable=false, unique=true)
      */
     protected $name;
 
 
     /**
      * @var ArrayCollection<ContentProduct>
-     *
-     * @ORM\OneToMany(targetEntity="Venice\AppBundle\Entity\ContentProduct", mappedBy="content", cascade={"PERSIST", "REMOVE"})
-     * @OrderBy({"orderNumber" = "ASC"})
-     *
      */
     protected $contentProducts;
 
 
     /**
      * @var User
-     *
-     * @ORM\ManyToOne(targetEntity="Venice\AppBundle\Entity\User")
      */
     protected $author;
 
 
     /**
      * @var ContentInGroup
-     *
-     * @ORM\OneToMany(targetEntity="Venice\AppBundle\Entity\Content\ContentInGroup", mappedBy="content", cascade={"PERSIST", "REMOVE"})
-     * @OrderBy({"orderNumber" = "ASC"})
      */
     protected $contentsInGroup;
 

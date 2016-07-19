@@ -1,0 +1,83 @@
+Venice\AppBundle\Entity\BillingPlan:
+    type: entity
+    table: billing_plan
+    repositoryClass: Venice\AppBundle\Entity\Repositories\BillingPlanRepository
+    id:
+        id:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        necktieId:
+            type: integer
+            scale: 0
+            length: null
+            unique: true
+            nullable: false
+            precision: 0
+            column: necktie_id
+        price:
+            type: string
+            scale: 0
+            length: 50
+            unique: false
+            nullable: false
+            precision: 0
+        initialPrice:
+            type: decimal
+            scale: 2
+            length: null
+            unique: false
+            nullable: false
+            precision: 7
+            column: initial_price
+        rebillPrice:
+            type: decimal
+            scale: 2
+            length: null
+            unique: false
+            nullable: true
+            precision: 7
+            column: rebill_price
+        frequency:
+            type: smallint
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+        rebillTimes:
+            type: smallint
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+            column: rebill_times
+        trial:
+            type: smallint
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+    manyToOne:
+        product:
+            targetEntity: Venice\AppBundle\Entity\Product\StandardProduct
+            cascade:
+                - persist
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                product_id:
+                    referencedColumnName: id
+                    onDelete: CASCADE
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

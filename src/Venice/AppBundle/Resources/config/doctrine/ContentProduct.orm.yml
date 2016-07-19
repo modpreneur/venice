@@ -1,0 +1,69 @@
+Venice\AppBundle\Entity\ContentProduct:
+    type: entity
+    table: contents_products
+    repositoryClass: Venice\AppBundle\Entity\Repositories\ContentProductRepository
+    id:
+        id:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        delay:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+        orderNumber:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            column: order_number
+        createdAt:
+            type: datetime
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            column: created_at
+        updatedAt:
+            type: datetime
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            column: updated_at
+    manyToOne:
+        content:
+            targetEntity: Venice\AppBundle\Entity\Content\Content
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: contentProducts
+            joinColumns:
+                content_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        product:
+            targetEntity: Venice\AppBundle\Entity\Product\Product
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: contentProducts
+            joinColumns:
+                product_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }
