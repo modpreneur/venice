@@ -4,21 +4,21 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "1ec0ddee01fb337c80fa4de594fba8b4",
+    "hash": "2cdbb4746cd686bfe9f0cf5c3db2e309",
     "content-hash": "3355945aed9d962381553a64134bd8ab",
     "packages": [
         {
             "name": "asm89/twig-cache-extension",
-            "version": "1.2.0",
+            "version": "1.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/asm89/twig-cache-extension.git",
-                "reference": "76a801d6da8e1a1015af974d93df4ade0dda7267"
+                "reference": "37cfee1f06fe8372cbe714d2d9224db276790936"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/asm89/twig-cache-extension/zipball/76a801d6da8e1a1015af974d93df4ade0dda7267",
-                "reference": "76a801d6da8e1a1015af974d93df4ade0dda7267",
+                "url": "https://api.github.com/repos/asm89/twig-cache-extension/zipball/37cfee1f06fe8372cbe714d2d9224db276790936",
+                "reference": "37cfee1f06fe8372cbe714d2d9224db276790936",
                 "shasum": ""
             },
             "require": {
@@ -28,10 +28,13 @@
             "require-dev": {
                 "doctrine/cache": "~1.0"
             },
+            "suggest": {
+                "psr/cache-implementation": "To make use of PSR-6 cache implementation via PsrCacheAdapter."
+            },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.1-dev"
+                    "dev-master": "1.2-dev"
                 }
             },
             "autoload": {
@@ -56,24 +59,24 @@
                 "extension",
                 "twig"
             ],
-            "time": "2016-02-14 13:52:38"
+            "time": "2016-06-14 09:16:57"
         },
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.18.27",
+            "version": "3.18.30",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "8cc3d3231d9fb9da528205f3b905097a37ac3df3"
+                "reference": "fbce85229b913a9e1aded54e464a9bbff0787bf1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/8cc3d3231d9fb9da528205f3b905097a37ac3df3",
-                "reference": "8cc3d3231d9fb9da528205f3b905097a37ac3df3",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/fbce85229b913a9e1aded54e464a9bbff0787bf1",
+                "reference": "fbce85229b913a9e1aded54e464a9bbff0787bf1",
                 "shasum": ""
             },
             "require": {
-                "guzzlehttp/guzzle": "~5.3|~6.0.1|~6.1",
+                "guzzlehttp/guzzle": "^5.3.1|^6.2.1",
                 "guzzlehttp/promises": "~1.0",
                 "guzzlehttp/psr7": "~1.3.1",
                 "mtdowling/jmespath.php": "~2.2",
@@ -136,7 +139,7 @@
                 "s3",
                 "sdk"
             ],
-            "time": "2016-07-07 23:09:15"
+            "time": "2016-07-18 16:15:53"
         },
         {
             "name": "behat/transliterator",
@@ -1372,16 +1375,16 @@
         },
         {
             "name": "elasticsearch/elasticsearch",
-            "version": "v2.2.0",
+            "version": "v2.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/elastic/elasticsearch-php.git",
-                "reference": "11ebdf2c847d0e2c4a47ac993485beb5a19d5dc4"
+                "reference": "7b34186a58730d0a8963741bd62fa5ab45658ada"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/elastic/elasticsearch-php/zipball/11ebdf2c847d0e2c4a47ac993485beb5a19d5dc4",
-                "reference": "11ebdf2c847d0e2c4a47ac993485beb5a19d5dc4",
+                "url": "https://api.github.com/repos/elastic/elasticsearch-php/zipball/7b34186a58730d0a8963741bd62fa5ab45658ada",
+                "reference": "7b34186a58730d0a8963741bd62fa5ab45658ada",
                 "shasum": ""
             },
             "require": {
@@ -1422,7 +1425,7 @@
                 "elasticsearch",
                 "search"
             ],
-            "time": "2016-06-03 21:09:29"
+            "time": "2016-07-14 14:13:40"
         },
         {
             "name": "emanueleminotto/twig-cache-bundle",
@@ -1576,12 +1579,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfSymfony/FOSUserBundle.git",
-                "reference": "298f27ce696deaa6ecd72e6ba563f892a17e0512"
+                "reference": "42ad0730ee22406de20da75fa9a3f4d74c565a83"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSUserBundle/zipball/298f27ce696deaa6ecd72e6ba563f892a17e0512",
-                "reference": "298f27ce696deaa6ecd72e6ba563f892a17e0512",
+                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSUserBundle/zipball/42ad0730ee22406de20da75fa9a3f4d74c565a83",
+                "reference": "42ad0730ee22406de20da75fa9a3f4d74c565a83",
                 "shasum": ""
             },
             "require": {
@@ -1637,7 +1640,7 @@
             "keywords": [
                 "User management"
             ],
-            "time": "2016-06-21 10:34:42"
+            "time": "2016-07-19 12:01:22"
         },
         {
             "name": "fzaninotto/faker",
@@ -1689,16 +1692,16 @@
         },
         {
             "name": "gedmo/doctrine-extensions",
-            "version": "v2.4.15",
+            "version": "v2.4.18",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Atlantic18/DoctrineExtensions.git",
-                "reference": "8f172af78138ee3ea12e87be431dec3da0c2f4a9"
+                "reference": "c453c7d695da0dd1c3e713a27ec71a05da355662"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Atlantic18/DoctrineExtensions/zipball/8f172af78138ee3ea12e87be431dec3da0c2f4a9",
-                "reference": "8f172af78138ee3ea12e87be431dec3da0c2f4a9",
+                "url": "https://api.github.com/repos/Atlantic18/DoctrineExtensions/zipball/c453c7d695da0dd1c3e713a27ec71a05da355662",
+                "reference": "c453c7d695da0dd1c3e713a27ec71a05da355662",
                 "shasum": ""
             },
             "require": {
@@ -1764,31 +1767,31 @@
                 "tree",
                 "uploadable"
             ],
-            "time": "2016-07-08 05:48:13"
+            "time": "2016-07-19 06:08:11"
         },
         {
             "name": "guzzlehttp/guzzle",
-            "version": "6.2.0",
+            "version": "6.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/guzzle.git",
-                "reference": "d094e337976dff9d8e2424e8485872194e768662"
+                "reference": "3f808fba627f2c5b69e2501217bf31af349c1427"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/d094e337976dff9d8e2424e8485872194e768662",
-                "reference": "d094e337976dff9d8e2424e8485872194e768662",
+                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/3f808fba627f2c5b69e2501217bf31af349c1427",
+                "reference": "3f808fba627f2c5b69e2501217bf31af349c1427",
                 "shasum": ""
             },
             "require": {
-                "guzzlehttp/promises": "~1.0",
-                "guzzlehttp/psr7": "~1.1",
-                "php": ">=5.5.0"
+                "guzzlehttp/promises": "^1.0",
+                "guzzlehttp/psr7": "^1.3.1",
+                "php": ">=5.5"
             },
             "require-dev": {
                 "ext-curl": "*",
-                "phpunit/phpunit": "~4.0",
-                "psr/log": "~1.0"
+                "phpunit/phpunit": "^4.0",
+                "psr/log": "^1.0"
             },
             "type": "library",
             "extra": {
@@ -1826,7 +1829,7 @@
                 "rest",
                 "web service"
             ],
-            "time": "2016-03-21 20:02:09"
+            "time": "2016-07-15 17:22:37"
         },
         {
             "name": "guzzlehttp/promises",
@@ -2141,16 +2144,16 @@
         },
         {
             "name": "jms-serializer/serializer",
-            "version": "1.3.3",
+            "version": "1.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/jms-serializer/serializer.git",
-                "reference": "e418b616562445438d51a284ae71bb328133f694"
+                "reference": "1d0e485bbe3fc25e2d87b815aec9d72d0ae256f4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jms-serializer/serializer/zipball/e418b616562445438d51a284ae71bb328133f694",
-                "reference": "e418b616562445438d51a284ae71bb328133f694",
+                "url": "https://api.github.com/repos/jms-serializer/serializer/zipball/1d0e485bbe3fc25e2d87b815aec9d72d0ae256f4",
+                "reference": "1d0e485bbe3fc25e2d87b815aec9d72d0ae256f4",
                 "shasum": ""
             },
             "require": {
@@ -2163,9 +2166,6 @@
             },
             "conflict": {
                 "twig/twig": "<1.12"
-            },
-            "replace": {
-                "jms/serializer": "1.*"
             },
             "require-dev": {
                 "doctrine/orm": "~2.1",
@@ -2190,9 +2190,9 @@
                 }
             },
             "autoload": {
-                "psr-4": {
-                    "JMS\\Serializer\\": "src/",
-                    "JMS\\Serializer\\Tests\\": "tests/"
+                "psr-0": {
+                    "JMS\\Serializer": "src/",
+                    "JMS\\Serializer\\Tests": "tests/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -2214,7 +2214,7 @@
                 "serialization",
                 "xml"
             ],
-            "time": "2016-05-03 11:37:27"
+            "time": "2016-04-25 13:16:48"
         },
         {
             "name": "jms-serializer/serializer-bundle",
@@ -2372,6 +2372,79 @@
             ],
             "description": "A library for easily creating recursive-descent parsers.",
             "time": "2012-11-18 18:08:43"
+        },
+        {
+            "name": "jms/serializer",
+            "version": "1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/schmittjoh/serializer.git",
+                "reference": "fe13a1f993ea3456e195b7820692f2eb2b6bbb48"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/schmittjoh/serializer/zipball/fe13a1f993ea3456e195b7820692f2eb2b6bbb48",
+                "reference": "fe13a1f993ea3456e195b7820692f2eb2b6bbb48",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/annotations": "1.*",
+                "doctrine/instantiator": "~1.0.3",
+                "jms/metadata": "~1.1",
+                "jms/parser-lib": "1.*",
+                "php": ">=5.4.0",
+                "phpcollection/phpcollection": "~0.1"
+            },
+            "conflict": {
+                "twig/twig": "<1.12"
+            },
+            "require-dev": {
+                "doctrine/orm": "~2.1",
+                "doctrine/phpcr-odm": "~1.0.1",
+                "jackalope/jackalope-doctrine-dbal": "1.0.*",
+                "phpunit/phpunit": "~4.0",
+                "propel/propel1": "~1.7",
+                "symfony/filesystem": "2.*",
+                "symfony/form": "~2.1",
+                "symfony/translation": "~2.0",
+                "symfony/validator": "~2.0",
+                "symfony/yaml": "2.*",
+                "twig/twig": "~1.12|~2.0"
+            },
+            "suggest": {
+                "symfony/yaml": "Required if you'd like to serialize data to YAML format."
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.1-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "JMS\\Serializer": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache2"
+            ],
+            "authors": [
+                {
+                    "name": "Johannes M. Schmitt",
+                    "email": "schmittjoh@gmail.com"
+                }
+            ],
+            "description": "Library for (de-)serializing data of any complexity; supports XML, JSON, and YAML.",
+            "homepage": "http://jmsyst.com/libs/serializer",
+            "keywords": [
+                "deserialization",
+                "jaxb",
+                "json",
+                "serialization",
+                "xml"
+            ],
+            "time": "2015-10-27 09:24:41"
         },
         {
             "name": "jms/serializer-bundle",
@@ -2543,7 +2616,7 @@
             ],
             "authors": [
                 {
-                    "name": "Knplabs",
+                    "name": "KnpLabs",
                     "homepage": "http://knplabs.com"
                 }
             ],
@@ -2812,7 +2885,7 @@
                     "email": "stof@notk.org"
                 },
                 {
-                    "name": "Knplabs",
+                    "name": "KnpLabs",
                     "homepage": "http://knplabs.com"
                 },
                 {
@@ -5846,12 +5919,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/modpreneur/trinity-admin.git",
-                "reference": "eabe192c0741c192d1bf85048b15572aea762a86"
+                "reference": "481c3d9ba6a5f1f7fddf2b7f2bbd17678cfa8165"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/modpreneur/trinity-admin/zipball/eabe192c0741c192d1bf85048b15572aea762a86",
-                "reference": "eabe192c0741c192d1bf85048b15572aea762a86",
+                "url": "https://api.github.com/repos/modpreneur/trinity-admin/zipball/481c3d9ba6a5f1f7fddf2b7f2bbd17678cfa8165",
+                "reference": "481c3d9ba6a5f1f7fddf2b7f2bbd17678cfa8165",
                 "shasum": ""
             },
             "require": {
@@ -5896,7 +5969,7 @@
                 }
             ],
             "description": "Trinity Admin bundle",
-            "time": "2016-07-11 14:07:48"
+            "time": "2016-07-19 12:45:54"
         },
         {
             "name": "trinity/bunny-bundle",
@@ -5942,12 +6015,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/modpreneur/trinity-core-entities.git",
-                "reference": "9dc5e100248571c9cbc32d98980a2f9a30fa75a6"
+                "reference": "14c9b6cff339c3af8028d3dc52771ab52391ad4d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/modpreneur/trinity-core-entities/zipball/9dc5e100248571c9cbc32d98980a2f9a30fa75a6",
-                "reference": "9dc5e100248571c9cbc32d98980a2f9a30fa75a6",
+                "url": "https://api.github.com/repos/modpreneur/trinity-core-entities/zipball/14c9b6cff339c3af8028d3dc52771ab52391ad4d",
+                "reference": "14c9b6cff339c3af8028d3dc52771ab52391ad4d",
                 "shasum": ""
             },
             "require": {
@@ -5987,7 +6060,7 @@
                 }
             ],
             "description": "Trinity Framework",
-            "time": "2016-06-28 13:11:47"
+            "time": "2016-07-19 14:07:17"
         },
         {
             "name": "trinity/core-interfaces",
@@ -6106,12 +6179,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/modpreneur/trinity-grid.git",
-                "reference": "f6cbbeddc3eeefd1c6c5c0424ccab525baa50afb"
+                "reference": "54d35637c34624904498209b0df4f730433ace90"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/modpreneur/trinity-grid/zipball/f6cbbeddc3eeefd1c6c5c0424ccab525baa50afb",
-                "reference": "f6cbbeddc3eeefd1c6c5c0424ccab525baa50afb",
+                "url": "https://api.github.com/repos/modpreneur/trinity-grid/zipball/54d35637c34624904498209b0df4f730433ace90",
+                "reference": "54d35637c34624904498209b0df4f730433ace90",
                 "shasum": ""
             },
             "require": {
@@ -6163,7 +6236,7 @@
                 }
             ],
             "description": "Trinity Grid bundle",
-            "time": "2016-07-11 07:58:50"
+            "time": "2016-07-18 09:50:01"
         },
         {
             "name": "trinity/logger",
@@ -6171,12 +6244,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/modpreneur/trinity-logger.git",
-                "reference": "3508b69666487609e0341d0c45930bebcd6594ba"
+                "reference": "3057c7db025790ecfc4b9bdb48851edd4f399b47"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/modpreneur/trinity-logger/zipball/3508b69666487609e0341d0c45930bebcd6594ba",
-                "reference": "3508b69666487609e0341d0c45930bebcd6594ba",
+                "url": "https://api.github.com/repos/modpreneur/trinity-logger/zipball/3057c7db025790ecfc4b9bdb48851edd4f399b47",
+                "reference": "3057c7db025790ecfc4b9bdb48851edd4f399b47",
                 "shasum": ""
             },
             "require": {
@@ -6217,7 +6290,7 @@
                 }
             ],
             "description": "Trinity Logger bundle",
-            "time": "2016-07-11 10:05:08"
+            "time": "2016-07-12 12:18:05"
         },
         {
             "name": "trinity/messages",
@@ -6225,12 +6298,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/modpreneur/trinity-messages.git",
-                "reference": "478328c237a05232d5a31456cada0c3bd64e3d34"
+                "reference": "54e80cecdc38bb643cede23d82d94986c3d28aa3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/modpreneur/trinity-messages/zipball/478328c237a05232d5a31456cada0c3bd64e3d34",
-                "reference": "478328c237a05232d5a31456cada0c3bd64e3d34",
+                "url": "https://api.github.com/repos/modpreneur/trinity-messages/zipball/54e80cecdc38bb643cede23d82d94986c3d28aa3",
+                "reference": "54e80cecdc38bb643cede23d82d94986c3d28aa3",
                 "shasum": ""
             },
             "require": {
@@ -6262,7 +6335,7 @@
                 }
             ],
             "description": "Trinity Messages bundle",
-            "time": "2016-07-07 18:36:01"
+            "time": "2016-07-18 07:55:47"
         },
         {
             "name": "trinity/notification",
@@ -6270,12 +6343,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/modpreneur/trinity-notifications.git",
-                "reference": "5f6f5baa9b5b2b2a4828a628c67bbfb3282c6181"
+                "reference": "204a8054ecc888936bd5fc75eb88843baa28ef02"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/modpreneur/trinity-notifications/zipball/5f6f5baa9b5b2b2a4828a628c67bbfb3282c6181",
-                "reference": "5f6f5baa9b5b2b2a4828a628c67bbfb3282c6181",
+                "url": "https://api.github.com/repos/modpreneur/trinity-notifications/zipball/204a8054ecc888936bd5fc75eb88843baa28ef02",
+                "reference": "204a8054ecc888936bd5fc75eb88843baa28ef02",
                 "shasum": ""
             },
             "require": {
@@ -6331,7 +6404,7 @@
                 }
             ],
             "description": "Trinity Notification bundle",
-            "time": "2016-06-30 10:26:29"
+            "time": "2016-07-16 08:40:49"
         },
         {
             "name": "trinity/search",
@@ -6339,12 +6412,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/modpreneur/trinity-search.git",
-                "reference": "2e536467f10ebd6183348eafd6617ed93816e4f3"
+                "reference": "1d01777709ac5a31d1a943c0392b2a359129056a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/modpreneur/trinity-search/zipball/2e536467f10ebd6183348eafd6617ed93816e4f3",
-                "reference": "2e536467f10ebd6183348eafd6617ed93816e4f3",
+                "url": "https://api.github.com/repos/modpreneur/trinity-search/zipball/1d01777709ac5a31d1a943c0392b2a359129056a",
+                "reference": "1d01777709ac5a31d1a943c0392b2a359129056a",
                 "shasum": ""
             },
             "require": {
@@ -6403,7 +6476,7 @@
                 }
             ],
             "description": "Trinity Search bundle",
-            "time": "2016-07-11 12:50:47"
+            "time": "2016-07-18 09:20:18"
         },
         {
             "name": "trinity/settings",
