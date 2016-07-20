@@ -2,7 +2,10 @@ Venice\AppBundle\Entity\User:
     constraints:
         - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
             fields:
-                - user
+                - username
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+            fields:
+                - email
     properties:
         birthDate:
             - DateTime: ~

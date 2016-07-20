@@ -5,7 +5,9 @@ Venice\AppBundle\Entity\ProductAccess:
                 - user
                 - product
             errorPath: product
-       - Callback: [validate]
+        - Symfony\Component\Validator\Constraints\Callback:
+            callback: "validate"
+
     properties:
         toDate:
             - Type: \DateTime
