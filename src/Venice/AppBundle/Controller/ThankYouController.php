@@ -26,17 +26,21 @@ class ThankYouController extends Controller
      */
     public function thankYouAction(Request $request)
     {
-        //@todo @JakubFajkus
         $productId = $request->get('productId');
         $product = null;
         if ($productId !== null) {
             $product = $this->getDoctrine()->getRepository(StandardProduct::class)
                 ->findOneBy(['necktieId' => $productId]);
+            //@todo @JakubFajkus log when the product does not exist
+
+            if ($product === null) {
+                $this->get('logger')->addCritical("No product with necktie id $productId found in " . self::class);
+            }
         }
 
         return $this->redirectToRoute(
             'front_thank_you',
-            ['productId' => ($product !== null)? $product->getId() : null]
+            ['productId' => ($product !== null) ? $product->getId() : null]
         );
     }
 }
