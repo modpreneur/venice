@@ -93,16 +93,9 @@ services:
         class: Venice\AppBundle\EventListener\KernelExceptionListener
         arguments:
             - "@router"
-            - "@service_container"
+            - "%login_route%"
         tags:
             - {name: "kernel.event_listener", event: "kernel.exception", method: "onKernelException"}
-
-    app.event_listener.free_product_created:
-        class: Venice\AppBundle\EventListener\AppLogicListener
-        arguments:
-            - "@doctrine"
-        tags:
-            - {name: "kernel.event_listener", event: app.free_product_created, method: "onFreeProductCreated"}
 
     app.entity_listener:
         class: Venice\AppBundle\EventListener\EntityListener

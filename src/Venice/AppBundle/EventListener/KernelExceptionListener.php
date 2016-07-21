@@ -8,36 +8,38 @@
 
 namespace Venice\AppBundle\EventListener;
 
-
-use Venice\AppBundle\Exceptions\ExpiredRefreshTokenException;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
 use Symfony\Component\Routing\RouterInterface;
+use Venice\AppBundle\Exceptions\ExpiredRefreshTokenException;
 
 class KernelExceptionListener
 {
+    /** @var RouterInterface */
     protected $router;
 
-    protected $container;
+    /** @var string */
+    protected $loginRoute;
 
-    public function __construct(RouterInterface $router, ContainerInterface $container)
+    public function __construct(RouterInterface $router, string $loginRoute)
     {
         $this->router = $router;
-        $this->container = $container;
+        $this->loginRoute = $loginRoute;
     }
+
     /**
      * @param GetResponseForExceptionEvent $event
+     *
+     * @throws \Symfony\Component\Routing\Exception\InvalidParameterException
+     * @throws \Symfony\Component\Routing\Exception\MissingMandatoryParametersException
+     * @throws \Symfony\Component\Routing\Exception\RouteNotFoundException
+     * @throws \InvalidArgumentException
      */
     public function onKernelException(GetResponseForExceptionEvent $event)
     {
         // OAuth refresh token has expired. Force user to login.
-        if($event->getException() instanceof ExpiredRefreshTokenException)
-        {
-            $response = new RedirectResponse(
-                $this->router->generate(
-                    $this->container->getParameter("login_route"))
-            );
+        if ($event->getException() instanceof ExpiredRefreshTokenException) {
+            $response = new RedirectResponse($this->router->generate($this->loginRoute));
 
             //Set the response and stop event propagation to another listeners.
             $event->setResponse($response);

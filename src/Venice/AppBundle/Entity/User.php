@@ -8,18 +8,19 @@
 
 namespace Venice\AppBundle\Entity;
 
-use Trinity\Component\Core\Interfaces\ClientInterface;
-use Trinity\Component\EntityCore\Entity\BaseUser;
-use Venice\AppBundle\Entity\Product\Product;
-use Venice\AppBundle\Traits\Timestampable;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use InvalidArgumentException;
 use JMS\Serializer\Annotation\SerializedName;
 use Symfony\Component\Validator\Constraints as Assert;
+use Trinity\Component\Core\Interfaces\ClientInterface;
+use Trinity\Component\EntityCore\Entity\BaseUser;
 use Trinity\NotificationBundle\Annotations as N;
 use Trinity\NotificationBundle\Entity\NotificationEntityInterface;
+use Venice\AppBundle\Entity\Product\FreeProduct;
+use Venice\AppBundle\Entity\Product\Product;
+use Venice\AppBundle\Traits\Timestampable;
 
 /**
  * Class User
@@ -134,10 +135,10 @@ class User extends BaseUser implements NotificationEntityInterface
     {
         if ($preferredUnits !== self::PREFERRED_UNITS_METRIC || $preferredUnits !== self::PREFERRED_UNITS_IMPERIAL) {
             throw new InvalidArgumentException(
-                "Preferred units has to be one of ".
-                self::PREFERRED_UNITS_METRIC.
-                " or ".
-                self::PREFERRED_UNITS_IMPERIAL.
+                "Preferred units has to be one of " .
+                self::PREFERRED_UNITS_METRIC .
+                " or " .
+                self::PREFERRED_UNITS_IMPERIAL .
                 ", $preferredUnits given.");
         }
 
@@ -225,7 +226,7 @@ class User extends BaseUser implements NotificationEntityInterface
     {
         $token = $this->OAuthTokens->last();
 
-        if(false !== $token) {
+        if (false !== $token) {
             return $token->getAccessToken();
         }
 
@@ -253,7 +254,7 @@ class User extends BaseUser implements NotificationEntityInterface
     {
         $token = $this->OAuthTokens->last();
 
-        if(false !== $token) {
+        if (false !== $token) {
             return $token->getRefreshToken();
         }
 
@@ -330,11 +331,15 @@ class User extends BaseUser implements NotificationEntityInterface
      */
     public function hasAccessToProduct(Product $product)
     {
-        $access = null;
-
         if (!$product->isEnabled()) {
             return false;
         }
+
+        if ($product instanceof FreeProduct) {
+            return true;
+        }
+
+        $access = null;
 
         /** @var ProductAccess $productAccess */
         foreach ($this->getProductAccesses() as $productAccess) {
