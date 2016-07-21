@@ -2,12 +2,12 @@
 /web/bundles
 
 /app/bootstrap.php.cache
-/app/cache/*
+/var/cache/*
 /app/config/parameters.yml
 /app/config/parameters_test.yml
 /app/config/parameters_dev.yml
 /app/config/parameters_prod.yml
-/app/logs/*
+/var/logs/*
 !app/cache/.gitkeep
 !app/logs/.gitkeep
 /build/

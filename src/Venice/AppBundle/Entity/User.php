@@ -51,14 +51,12 @@ class User extends BaseUser implements NotificationEntityInterface
      */
     protected $necktieId;
 
-
     /**
      * @var string
      *
      * @ORM\Column(name="preferred_units", type="string", length=10)
      */
     protected $preferredUnits;
-
 
     /**
      * @var ArrayCollection<ProductAccess>

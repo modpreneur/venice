@@ -1,9 +1,7 @@
 {% extends('VeniceAppBundle::base.html.twig') %}
 
 {% block stylesheets %}
-    {% stylesheets filter='lessphp' '@TrinityAdminBundle/Resources/Public/css/bowtie.less' %}
-    <link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}"/>
-    {% endstylesheets %}
+    <link rel="stylesheet" href="{{ asset("assetic/bowtie_css.css") }}"/>
 {% endblock %}
 
 
