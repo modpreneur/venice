@@ -31,8 +31,6 @@ class GroupContent extends Content
 
 
     /**
-     * @Assert\Callback
-     *
      * @param ExecutionContextInterface $context
      */
     public function validate(ExecutionContextInterface $context)

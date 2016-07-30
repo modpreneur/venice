@@ -1,17 +1,13 @@
 Venice\AppBundle\Entity\Product\Product:
     type: entity
     table: product
-    inheritanceType: JOINED
+    inheritanceType: SINGLE_TABLE
     discriminatorColumn:
-        name: type
+        name: discriminator
         type: string
-        length: null
-        columnDefinition: null
-        fieldName: type
     discriminatorMap:
-        product: Venice\AppBundle\Entity\Product\Product
-        freeproduct: Venice\AppBundle\Entity\Product\FreeProduct
-        standardproduct: Venice\AppBundle\Entity\Product\StandardProduct
+        venice_freeproduct: Venice\AppBundle\Entity\Product\FreeProduct
+        venice_standardproduct: Venice\AppBundle\Entity\Product\StandardProduct
     repositoryClass: Venice\AppBundle\Entity\Repositories\ProductRepository
     id:
         id:

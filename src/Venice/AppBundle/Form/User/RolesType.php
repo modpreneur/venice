@@ -10,6 +10,7 @@ namespace Venice\AppBundle\Form\User;
 
 
 use Venice\AppBundle\Form\BaseType;
+use Venice\AppBundle\Services\EntityOverrideHandler;
 use Venice\AppBundle\Services\RolesLoader;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -23,10 +24,12 @@ class RolesType extends BaseType
     /**
      * RolesType constructor.
      * @param EntityManagerInterface $entityManager
+     * @param EntityOverrideHandler $entityOverrideHandler
+     * @param RolesLoader $rolesLoader
      */
-    public function __construct(EntityManagerInterface $entityManager, RolesLoader $rolesLoader)
+    public function __construct(EntityManagerInterface $entityManager, EntityOverrideHandler $entityOverrideHandler, RolesLoader $rolesLoader)
     {
-        parent::__construct($entityManager);
+        parent::__construct($entityManager, $entityOverrideHandler);
 
         $this->roles = $rolesLoader->readRolesFile();
     }

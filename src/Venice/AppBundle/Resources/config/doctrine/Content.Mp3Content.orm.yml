@@ -1,7 +1,7 @@
 Venice\AppBundle\Entity\Content\Mp3Content:
     type: entity
-    repositoryClass: Venice\AppBundle\Entity\Repositories\Mp3ContentRepository
     table: content_mp3
+    repositoryClass: Venice\AppBundle\Entity\Repositories\Mp3ContentRepository
     fields:
         link:
             type: string

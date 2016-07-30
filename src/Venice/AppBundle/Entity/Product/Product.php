@@ -249,20 +249,34 @@ abstract class Product extends BaseProduct
      */
     public static function createProductByType($type, $args = [])
     {
+        $class = new \ReflectionClass(static::createProductClassByType($type));
+
+        return $class->newInstanceArgs($args);
+    }
+
+
+    /**
+     * Return a class of content from type (first part of entity name ends with Content)
+     *
+     * @param string $type Could be formatted like HtmlContent, Mp3Content, Venice\AppBundle\\Entity\\Content\\PdfContent, ...
+     *
+     * @return Content
+     */
+    public static function createProductClassByType($type)
+    {
         $type = ucfirst($type);
 
         if (!strpos($type, "Product")) {
             $type .= "Product";
         }
 
-        if (!strpos($type, "Venice\AppBundle\\Entity\\Product\\")) {
-            $type = "Venice\AppBundle\\Entity\\Product\\" . $type;
+        if (!strpos($type, "Venice\\AppBundle\\Entity\\Product\\")) {
+            $type = "Venice\\AppBundle\\Entity\\Product\\" . $type;
         }
 
-        $class = new \ReflectionClass($type);
-
-        return $class->newInstanceArgs($args);
+        return $type;
     }
+
 
     /**
      * Get the product type string
@@ -278,6 +292,8 @@ abstract class Product extends BaseProduct
      */
     public function getFormTypeClass()
     {
+        throw new \Exception("DEPRECATED");
+
         $name = get_class($this) . "Type";
         $name = str_replace('Entity', 'Form', $name);
 

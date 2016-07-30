@@ -1,6 +1,12 @@
 Venice\AppBundle\Entity\ProductAccess:
     type: entity
     table: product_access
+    inheritanceType: SINGLE_TABLE
+    discriminatorColumn:
+        name: discriminator
+        type: string
+    discriminatorMap:
+        venice_productaccess: Venice\AppBundle\Entity\ProductAccess
     repositoryClass: Venice\AppBundle\Entity\Repositories\ProductAccessRepository
     id:
         id:

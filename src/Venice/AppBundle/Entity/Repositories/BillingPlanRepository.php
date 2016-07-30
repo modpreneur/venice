@@ -56,7 +56,7 @@ class BillingPlanRepository extends EntityRepository implements NotificationEnti
         return $query->getResult();
     }
 
-    public function count($id)
+    public function countByProduct($id)
     {
         $query = $this->getEntityManager()->createQuery('
               SELECT COUNT(bp)

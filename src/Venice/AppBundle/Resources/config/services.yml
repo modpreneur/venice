@@ -11,6 +11,36 @@ services:
           - "@service_container"
           - null # if bool all methods will return the given bool! leave blank or set to null to ensure default behavior
 
+    venice.app.entity_form_matcher:
+        class: Venice\AppBundle\Services\EntityFormMatcher
+        arguments:
+            - "@venice.app.configurator.entity_form"
+
+    venice.app.form_override_handler:
+        class: Venice\AppBundle\Services\FormOverrideHandler
+        arguments:
+            - "@venice.app.configurator.form_override"
+
+    venice.app.entity_override_handler:
+        class: Venice\AppBundle\Services\EntityOverrideHandler
+        arguments:
+            - "@venice.app.configurator.entity_override"
+
+    venice.app.configurator.entity_form:
+        class: Venice\AppBundle\Configurators\EntityFormConfigurator
+        arguments:
+            - "%venice.app.entity_forms%"
+
+    venice.app.configurator.form_override:
+        class: Venice\AppBundle\Configurators\FormOverrideConfigurator
+        arguments:
+            - "%venice.app.forms_override%"
+
+    venice.app.configurator.entity_override:
+        class: Venice\AppBundle\Configurators\EntityOverrideConfigurator
+        arguments:
+            - "%venice.app.entity_override%"
+
     app.services.necktie_gateway:
         class: Venice\AppBundle\Services\NecktieGateway
         arguments:
@@ -132,6 +162,13 @@ services:
             - {name: "kernel.event_listener", event: "trinity.notifications.changesDone", method: "onChangesDone"}
             - {name: "kernel.event_listener", event: "trinity.notifications.beforeDeleteEntity", method: "onBeforeDeleteEntity"}
 
+    app.doctrine_discriminator_listener:
+        class: Venice\AppBundle\EventListener\DoctrineDiscriminatorListener
+        arguments:
+            - "%venice.app.entity_mapping%"
+        tags:
+            - { name: doctrine.event_subscriber, connection: default }
+
     # TWIG EXTENSIONS #
 
     app.twig.extension.human_bool:
@@ -148,148 +185,136 @@ services:
 
 # ************   FORMS   ************
 
-    admin.form.custom_collection:
+
+    venice.admin.form.custom_collection:
         class: Venice\AppBundle\Form\Collection\CollectionType
         tags:
             - { name: form.type, alias: collection }
 
-    admin.form.content_in_group:
+    venice.admin.form.base:
+        class: Venice\AppBundle\Form\BaseType
+        arguments:
+            - "@doctrine.orm.entity_manager"
+            - "@venice.app.entity_override_handler"
+
+    venice.admin.form.content_in_group:
         class: Venice\AppBundle\Form\Content\ContentInGroupType
-        arguments:
-            - "@doctrine.orm.entity_manager"
+        parent: "venice.admin.form.base"
         tags:
             - { name: form.type }
 
-    admin.form.content_product_with_hidden_content:
+    venice.admin.form.content_product_with_hidden_content:
         class: Venice\AppBundle\Form\ContentProduct\ContentProductTypeWithHiddenContent
-        arguments:
-            - "@doctrine.orm.entity_manager"
+        parent: "venice.admin.form.base"
         tags:
             - { name: form.type }
 
-    admin.form.content_product_with_hidden_product:
+    venice.admin.form.content_product_with_hidden_product:
         class: Venice\AppBundle\Form\ContentProduct\ContentProductTypeWithHiddenProduct
-        arguments:
-            - "@doctrine.orm.entity_manager"
+        parent: "venice.admin.form.base"
         tags:
             - { name: form.type }
 
-    admin.form.group_content:
+    venice.admin.form.group_content:
         class: Venice\AppBundle\Form\Content\GroupContentType
-        arguments:
-            - "@doctrine.orm.entity_manager"
+        parent: "venice.admin.form.base"
         tags:
             - { name: form.type }
 
-    admin.form.html_content:
+    venice.admin.form.html_content:
         class: Venice\AppBundle\Form\Content\HtmlContentType
-        arguments:
-            - "@doctrine.orm.entity_manager"
+        parent: "venice.admin.form.base"
         tags:
             - { name: form.type }
 
-    admin.form.mp3_content:
+    venice.admin.form.mp3_content:
         class: Venice\AppBundle\Form\Content\Mp3ContentType
-        arguments:
-            - "@doctrine.orm.entity_manager"
+        parent: "venice.admin.form.base"
         tags:
             - { name: form.type }
 
-    admin.form.pdf_content:
+    venice.admin.form.pdf_content:
         class: Venice\AppBundle\Form\Content\PdfContentType
-        arguments:
-            - "@doctrine.orm.entity_manager"
+        parent: "venice.admin.form.base"
         tags:
             - { name: form.type }
 
-    admin.form.iframe_content:
+    venice.admin.form.iframe_content:
         class: Venice\AppBundle\Form\Content\IframeContentType
-        arguments:
-            - "@doctrine.orm.entity_manager"
+        parent: "venice.admin.form.base"
         tags:
             - { name: form.type }
 
-    admin.form.video_content:
+    venice.admin.form.video_content:
         class: Venice\AppBundle\Form\Content\VideoContentType
-        arguments:
-            - "@doctrine.orm.entity_manager"
+        parent: "venice.admin.form.base"
         tags:
             - { name: form.type }
 
-    admin.form.free_product:
+    venice.admin.form.free_product:
         class: Venice\AppBundle\Form\Product\FreeProductType
-        arguments:
-            - "@doctrine.orm.entity_manager"
+        parent: "venice.admin.form.base"
         tags:
             - { name: form.type }
 
-    admin.form.standard_product:
+    venice.admin.form.standard_product:
         class: Venice\AppBundle\Form\Product\StandardProductType
-        arguments:
-            - "@doctrine.orm.entity_manager"
+        parent: "venice.admin.form.base"
         tags:
             - { name: form.type }
 
-    admin.form.user:
+    venice.admin.form.user:
         class: Venice\AppBundle\Form\User\UserType
-        arguments:
-            - "@doctrine.orm.entity_manager"
+        parent: "venice.admin.form.base"
         tags:
             - { name: form.type }
 
-    admin.form.user.roles:
+    venice.admin.form.user.roles:
         class: Venice\AppBundle\Form\User\RolesType
+        parent: "venice.admin.form.base"
         arguments:
-            - "@doctrine.orm.entity_manager"
             - "@app.roles_loader"
         tags:
             - { name: form.type }
 
-    admin.form.billing_plan:
+    venice.admin.form.billing_plan:
         class: Venice\AppBundle\Form\BillingPlanType
-        arguments:
-            - "@doctrine.orm.entity_manager"
+        parent: "venice.admin.form.base"
         tags:
             - { name: form.type }
 
-    admin.form.blog_article:
+    venice.admin.form.blog_article:
         class: Venice\AppBundle\Form\BlogArticleType
-        arguments:
-            - "@doctrine.orm.entity_manager"
+        parent: "venice.admin.form.base"
         tags:
             - { name: form.type }
 
-    admin.form.product_access:
+    venice.admin.form.product_access:
         class: Venice\AppBundle\Form\ProductAccessType
-        arguments:
-            - "@doctrine.orm.entity_manager"
+        parent: "venice.admin.form.base"
         tags:
             - { name: form.type }
 
-    app.notification.form.product_access:
+    venice.app.notification.form.product_access:
         class: Venice\AppBundle\Form\Notification\ProductAccessType
-        arguments:
-            - "@doctrine.orm.entity_manager"
+        parent: "venice.admin.form.base"
         tags:
             - { name: form.type }
 
-    app.notification.form.product:
+    venice.app.notification.form.product:
         class: Venice\AppBundle\Form\Notification\ProductType
-        arguments:
-            - "@doctrine.orm.entity_manager"
+        parent: "venice.admin.form.base"
         tags:
             - { name: form.type }
 
-    app.notification.form.user:
+    venice.app.notification.form.user:
         class: Venice\AppBundle\Form\Notification\UserType
-        arguments:
-            - "@doctrine.orm.entity_manager"
+        parent: "venice.admin.form.base"
         tags:
             - { name: form.type }
 
-    app.notification.form.billing_plan:
+    venice.app.notification.form.billing_plan:
         class: Venice\AppBundle\Form\Notification\BillingPlanType
-        arguments:
-            - "@doctrine.orm.entity_manager"
+        parent: "venice.admin.form.base"
         tags:
             - { name: form.type }

@@ -1,7 +1,7 @@
 Venice\AppBundle\Entity\Content\IframeContent:
     type: entity
-    repositoryClass: Venice\AppBundle\Entity\Repositories\IframeContentRepository
     table: content_iframe
+    repositoryClass: Venice\AppBundle\Entity\Repositories\IframeContentRepository
     fields:
         html:
             type: text

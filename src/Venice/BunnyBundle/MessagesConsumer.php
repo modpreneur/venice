@@ -13,7 +13,6 @@ use Bunny\Client;
 use Bunny\Message;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Trinity\Bundle\BunnyBundle\Annotation\Consumer;
-use Trinity\Bundle\MessagesBundle\Event\Events;
 use Trinity\Bundle\MessagesBundle\Event\UnpackMessageEvent;
 
 /**

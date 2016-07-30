@@ -2,7 +2,7 @@ Venice\AppBundle\Entity\Content\Content:
     constraints:
         - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
             fields: name
-            repositoryMethod: "findByUniqueCriteria"
+#            repositoryMethod: "findByUniqueCriteria" #todo: @JakubFajkus fix validation
     properties:
         name:
             - NotBlank: ~
@@ -26,7 +26,10 @@ Venice\AppBundle\Entity\Content\ContentInGroup:
 
 Venice\AppBundle\Entity\Content\GroupContent:
     constraints:
-        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: handle
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+            fields: handle
+        - Symfony\Component\Validator\Constraints\Callback:
+            callback: "validate"
     properties:
         items:
             - Valid: ~

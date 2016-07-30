@@ -2,6 +2,12 @@
 Venice\AppBundle\Entity\User:
     type: entity
     table: user
+    inheritanceType: SINGLE_TABLE
+    discriminatorColumn:
+        name: discriminator
+        type: string
+    discriminatorMap:
+        venice_user: Venice\AppBundle\Entity\User
     repositoryClass: Venice\AppBundle\Entity\Repositories\UserRepository
     id:
         id:

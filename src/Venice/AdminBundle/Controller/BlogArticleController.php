@@ -120,11 +120,12 @@ class BlogArticleController extends BaseAdminController
             ->addRouteItem("Blog articles", "admin_blog_article_index")
             ->addRouteItem("New blog article", "admin_blog_article_new");
 
+        $blogArticle = $this->getEntityOverrideHandler()->getEntityInstance(BlogArticle::class);
         $form = $this
             ->getFormCreator()
             ->createCreateForm(
-                new BlogArticle(),
-                BlogArticleType::class,
+                $this->getEntityOverrideHandler()->getEntityInstance(BlogArticle::class),
+                $this->getEntityFormMatcher()->getFormClassForEntity($blogArticle),
                 "admin_blog_article"
             );
 //        $dateFormat = $this->get('trinity.settings')->get('date');
@@ -152,13 +153,13 @@ class BlogArticleController extends BaseAdminController
     public function createAction(Request $request)
     {
         $em = $this->getEntityManager();
-        $blogArticle = new BlogArticle();
+        $blogArticle = $this->getEntityOverrideHandler()->getEntityInstance(BlogArticle::class);
 
         $form = $this
             ->getFormCreator()
             ->createCreateForm(
                 $blogArticle,
-                BlogArticleType::class,
+                $this->getEntityFormMatcher()->getFormClassForEntity($blogArticle),
                 "admin_blog_article"
             );
 
@@ -199,7 +200,7 @@ class BlogArticleController extends BaseAdminController
         $form = $this->getFormCreator()
             ->createEditForm(
                 $blogArticle,
-                BlogArticleType::class,
+                $this->getEntityFormMatcher()->getFormClassForEntity($blogArticle),
                 'admin_blog_article', ["id",]
             );
         //        $dateFormat = $this->get('trinity.settings')->get('date');
@@ -231,7 +232,7 @@ class BlogArticleController extends BaseAdminController
         $blogArticleForm = $this->getFormCreator()
             ->createEditForm(
                 $blogArticle,
-                BlogArticleType::class,
+                $this->getEntityFormMatcher()->getFormClassForEntity($blogArticle),
                 "admin_blog_article"
             );
 

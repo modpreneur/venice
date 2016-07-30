@@ -1,7 +1,7 @@
 Venice\AppBundle\Entity\Content\HtmlContent:
     type: entity
-    repositoryClass: Venice\AppBundle\Entity\Repositories\HtmlContentRepository
     table: content_html
+    repositoryClass: Venice\AppBundle\Entity\Repositories\HtmlContentRepository
     fields:
         html:
             type: text

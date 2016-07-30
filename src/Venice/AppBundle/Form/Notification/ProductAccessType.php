@@ -77,7 +77,7 @@ class   ProductAccessType extends BaseType implements NotificationTypeInterface
             ->addModelTransformer(
                 new NotificationTransformer(
                     $this->entityManager,
-                    StandardProduct::class,
+                    $options['standardProductClass'],
                     'necktieId'
                 )
             );
@@ -86,7 +86,7 @@ class   ProductAccessType extends BaseType implements NotificationTypeInterface
             ->addModelTransformer(
                 new NotificationTransformer(
                     $this->entityManager,
-                    User::class,
+                    $options['userClass'],
                     'necktieId'
                 )
             );
@@ -105,6 +105,8 @@ class   ProductAccessType extends BaseType implements NotificationTypeInterface
             [
                 'data_class' => ProductAccess::class,
                 'csrf_protection' => false,
+                'standardProductClass' => StandardProduct::class,
+                'userClass' => User::class
             ]
         );
     }

@@ -1,5 +1,11 @@
 Venice\AppBundle\Entity\BillingPlan:
     type: entity
+    inheritanceType: SINGLE_TABLE
+    discriminatorColumn:
+        name: discriminator
+        type: string
+    discriminatorMap:
+        venice_billingplan: Venice\AppBundle\Entity\BillingPlan
     table: billing_plan
     repositoryClass: Venice\AppBundle\Entity\Repositories\BillingPlanRepository
     id:
@@ -81,3 +87,16 @@ Venice\AppBundle\Entity\BillingPlan:
                     onDelete: CASCADE
             orphanRemoval: false
     lifecycleCallbacks: {  }
+
+
+
+
+
+
+
+
+
+
+
+
+

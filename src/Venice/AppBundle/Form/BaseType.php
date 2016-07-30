@@ -11,14 +11,21 @@ namespace Venice\AppBundle\Form;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\AbstractType;
+use Venice\AppBundle\Services\EntityOverrideHandler;
 
-class BaseType extends AbstractType
+abstract class BaseType extends AbstractType
 {
     /** @var EntityManagerInterface */
     protected $entityManager;
 
-    public function __construct(EntityManagerInterface $entityManager)
+    /** @var  EntityOverrideHandler */
+    protected $entityOverrideHandler;
+
+    public function __construct(EntityManagerInterface $entityManager, EntityOverrideHandler $entityOverrideHandler)
     {
         $this->entityManager = $entityManager;
+        $this->entityOverrideHandler = $entityOverrideHandler;
     }
+
+
 }

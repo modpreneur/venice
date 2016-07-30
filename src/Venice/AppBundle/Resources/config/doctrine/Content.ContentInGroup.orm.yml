@@ -1,6 +1,13 @@
 Venice\AppBundle\Entity\Content\ContentInGroup:
     type: entity
     table: content_in_group
+    inheritanceType: SINGLE_TABLE
+    discriminatorColumn:
+        name: discriminator
+        type: string
+    discriminatorMap:
+        venice_contentingroup: Venice\AppBundle\Entity\Content\ContentInGroup
+    repositoryClass: Venice\AppBundle\Entity\Repositories\ContentInGroupRepository
     id:
         id:
             type: integer

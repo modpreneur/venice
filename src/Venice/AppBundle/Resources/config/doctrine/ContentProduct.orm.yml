@@ -1,5 +1,11 @@
 Venice\AppBundle\Entity\ContentProduct:
     type: entity
+    inheritanceType: SINGLE_TABLE
+    discriminatorColumn:
+        name: discriminator
+        type: string
+    discriminatorMap:
+        venice_contentproduct: Venice\AppBundle\Entity\ContentProduct
     table: contents_products
     repositoryClass: Venice\AppBundle\Entity\Repositories\ContentProductRepository
     id:

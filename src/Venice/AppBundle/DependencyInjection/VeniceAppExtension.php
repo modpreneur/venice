@@ -31,5 +31,14 @@ class VeniceAppExtension extends Extension
     {
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
+
+        $configuration = new Configuration();
+        $config = $this->processConfiguration($configuration, $config);
+
+        $container->setParameter('venice.app.entity_mapping', $config['entity_mapping']);
+        $container->setParameter('venice.app.forms_override', $config['forms_override']);
+        $container->setParameter('venice.app.entity_forms', $config['entity_forms']);
+        $container->setParameter('venice.app.entity_override', $config['entity_override']);
+
     }
 }

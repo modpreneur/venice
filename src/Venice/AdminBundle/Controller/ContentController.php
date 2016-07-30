@@ -138,12 +138,12 @@ class ContentController extends BaseAdminController
 
         $formOptions = [];
 
-        $content = new VideoContent();
+        $content = $this->getEntityOverrideHandler()->getEntityInstance(VideoContent::class);
 
         $form = $this->getFormCreator()
             ->createCreateForm(
                 $content,
-                $content->getFormTypeClass(),
+                $this->getEntityFormMatcher()->getFormClassForEntity($content),
                 "admin_content",
                 ["contentType" => $content->getType()],
                 $formOptions
@@ -171,14 +171,15 @@ class ContentController extends BaseAdminController
     public function newFormAction(Request $request, $contentType)
     {
         try {
-            $content = Content::createContentByType($contentType);
+            $contentClass = Content::createContentClassByType($contentType);
+            $content = $this->getEntityOverrideHandler()->getEntityInstance($contentClass);
         } catch (ReflectionException $e) {
             throw new NotFoundHttpException("Content type: ".$contentType." not found.");
         }
         $form = $this->getFormCreator()
             ->createCreateForm(
                 $content,
-                $content->getFormTypeClass(),
+                $this->getEntityFormMatcher()->getFormClassForEntity($content),
                 "admin_content",
                 ["contentType" => $contentType,]
             );
@@ -213,7 +214,8 @@ class ContentController extends BaseAdminController
     public function createAction(Request $request, $contentType)
     {
         try {
-            $content = Content::createContentByType($contentType);
+            $contentClass = Content::createContentClassByType($contentType);
+            $content = $this->getEntityOverrideHandler()->getEntityInstance($contentClass);
         } catch (ReflectionException $e) {
             throw new NotFoundHttpException("Content type: ".$contentType." not found.");
         }
@@ -229,7 +231,7 @@ class ContentController extends BaseAdminController
         $form = $this->getFormCreator()
             ->createCreateForm(
                 $content,
-                $content->getFormTypeClass(),
+                $this->getEntityFormMatcher()->getFormClassForEntity($content),
                 "admin_content",
                 ["contentType" => $contentType],
                 $formOptions
@@ -280,7 +282,7 @@ class ContentController extends BaseAdminController
         $form = $this->getFormCreator()
             ->createEditForm(
                 $content,
-                $content->getFormTypeClass(),
+                $this->getEntityFormMatcher()->getFormClassForEntity($content),
                 "admin_content",
                 ["groupContent" => $content],
                 $formOptions
@@ -329,7 +331,7 @@ class ContentController extends BaseAdminController
         $form = $this->getFormCreator()
             ->createEditForm(
                 $content,
-                $content->getFormTypeClass(),
+                $this->getEntityFormMatcher()->getFormClassForEntity($content),
                 "admin_content"
             );
 
@@ -368,7 +370,7 @@ class ContentController extends BaseAdminController
         $contentForm = $this->getFormCreator()
             ->createEditForm(
                 $content,
-                $content->getFormTypeClass(),
+                $this->getEntityFormMatcher()->getFormClassForEntity($content),
                 "admin_content",
                 ["groupContent" => $content,]
             );
@@ -547,8 +549,11 @@ class ContentController extends BaseAdminController
 
         $form = $this->getFormCreator()
             ->createCreateForm(
-                new ContentProduct(),
-                ContentProductTypeWithHiddenContent::class,
+                $this->getEntityOverrideHandler()->getEntityInstance(ContentProduct::class),
+                $this->getFormOverrideHandler()->getFormClass(
+                    ContentProductTypeWithHiddenContent::class,
+                    ContentProductTypeWithHiddenContent::class
+                ),
                 "admin_content_content_product",
                 [],
                 ["content" => $content,]
@@ -569,12 +574,15 @@ class ContentController extends BaseAdminController
      */
     public function contentProductCreateAction(Request $request)
     {
-        $contentProduct = new ContentProduct();
+        $contentProduct = $this->getEntityOverrideHandler()->getEntityInstance(ContentProduct::class);
 
         $form = $this->getFormCreator()
             ->createCreateForm(
                 $contentProduct,
-                ContentProductTypeWithHiddenContent::class,
+                $this->getFormOverrideHandler()->getFormClass(
+                    ContentProductTypeWithHiddenContent::class,
+                    ContentProductTypeWithHiddenContent::class
+                ),
                 "admin_content_content_product"
             );
 
@@ -626,7 +634,10 @@ class ContentController extends BaseAdminController
         $contentForm = $this->getFormCreator()
             ->createEditForm(
                 $contentProduct,
-                ContentProductTypeWithHiddenContent::class,
+                $this->getFormOverrideHandler()->getFormClass(
+                    ContentProductTypeWithHiddenContent::class,
+                    ContentProductTypeWithHiddenContent::class
+                ),
                 "admin_content_content_product",
                 ["id" => $contentProduct->getId(),],
                 ["content" => $contentProduct->getContent()]
@@ -656,7 +667,10 @@ class ContentController extends BaseAdminController
         $form = $this->getFormCreator()
             ->createEditForm(
                 $contentProduct,
-                ContentProductTypeWithHiddenContent::class,
+                $this->getFormOverrideHandler()->getFormClass(
+                    ContentProductTypeWithHiddenContent::class,
+                    ContentProductTypeWithHiddenContent::class
+                ),
                 "admin_content_content_product",
                 ["id" => $contentProduct->getId(),],
                 ["content" => $contentProduct->getContent()]

@@ -3,6 +3,7 @@ admin_dashboard:
     defaults: { _controller: 'VeniceAdminBundle:Dashboard:index' }
     options: { compiler_class: Symfony\Component\Routing\RouteCompiler }
 
+#todo: @JakubFajkus remove route!
 admin_dashboard_dashboardextended:
     path: /admin/dashboard-extended
     defaults: { _controller: 'VeniceAdminBundle:Dashboard:dashboardExtended' }

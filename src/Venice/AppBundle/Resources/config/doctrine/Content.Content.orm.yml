@@ -1,21 +1,18 @@
 Venice\AppBundle\Entity\Content\Content:
     type: entity
     table: content
-    inheritanceType: JOINED
+    inheritanceType: SINGLE_TABLE
     discriminatorColumn:
-        name: type
+        name: discriminator
         type: string
-        length: null
-        columnDefinition: null
-        fieldName: type
     discriminatorMap:
-        content: Venice\AppBundle\Entity\Content\Content
-        groupcontent: Venice\AppBundle\Entity\Content\GroupContent
-        htmlcontent: Venice\AppBundle\Entity\Content\HtmlContent
-        iframecontent: Venice\AppBundle\Entity\Content\IframeContent
-        mp3content: Venice\AppBundle\Entity\Content\Mp3Content
-        pdfcontent: Venice\AppBundle\Entity\Content\PdfContent
-        videocontent: Venice\AppBundle\Entity\Content\VideoContent
+        venice_content: Venice\AppBundle\Entity\Content\Content
+        venice_groupcontent: Venice\AppBundle\Entity\Content\GroupContent
+        venice_htmlcontent: Venice\AppBundle\Entity\Content\HtmlContent
+        venice_iframecontent: Venice\AppBundle\Entity\Content\IframeContent
+        venice_mp3content: Venice\AppBundle\Entity\Content\Mp3Content
+        venice_pdfcontent: Venice\AppBundle\Entity\Content\PdfContent
+        venice_videocontent: Venice\AppBundle\Entity\Content\VideoContent
     repositoryClass: Venice\AppBundle\Entity\Repositories\ContentRepository
     id:
         id:

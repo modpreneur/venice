@@ -1,6 +1,13 @@
 Venice\AppBundle\Entity\OAuthToken:
     type: entity
+    inheritanceType: SINGLE_TABLE
+    discriminatorColumn:
+        name: discriminator
+        type: string
+    discriminatorMap:
+        venice_oauthtoken: Venice\AppBundle\Entity\OAuthToken
     table: oauth_token
+    repositoryClass: Venice\AppBundle\Entity\Repositories\OAuthTokenRepository
     id:
         id:
             type: integer

@@ -1,7 +1,7 @@
 Venice\AppBundle\Entity\Content\VideoContent:
     type: entity
-    repositoryClass: Venice\AppBundle\Entity\Repositories\VideoContentRepository
     table: content_video
+    repositoryClass: Venice\AppBundle\Entity\Repositories\VideoContentRepository
     fields:
         previewImage:
             type: string
