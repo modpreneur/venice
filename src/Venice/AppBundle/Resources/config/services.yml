@@ -2,10 +2,7 @@ services:
 
     # SERVICES #
 
-    logic:
-         alias: app_logic
-
-    app_logic:
+    venice.app.app_logic:
         class: Venice\AppBundle\Services\AppLogic
         arguments:
           - "@service_container"
@@ -41,60 +38,55 @@ services:
         arguments:
             - "%venice.app.entity_override%"
 
-    app.services.necktie_gateway:
+    venice.app.necktie_gateway:
         class: Venice\AppBundle\Services\NecktieGateway
         arguments:
             - "@doctrine.orm.entity_manager"
             - "@router"
-            - "@app.services.necktie_gateway_helper"
-            - "@app.services.necktie_connector"
+            - "@venice.app.necktie_gateway_helper"
+            - "@venice.app.necktie_connector"
             - %necktie_url%
             - %necktie_client_id%
             - %necktie_client_secret%
             - %login_response_route%
 
+#    todo: Remove
     necktie:
-        alias: app.services.necktie_gateway
+        alias: venice.app.necktie_gateway
 
-    app.services.necktie_connector:
+    venice.app.necktie_connector:
         class: Venice\AppBundle\Services\NecktieConnector
 
-    app.services.necktie_gateway_helper:
+    venice.app.necktie_gateway_helper:
         class: Venice\AppBundle\Services\NecktieGatewayHelper
 
-    app.services.connection_manager:
+    venice.app.connection_manager:
         class: Venice\AppBundle\Services\ConnectionManager
         arguments:
             - "@service_container"
             - %primary_gateway_service%
             - %secondary_gateway_service%
 
-    form_error_serializer:
+    venice.app.form_error_serializer:
         class: Venice\AppBundle\Services\FormErrorSerializer
 
-    app.handler.logout_success_handler:
+    venice.app.logout_success_handler:
         class: Venice\AppBundle\Services\LogoutSuccessHandler
         arguments:
             - "@router.default"
             - %necktie_url%
 
-    app.services.buy_url_generator:
+    venice.app.buy_url_generator:
         class: Venice\AppBundle\Services\BuyUrlGenerator
         arguments:
             - "@router"
             - "@doctrine.orm.entity_manager"
             - %necktie_url%
 
-    admin.form_creator:
-        class: Venice\AppBundle\Services\FormCreator
-        arguments:
-            - "@form.factory"
-            - "@router"
-
-    app.roles_loader:
+    venice.app.roles_loader:
         class: Venice\AppBundle\Services\RolesLoader
 
-    app.s3_client:
+    venice.app.s3_client:
         class: Aws\S3\S3Client
         factory_class: Aws\S3\S3Client
         factory_method: 'factory'
@@ -105,21 +97,21 @@ services:
                       secret: %amazon_s3_secret%
                       key: %amazon_s3_key%
 
-    app.file_uploader:
+    venice.app.file_uploader:
         class: Venice\AppBundle\Services\FileUploader
         arguments:
             - "@froala_editor_storage_filesystem"
             - %amazon_s3_region%
             - %amazon_s3_bucket%
 
-    app.client_secret_provider:
+    venice.app.client_secret_provider:
         class: Venice\AppBundle\Services\ClientSecretProvider
         arguments:
             - "%necktie_client_secret%"
 
     # EVENT LISTENERS #
 
-    app.event_listener.kernel_excetpion:
+    venice.app.event_listener.kernel_excetpion:
         class: Venice\AppBundle\EventListener\KernelExceptionListener
         arguments:
             - "@router"
@@ -127,21 +119,14 @@ services:
         tags:
             - {name: "kernel.event_listener", event: "kernel.exception", method: "onKernelException"}
 
-    app.event_listener.free_product_created:
-        class: Venice\AppBundle\EventListener\AppLogicListener
-        arguments:
-            - "@doctrine"
-        tags:
-            - {name: "kernel.event_listener", event: app.free_product_created, method: "onFreeProductCreated"}
-
-    app.entity_listener:
+    venice.app.entity_listener:
         class: Venice\AppBundle\EventListener\EntityListener
         arguments:
             - "@service_container"
         tags:
             - { name: doctrine.event_listener, event: onFlush}
 
-    app.login_listener:
+    venice.app.login_listener:
         class: Venice\AppBundle\EventListener\LoginListener
         tags:
             - {name: "kernel.event_listener", event: "app.necktie_login_successful", method: "onSuccessfulLogin"}
@@ -153,7 +138,7 @@ services:
         calls:
             - [ "setAnnotationReader", [ "@annotation_reader" ] ]
 
-    app.notification_listener:
+    venice.app.notification_listener:
         class: Venice\AppBundle\EventListener\NotificationListener
         arguments:
             - "@trinity.services.price_string_generator"
@@ -162,7 +147,7 @@ services:
             - {name: "kernel.event_listener", event: "trinity.notifications.changesDone", method: "onChangesDone"}
             - {name: "kernel.event_listener", event: "trinity.notifications.beforeDeleteEntity", method: "onBeforeDeleteEntity"}
 
-    app.doctrine_discriminator_listener:
+    venice.app.doctrine_discriminator_listener:
         class: Venice\AppBundle\EventListener\DoctrineDiscriminatorListener
         arguments:
             - "%venice.app.entity_mapping%"
@@ -171,13 +156,13 @@ services:
 
     # TWIG EXTENSIONS #
 
-    app.twig.extension.human_bool:
+    venice.app.twig.extension.human_bool:
         class: Venice\AppBundle\Twig\HumanBoolExtension
         public: false
         tags:
             - { name: twig.extension }
 
-    twig.extension.date:
+    venice.twig.extension.date:
          class: Twig_Extensions_Extension_Date
          tags:
              - { name: twig.extension }
@@ -186,135 +171,135 @@ services:
 # ************   FORMS   ************
 
 
-    venice.admin.form.custom_collection:
+    venice.app.form.custom_collection:
         class: Venice\AppBundle\Form\Collection\CollectionType
         tags:
             - { name: form.type, alias: collection }
 
-    venice.admin.form.base:
+    venice.app.form.base:
         class: Venice\AppBundle\Form\BaseType
         arguments:
             - "@doctrine.orm.entity_manager"
             - "@venice.app.entity_override_handler"
 
-    venice.admin.form.content_in_group:
+    venice.app.form.content_in_group:
         class: Venice\AppBundle\Form\Content\ContentInGroupType
-        parent: "venice.admin.form.base"
+        parent: "venice.app.form.base"
         tags:
             - { name: form.type }
 
-    venice.admin.form.content_product_with_hidden_content:
+    venice.app.form.content_product_with_hidden_content:
         class: Venice\AppBundle\Form\ContentProduct\ContentProductTypeWithHiddenContent
-        parent: "venice.admin.form.base"
+        parent: "venice.app.form.base"
         tags:
             - { name: form.type }
 
-    venice.admin.form.content_product_with_hidden_product:
+    venice.app.form.content_product_with_hidden_product:
         class: Venice\AppBundle\Form\ContentProduct\ContentProductTypeWithHiddenProduct
-        parent: "venice.admin.form.base"
+        parent: "venice.app.form.base"
         tags:
             - { name: form.type }
 
-    venice.admin.form.group_content:
+    venice.app.form.group_content:
         class: Venice\AppBundle\Form\Content\GroupContentType
-        parent: "venice.admin.form.base"
+        parent: "venice.app.form.base"
         tags:
             - { name: form.type }
 
-    venice.admin.form.html_content:
+    venice.app.form.html_content:
         class: Venice\AppBundle\Form\Content\HtmlContentType
-        parent: "venice.admin.form.base"
+        parent: "venice.app.form.base"
         tags:
             - { name: form.type }
 
-    venice.admin.form.mp3_content:
+    venice.app.form.mp3_content:
         class: Venice\AppBundle\Form\Content\Mp3ContentType
-        parent: "venice.admin.form.base"
+        parent: "venice.app.form.base"
         tags:
             - { name: form.type }
 
-    venice.admin.form.pdf_content:
+    venice.app.form.pdf_content:
         class: Venice\AppBundle\Form\Content\PdfContentType
-        parent: "venice.admin.form.base"
+        parent: "venice.app.form.base"
         tags:
             - { name: form.type }
 
-    venice.admin.form.iframe_content:
+    venice.app.form.iframe_content:
         class: Venice\AppBundle\Form\Content\IframeContentType
-        parent: "venice.admin.form.base"
+        parent: "venice.app.form.base"
         tags:
             - { name: form.type }
 
-    venice.admin.form.video_content:
+    venice.app.form.video_content:
         class: Venice\AppBundle\Form\Content\VideoContentType
-        parent: "venice.admin.form.base"
+        parent: "venice.app.form.base"
         tags:
             - { name: form.type }
 
-    venice.admin.form.free_product:
+    venice.app.form.free_product:
         class: Venice\AppBundle\Form\Product\FreeProductType
-        parent: "venice.admin.form.base"
+        parent: "venice.app.form.base"
         tags:
             - { name: form.type }
 
-    venice.admin.form.standard_product:
+    venice.app.form.standard_product:
         class: Venice\AppBundle\Form\Product\StandardProductType
-        parent: "venice.admin.form.base"
+        parent: "venice.app.form.base"
         tags:
             - { name: form.type }
 
-    venice.admin.form.user:
+    venice.app.form.user:
         class: Venice\AppBundle\Form\User\UserType
-        parent: "venice.admin.form.base"
+        parent: "venice.app.form.base"
         tags:
             - { name: form.type }
 
-    venice.admin.form.user.roles:
+    venice.app.form.user.roles:
         class: Venice\AppBundle\Form\User\RolesType
-        parent: "venice.admin.form.base"
+        parent: "venice.app.form.base"
         arguments:
-            - "@app.roles_loader"
+            - "@venice.app.roles_loader"
         tags:
             - { name: form.type }
 
-    venice.admin.form.billing_plan:
+    venice.app.form.billing_plan:
         class: Venice\AppBundle\Form\BillingPlanType
-        parent: "venice.admin.form.base"
+        parent: "venice.app.form.base"
         tags:
             - { name: form.type }
 
-    venice.admin.form.blog_article:
+    venice.app.form.blog_article:
         class: Venice\AppBundle\Form\BlogArticleType
-        parent: "venice.admin.form.base"
+        parent: "venice.app.form.base"
         tags:
             - { name: form.type }
 
-    venice.admin.form.product_access:
+    venice.app.form.product_access:
         class: Venice\AppBundle\Form\ProductAccessType
-        parent: "venice.admin.form.base"
+        parent: "venice.app.form.base"
         tags:
             - { name: form.type }
 
     venice.app.notification.form.product_access:
         class: Venice\AppBundle\Form\Notification\ProductAccessType
-        parent: "venice.admin.form.base"
+        parent: "venice.app.form.base"
         tags:
             - { name: form.type }
 
     venice.app.notification.form.product:
         class: Venice\AppBundle\Form\Notification\ProductType
-        parent: "venice.admin.form.base"
+        parent: "venice.app.form.base"
         tags:
             - { name: form.type }
 
     venice.app.notification.form.user:
         class: Venice\AppBundle\Form\Notification\UserType
-        parent: "venice.admin.form.base"
+        parent: "venice.app.form.base"
         tags:
             - { name: form.type }
 
     venice.app.notification.form.billing_plan:
         class: Venice\AppBundle\Form\Notification\BillingPlanType
-        parent: "venice.admin.form.base"
+        parent: "venice.app.form.base"
         tags:
             - { name: form.type }

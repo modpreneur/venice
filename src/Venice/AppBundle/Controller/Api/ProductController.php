@@ -22,6 +22,6 @@ class ProductController extends Controller
      */
     public function necktieProductExistsAction($id)
     {
-        return new JsonResponse($this->get("app.services.necktie_gateway")->productExists($this->getUser(), $id));
+        return new JsonResponse($this->get("venice.app.necktie_gateway")->productExists($this->getUser(), $id));
     }
 }

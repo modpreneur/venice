@@ -40,7 +40,7 @@ class NecktieBuyController extends Controller
 
         /** @var User $user */
         $user = $this->getUser();
-        $this->get('app.services.necktie_gateway')->refreshAccessToken($user);
+        $this->get('venice.app.necktie_gateway')->refreshAccessToken($user);
 
         $em = $this->getDoctrine()->getManager();
         $em->persist($user);

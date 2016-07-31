@@ -219,7 +219,7 @@ class NecktieLoginController extends Controller
      */
     protected function getGateway()
     {
-        return $this->get('app.services.necktie_gateway');
+        return $this->get('venice.app.necktie_gateway');
     }
 
     protected function dispatchSuccessfulLoginEvent($user)

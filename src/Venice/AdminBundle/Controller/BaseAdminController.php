@@ -51,7 +51,7 @@ class BaseAdminController extends FOSRestController
      */
     public function getFormErrorSerializer()
     {
-        return $this->get('form_error_serializer');
+        return $this->get('venice.app.form_error_serializer');
     }
 
 
@@ -62,7 +62,7 @@ class BaseAdminController extends FOSRestController
     {
         // save logic to variable to speed up the process a bit
         if (!$this->logic) {
-            $this->logic = $this->get('app_logic');
+            $this->logic = $this->get('venice.app.app_logic');
         }
 
         return $this->logic;
@@ -75,7 +75,7 @@ class BaseAdminController extends FOSRestController
     {
         // save creator to variable to speed up the process a bit
         if (!$this->formCreator) {
-            $this->formCreator = $this->get('admin.form_creator');
+            $this->formCreator = $this->get('venice.admin.form_creator');
         }
 
         return $this->formCreator;

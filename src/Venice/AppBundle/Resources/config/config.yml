@@ -12,7 +12,7 @@ parameters:
 trinity_messages:
     sender_identification: "%client_identification%"
     message_user_provider: "@venice.bunny.message_user_provider"
-    secret_key_provider: "@app.client_secret_provider"
+    secret_key_provider: "@venice.app.client_secret_provider"
 
 bunny:
     host: "%rabbit_url%"
@@ -34,7 +34,7 @@ trinity_notification:
         product-access: Venice\AppBundle\Entity\ProductAccess
     mode: client
     client_id: %necktie_client_short_id%
-    client_secret_provider: "@app.client_secret_provider"
+    client_secret_provider: "@venice.app.client_secret_provider"
     forms:
         product: Venice\AppBundle\Form\Notification\ProductType
         billing-plan: Venice\AppBundle\Form\Notification\BillingPlanType
@@ -88,7 +88,7 @@ twig:
     globals:
         root_path: %kernel.root_dir%
         admin_manager: "@trinity.admin.service.admin_manager"
-        appLogic: "@app_logic"
+        appLogic: "@venice.app.app_logic"
 
 twig_cache:
     service: trinity.cache
@@ -250,7 +250,7 @@ knp_gaufrette:
     adapters:
         froala_editor_storage:
             aws_s3:
-                service_id: app.s3_client
+                service_id: venice.app.s3_client
                 bucket_name: %amazon_s3_bucket%
                 options:
                     create: true
