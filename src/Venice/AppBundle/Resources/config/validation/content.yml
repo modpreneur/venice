@@ -2,7 +2,7 @@ Venice\AppBundle\Entity\Content\Content:
     constraints:
         - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
             fields: name
-#            repositoryMethod: "findByUniqueCriteria" #todo: @JakubFajkus fix validation
+            repositoryMethod: "findByUniqueCriteria"
     properties:
         name:
             - NotBlank: ~
