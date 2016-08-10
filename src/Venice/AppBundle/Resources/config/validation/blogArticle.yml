@@ -1,0 +1,14 @@
+Venice\AppBundle\Entity\BlogArticle:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: handle
+    properties:
+        handle:
+            - NotBlank: ~
+        dateToPublish:
+            - DateTime: ~
+        title:
+            - NotBlank: ~
+        content:
+            - NotBlank: ~
+            - Length:
+                min: 10

@@ -189,7 +189,7 @@ class UserController extends BaseAdminController
         $form = $this->getFormCreator()
             ->createEditForm(
                 $user,
-                UserType::class,
+                $this->getEntityFormMatcher()->getFormClassForEntity($user),
                 "admin_user",
                 ["id" => $user->getId(),]
             );
@@ -219,7 +219,7 @@ class UserController extends BaseAdminController
         $form = $this->getFormCreator()
             ->createEditForm(
                 $user,
-                UserType::class,
+                $this->getEntityFormMatcher()->getFormClassForEntity($user),
                 "admin_user",
                 ["id" => $user->getId(),]
             );
@@ -336,7 +336,7 @@ class UserController extends BaseAdminController
         $form = $this->getFormCreator()
             ->createEditForm(
                 $user,
-                RolesType::class,
+                $this->getFormOverrideHandler()->getFormClass(RolesType::class),
                 "admin_user_roles",
                 ["id" => $user->getId()]
             );
@@ -363,7 +363,7 @@ class UserController extends BaseAdminController
         $form = $this->getFormCreator()
             ->createEditForm(
                 $user,
-                RolesType::class,
+                $this->getFormOverrideHandler()->getFormClass(RolesType::class),
                 "admin_user_roles",
                 ["id" => $user->getId()]
             );

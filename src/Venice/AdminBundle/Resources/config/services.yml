@@ -1,6 +1,6 @@
 services:
 
-    admin.listener.menu.config:
+    venice.admin.listener.menu.config:
         class: Venice\AdminBundle\Services\MenuListener
         arguments:
             - "@doctrine.orm.entity_manager"
@@ -8,7 +8,13 @@ services:
         tags:
             - { name: kernel.event_listener, event: trinity.main_menu.configure, method: onMenuConfigure }
 
-    knp.main_menu:
+    venice.admin.form_creator:
+        class: Venice\AppBundle\Services\FormCreator
+        arguments:
+            - "@form.factory"
+            - "@router"
+
+    venice.admin.main_menu:
         class: Knp\Menu\MenuItem
         factory: ["@trinity.admin.menu_builder", createMainMenu]
         arguments:
@@ -16,52 +22,52 @@ services:
         tags:
             - { name: knp_menu.menu, alias: sidebar }
 
-    admin.grid.standardproduct:
+    venice.admin.grid.standardproduct:
         class: Venice\AdminBundle\Grid\ProductGrid
         tags:
-          - { name: trinity.grid, alias: standardproduct }
+            - { name: trinity.grid, alias: standardproduct }
 
-    admin.grid.freeproduct:
+    venice.admin.grid.freeproduct:
         class: Venice\AdminBundle\Grid\ProductGrid
         tags:
-          - { name: trinity.grid, alias: freeproduct }
+            - { name: trinity.grid, alias: freeproduct }
 
-    admin.grid.product:
+    venice.admin.grid.product:
         class: Venice\AdminBundle\Grid\ProductGrid
         tags:
-          - { name: trinity.grid, alias: product }
+            - { name: trinity.grid, alias: product }
 
-    admin.grid.content_product:
-            class: Venice\AdminBundle\Grid\ContentProductGrid
-            tags:
-              - { name: trinity.grid, alias: contentproduct }
+    venice.admin.grid.content_product:
+        class: Venice\AdminBundle\Grid\ContentProductGrid
+        tags:
+            - { name: trinity.grid, alias: contentproduct }
 
-    admin.grid.user:
+    venice.admin.grid.user:
         class: Venice\AdminBundle\Grid\UserGrid
         tags:
-           - { name: trinity.grid, alias: user }
+             - { name: trinity.grid, alias: user }
 
-    admin.grid.product_access:
+    venice.admin.grid.product_access:
         class: Venice\AdminBundle\Grid\ProductAccessGrid
         tags:
-           - { name: trinity.grid, alias: productaccess }
+             - { name: trinity.grid, alias: productaccess }
 
-    admin.grid.billing_plan:
+    venice.admin.grid.billing_plan:
         class: Venice\AdminBundle\Grid\BillingPlanGrid
         tags:
-           - { name: trinity.grid, alias: billingplan }
+             - { name: trinity.grid, alias: billingplan }
 
-    admin.grid.content:
+    venice.admin.grid.content:
         class: Venice\AdminBundle\Grid\ContentGrid
         tags:
-           - { name: trinity.grid, alias: content }
+             - { name: trinity.grid, alias: content }
 
-    admin.grid.group_content:
+    venice.admin.grid.group_content:
         class: Venice\AdminBundle\Grid\ContentGrid
         tags:
-           - { name: trinity.grid, alias: groupcontent }
+             - { name: trinity.grid, alias: groupcontent }
 
-    admin.grid.blog_article:
+    venice.admin.grid.blog_article:
         class: Venice\AdminBundle\Grid\BlogArticleGrid
         tags:
-           - { name: trinity.grid, alias: blogarticle }
+             - { name: trinity.grid, alias: blogarticle }

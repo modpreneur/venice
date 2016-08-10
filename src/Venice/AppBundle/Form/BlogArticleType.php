@@ -9,6 +9,7 @@
 namespace Venice\AppBundle\Form;
 
 
+use Venice\AppBundle\Entity\BlogArticle;
 use Venice\AppBundle\Entity\Product\Product;
 use KMS\FroalaEditorBundle\Form\Type\FroalaEditorType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -76,7 +77,7 @@ class BlogArticleType extends BaseType
     {
         $resolver->setDefaults(
             [
-                "data_class" => "Venice\AppBundle\\Entity\\BlogArticle",
+                "data_class" => $this->entityOverrideHandler->getEntityClass(BlogArticle::class),
             ]
         );
     }

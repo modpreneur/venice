@@ -1,0 +1,24 @@
+Venice\AppBundle\Entity\ContentProduct:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+            fields:
+                - content
+                - product
+                - delay
+                - orderNumber
+            errorPath: orderNumber
+            message: "The association with the same data already exists"
+
+    properties:
+        content:
+            - NotBlank: ~
+        product:
+            - NotBlank: ~
+        delay:
+            - Range:
+                min: 0
+                max: 10000
+        orderNumber:
+            - Range:
+                min: 0
+                max: 10000

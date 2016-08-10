@@ -37,14 +37,8 @@ class BillingPlanController extends BaseAdminController
      */
     public function indexAction(Request $request, int $id)
     {
-//        $entityManager = $this->getDoctrine()->getManager();
-//        $billingPlans = $entityManager->getRepository("VeniceAppBundle:BillingPlan")->findBy(["product" => $product]);
-//
-//        $necktieBillingPlanShowUrl = $this->getParameter("necktie_show_billing_plan_url");
-
-        $count = $this->getDoctrine()->getRepository('VeniceAppBundle:BillingPlan')->count($id);
+        $count = $this->getDoctrine()->getRepository('VeniceAppBundle:BillingPlan')->countByProduct($id);
         $url = $this->generateUrl('grid_default', ['entity' => 'BillingPlan']);
-
 
         $gridConfBuilder = $this->get('trinity.grid.grid_configuration_service')->createGridConfigurationBuilder(
             $url,
@@ -171,7 +165,7 @@ class BillingPlanController extends BaseAdminController
         $billingPlanForm = $this->getFormCreator()
             ->createEditForm(
                 $billingPlan,
-                BillingPlanType::class,
+                $this->getEntityFormMatcher()->getFormClassForEntity($billingPlan),
                 "admin_billing_plan",
                 ["id" => $billingPlan->getId(),],
                 ["product" => $billingPlan->getProduct()]
@@ -205,7 +199,7 @@ class BillingPlanController extends BaseAdminController
         $billingPlanForm = $this->getFormCreator()
             ->createEditForm(
                 $billingPlan,
-                BillingPlanType::class,
+                $this->getEntityFormMatcher()->getFormClassForEntity($billingPlan),
                 "admin_billing_plan",
                 ["id" => $billingPlan->getId(),],
                 ["product" => $billingPlan->getProduct()]
@@ -262,12 +256,12 @@ class BillingPlanController extends BaseAdminController
                 ["id" => $product->getId()]
             );
 
-        $billingPlan = new BillingPlan();
+        $billingPlan = $this->getEntityOverrideHandler()->getEntityInstance(BillingPlan::class);
 
         $form = $this->getFormCreator()
             ->createCreateForm(
                 $billingPlan,
-                BillingPlanType::class,
+                $this->getEntityFormMatcher()->getFormClassForEntity($billingPlan),
                 "admin_billing_plan",
                 ["id" => $product->getId(),],
                 ["product" => $product]
@@ -296,12 +290,12 @@ class BillingPlanController extends BaseAdminController
     public function createAction(Request $request, StandardProduct $product)
     {
         $em = $this->getEntityManager();
-        $billingPlan = new BillingPlan();
+        $billingPlan = $this->getEntityOverrideHandler()->getEntityInstance(BillingPlan::class);
 
         $form = $this->getFormCreator()
             ->createCreateForm(
                 $billingPlan,
-                BillingPlanType::class,
+                $this->getEntityFormMatcher()->getFormClassForEntity($billingPlan),
                 "admin_billing_plan",
                 ["id" => $product->getId(),],
                 ["product" => $product]

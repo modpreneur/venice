@@ -8,7 +8,6 @@
 
 namespace Venice\AppBundle\Form\Notification;
 
-
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -45,7 +44,7 @@ class ProductType extends BaseType implements NotificationTypeInterface
             ->addModelTransformer(
                 new NotificationTransformer(
                     $this->entityManager,
-                    BillingPlan::class,
+                    $options['billingPlanClass'],
                     'necktieId'
                 )
             );
@@ -64,6 +63,7 @@ class ProductType extends BaseType implements NotificationTypeInterface
             [
                 'data_class' => StandardProduct::class,
                 'csrf_protection' => false,
+                'billingPlanClass' => BillingPlan::class
             ]
         );
 

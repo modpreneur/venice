@@ -1,0 +1,13 @@
+Venice\AppBundle\Entity\Content\HtmlContent:
+    type: entity
+    table: content_html
+    repositoryClass: Venice\AppBundle\Entity\Repositories\HtmlContentRepository
+    fields:
+        html:
+            type: text
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+    lifecycleCallbacks: {  }

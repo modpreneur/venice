@@ -1,0 +1,13 @@
+Venice\AppBundle\Entity\Content\PdfContent:
+    type: entity
+    table: content_pdf
+    repositoryClass: Venice\AppBundle\Entity\Repositories\PdfContentRepository
+    fields:
+        link:
+            type: string
+            scale: 0
+            length: 255
+            unique: false
+            nullable: false
+            precision: 0
+    lifecycleCallbacks: {  }

@@ -13,20 +13,9 @@ use Venice\AppBundle\Entity\ContentProduct;
 use Venice\AppBundle\Entity\User;
 use Venice\AppBundle\Traits\Timestampable;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\Mapping\OrderBy;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Class AbstractContent
- *
- * @ORM\Table(name="content")
- * @ORM\Entity(repositoryClass="ContentRepository")
- * @ORM\InheritanceType("JOINED")
- * @ORM\DiscriminatorColumn(name="type", type="string")
- *
- * @UniqueEntity("name")
  *
  * @package Venice\AppBundle\Entity\Content
  */
@@ -36,49 +25,30 @@ abstract class Content
 
     /**
      * @var int
-     *
-     * @ORM\Id()
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     *
      */
     protected $id;
 
 
     /**
      * @var string
-     *
-     * @Assert\Length(min = 3)
-     * @Assert\NotBlank()
-     *
-     * @ORM\Column(name="name", type="string", length=255, nullable=false, unique=true)
      */
     protected $name;
 
 
     /**
      * @var ArrayCollection<ContentProduct>
-     *
-     * @ORM\OneToMany(targetEntity="Venice\AppBundle\Entity\ContentProduct", mappedBy="content", cascade={"PERSIST", "REMOVE"})
-     * @OrderBy({"orderNumber" = "ASC"})
-     *
      */
     protected $contentProducts;
 
 
     /**
      * @var User
-     *
-     * @ORM\ManyToOne(targetEntity="Venice\AppBundle\Entity\User")
      */
     protected $author;
 
 
     /**
      * @var ContentInGroup
-     *
-     * @ORM\OneToMany(targetEntity="Venice\AppBundle\Entity\Content\ContentInGroup", mappedBy="content", cascade={"PERSIST", "REMOVE"})
-     * @OrderBy({"orderNumber" = "ASC"})
      */
     protected $contentsInGroup;
 
@@ -191,17 +161,29 @@ abstract class Content
      */
     public static function createContentByType($type, $args = [])
     {
+        $class = new \ReflectionClass(static::createContentClassByType($type));
+
+        return $class->newInstanceArgs($args);
+    }
+
+    /**
+     * Return a class of content from type (first part of entity name ends with Content)
+     *
+     * @param string $type Could be formatted like HtmlContent, Mp3Content, Venice\AppBundle\\Entity\\Content\\PdfContent, ...
+     *
+     * @return Content
+     */
+    public static function createContentClassByType($type)
+    {
         $type = ucfirst($type);
 
         if(!strpos($type,"Content"))
             $type .= "Content";
 
-        if(!strpos($type,"Venice\AppBundle\\Entity\\Content\\"))
-            $type = "Venice\AppBundle\\Entity\\Content\\" . $type;
+        if(!strpos($type,"Venice\\AppBundle\\Entity\\Content\\"))
+            $type = "Venice\\AppBundle\\Entity\\Content\\" . $type;
 
-        $class = new \ReflectionClass($type);
-
-        return $class->newInstanceArgs($args);
+        return $type;
     }
 
 
@@ -220,6 +202,8 @@ abstract class Content
      */
     public function getFormTypeClass()
     {
+        throw new \Exception("DEPRECATED");
+
         $name = get_class($this) . "Type";
         $name = str_replace('Entity', 'Form', $name);
 

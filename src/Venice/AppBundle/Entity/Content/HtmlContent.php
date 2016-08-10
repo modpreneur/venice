@@ -9,21 +9,15 @@
 namespace Venice\AppBundle\Entity\Content;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Class HtmlContent
  * @package Venice\AppBundle\Entity\Content
- *
- * @ORM\Entity()
- * @ORM\Table(name="content_html")
  */
 class HtmlContent extends Content
 {
     /**
      * @var string
-     *
-     * @ORM\Column(name="html", type="text", nullable=false)
      */
     protected $html;
 
@@ -32,7 +26,6 @@ class HtmlContent extends Content
      * Return Content's content no matter what concrete implementation is.
      *
      * @return string
-     *
      */
     public function getContent()
     {

@@ -161,12 +161,12 @@ class ProductController extends BaseAdminController
             ->addRouteItem("Products", "admin_product_index")
             ->addRouteItem("New product", "admin_product_new");
 
-        $product = new FreeProduct();
+        $product = $this->getEntityOverrideHandler()->getEntityInstance(FreeProduct::class);
 
         $form = $this->getFormCreator()
             ->createCreateForm(
                 $product,
-                FreeProductType::class,
+                $this->getEntityFormMatcher()->getFormClassForEntity($product),
                 "admin_product",
                 ["productType" => $product->getType(),]
             );
@@ -202,7 +202,7 @@ class ProductController extends BaseAdminController
         $productForm = $this->getFormCreator()
             ->createCreateForm(
                 $product,
-                $product->getFormTypeClass(),
+                $this->getEntityFormMatcher()->getFormClassForEntity($product),
                 "admin_product",
                 ["productType" => $productType,]
             );
@@ -254,7 +254,7 @@ class ProductController extends BaseAdminController
         $productForm = $this->getFormCreator()
             ->createEditForm(
                 $product,
-                $product->getFormTypeClass(),
+                $this->getEntityFormMatcher()->getFormClassForEntity($product),
                 "admin_product",
                 ["id" => $product->getId(),]
             );
@@ -303,7 +303,7 @@ class ProductController extends BaseAdminController
         $productForm = $this->getFormCreator()
             ->createEditForm(
                 $product,
-                $product->getFormTypeClass(),
+                $this->getEntityFormMatcher()->getFormClassForEntity($product),
                 "admin_product",
                 ["id" => $product->getId()]
             );
@@ -449,8 +449,11 @@ class ProductController extends BaseAdminController
 
         $form = $this->getFormCreator()
             ->createCreateForm(
-                new ContentProduct(),
-                ContentProductTypeWithHiddenProduct::class,
+                $this->getEntityOverrideHandler()->getEntityInstance(ContentProduct::class),
+                $this->getFormOverrideHandler()->getFormClass(
+                    ContentProductTypeWithHiddenProduct::class,
+                    ContentProductTypeWithHiddenProduct::class
+                ),
                 "admin_product_content_product",
                 [],
                 ["product" => $product,]
@@ -474,7 +477,10 @@ class ProductController extends BaseAdminController
         $contentForm = $this->getFormCreator()
             ->createEditForm(
                 $contentProduct,
-                ContentProductTypeWithHiddenProduct::class,
+                $this->getFormOverrideHandler()->getFormClass(
+                    ContentProductTypeWithHiddenProduct::class,
+                    ContentProductTypeWithHiddenProduct::class
+                ),
                 "admin_product_content_product",
                 ["id" => $contentProduct->getId(),],
                 ["product" => $contentProduct->getProduct()]
@@ -504,7 +510,10 @@ class ProductController extends BaseAdminController
         $form = $this->getFormCreator()
             ->createEditForm(
                 $contentProduct,
-                ContentProductTypeWithHiddenProduct::class,
+                $this->getFormOverrideHandler()->getFormClass(
+                    ContentProductTypeWithHiddenProduct::class,
+                    ContentProductTypeWithHiddenProduct::class
+                ),
                 "admin_product_content_product",
                 ["id" => $contentProduct->getId(),],
                 ["product" => $contentProduct->getProduct()]
@@ -573,12 +582,15 @@ class ProductController extends BaseAdminController
      */
     public function contentProductCreateAction(Request $request)
     {
-        $contentProduct = new ContentProduct();
+        $contentProduct = $this->getEntityOverrideHandler()->getEntityInstance(ContentProduct::class);
 
         $form = $this->getFormCreator()
             ->createCreateForm(
                 $contentProduct,
-                ContentProductTypeWithHiddenProduct::class,
+                $this->getFormOverrideHandler()->getFormClass(
+                    ContentProductTypeWithHiddenProduct::class,
+                    ContentProductTypeWithHiddenProduct::class
+                ),
                 "admin_product_content_product"
             );
 

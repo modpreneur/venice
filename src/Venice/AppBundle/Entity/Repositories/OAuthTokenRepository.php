@@ -1,13 +1,13 @@
 <?php
 
-namespace Venice\AppBundle\Entity\Product;
+namespace Venice\AppBundle\Entity\Repositories;
 
 use Doctrine\ORM\EntityRepository;
 
 /**
- * ProductRepository
+ * OAuthTokenRepository
  */
-class ProductRepository extends EntityRepository
+class OAuthTokenRepository extends EntityRepository
 {
     /**
      * @return int
@@ -15,10 +15,10 @@ class ProductRepository extends EntityRepository
     public function count()
     {
         $query = $this->getEntityManager()->createQuery('
-              SELECT COUNT(product)
-              FROM  VeniceAppBundle:Product\Product AS product
-            ')
-        ;
+              SELECT COUNT(t)
+              FROM  VeniceAppBundle:OAuthToken AS t
+            ');
+
         return $query->getSingleScalarResult();
     }
 }

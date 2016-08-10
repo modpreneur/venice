@@ -25,7 +25,7 @@ class ProductController extends Controller
     public function indexAction()
     {
         $products = $this->getDoctrine()->getRepository("VeniceAppBundle:Product\\Product")->findAll();
-        $urlGenerator = $this->get('app.services.buy_url_generator');
+        $urlGenerator = $this->get('venice.app.buy_url_generator');
 
         return $this->render(
             'VeniceFrontBundle:Product:index.html.twig',
@@ -44,7 +44,7 @@ class ProductController extends Controller
     public function showAction(Product $product)
     {
         return $this->render('VeniceFrontBundle:Product:show.html.twig',
-            ['product' => $product, 'urlGenerator' => $this->get('app.services.buy_url_generator')]
+            ['product' => $product, 'urlGenerator' => $this->get('venice.app.buy_url_generator')]
         );
     }
 

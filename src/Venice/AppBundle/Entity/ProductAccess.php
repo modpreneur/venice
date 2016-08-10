@@ -15,9 +15,6 @@ use Trinity\NotificationBundle\Annotations as N;
 /**
  * ProductAccess
  *
- * @ORM\Table(name="product_access")
- * @ORM\Entity(repositoryClass="Venice\AppBundle\Entity\Repositories\ProductAccessRepository")
- *
  * @UniqueEntity(fields={"user", "product"}, errorPath="product")
  */
 class ProductAccess implements NotificationEntityInterface
@@ -26,50 +23,31 @@ class ProductAccess implements NotificationEntityInterface
 
     /**
      * @var integer
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
 
-
     /**
-     * @ORM\Column(name="necktie_id", type="integer", unique=true, nullable=false)
-     *
      * @var integer
      */
     protected $necktieId;
 
-
     /**
      * @var User
-     *
-     * @ORM\ManyToOne(targetEntity="Venice\AppBundle\Entity\User", inversedBy="productAccesses", cascade={"PERSIST"})
      */
     private $user;
 
     /**
      * @var Product
-     *
-     * @ORM\ManyToOne(targetEntity="Venice\AppBundle\Entity\Product\Product", inversedBy="productAccesses")
      */
     private $product;
 
     /**
      * @var \DateTime
-     *
-     * @ORM\Column(name="from_date", type="datetimetz", nullable=false)
      */
     private $fromDate;
 
     /**
      * @var \DateTime
-     *
-     * @Assert\Type("\DateTime")
-     * @Assert\GreaterThanOrEqual("now")
-     *
-     * @ORM\Column(name="to_date", type="datetimetz", nullable=true)
      */
     private $toDate;
 
@@ -81,8 +59,6 @@ class ProductAccess implements NotificationEntityInterface
 
 
     /**
-     * @Assert\Callback
-     *
      * @param ExecutionContextInterface $context
      */
     public function validate(ExecutionContextInterface $context)

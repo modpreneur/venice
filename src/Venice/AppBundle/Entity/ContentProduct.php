@@ -12,21 +12,9 @@ use Venice\AppBundle\Entity\Content\Content;
 use Venice\AppBundle\Entity\Product\Product;
 use Venice\AppBundle\Traits\Timestampable;
 use DateTime;
-use Doctrine\ORM\Mapping as ORM;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Class ContentProduct
- *
- * @ORM\Entity(repositoryClass="Venice\AppBundle\Entity\Repositories\ContentProductRepository")
- * @ORM\Table(name="contents_products")
- *
- * @UniqueEntity(
- *     fields={"content", "product", "delay", "orderNumber"},
- *     errorPath="orderNumber",
- *     message="The association with the same data already exists"
- * )
  *
  * @package Venice\AppBundle\Entity
  */
@@ -36,58 +24,30 @@ class ContentProduct
 
     /**
      * @var int
-     *
-     * @ORM\Id()
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     protected $id;
 
 
     /**
      * @var Content
-     *
-     * @Assert\NotBlank()
-     *
-     * @ORM\ManyToOne(targetEntity="Venice\AppBundle\Entity\Content\Content", inversedBy="contentProducts")
-     * @ORM\JoinColumn(name="content_id", referencedColumnName="id")
      */
     protected $content;
 
 
     /**
      * @var Product
-     *
-     * @Assert\NotBlank()
-     *
-     * @ORM\ManyToOne(targetEntity="Venice\AppBundle\Entity\Product\Product", inversedBy="contentProducts")
-     * @ORM\JoinColumn(name="product_id", referencedColumnName="id")
      */
     protected $product;
 
 
     /**
      * @var int delay in hours
-     *
-     * @Assert\Range(
-     *     min = 0,
-     *     max = 10000
-     *     )
-     *
-     * @ORM\Column(name="delay", type="integer", nullable=false)
      */
     protected $delay;
 
 
     /**
      * @var
-     *
-     * @Assert\Range(
-     *     min = 0,
-     *     max = 10000
-     *     )
-     *
-     * @ORM\Column(name="order_number", type="integer", nullable=false)
      */
     protected $orderNumber;
 

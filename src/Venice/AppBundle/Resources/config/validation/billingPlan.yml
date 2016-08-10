@@ -1,0 +1,6 @@
+Venice\AppBundle\Entity\BillingPlan:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: necktieId
+    properties:
+        product:
+            - NotBlank: ~

@@ -59,7 +59,7 @@ security:
                 login_path: /login
                 check_path: /login_check
             logout:
-                success_handler: app.handler.logout_success_handler
+                success_handler: venice.app.logout_success_handler
 
 
     access_control:

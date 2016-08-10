@@ -9,26 +9,16 @@
 namespace Venice\AppBundle\Entity\Product;
 
 use Venice\AppBundle\Entity\BillingPlan;
-use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation\SerializedName;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Symfony\Component\Validator\Constraints as Assert;
 use Trinity\Component\Core\Interfaces\ClientInterface;
 use Trinity\NotificationBundle\Annotations as N;
 use Trinity\NotificationBundle\Entity\NotificationEntityInterface;
 
 /**
- * @ORM\Entity(repositoryClass="StandardProductRepository")
- * @ORM\Table(name="product_standard")
- *
- * @ORM\HasLifecycleCallbacks
- *
  * @N\Source(columns="necktieId, name, description, defaultBillingPlan")
  * Creating products on client is not allowed because creating billing plans is not allowed
  * @N\Methods(types={"put", "delete"})
  * @N\Url(postfix="product")
- *
- * @UniqueEntity(fields={"necktieId"})
  *
  * Class StandardProduct
  */
@@ -39,8 +29,6 @@ class StandardProduct extends Product implements NotificationEntityInterface
     /**
      * @var integer
      *
-     * @ORM\Column(name="necktie_id", type="integer", nullable=false, unique=true)
-     *
      * @SerializedName("id")
      */
     protected $necktieId;
@@ -49,8 +37,6 @@ class StandardProduct extends Product implements NotificationEntityInterface
     /**
      * @var BillingPlan Billing plan of the product
      *
-     * @ORM\OneToOne(targetEntity="Venice\AppBundle\Entity\BillingPlan", cascade={"persist", "remove"})
-     * @ORM\JoinColumn(referencedColumnName="id", onDelete="SET NULL")
      */
     protected $defaultBillingPlan;
 

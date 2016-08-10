@@ -65,7 +65,7 @@ class BillingPlanType extends BaseType implements NotificationTypeInterface
             ->addModelTransformer(
                 new NotificationTransformer(
                     $this->entityManager,
-                    StandardProduct::class,
+                    $options['standardProductClass'],
                     'necktieId'
                 )
             );
@@ -84,6 +84,7 @@ class BillingPlanType extends BaseType implements NotificationTypeInterface
             [
                 'data_class' => BillingPlan::class,
                 'csrf_protection' => false,
+                'standardProductClass' => StandardProduct::class
             ]
         );
     }

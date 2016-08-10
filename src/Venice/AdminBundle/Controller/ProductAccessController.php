@@ -33,7 +33,6 @@ class ProductAccessController extends BaseAdminController
     public function indexAction(int $id)
     {
         $entityManager = $this->getDoctrine()->getManager();
-//        $productAccesses = $entityManager->getRepository("VeniceAppBundle:ProductAccess")->findBy(["user" => $user]);
 
         $necktieUrl = $this->getParameter("necktie_show_product_access_url");
 
@@ -60,7 +59,6 @@ class ProductAccessController extends BaseAdminController
             ]
         );
     }
-
 
     /**
      * @Security("is_granted('ROLE_ADMIN_PRODUCT_ACCESS_VIEW')")

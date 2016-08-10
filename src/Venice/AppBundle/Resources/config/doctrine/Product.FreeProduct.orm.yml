@@ -1,0 +1,6 @@
+Venice\AppBundle\Entity\Product\FreeProduct:
+    type: entity
+    repositoryClass: Venice\AppBundle\Entity\Repositories\ProductRepository
+    table: product_free
+    fields:
+    lifecycleCallbacks: {  }

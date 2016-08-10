@@ -1,0 +1,85 @@
+Venice\AppBundle\Entity\ProductAccess:
+    type: entity
+    table: product_access
+    inheritanceType: SINGLE_TABLE
+    discriminatorColumn:
+        name: discriminator
+        type: string
+    discriminatorMap:
+        venice_productaccess: Venice\AppBundle\Entity\ProductAccess
+    repositoryClass: Venice\AppBundle\Entity\Repositories\ProductAccessRepository
+    id:
+        id:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        necktieId:
+            type: integer
+            scale: 0
+            length: null
+            unique: true
+            nullable: false
+            precision: 0
+            column: necktie_id
+        fromDate:
+            type: datetimetz
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            column: from_date
+        toDate:
+            type: datetimetz
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+            column: to_date
+        createdAt:
+            type: datetime
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            column: created_at
+        updatedAt:
+            type: datetime
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            column: updated_at
+    manyToOne:
+        user:
+            targetEntity: Venice\AppBundle\Entity\User
+            cascade:
+                - persist
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: productAccesses
+            joinColumns:
+                user_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        product:
+            targetEntity: Venice\AppBundle\Entity\Product\Product
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: productAccesses
+            joinColumns:
+                product_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

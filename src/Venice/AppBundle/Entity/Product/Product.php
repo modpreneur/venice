@@ -8,7 +8,8 @@
 
 namespace Venice\AppBundle\Entity\Product;
 
-
+use Cocur\Slugify\Slugify;
+use Doctrine\Common\Collections\ArrayCollection;
 use Trinity\Component\EntityCore\Entity\BaseProduct;
 use Venice\AppBundle\Entity\BlogArticle;
 use Venice\AppBundle\Entity\Content\Content;
@@ -17,24 +18,9 @@ use Venice\AppBundle\Entity\ProductAccess;
 use Venice\AppBundle\Entity\User;
 use Venice\AppBundle\Form\Product\FreeProductType;
 use Venice\AppBundle\Form\Product\StandardProductType;
-use Cocur\Slugify\Slugify;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\Mapping\OrderBy;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Class BaseProduct
- *
- * @ORM\Table(name="product")
- * @ORM\Entity(repositoryClass="ProductRepository")
- *
- * @ORM\InheritanceType("JOINED")
- * @ORM\DiscriminatorColumn(name="type", type="string")
- *
- *
- * @UniqueEntity("handle")
  *
  * @package Venice\AppBundle\Entity\Product
  */
@@ -42,68 +28,38 @@ abstract class Product extends BaseProduct
 {
     /**
      * @var string
-     *
-     * @ORM\Column(name="handle", type="string", unique=true)
      */
     protected $handle;
 
-
     /**
      * @var string Url to image of the product
-     *
-     * @Assert\Url()
-     *
-     * @ORM\Column(name="image", type="string", length=255, nullable=true)
      */
     protected $image;
 
-
     /**
      * @var bool
-     *
-     * @ORM\Column(name="enabled", type="boolean")
      */
     protected $enabled;
 
-
     /**
      * @var integer
-     *
-     * @Assert\Range(
-     *     min = 0,
-     *     max = 10000
-     *     )
-     *
-     * @ORM\Column(name="order_number", type="integer")
      */
     protected $orderNumber;
 
-
     /**
      * @var ArrayCollection<ProductAccess>
-     *
-     * @ORM\OneToMany(targetEntity="Venice\AppBundle\Entity\ProductAccess", mappedBy="product", cascade={"remove"})
      */
     protected $productAccesses;
 
-
     /**
      * @var ArrayCollection<ContentProduct>
-     *
-     * @ORM\OneToMany(targetEntity="Venice\AppBundle\Entity\ContentProduct", mappedBy="product", cascade={"remove"})
-     * @OrderBy({"delay" = "ASC", "orderNumber" = "ASC"})
-     *
      */
     protected $contentProducts;
 
-
     /**
      * @var ArrayCollection<BlogArticle>
-     *
-     * @ORM\ManyToMany(targetEntity="Venice\AppBundle\Entity\BlogArticle", mappedBy="products", cascade={"PERSIST"})
      */
     protected $articles;
-
 
     public function __construct()
     {
@@ -114,7 +70,6 @@ abstract class Product extends BaseProduct
         $this->updateTimestamps();
     }
 
-
     /**
      * @return string
      */
@@ -122,7 +77,6 @@ abstract class Product extends BaseProduct
     {
         return $this->image;
     }
-
 
     /**
      * @param string $image
@@ -136,7 +90,6 @@ abstract class Product extends BaseProduct
         return $this;
     }
 
-
     /**
      * @return string
      */
@@ -145,7 +98,6 @@ abstract class Product extends BaseProduct
         return $this->handle;
     }
 
-
     /**
      * @param string $handle
      */
@@ -153,7 +105,6 @@ abstract class Product extends BaseProduct
     {
         $this->handle = $handle;
     }
-
 
     /**
      * Create a new handle from given source and set it to the entity.
@@ -164,7 +115,6 @@ abstract class Product extends BaseProduct
     {
         $this->handle = (new Slugify())->slugify($source);
     }
-
 
     public function setName($name)
     {
@@ -188,7 +138,6 @@ abstract class Product extends BaseProduct
         return $this->enabled;
     }
 
-
     /**
      * @param bool $enabled
      *
@@ -209,7 +158,6 @@ abstract class Product extends BaseProduct
         return $this->orderNumber;
     }
 
-
     /**
      * @param int $orderNumber
      *
@@ -222,7 +170,6 @@ abstract class Product extends BaseProduct
         return $this;
     }
 
-
     /**
      * @return ArrayCollection<ProductAccess>
      */
@@ -231,9 +178,9 @@ abstract class Product extends BaseProduct
         return $this->productAccesses;
     }
 
-
     /**
      * @param ProductAccess $productAccess
+     *
      * @return $this
      */
     public function addProductAccess(ProductAccess $productAccess)
@@ -245,9 +192,9 @@ abstract class Product extends BaseProduct
         return $this;
     }
 
-
     /**
      * @param ProductAccess $productAccess
+     *
      * @return $this
      */
     public function removeProductAccess(ProductAccess $productAccess)
@@ -257,7 +204,6 @@ abstract class Product extends BaseProduct
         return $this;
     }
 
-
     /**
      * @return ArrayCollection<ContentProduct>
      */
@@ -266,9 +212,9 @@ abstract class Product extends BaseProduct
         return $this->contentProducts;
     }
 
-
     /**
      * @param ContentProduct $contentProduct
+     *
      * @return $this
      */
     public function addContentProduct(ContentProduct $contentProduct)
@@ -280,9 +226,9 @@ abstract class Product extends BaseProduct
         return $this;
     }
 
-
     /**
      * @param ContentProduct $contentProduct
+     *
      * @return $this
      */
     public function removeContentProduct(ContentProduct $contentProduct)
@@ -292,28 +238,43 @@ abstract class Product extends BaseProduct
         return $this;
     }
 
-
     /**
      * Creates new instance of product from type (first part of entity name ends with Product)
      *
-     * @param string $type Could be formatted like StandardProduct, FreeProduct, Venice\AppBundle\\Entity\\Product\\StandardProduct, ...
-     * @param array $args
+     * @param string $type Could be formatted like StandardProduct, FreeProduct,
+     *                     Venice\AppBundle\\Entity\\Product\\StandardProduct, ...
+     * @param array  $args
      *
      * @return Product
      */
     public static function createProductByType($type, $args = [])
     {
-        $type = ucfirst($type);
-
-        if (!strpos($type, "Product"))
-            $type .= "Product";
-
-        if (!strpos($type, "Venice\AppBundle\\Entity\\Product\\"))
-            $type = "Venice\AppBundle\\Entity\\Product\\".$type;
-
-        $class = new \ReflectionClass($type);
+        $class = new \ReflectionClass(static::createProductClassByType($type));
 
         return $class->newInstanceArgs($args);
+    }
+
+
+    /**
+     * Return a class of content from type (first part of entity name ends with Content)
+     *
+     * @param string $type Could be formatted like HtmlContent, Mp3Content, Venice\AppBundle\\Entity\\Content\\PdfContent, ...
+     *
+     * @return Content
+     */
+    public static function createProductClassByType($type)
+    {
+        $type = ucfirst($type);
+
+        if (!strpos($type, "Product")) {
+            $type .= "Product";
+        }
+
+        if (!strpos($type, "Venice\\AppBundle\\Entity\\Product\\")) {
+            $type = "Venice\\AppBundle\\Entity\\Product\\" . $type;
+        }
+
+        return $type;
     }
 
 
@@ -324,7 +285,6 @@ abstract class Product extends BaseProduct
      */
     abstract public function getType();
 
-
     /**
      * Get form type of product
      *
@@ -332,12 +292,13 @@ abstract class Product extends BaseProduct
      */
     public function getFormTypeClass()
     {
-        $name = get_class($this)."Type";
+        throw new \Exception("DEPRECATED");
+
+        $name = get_class($this) . "Type";
         $name = str_replace('Entity', 'Form', $name);
 
         return $name;
     }
-
 
     /**
      * Get all Content of the product.
@@ -357,7 +318,6 @@ abstract class Product extends BaseProduct
 
         return $content;
     }
-
 
     /**
      * Get all content by type.
@@ -382,7 +342,6 @@ abstract class Product extends BaseProduct
         return $content;
     }
 
-
     /**
      * Get all available content without information about delay and order.
      *
@@ -401,11 +360,10 @@ abstract class Product extends BaseProduct
         return $content;
     }
 
-
     /**
      * Get all available content by type without information about delay and order.
      *
-     * @param User $user
+     * @param User   $user
      * @param string $type Type of the content (html, text, video, mp3, ...)
      *
      * @return Content[]
@@ -422,7 +380,6 @@ abstract class Product extends BaseProduct
 
         return $content;
     }
-
 
     /**
      * Get all available ContentProducts. Check if the user has access to the content.
@@ -448,7 +405,6 @@ abstract class Product extends BaseProduct
 
         return $contentProducts;
     }
-
 
     /**
      * Get all ContentProducts for immersion.
@@ -499,7 +455,6 @@ abstract class Product extends BaseProduct
         return array_values($content);
     }
 
-
     /**
      * @return ArrayCollection<BlogArticle>
      */
@@ -508,15 +463,14 @@ abstract class Product extends BaseProduct
         return $this->articles;
     }
 
-
     /**
      * @param BlogArticle $blogArticle
+     *
      * @return $this
      */
     public function addBlogArticle(BlogArticle $blogArticle)
     {
-        if(!$this->articles->contains($blogArticle))
-        {
+        if (!$this->articles->contains($blogArticle)) {
             $blogArticle->addProduct($this);
             $this->articles->add($blogArticle);
         }
@@ -524,9 +478,9 @@ abstract class Product extends BaseProduct
         return $this;
     }
 
-
     /**
      * @param BlogArticle $blogArticle
+     *
      * @return $this
      */
     public function removeBlogArticle(BlogArticle $blogArticle)
@@ -536,6 +490,4 @@ abstract class Product extends BaseProduct
 
         return $this;
     }
-
-
 }

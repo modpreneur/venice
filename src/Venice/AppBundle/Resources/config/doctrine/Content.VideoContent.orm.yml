@@ -1,0 +1,53 @@
+Venice\AppBundle\Entity\Content\VideoContent:
+    type: entity
+    table: content_video
+    repositoryClass: Venice\AppBundle\Entity\Repositories\VideoContentRepository
+    fields:
+        previewImage:
+            type: string
+            scale: 0
+            length: 255
+            unique: false
+            nullable: false
+            precision: 0
+            column: preview_image
+        videoMobile:
+            type: string
+            scale: 0
+            length: 255
+            unique: false
+            nullable: true
+            precision: 0
+            column: video_mob
+        videoLq:
+            type: string
+            scale: 0
+            length: 255
+            unique: false
+            nullable: true
+            precision: 0
+            column: video_lq
+        videoHq:
+            type: string
+            scale: 0
+            length: 255
+            unique: false
+            nullable: true
+            precision: 0
+            column: video_hq
+        videoHd:
+            type: string
+            scale: 0
+            length: 255
+            unique: false
+            nullable: true
+            precision: 0
+            column: video_hd
+        duration:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+    lifecycleCallbacks: {  }

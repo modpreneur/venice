@@ -38,7 +38,7 @@ class ContentProductRepository extends EntityRepository
               SELECT COUNT(cp)
               FROM  VeniceAppBundle:ContentProduct AS cp
               JOIN cp.content content
-              WHERE cp.content.id = :contentId
+              WHERE content.id = :contentId
             ')
             ->setParameter('contentId', $contentId)
         ;

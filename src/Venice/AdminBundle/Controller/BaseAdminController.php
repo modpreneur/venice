@@ -8,22 +8,34 @@
 
 namespace Venice\AdminBundle\Controller;
 
-
-use Venice\AppBundle\Services\AppLogic;
-use Venice\AppBundle\Services\FormCreator;
-use Venice\AppBundle\Services\FormErrorSerializer;
 use Doctrine\Common\Persistence\ObjectManager;
 use FOS\RestBundle\Controller\FOSRestController;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Venice\AppBundle\Services\AppLogic;
+use Venice\AppBundle\Services\EntityFormMatcher;
+use Venice\AppBundle\Services\EntityOverrideHandler;
+use Venice\AppBundle\Services\FormCreator;
+use Venice\AppBundle\Services\FormErrorSerializer;
+use Venice\AppBundle\Services\FormOverrideHandler;
 
 class BaseAdminController extends FOSRestController
 {
-    /** @var  AppLogic */
-    protected $logic;
+    /** @var AppLogic */
+    private $logic;
 
-    /** @var  FormCreator */
-    protected $formCreator;
+    /** @var FormCreator */
+    private $formCreator;
+
+    /** @var EntityFormMatcher */
+    private $formMatcher;
+
+    /** @var FormOverrideHandler */
+    private $formOverrideHandler;
+
+    /** @var EntityOverrideHandler */
+    private $entityOverrideHandler;
+
 
     /**
      * @return ObjectManager
@@ -39,7 +51,7 @@ class BaseAdminController extends FOSRestController
      */
     public function getFormErrorSerializer()
     {
-        return $this->get("form_error_serializer");
+        return $this->get('venice.app.form_error_serializer');
     }
 
 
@@ -49,21 +61,63 @@ class BaseAdminController extends FOSRestController
     public function getLogic():AppLogic
     {
         // save logic to variable to speed up the process a bit
-        if(!$this->logic) {
-            $this->logic = $this->get("app_logic");
+        if (!$this->logic) {
+            $this->logic = $this->get('venice.app.app_logic');
         }
 
         return $this->logic;
     }
 
-    public function getFormCreator()
+    /**
+     * @return FormCreator
+     */
+    public function getFormCreator():FormCreator
     {
         // save creator to variable to speed up the process a bit
-        if(!$this->formCreator) {
-            $this->formCreator = $this->get("admin.form_creator");
+        if (!$this->formCreator) {
+            $this->formCreator = $this->get('venice.admin.form_creator');
         }
 
         return $this->formCreator;
+    }
+
+    /**
+     * @return EntityFormMatcher
+     */
+    public function getEntityFormMatcher():EntityFormMatcher
+    {
+        // save creator to variable to speed up the process a bit
+        if (!$this->formMatcher) {
+            $this->formMatcher = $this->get('venice.app.entity_form_matcher');
+        }
+
+        return $this->formMatcher;
+    }
+
+    /**
+     * @return FormOverrideHandler
+     */
+    public function getFormOverrideHandler():FormOverrideHandler
+    {
+        // save creator to variable to speed up the process a bit
+        if (!$this->formOverrideHandler) {
+            $this->formOverrideHandler = $this->get('venice.app.form_override_handler');
+        }
+
+        return $this->formOverrideHandler;
+    }
+
+    /**
+     * @return EntityOverrideHandler
+     */
+    public function getEntityOverrideHandler():EntityOverrideHandler
+    {
+        // save creator to variable to speed up the process a bit
+        if (!$this->entityOverrideHandler) {
+            $this->entityOverrideHandler = $this->get('venice.app.entity_override_handler');
+        }
+
+        return $this->entityOverrideHandler;
     }
 
 
@@ -73,14 +127,14 @@ class BaseAdminController extends FOSRestController
      *
      * @return JsonResponse
      */
-    public function returnFormErrorsJsonResponse(FormInterface $form, $message = "")
+    public function returnFormErrorsJsonResponse(FormInterface $form, $message = '')
     {
         $errors = $this->getFormErrorSerializer()->serializeFormErrors($form, true, true);
 
         return new JsonResponse(
             [
-                "error" => $errors,
-                "message" => $message
+                'error' => $errors,
+                'message' => $message
             ],
             400
         );
@@ -94,8 +148,8 @@ class BaseAdminController extends FOSRestController
     {
         $breadcrumbs = $this->get('white_october_breadcrumbs');
 
-        if($setHome)
-            $breadcrumbs->addRouteItem("Home", "admin_dashboard");
+        if ($setHome)
+            $breadcrumbs->addRouteItem('Home', 'admin_dashboard');
 
         return $breadcrumbs;
     }

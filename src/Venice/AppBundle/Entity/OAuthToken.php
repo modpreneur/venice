@@ -8,14 +8,9 @@
 
 namespace Venice\AppBundle\Entity;
 
-
 use Venice\AppBundle\Traits\Timestampable;
-use Doctrine\ORM\Mapping as ORM;
 
 /**
- *
- * @ORM\Entity()
- * @ORM\Table(name="oauth_token")
  *
  * Class OAuthToken
  * @package Venice\AppBundle\Entity
@@ -26,34 +21,24 @@ class OAuthToken
 
     /**
      * @var int
-     *
-     * @ORM\Column(type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     protected $id;
 
 
     /**
      * @var
-     *
-     * @ORM\ManyToOne(targetEntity="Venice\AppBundle\Entity\User", inversedBy="OAuthTokens")
      */
     protected $user;
 
 
     /**
      * @var string
-     *
-     * @ORM\Column(type="access_token", type="string")
      */
     protected $accessToken;
 
 
     /**
      * @var string
-     *
-     * @ORM\Column(type="refresh_token", type="string")
      */
     protected $refreshToken;
 
@@ -62,16 +47,12 @@ class OAuthToken
      * Datetime to which will be token valid
      *
      * @var \DateTime
-     *
-     * @ORM\Column(type="access_token", type="datetime")
      */
     protected $validTo;
 
 
     /**
      * @var string
-     *
-     * @ORM\Column(type="scope", type="string", nullable=true)
      */
     protected $scope;
 

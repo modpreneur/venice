@@ -30,7 +30,7 @@ class FroalaController extends Controller
     {
         /** @var UploadedFile $file */
         $file = $request->files->get("file");
-        $uploader = $this->get("app.file_uploader");
+        $uploader = $this->get("venice.app.file_uploader");
         $key = $uploader->upload($file);
 
         $url = $uploader->genUrl($key);
@@ -47,7 +47,7 @@ class FroalaController extends Controller
     {
         /** @var UploadedFile $file */
         $file = $request->files->get("file");
-        $uploader = $this->get("app.file_uploader");
+        $uploader = $this->get("venice.app.file_uploader");
         $key = $uploader->upload($file);
 
         $url = $uploader->genUrl($key);

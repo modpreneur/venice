@@ -31,10 +31,9 @@ class ThankYouController extends Controller
         if ($productId !== null) {
             $product = $this->getDoctrine()->getRepository(StandardProduct::class)
                 ->findOneBy(['necktieId' => $productId]);
-            //@todo @JakubFajkus log when the product does not exist
 
             if ($product === null) {
-                $this->get('logger')->addCritical("No product with necktie id $productId found in " . self::class);
+                $this->get('logger')->addCritical("Could not find product with necktie id: $productId on thank you page.");
             }
         }
 

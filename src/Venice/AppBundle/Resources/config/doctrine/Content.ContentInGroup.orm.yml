@@ -1,0 +1,59 @@
+Venice\AppBundle\Entity\Content\ContentInGroup:
+    type: entity
+    table: content_in_group
+    inheritanceType: SINGLE_TABLE
+    discriminatorColumn:
+        name: discriminator
+        type: string
+    discriminatorMap:
+        venice_contentingroup: Venice\AppBundle\Entity\Content\ContentInGroup
+    repositoryClass: Venice\AppBundle\Entity\Repositories\ContentInGroupRepository
+    id:
+        id:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        delay:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+        orderNumber:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            column: order_number
+    manyToOne:
+        group:
+            targetEntity: Venice\AppBundle\Entity\Content\GroupContent
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: items
+            joinColumns:
+                group_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        content:
+            targetEntity: Venice\AppBundle\Entity\Content\Content
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: contentsInGroup
+            joinColumns:
+                content_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }
