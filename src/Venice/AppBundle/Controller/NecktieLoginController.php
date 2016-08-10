@@ -158,7 +158,6 @@ class NecktieLoginController extends Controller
         $user = $necktieGateway->getUserByAccessToken($request->query->get('access_token'), true);
 
         if ($user === null) {
-
             throw new NotFoundHttpException('User not found!');
         }
 

@@ -15,23 +15,6 @@ use Trinity\AdminBundle\Event\MenuEvent;
 
 class MenuListener
 {
-    /** @var EntityManager */
-    private $em;
-
-    /** @var ContainerInterface */
-    private $container;
-
-
-    /**
-     * @param EntityManager $em
-     * @param ContainerInterface $container
-     */
-    public function __construct(EntityManager $em, ContainerInterface $container)
-    {
-        $this->em = $em;
-        $this->container = $container;
-    }
-
     /**
      * @param MenuEvent $event
      */
@@ -42,30 +25,30 @@ class MenuListener
         $menu
             ->addChild('Dashboard', array('route' => 'admin_dashboard'))
             ->setAttribute('icon', 'trinity trinity-home')
-            ->setExtra('orderNumber', 0);
+            ->setExtra('orderNumber', 10);
 
         $menu
             ->addChild('Products', array('route' => 'admin_product_index'))
             ->setAttribute('icon', 'trinity trinity-products')
-            ->setExtra('orderNumber', 1)
+            ->setExtra('orderNumber', 20)
             ->setExtra('roles', ['ROLE_ADMIN_PRODUCT_VIEW']);
 
         $menu
             ->addChild('Contents', array('route' => 'admin_content_index'))
             ->setAttribute('icon', 'tiecons tiecons-video')
-            ->setExtra('orderNumber', 2)
+            ->setExtra('orderNumber', 30)
             ->setExtra('roles', ['ROLE_ADMIN_CONTENT_VIEW']);
 
         $menu
             ->addChild('Blog articles', array('route' => 'admin_blog_article_index'))
             ->setAttribute('icon', 'tiecons tiecons-book-text')
-            ->setExtra('orderNumber', 4)
+            ->setExtra('orderNumber', 40)
             ->setExtra('roles', ['ROLE_ADMIN_BLOG_VIEW']);
 
         $menu
             ->addChild('Users', array('route' => 'admin_user_index'))
             ->setAttribute('icon', 'tiecons tiecons-user-negative')
-            ->setExtra('orderNumber', 5)
+            ->setExtra('orderNumber', 50)
             ->setExtra('roles', ['ROLE_ADMIN_USER_VIEW']);
         //
         //$menu

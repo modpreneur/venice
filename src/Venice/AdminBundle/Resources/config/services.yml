@@ -2,9 +2,6 @@ services:
 
     venice.admin.listener.menu.config:
         class: Venice\AdminBundle\Services\MenuListener
-        arguments:
-            - "@doctrine.orm.entity_manager"
-            - "@service_container"
         tags:
             - { name: kernel.event_listener, event: trinity.main_menu.configure, method: onMenuConfigure }
 
