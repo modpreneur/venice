@@ -5,7 +5,7 @@ services:
         arguments:
             - "@kernel"
         tags:
-            - { name: kernel.event_listener, event: trinity.messages.sendMessage, method: onSendMessage}
+            - { name: kernel.event_listener, event: trinity.messages.sendMessage, method: onSendMessage, priority: 100}
 
     venice.bunny.message_user_provider:
         class: Venice\BunnyBundle\Services\MessageUserProvider

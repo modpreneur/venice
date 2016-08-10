@@ -117,24 +117,24 @@ services:
             - "@router"
             - "%login_route%"
         tags:
-            - {name: "kernel.event_listener", event: "kernel.exception", method: "onKernelException"}
+            - {name: "kernel.event_listener", event: "kernel.exception", method: "onKernelException", priority: 100}
 
     venice.app.entity_listener:
         class: Venice\AppBundle\EventListener\EntityListener
         arguments:
             - "@service_container"
         tags:
-            - { name: doctrine.event_listener, event: onFlush}
+            - { name: doctrine.event_listener, event: onFlush, priority: 100}
 
     venice.app.login_listener:
         class: Venice\AppBundle\EventListener\LoginListener
         tags:
-            - {name: "kernel.event_listener", event: "app.necktie_login_successful", method: "onSuccessfulLogin"}
+            - {name: "kernel.event_listener", event: "app.necktie_login_successful", method: "onSuccessfulLogin", priority: 100}
 
     gedmo.listener.timestampable:
         class: Gedmo\Timestampable\TimestampableListener
         tags:
-            - { name: doctrine.event_subscriber, connection: default }
+            - { name: doctrine.event_subscriber, connection: default, priority: 100 }
         calls:
             - [ "setAnnotationReader", [ "@annotation_reader" ] ]
 
@@ -144,15 +144,15 @@ services:
             - "@trinity.services.price_string_generator"
             - "@doctrine.orm.entity_manager"
         tags:
-            - {name: "kernel.event_listener", event: "trinity.notifications.changesDone", method: "onChangesDone"}
-            - {name: "kernel.event_listener", event: "trinity.notifications.beforeDeleteEntity", method: "onBeforeDeleteEntity"}
+            - {name: "kernel.event_listener", event: "trinity.notifications.changesDone", method: "onChangesDone", priority: 100}
+            - {name: "kernel.event_listener", event: "trinity.notifications.beforeDeleteEntity", method: "onBeforeDeleteEntity", priority: 100}
 
     venice.app.doctrine_discriminator_listener:
         class: Venice\AppBundle\EventListener\DoctrineDiscriminatorListener
         arguments:
             - "%venice.app.entity_mapping%"
         tags:
-            - { name: doctrine.event_subscriber, connection: default }
+            - { name: doctrine.event_subscriber, connection: default, priority: 100}
 
     # TWIG EXTENSIONS #
 

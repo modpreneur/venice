@@ -3,7 +3,7 @@ services:
     venice.admin.listener.menu.config:
         class: Venice\AdminBundle\Services\MenuListener
         tags:
-            - { name: kernel.event_listener, event: trinity.main_menu.configure, method: onMenuConfigure }
+            - { name: kernel.event_listener, event: trinity.main_menu.configure, method: onMenuConfigure, priority: 100 }
 
     venice.admin.form_creator:
         class: Venice\AppBundle\Services\FormCreator
