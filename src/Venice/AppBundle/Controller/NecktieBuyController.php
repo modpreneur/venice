@@ -53,7 +53,7 @@ class NecktieBuyController extends Controller
 
         if($paySystem === 'cb') {
             $paySystemUrlPart = 'cb/ocb';
-        } else if ($paySystem === 'braintree') {
+        } elseif ($paySystem === 'braintree') {
             $paySystemUrlPart = 'braintree/buy';
         } else {
             throw new NotFoundHttpException('Unsupported pay system: ' . $paySystem);

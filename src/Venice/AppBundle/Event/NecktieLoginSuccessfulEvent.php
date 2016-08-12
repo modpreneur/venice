@@ -18,7 +18,7 @@ class NecktieLoginSuccessfulEvent extends Event
     protected $user;
 
     /**
-     * FreeProductCreatedEvent constructor.
+     * NecktieLoginSuccessfulEvent constructor.
      * @param User $user
      */
     public function __construct(User $user)

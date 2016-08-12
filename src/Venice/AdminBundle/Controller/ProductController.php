@@ -13,14 +13,10 @@ use Venice\AppBundle\Entity\Product\FreeProduct;
 use Venice\AppBundle\Entity\Product\Product;
 use Venice\AppBundle\Entity\Product\StandardProduct;
 use Venice\AppBundle\Event\AppEvents;
-use Venice\AppBundle\Event\FreeProductCreatedEvent;
 use Venice\AppBundle\Form\ContentProduct\ContentProductTypeWithHiddenProduct;
-use Venice\AppBundle\Form\Product\FreeProductType;
-use Venice\AppBundle\Form\Product\StandardProductType;
 use Doctrine\DBAL\DBALException;
 use ReflectionException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -214,10 +210,6 @@ class ProductController extends BaseAdminController
 
             try {
                 $em->flush();
-
-                if ($product instanceof FreeProduct) {
-                    $this->get("event_dispatcher")->dispatch(AppEvents::FREE_PRODUCT_CREATED, new FreeProductCreatedEvent($product));
-                }
             } catch (DBALException $e) {
                 return new JsonResponse(
                     [
