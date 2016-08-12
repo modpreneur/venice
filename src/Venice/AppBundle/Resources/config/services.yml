@@ -60,13 +60,6 @@ services:
     venice.app.necktie_gateway_helper:
         class: Venice\AppBundle\Services\NecktieGatewayHelper
 
-    venice.app.connection_manager:
-        class: Venice\AppBundle\Services\ConnectionManager
-        arguments:
-            - "@service_container"
-            - %primary_gateway_service%
-            - %secondary_gateway_service%
-
     venice.app.form_error_serializer:
         class: Venice\AppBundle\Services\FormErrorSerializer
 
