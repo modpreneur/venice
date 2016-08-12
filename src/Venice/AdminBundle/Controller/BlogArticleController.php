@@ -124,7 +124,7 @@ class BlogArticleController extends BaseAdminController
         $form = $this
             ->getFormCreator()
             ->createCreateForm(
-                $this->getEntityOverrideHandler()->getEntityInstance(BlogArticle::class),
+                $blogArticle,
                 $this->getEntityFormMatcher()->getFormClassForEntity($blogArticle),
                 "admin_blog_article"
             );
