@@ -2,7 +2,6 @@
 
 {% block headerJavascripts %}
     {#Some helper settings#}
-    <script src="{{ asset('js/lib/abbreviations.js') }}"></script>
 {% endblock %}
 
 {% block stylesheets %}
@@ -13,38 +12,18 @@
 
 {% block trinity_admin_script_footer %}
 
-    {# FOR TOM: NEVER EVER REMOVE THIS!#}
-    {% block necktieJavascript %}
+    {% block veniceJavascript %}
         <script type="text/javascript" src="https://www.google.com/jsapi"></script>
         {#Necktie JS#}
         {% if app.environment is same as('dev') or app.environment is same as('test') %}
             {#Uncompiled#}
-            <script src="{{ asset('js/node_modules/lodash/lodash.js') }}"></script>
-            <script src="{{ asset('js/node_modules/jquery/dist/jquery.js') }}"></script>
-            <script src="{{ asset('js/node_modules/react/dist/react.js') }}"></script>
-            <script src="{{ asset('js/node_modules/react-dom/dist/react-dom.js') }}"></script>
-            <script src="{{ asset('js/node_modules/flux/dist/Flux.js') }}"></script>
-            {#<script src="{{ asset('js/node_modules/dragula/dist/dragula.js') }}"></script>#}
-            <script src="{{ asset('js/node_modules/history/umd/History.js') }}"></script>
-            <script src="{{ asset('js/node_modules/moment/moment.js') }}"></script>
+            <script src="{{ asset('js/dist/vendor.bundle.js') }}"></script>
             <script src="{{ asset('js/dist/venice.bundle.js') }}"></script>
         {% else %}
             {#Compiled#}
             <script src="{{ asset('js/dist/venice.bundle.min.js') }}"></script>
-            {#<script src="{{ asset('js/dist/necktie.styles.min.css') }}"></script>#}
+            <script src="{{ asset('js/dist/venice.styles.min.css') }}"></script>
         {% endif %}
-
-        {#@todo @RichardBures delete#}
-        {#Admin JS#}
-        {# SORTABLE js is for drag and drop sorting  - will be used in future inside Dashboard probably#}
-        {#<script src="{{ asset('js/lib/Sortable.min.js') }}"></script>#}
-
-        {# WEBSHIMS - Needed for HTML5 form features in older browsers#}
-        {#<script src="//cdn.jsdelivr.net/webshim/1.14.5/polyfiller.js"></script>#}
-        {#<script>#}
-        {#//  webshims.setOptions('forms-ext', {types: 'date'});#}
-        {#// webshims.polyfill('forms forms-ext');#}
-        {#</script>#}
     {% endblock %}
 
     {{ parent() }}
