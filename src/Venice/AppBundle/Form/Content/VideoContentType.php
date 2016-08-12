@@ -8,11 +8,14 @@
 
 namespace Venice\AppBundle\Form\Content;
 
-
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 
+/**
+ * Class VideoContentType
+ * @package Venice\AppBundle\Form\Content
+ */
 class VideoContentType extends ContentType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -21,48 +24,47 @@ class VideoContentType extends ContentType
 
         $builder
             ->add(
-                "duration",
+                'duration',
                 NumberType::class,
                 [
-                    "required" => true
+                    'required' => true
                 ]
             )
             ->add(
-                "previewImage",
+                'previewImage',
                 TextType::class,
                 [
-                    "required" => true,
-                    "label" => "Preview image link",
+                    'required' => true,
+                    'label' => 'Preview image link',
                 ]
             )
             ->add(
-                "videoMobile",
+                'videoMobile',
                 TextType::class,
                 [
-                    "required" => false
+                    'required' => false
                 ]
             )
             ->add(
-                "videoLq",
+                'videoLq',
                 TextType::class,
                 [
-                    "required" => false
+                    'required' => false
                 ]
             )
             ->add(
-                "videoHq",
+                'videoHq',
                 TextType::class,
                 [
-                    "required" => false
+                    'required' => false
                 ]
             )
             ->add(
-                "videoHd",
+                'videoHd',
                 TextType::class,
                 [
-                    "required" => false
+                    'required' => false
                 ]
             );
     }
-
 }

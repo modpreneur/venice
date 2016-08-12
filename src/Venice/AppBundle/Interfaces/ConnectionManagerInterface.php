@@ -8,7 +8,6 @@
 
 namespace Venice\AppBundle\Interfaces;
 
-
 use Venice\AppBundle\Entity\BillingPlan;
 use Venice\AppBundle\Entity\Invoice;
 use Venice\AppBundle\Entity\Product\StandardProduct;

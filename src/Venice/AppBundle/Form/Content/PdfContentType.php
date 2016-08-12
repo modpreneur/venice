@@ -8,7 +8,6 @@
 
 namespace Venice\AppBundle\Form\Content;
 
-
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 
@@ -19,7 +18,6 @@ class PdfContentType extends ContentType
         parent::buildForm($builder, $options);
 
         $builder
-            ->add("link", TextType::class);
+            ->add('link', TextType::class);
     }
-
 }

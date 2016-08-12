@@ -80,7 +80,7 @@ class BillingPlan extends BaseBillingPlan implements NotificationEntityInterface
     /**
      * @N\AssociationGetter()
      *
-     * @return ProductInterface
+     * @return StandardProduct
      */
     public function getProduct()
     {
@@ -128,6 +128,6 @@ class BillingPlan extends BaseBillingPlan implements NotificationEntityInterface
     /** @return ClientInterface[] */
     public function getClients()
     {
-       return [];
+        return [];
     }
 }

@@ -8,7 +8,6 @@
 
 namespace Venice\AppBundle\Services;
 
-
 use Venice\AppBundle\Entity\BillingPlan;
 use Venice\AppBundle\Entity\Invoice;
 use Venice\AppBundle\Entity\OAuthToken;
@@ -28,12 +27,12 @@ class NecktieGatewayHelper implements NecktieGatewayHelperInterface
      */
     public function getUserInfoFromNecktieProfileResponse(array $response)
     {
-        $requiredFields = ["username", "email", "id"];
+        $requiredFields = ['username', 'email', 'id'];
         $userInfo = [];
 
 
-        if (is_array($response) && array_key_exists("user", $response)) {
-            $response = $response["user"];
+        if (is_array($response) && array_key_exists('user', $response)) {
+            $response = $response['user'];
         } else {
             return null;
         }
@@ -55,16 +54,16 @@ class NecktieGatewayHelper implements NecktieGatewayHelperInterface
      */
     public function createOAuthTokenFromArray(array $array)
     {
-        if (array_key_exists("access_token", $array)
-            && array_key_exists("refresh_token", $array)
-            && array_key_exists("scope", $array)
-            && array_key_exists("expires_in", $array)
+        if (array_key_exists('access_token', $array)
+            && array_key_exists('refresh_token', $array)
+            && array_key_exists('scope', $array)
+            && array_key_exists('expires_in', $array)
         ) {
             $necktieToken = new OAuthToken();
-            $necktieToken->setAccessToken($array["access_token"]);
-            $necktieToken->setRefreshToken($array["refresh_token"]);
-            $necktieToken->setScope($array["scope"]);
-            $necktieToken->setValidToByLifetime($array["expires_in"]);
+            $necktieToken->setAccessToken($array['access_token']);
+            $necktieToken->setRefreshToken($array['refresh_token']);
+            $necktieToken->setScope($array['scope']);
+            $necktieToken->setValidToByLifetime($array['expires_in']);
 
             return $necktieToken;
         } else {
@@ -78,8 +77,8 @@ class NecktieGatewayHelper implements NecktieGatewayHelperInterface
      */
     public function getInvoicesFromNecktieResponse(array $response)
     {
-        if (array_key_exists("invoices", $response) && is_array($response["invoices"])) {
-            $response = $response["invoices"];
+        if (array_key_exists('invoices', $response) && is_array($response['invoices'])) {
+            $response = $response['invoices'];
         } else {
             return [];
         }
@@ -90,36 +89,36 @@ class NecktieGatewayHelper implements NecktieGatewayHelperInterface
         foreach ($response as $invoice) {
             $invoiceObject = new Invoice();
 
-            if (array_key_exists("id", $invoice)) {
-                $invoiceObject->setId($invoice["id"]);
+            if (array_key_exists('id', $invoice)) {
+                $invoiceObject->setId($invoice['id']);
             } else {
                 continue;
             }
 
 
-            if (array_key_exists("total_customer_price", $invoice)) {
-                $invoiceObject->setTotalPrice($invoice["total_customer_price"]);
+            if (array_key_exists('total_customer_price', $invoice)) {
+                $invoiceObject->setTotalPrice($invoice['total_customer_price']);
             } else {
                 continue;
             }
 
-            if (array_key_exists("transaction_type", $invoice)) {
-                $invoiceObject->setTransactionType($invoice["transaction_type"]);
+            if (array_key_exists('transaction_type', $invoice)) {
+                $invoiceObject->setTransactionType($invoice['transaction_type']);
             } else {
                 continue;
             }
 
-            if (array_key_exists("transaction_time", $invoice)) {
-                $date = \DateTime::createFromFormat(\DateTime::W3C, $invoice["transaction_time"]);
+            if (array_key_exists('transaction_time', $invoice)) {
+                $date = \DateTime::createFromFormat(\DateTime::W3C, $invoice['transaction_time']);
                 $invoiceObject->setTransactionTime($date);
             } else {
                 continue;
             }
 
-            if (array_key_exists("items", $invoice)) {
-                foreach ($invoice["items"] as $invoiceItem) {
-                    if (array_key_exists("product", $invoiceItem) && array_key_exists("name", $invoiceItem["product"])) {
-                        $invoiceObject->addItem($invoiceItem["product"]["name"]);
+            if (array_key_exists('items', $invoice)) {
+                foreach ($invoice['items'] as $invoiceItem) {
+                    if (array_key_exists('product', $invoiceItem) && array_key_exists('name', $invoiceItem['product'])) {
+                        $invoiceObject->addItem($invoiceItem['product']['name']);
                     }
                 }
             } else {
@@ -144,29 +143,29 @@ class NecktieGatewayHelper implements NecktieGatewayHelperInterface
     {
         $billingPlan = new BillingPlan();
 
-        if (array_key_exists("initial_price", $response)) {
-            $billingPlan->setInitialPrice($response["initial_price"]);
+        if (array_key_exists('initial_price', $response)) {
+            $billingPlan->setInitialPrice($response['initial_price']);
         }
 
-        if (array_key_exists("id", $response)) {
-            $billingPlan->setNecktieId($response["id"]);
+        if (array_key_exists('id', $response)) {
+            $billingPlan->setNecktieId($response['id']);
         }
 
-        if (array_key_exists("id", $response)) {
-            $billingPlan->setId($response["id"]);
+        if (array_key_exists('id', $response)) {
+            $billingPlan->setId($response['id']);
         }
 
-        if (array_key_exists("type", $response) && $response["type"] == "recurring") {
-            if (array_key_exists("rebill_price", $response)) {
-                $billingPlan->setRebillPrice($response["rebill_price"]);
+        if (array_key_exists('type', $response) && $response['type'] == 'recurring') {
+            if (array_key_exists('rebill_price', $response)) {
+                $billingPlan->setRebillPrice($response['rebill_price']);
             }
 
-            if (array_key_exists("frequency", $response)) {
-                $billingPlan->setFrequency($response["frequency"]);
+            if (array_key_exists('frequency', $response)) {
+                $billingPlan->setFrequency($response['frequency']);
             }
 
-            if (array_key_exists("rebill_times", $response)) {
-                $billingPlan->setRebillTimes($response["rebill_times"]);
+            if (array_key_exists('rebill_times', $response)) {
+                $billingPlan->setRebillTimes($response['rebill_times']);
             }
         }
 
@@ -255,8 +254,8 @@ class NecktieGatewayHelper implements NecktieGatewayHelperInterface
      */
     public function hasError($response)
     {
-        if ((is_string($response) && false !== strpos($response, "error"))
-            || (is_array($response) && array_key_exists("error", $response))
+        if ((is_string($response) && false !== strpos($response, 'error'))
+            || (is_array($response) && array_key_exists('error', $response))
         ) {
             return true;
         } else {

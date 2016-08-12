@@ -8,23 +8,26 @@
 
 namespace Venice\FrontBundle\Twig;
 
-
 use Venice\AppBundle\Entity\Content\Content;
 
+/**
+ * Class RenderDefaultContentTemplateExtension
+ * @package Venice\FrontBundle\Twig
+ */
 class RenderDefaultContentTemplateExtension extends \Twig_Extension
 {
     public function getFilters()
     {
         return [
             new \Twig_SimpleFilter(
-                "renderDefault",
+                'renderDefault',
                 [
                     $this,
-                    "renderDefault",
+                    'renderDefault',
                 ],
                 [
-                    "is_safe" => ["html"],
-                    "needs_environment" => true,
+                    'is_safe' => ['html'],
+                    'needs_environment' => true,
                 ]
             )
         ];
@@ -33,8 +36,8 @@ class RenderDefaultContentTemplateExtension extends \Twig_Extension
     public function renderDefault(\Twig_Environment $twig, Content $content)
     {
         return $twig->render(
-            "VeniceFrontBundle:Content:".$content->getType()."Default.html.twig",
-            ["content" => $content]
+            'VeniceFrontBundle:Content:' . $content->getType() . 'Default.html.twig',
+            ['content' => $content]
         );
     }
 
@@ -46,6 +49,6 @@ class RenderDefaultContentTemplateExtension extends \Twig_Extension
      */
     public function getName()
     {
-        return "app_render_default_content_template_extension";
+        return 'app_render_default_content_template_extension';
     }
 }

@@ -8,7 +8,6 @@
 
 namespace Venice\AppBundle\Interfaces;
 
-
 use Venice\AppBundle\Entity\User;
 use Venice\AppBundle\Exceptions\ExpiredRefreshTokenException;
 use Venice\AppBundle\Exceptions\UnsuccessfulNecktieResponseException;
@@ -51,5 +50,4 @@ interface NecktieGatewayInterface extends GatewayInterface
      * @throws ExpiredRefreshTokenException
      */
     public function refreshAccessTokenIfNeeded(User $user);
-
 }

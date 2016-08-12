@@ -8,7 +8,6 @@
 
 namespace Venice\AppBundle\Form\ContentProduct;
 
-
 use Venice\AppBundle\Form\DataTransformer\EntityToNumberTransformer;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
@@ -24,44 +23,44 @@ class ContentProductTypeWithHiddenContent extends ContentProductType
 
         $builder
             ->add(
-                "product",
+                'product',
                 EntityType::class,
                 [
-                    "class" => "Venice\AppBundle\\Entity\\Product\\Product",
-                    "choice_label" => "name"
+                    'class' => "Venice\AppBundle\\Entity\\Product\\Product",
+                    'choice_label' => 'name'
                 ]
             )
             ->add(
-                "content",
+                'content',
                 HiddenType::class,
                 [
                       // Uses model transformer
-                    "data" => $options["content"],
-                    "data_class" => null,
-                    "label" => false
+                    'data' => $options['content'],
+                    'data_class' => null,
+                    'label' => false
                 ]
             )
             ->add(
-                "delay",
+                'delay',
                 IntegerType::class,
                 [
-                    "required" => true,
-                    "empty_data" => 0,
-                    "attr" => ["placeholder" => "Delay[hours]"]
+                    'required' => true,
+                    'empty_data' => 0,
+                    'attr' => ['placeholder' => 'Delay[hours]']
                 ]
             )
             ->add(
-                "orderNumber",
+                'orderNumber',
                 IntegerType::class,
                 [
-                    "required" => true,
-                    "empty_data" => 0,
-                    "attr" => ["placeholder" => "Order number"]
+                    'required' => true,
+                    'empty_data' => 0,
+                    'attr' => ['placeholder' => 'Order number']
                 ]
             );
 
         $builder
-            ->get("content")
+            ->get('content')
             ->addModelTransformer(
                 new EntityToNumberTransformer(
                     $this->entityManager,
@@ -72,12 +71,12 @@ class ContentProductTypeWithHiddenContent extends ContentProductType
 
     /**
      * @param OptionsResolver $resolver
+     * @throws \Symfony\Component\OptionsResolver\Exception\AccessException
      */
     public function configureOptions(OptionsResolver $resolver)
     {
         parent::configureOptions($resolver);
 
-        $resolver->setDefault("content", null);
+        $resolver->setDefault('content', null);
     }
-
 }

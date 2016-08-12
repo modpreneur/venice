@@ -8,45 +8,44 @@
 
 namespace Venice\AdminBundle\Services;
 
-
-use Doctrine\ORM\EntityManager;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Trinity\AdminBundle\Event\MenuEvent;
 
 class MenuListener
 {
     /**
      * @param MenuEvent $event
+     * @throws \InvalidArgumentException
+     * @throws \Trinity\AdminBundle\Exception\MenuException
      */
     public function onMenuConfigure(MenuEvent $event)
     {
         $menu = $event->getMenu('sidebar');
 
         $menu
-            ->addChild('Dashboard', array('route' => 'admin_dashboard'))
+            ->addChild('Dashboard', ['route' => 'admin_dashboard'])
             ->setAttribute('icon', 'trinity trinity-home')
             ->setExtra('orderNumber', 10);
 
         $menu
-            ->addChild('Products', array('route' => 'admin_product_index'))
+            ->addChild('Products', ['route' => 'admin_product_index'])
             ->setAttribute('icon', 'trinity trinity-products')
             ->setExtra('orderNumber', 20)
             ->setExtra('roles', ['ROLE_ADMIN_PRODUCT_VIEW']);
 
         $menu
-            ->addChild('Contents', array('route' => 'admin_content_index'))
+            ->addChild('Contents', ['route' => 'admin_content_index'])
             ->setAttribute('icon', 'tiecons tiecons-video')
             ->setExtra('orderNumber', 30)
             ->setExtra('roles', ['ROLE_ADMIN_CONTENT_VIEW']);
 
         $menu
-            ->addChild('Blog articles', array('route' => 'admin_blog_article_index'))
+            ->addChild('Blog articles', ['route' => 'admin_blog_article_index'])
             ->setAttribute('icon', 'tiecons tiecons-book-text')
             ->setExtra('orderNumber', 40)
             ->setExtra('roles', ['ROLE_ADMIN_BLOG_VIEW']);
 
         $menu
-            ->addChild('Users', array('route' => 'admin_user_index'))
+            ->addChild('Users', ['route' => 'admin_user_index'])
             ->setAttribute('icon', 'tiecons tiecons-user-negative')
             ->setExtra('orderNumber', 50)
             ->setExtra('roles', ['ROLE_ADMIN_USER_VIEW']);

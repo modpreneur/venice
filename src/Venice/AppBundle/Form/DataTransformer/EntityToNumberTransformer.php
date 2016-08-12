@@ -8,11 +8,14 @@
 
 namespace Venice\AppBundle\Form\DataTransformer;
 
-
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Exception\TransformationFailedException;
 
+/**
+ * Class EntityToNumberTransformer
+ * @package Venice\AppBundle\Form\DataTransformer
+ */
 class EntityToNumberTransformer implements DataTransformerInterface
 {
     /** @var EntityManagerInterface */
@@ -58,19 +61,19 @@ class EntityToNumberTransformer implements DataTransformerInterface
     public function transform($value)
     {
         if (!$value) {
-            return "";
+            return '';
         }
 
         if (is_object($value)) {
-            if (method_exists($value, "getId")) {
+            if (method_exists($value, 'getId')) {
                 return $value->getId();
-            } elseif (property_exists($value, "id")) {
+            } elseif (property_exists($value, 'id')) {
                 return $value->id;
             }
         }
 
 
-        throw new TransformationFailedException("Given value is not an object");
+        throw new TransformationFailedException('Given value is not an object');
     }
 
     /**

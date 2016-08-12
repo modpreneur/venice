@@ -2,7 +2,9 @@
 
 namespace Venice\AppBundle\EventListener;
 
+use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\LoadClassMetadataEventArgs;
+use Doctrine\ORM\Events;
 
 /**
  * This Listener listens to the loadClassMetadata event. Upon this event
@@ -13,7 +15,7 @@ use Doctrine\ORM\Event\LoadClassMetadataEventArgs;
  * load metadata event to update the parent with a good discriminator map,
  * collecting all entries from the subclasses.
  */
-class DoctrineDiscriminatorListener implements \Doctrine\Common\EventSubscriber
+class DoctrineDiscriminatorListener implements EventSubscriber
 {
     /**
      * @var array
@@ -34,7 +36,7 @@ class DoctrineDiscriminatorListener implements \Doctrine\Common\EventSubscriber
      */
     public function getSubscribedEvents()
     {
-        return array(\Doctrine\ORM\Events::loadClassMetadata);
+        return [Events::loadClassMetadata];
     }
 
     /**
@@ -51,6 +53,7 @@ class DoctrineDiscriminatorListener implements \Doctrine\Common\EventSubscriber
 
         foreach ($this->mapping as $entityName => $map) {
             if ($class->getName() === $map['entity']) {
+                //the $metadata->discriminatorMap property does exist!
                 $discriminatorMap = array_merge($metadata->discriminatorMap, $map['map']);
 //                $discriminatorMap = array_merge($discriminatorMap, array($entityName => $map['entity']));
                 $metadata->setDiscriminatorMap($discriminatorMap);

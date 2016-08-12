@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Venice\AdminBundle\Grid;
-
 
 use Trinity\Bundle\GridBundle\Grid\BaseGrid;
 use Trinity\Bundle\SearchBundle\NQL\NQLQuery;
@@ -13,7 +11,6 @@ use Trinity\Bundle\SearchBundle\NQL\NQLQuery;
  */
 class UserGrid extends BaseGrid
 {
-
     /**
      * Set up grid (template)
      *
@@ -21,7 +18,7 @@ class UserGrid extends BaseGrid
      */
     public function setUp()
     {
-        $this->addTemplate("VeniceAdminBundle:User:grid.html.twig");
+        $this->addTemplate('VeniceAdminBundle:User:grid.html.twig');
     }
 
 

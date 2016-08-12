@@ -26,11 +26,11 @@ class NecktieConnectorTest extends BaseTest
         $connector = new NecktieConnector();
 
         $user = new User();
-        $token = (new OAuthToken())->setAccessToken("accessToken");
+        $token = (new OAuthToken())->setAccessToken('accessToken');
         $user->addOAuthToken($token);
         $accessToken = null;
 
-        $this->assertEquals("accessToken", $this->invokeMethod($connector, "getAccessToken", [$user, $accessToken]));
+        $this->assertEquals('accessToken', $this->invokeMethod($connector, 'getAccessToken', [$user, $accessToken]));
     }
 
     
@@ -44,7 +44,7 @@ class NecktieConnectorTest extends BaseTest
         $user = new User();
         $accessToken = null;
 
-        $this->assertEquals(null, $this->invokeMethod($connector, "getAccessToken", [$user, $accessToken]));
+        $this->assertEquals(null, $this->invokeMethod($connector, 'getAccessToken', [$user, $accessToken]));
     }
 
 
@@ -53,9 +53,9 @@ class NecktieConnectorTest extends BaseTest
         $connector = new NecktieConnector();
 
         $user = new User();
-        $accessToken = "accessTokenString";
+        $accessToken = 'accessTokenString';
 
-        $this->assertEquals("accessTokenString", $this->invokeMethod($connector, "getAccessToken", [$user, $accessToken]));
+        $this->assertEquals('accessTokenString', $this->invokeMethod($connector, 'getAccessToken', [$user, $accessToken]));
     }
 
 
@@ -66,7 +66,7 @@ class NecktieConnectorTest extends BaseTest
     {
         $connector = new NecktieConnector();
 
-        $this->assertEquals($expectedOutput, $this->invokeMethod($connector, "prepareOptions", $input));
+        $this->assertEquals($expectedOutput, $this->invokeMethod($connector, 'prepareOptions', $input));
     }
 
 
@@ -81,11 +81,11 @@ class NecktieConnectorTest extends BaseTest
         $client = $connectorMock->getClient();
         $this->assertNull($client);
 
-        $connectorMock->setBaseUri("http://192.168.99.100/app_dev.php");
+        $connectorMock->setBaseUri('http://192.168.99.100/app_dev.php');
 
         $client = $connectorMock->getClient();
 
-        $this->assertEquals(new Client(["base_uri" => "http://192.168.99.100/app_dev.php"]), $client);
+        $this->assertEquals(new Client(['base_uri' => 'http://192.168.99.100/app_dev.php']), $client);
 
 
     }
@@ -96,18 +96,18 @@ class NecktieConnectorTest extends BaseTest
         $clientMock = $this->getMockBuilder("GuzzleHttp\\Client")
             ->getMock();
 
-        $method = "get";
-        $uri = "/api/user";
-        $options = ["redirects" => false];
+        $method = 'get';
+        $uri = '/api/user';
+        $options = ['redirects' => false];
 
         $clientMock->expects($this->once())
-            ->method("request")
+            ->method('request')
             ->with($method, $uri, $options);
 
         $connector = new NecktieConnector();
         $connector->setClient($clientMock);
 
-        $this->invokeMethod($connector, "createRequest", [$method, $uri, $options]);
+        $this->invokeMethod($connector, 'createRequest', [$method, $uri, $options]);
     }
 
 
@@ -142,7 +142,7 @@ class NecktieConnectorTest extends BaseTest
         $connector = new NecktieConnector();
 
         $connectorMock = $this->getMockBuilder("Venice\AppBundle\\Services\\NecktieConnector")
-            ->setMethods(["getAccessToken", "prepareOptions"])
+            ->setMethods(['getAccessToken', 'prepareOptions'])
             ->getMock();
 
         $clientMock = new MockHandler([$guzzleResponseMock]);
@@ -157,25 +157,25 @@ class NecktieConnectorTest extends BaseTest
         $connectorMock->setClient($client);
 
         $connectorMock->expects($this->once())
-            ->method("getAccessToken")
+            ->method('getAccessToken')
             ->will($this->returnValue($accessToken));
 
         $connectorPreparedOptions = $this->invokeMethod(
             $connector,
-            "prepareOptions",
+            'prepareOptions',
             [$method, $data, $accessToken, $sendAsJson]
         );
 
         $connectorMock->expects($this->once())
-            ->method("prepareOptions")
+            ->method('prepareOptions')
             ->will($this->returnValue($connectorPreparedOptions));
 
 
         $response = $connectorMock->getResponse($user, $method, $uri, $data, $accessToken, $sendAsJson);
 
         $transaction = $container[0];
-        $this->assertEquals($method, $transaction["request"]->getMethod());
-        $this->assertEquals($uri, $transaction["request"]->getUri()->getPath());
+        $this->assertEquals($method, $transaction['request']->getMethod());
+        $this->assertEquals($uri, $transaction['request']->getUri()->getPath());
 
         return $response;
     }
@@ -193,21 +193,21 @@ class NecktieConnectorTest extends BaseTest
             [
                 //input data - get
                 [
-                    "get",
+                    'get',
                     [
-                        "a" => "aaa",
-                        "b" => "bbb",
+                        'a' => 'aaa',
+                        'b' => 'bbb',
                     ],
-                    "accessTokenString",
+                    'accessTokenString',
                 ],
                 //expected result
                 [
-                    "headers" => [
-                        "Authorization" => "Bearer accessTokenString"
+                    'headers' => [
+                        'Authorization' => 'Bearer accessTokenString'
                     ],
-                    "query" => [
-                        "a" => "aaa",
-                        "b" => "bbb",
+                    'query' => [
+                        'a' => 'aaa',
+                        'b' => 'bbb',
                     ],
                 ]
             ],
@@ -215,21 +215,21 @@ class NecktieConnectorTest extends BaseTest
             [
                 //input data
                 [
-                    "post",
+                    'post',
                     [
-                        "a" => "aaa",
-                        "b" => "bbb",
+                        'a' => 'aaa',
+                        'b' => 'bbb',
                     ],
-                    "accessTokenString",
+                    'accessTokenString',
                 ],
                 //expected result
                 [
-                    "headers" => [
-                        "Authorization" => "Bearer accessTokenString"
+                    'headers' => [
+                        'Authorization' => 'Bearer accessTokenString'
                     ],
-                    "form_params" => [
-                        "a" => "aaa",
-                        "b" => "bbb",
+                    'form_params' => [
+                        'a' => 'aaa',
+                        'b' => 'bbb',
                     ],
                 ]
             ],
@@ -237,22 +237,22 @@ class NecktieConnectorTest extends BaseTest
             [
                 //input data
                 [
-                    "post",
+                    'post',
                     [
-                        "a" => "aaa",
-                        "b" => "bbb",
+                        'a' => 'aaa',
+                        'b' => 'bbb',
                     ],
-                    "accessTokenString",
+                    'accessTokenString',
                     true
                 ],
                 //expected result
                 [
-                    "headers" => [
-                        "Authorization" => "Bearer accessTokenString"
+                    'headers' => [
+                        'Authorization' => 'Bearer accessTokenString'
                     ],
-                    "json" => [
-                        "a" => "aaa",
-                        "b" => "bbb",
+                    'json' => [
+                        'a' => 'aaa',
+                        'b' => 'bbb',
                     ],
                 ]
             ],
@@ -262,12 +262,12 @@ class NecktieConnectorTest extends BaseTest
     public function providerTestGetResponseWithoutException()
     {
         $user = new User();
-        $token = (new OAuthToken())->setAccessToken("usersAccessToken");
+        $token = (new OAuthToken())->setAccessToken('usersAccessToken');
         $user->addOAuthToken($token);
 
         $data = [
-            "data1" => "value1",
-            "data2" => "value2"
+            'data1' => 'value1',
+            'data2' => 'value2'
         ];
         $sendAsJson = false;
 
@@ -277,26 +277,26 @@ class NecktieConnectorTest extends BaseTest
             [
                 //input data - get
                 [
-                    new Response(200, [], "ok"),
+                    new Response(200, [], 'ok'),
                     $user,
-                    "GET",
-                    "/api/v1/test",
+                    'GET',
+                    '/api/v1/test',
                     $data,
                     null,
                     $sendAsJson
 
                 ],
                 //expected result
-                "ok"
+                'ok'
             ],
             //#1 test data - ClientException, code 404 - returns null
             [
                 //input data - get
                 [
-                    new Response(404, [], "not found"),
+                    new Response(404, [], 'not found'),
                     $user,
-                    "GET",
-                    "/api/v1/test",
+                    'GET',
+                    '/api/v1/test',
                     $data,
                     null,
                     $sendAsJson
@@ -311,12 +311,12 @@ class NecktieConnectorTest extends BaseTest
     public function providerTestGetResponseWithException()
     {
         $user = new User();
-        $token = (new OAuthToken())->setAccessToken("usersAccessToken");
+        $token = (new OAuthToken())->setAccessToken('usersAccessToken');
         $user->addOAuthToken($token);
 
         $data = [
-            "data1" => "value1",
-            "data2" => "value2"
+            'data1' => 'value1',
+            'data2' => 'value2'
         ];
         $sendAsJson = false;
 
@@ -325,34 +325,34 @@ class NecktieConnectorTest extends BaseTest
             [
                 //input data - get
                 [
-                    new Response(500, [], "error"),
+                    new Response(500, [], 'error'),
                     $user,
-                    "GET",
-                    "/api/v1/test",
+                    'GET',
+                    '/api/v1/test',
                     $data,
                     null,
                     $sendAsJson
 
                 ],
                 //expected result
-                "error"
+                'error'
             ],
 
             //#0 test data - client exception
             [
                 //input data - get
                 [
-                    new Response(400, [], "bad request"),
+                    new Response(400, [], 'bad request'),
                     $user,
-                    "GET",
-                    "/api/v1/test",
+                    'GET',
+                    '/api/v1/test',
                     $data,
                     null,
                     $sendAsJson
 
                 ],
                 //expected result
-                "error"
+                'error'
             ],
         ];
     }

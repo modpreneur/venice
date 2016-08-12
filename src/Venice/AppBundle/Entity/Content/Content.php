@@ -8,11 +8,10 @@
 
 namespace Venice\AppBundle\Entity\Content;
 
-
+use Doctrine\Common\Collections\ArrayCollection;
 use Venice\AppBundle\Entity\ContentProduct;
 use Venice\AppBundle\Entity\User;
 use Venice\AppBundle\Traits\Timestampable;
-use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Class AbstractContent
@@ -130,8 +129,7 @@ abstract class Content
      */
     public function addContentProduct(ContentProduct $contentProduct)
     {
-        if(!$this->contentProducts->contains($contentProduct))
-        {
+        if (!$this->contentProducts->contains($contentProduct)) {
             $this->contentProducts->add($contentProduct);
         }
 
@@ -154,8 +152,8 @@ abstract class Content
     /**
      * Creates new instance of content from type (first part of entity name ends with Content)
      *
-     * @param string $type Could be formatted like HtmlContent, Mp3Content, Venice\AppBundle\\Entity\\Content\\PdfContent, ...
-     * @param array  $args
+     * @param string $type Could be formatted like HtmlContent, Mp3Content, Venice\AppBundle\Entity\Content\PdfContent
+     * @param array $args
      *
      * @return Content
      */
@@ -169,7 +167,7 @@ abstract class Content
     /**
      * Return a class of content from type (first part of entity name ends with Content)
      *
-     * @param string $type Could be formatted like HtmlContent, Mp3Content, Venice\AppBundle\\Entity\\Content\\PdfContent, ...
+     * @param string $type Could be formatted like HtmlContent, Mp3Content, Venice\AppBundle\Entity\Content\PdfContent
      *
      * @return Content
      */
@@ -177,11 +175,14 @@ abstract class Content
     {
         $type = ucfirst($type);
 
-        if(!strpos($type,"Content"))
-            $type .= "Content";
+        if (!strpos($type, 'Content')) {
+            $type .= 'Content';
+        }
 
-        if(!strpos($type,"Venice\\AppBundle\\Entity\\Content\\"))
+        //todo:
+        if (!strpos($type, "Venice\\AppBundle\\Entity\\Content\\")) {
             $type = "Venice\\AppBundle\\Entity\\Content\\" . $type;
+        }
 
         return $type;
     }
@@ -193,22 +194,4 @@ abstract class Content
      * @return string
      */
     abstract public function getType();
-
-
-    /**
-     * Get the fully classified class name of the type
-     *
-     * @return string
-     */
-    public function getFormTypeClass()
-    {
-        throw new \Exception("DEPRECATED");
-
-        $name = get_class($this) . "Type";
-        $name = str_replace('Entity', 'Form', $name);
-
-        return $name;
-    }
-
-
 }

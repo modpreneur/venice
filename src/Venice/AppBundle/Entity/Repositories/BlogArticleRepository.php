@@ -14,6 +14,8 @@ class BlogArticleRepository extends EntityRepository
      * @param int $productId
      *
      * @return int
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function getCountByProduct(int $productId)
     {
@@ -30,6 +32,8 @@ class BlogArticleRepository extends EntityRepository
 
     /**
      * @return int
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function count()
     {

@@ -75,7 +75,6 @@ class Mp3Content extends AbstractPlayableContent
      */
     public function getType()
     {
-        return "mp3";
+        return 'mp3';
     }
-
 }

@@ -8,8 +8,7 @@
 
 namespace Venice\AppBundle\Event;
 
-
 final class AppEvents
 {
-    const NECKTIE_LOGIN_SUCCESSFUL = "app.necktie_login_successful";
+    const NECKTIE_LOGIN_SUCCESSFUL = 'app.necktie_login_successful';
 }

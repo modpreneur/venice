@@ -8,13 +8,12 @@
 
 namespace Venice\AdminBundle;
 
-
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 class VeniceAdminBundle extends Bundle
 {
     public function getParent()
     {
-        return "TrinityAdminBundle";
+        return 'TrinityAdminBundle';
     }
 }

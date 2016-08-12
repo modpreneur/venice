@@ -8,27 +8,22 @@
 
 namespace Venice\AppBundle\Form\Notification;
 
-
-use IntlDateFormatter;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Trinity\NotificationBundle\DataTransformer\NotificationTransformer;
 use Trinity\NotificationBundle\Interfaces\NotificationTypeInterface;
-use Trinity\NotificationBundle\Notification\EntityConverter;
 use Venice\AppBundle\Entity\Product\StandardProduct;
 use Venice\AppBundle\Entity\ProductAccess;
 use Venice\AppBundle\Entity\User;
 use Venice\AppBundle\Form\BaseType;
-use Trinity\NotificationBundle\DataTransformer\NotificationTransformer;
-
 
 /**
  * Class ProductAccessType
  */
-class   ProductAccessType extends BaseType implements NotificationTypeInterface
+class ProductAccessType extends BaseType implements NotificationTypeInterface
 {
     /**
      * {@inheritdoc}

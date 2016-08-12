@@ -8,7 +8,6 @@
 
 namespace Venice\AppBundle\Form\ContentProduct;
 
-
 use Venice\AppBundle\Form\BaseType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -18,7 +17,7 @@ abstract class ContentProductType extends BaseType
     {
         $resolver->setDefaults(
             [
-                "data_class" => "Venice\AppBundle\\Entity\\ContentProduct"
+                'data_class' => "Venice\AppBundle\\Entity\\ContentProduct"
             ]
         );
     }

@@ -5,6 +5,12 @@ namespace Venice\AppBundle\Services;
 use Gaufrette\Filesystem;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
+/**
+ * todo: Copied from necktie, needs review
+ *
+ * Class FileUploader
+ * @package Venice\AppBundle\Services
+ */
 class FileUploader
 {
     private $allowedMimeTypes = [
@@ -25,7 +31,7 @@ class FileUploader
     }
 
     //S3 is one layer file system doesn't have folders
-    public function upload(UploadedFile $file, $prefix = "")
+    public function upload(UploadedFile $file, $prefix = '')
     {
         // Check if the file's mime type is in the list of allowed mime types.
         if (!in_array($file->getClientMimeType(), $this->allowedMimeTypes)) {

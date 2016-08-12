@@ -32,13 +32,6 @@ admin_product_new:
     options: { compiler_class: Symfony\Component\Routing\RouteCompiler }
     methods: [GET]
 
-admin_product_new_form:
-    path: '/admin/product/new/{productType}'
-    defaults: { _controller: 'VeniceAdminBundle:Product:newForm' }
-    requirements: { productType: \w+ }
-    options: { compiler_class: Symfony\Component\Routing\RouteCompiler }
-    methods: [GET]
-
 admin_product_create:
     path: '/admin/product/create/{productType}'
     defaults: { _controller: 'VeniceAdminBundle:Product:create' }

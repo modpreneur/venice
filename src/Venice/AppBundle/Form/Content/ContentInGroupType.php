@@ -8,22 +8,22 @@
 
 namespace Venice\AppBundle\Form\Content;
 
-
-use Venice\AppBundle\Entity\Content\GroupContent;
-use Venice\AppBundle\Form\BaseType;
-use Venice\AppBundle\Form\DataTransformer\EntityToNumberTransformer;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Venice\AppBundle\Entity\Content\GroupContent;
+use Venice\AppBundle\Form\BaseType;
+use Venice\AppBundle\Form\DataTransformer\EntityToNumberTransformer;
 
 class ContentInGroupType extends BaseType
 {
     /**
      * @param FormBuilderInterface $builder
      * @param array $options
+     * @throws \Symfony\Component\Form\Exception\InvalidArgumentException
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -31,47 +31,47 @@ class ContentInGroupType extends BaseType
 
         $builder
             ->add(
-                "content",
+                'content',
                 EntityType::class,
                 [
-                    "class" => "Venice\AppBundle\\Entity\\Content\\Content",
-                    'query_builder' => $this->getQueryBuilderFunction($options["groupContent"]),
-                    "choice_label" => "name",
-                    "label" => "Content",
-                    "placeholder" => "Choose content",
-                    "required" => true
+                    'class' => "Venice\AppBundle\\Entity\\Content\\Content",
+                    'query_builder' => $this->getQueryBuilderFunction($options['groupContent']),
+                    'choice_label' => 'name',
+                    'label' => 'Content',
+                    'placeholder' => 'Choose content',
+                    'required' => true
                 ]
             )
             ->add(
-                "group",
+                'group',
                 HiddenType::class,
                 [
                     // Uses model transformer
-                    "data" => $options["groupContent"],
-                    "data_class" => null,
-                    "label" => false,
+                    'data' => $options['groupContent'],
+                    'data_class' => null,
+                    'label' => false,
                 ]
             )
             ->add(
-                "delay",
+                'delay',
                 IntegerType::class,
                 [
-                    "empty_data" => 0,
-                    "required" => false,
-                    "attr" => ["placeholder" => "Delay[hours]"]
+                    'empty_data' => 0,
+                    'required' => false,
+                    'attr' => ['placeholder' => 'Delay[hours]']
                 ]
             )
             ->add(
-                "orderNumber",
+                'orderNumber',
                 IntegerType::class,
                 [
-                    "empty_data" => 0,
-                    "required" => false,
-                    "attr" => ["placeholder" => "Order number"]
+                    'empty_data' => 0,
+                    'required' => false,
+                    'attr' => ['placeholder' => 'Order number']
                 ]
             );
 
-        $builder->get("group")
+        $builder->get('group')
             ->addModelTransformer(
                 new EntityToNumberTransformer(
                     $this->entityManager,
@@ -82,13 +82,14 @@ class ContentInGroupType extends BaseType
 
     /**
      * @param OptionsResolver $resolver
+     * @throws \Symfony\Component\OptionsResolver\Exception\AccessException
      */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(
             [
-                "data_class" => "Venice\AppBundle\\Entity\\Content\\ContentInGroup",
-                "groupContent" => null
+                'data_class' => "Venice\AppBundle\\Entity\\Content\\ContentInGroup",
+                'groupContent' => null
             ]
         );
     }
@@ -107,15 +108,16 @@ class ContentInGroupType extends BaseType
         // Get all ContentGroups but the given group - do not allow circular relations
         if ($groupContent && $groupContent->getId()) {
             $groupId = $groupContent->getId();
+
             return function (EntityRepository $er) use ($groupId) {
                 return $er
                     ->createQueryBuilder('c')
                     ->andWhere('c.id != :id')
-                    ->setParameter("id", $groupId);
+                    ->setParameter('id', $groupId);
             };
         } else {
             return function (EntityRepository $er) {
-                return $er->createQueryBuilder("c");
+                return $er->createQueryBuilder('c');
             };
         }
     }

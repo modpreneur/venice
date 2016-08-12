@@ -37,6 +37,8 @@ class GroupContent extends Content
     {
         $count = $this->items->count();
 
+        //the for cycle is used for better indexing
+        /** @noinspection ForeachInvariantsInspection */
         for ($i = 0; $i < $count; $i++) {
             if ($this->items[$i]->getContent() && $this->id == $this->items[$i]->getContent()->getId()) {
                 $context
@@ -54,8 +56,10 @@ class GroupContent extends Content
                     && $this->items[$i]->getOrderNumber() === $this->items[$j]->getOrderNumber()
                 ) {
                     $context
-                        ->buildViolation('Group content can not contain the same content(with the same delay and order) twice.')
-                        ->atPath("items")
+                        ->buildViolation(
+                            'Group content can not contain the same content(with the same delay and order) twice.'
+                        )
+                        ->atPath('items')
                         ->addViolation();
 
                     break;
@@ -165,10 +169,10 @@ class GroupContent extends Content
      */
     public function getContent()
     {
-        $names = "";
+        $names = '';
 
         foreach ($this->items as $item) {
-            $names .= $item->getContent()->getName().", ";
+            $names .= $item->getContent()->getName() . ', ';
         }
 
         return $names;
@@ -182,6 +186,6 @@ class GroupContent extends Content
      */
     public function getType()
     {
-        return "group";
+        return 'group';
     }
 }

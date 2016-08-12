@@ -8,10 +8,10 @@
 
 namespace Venice\AppBundle\Entity;
 
+use DateTime;
 use Venice\AppBundle\Entity\Content\Content;
 use Venice\AppBundle\Entity\Product\Product;
 use Venice\AppBundle\Traits\Timestampable;
-use DateTime;
 
 /**
  * Class ContentProduct
@@ -199,12 +199,12 @@ class ContentProduct
     {
         if ($this->isAvailableFor($user)) {
             // 0 hours to access
-            return new \DateInterval("PT0H");
+            return new \DateInterval('PT0H');
         }
 
         $productAccess = $user->getProductAccess($this->product);
 
-        if(!$productAccess) {
+        if (!$productAccess) {
             return null;
         }
 
@@ -213,7 +213,7 @@ class ContentProduct
 
         // Add delay to the time
         $hours = $this->getDelay();
+
         return $timeOfAccess->add(new \DateInterval("PT{$hours}H"));
     }
-
 }

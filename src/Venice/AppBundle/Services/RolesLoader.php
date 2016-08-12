@@ -10,6 +10,10 @@ namespace Venice\AppBundle\Services;
 
 use Symfony\Component\Yaml\Parser;
 
+/**
+ * Class RolesLoader
+ * @package Venice\AppBundle\Services
+ */
 class RolesLoader
 {
     public function readRolesFile()

@@ -61,6 +61,6 @@ class HtmlContent extends Content
      */
     public function getType()
     {
-        return "html";
+        return 'html';
     }
 }

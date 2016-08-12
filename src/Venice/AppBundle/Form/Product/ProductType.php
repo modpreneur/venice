@@ -8,7 +8,6 @@
 
 namespace Venice\AppBundle\Form\Product;
 
-
 use Venice\AppBundle\Form\BaseType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
@@ -21,12 +20,12 @@ class ProductType extends BaseType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add("name", TextType::class)
-            ->add("handle", TextType::class)
-            ->add("description", TextareaType::class, ["required" => false])
-            ->add("image", TextType::class)
-            ->add("enabled", CheckboxType::class, ["required" => false])
-            ->add("orderNumber", IntegerType::class)
+            ->add('name', TextType::class)
+            ->add('handle', TextType::class)
+            ->add('description', TextareaType::class, ['required' => false])
+            ->add('image', TextType::class)
+            ->add('enabled', CheckboxType::class, ['required' => false])
+            ->add('orderNumber', IntegerType::class)
         ;
     }
 }

@@ -8,7 +8,6 @@
 
 namespace Venice\AppBundle\Controller;
 
-
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,7 +21,7 @@ use Venice\AppBundle\Entity\User;
 class NecktieBuyController extends Controller
 {
     /**
-     * @param Request         $request
+     * @param Request $request
      * @param StandardProduct $product
      *
      * @return RedirectResponse
@@ -42,16 +41,16 @@ class NecktieBuyController extends Controller
         $user = $this->getUser();
         $this->get('venice.app.necktie_gateway')->refreshAccessToken($user);
 
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($user);
-        $em->flush();
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($user);
+        $entityManager->flush();
 
         $token = $user->getLastAccessToken();
         $useStoredCC = $request->query->has('useStoredCC') ? 'useStoredCC=true' : '';
         $billingPlanId = $request->query->get('billingPlanId');
         $productId = $product->getNecktieId();
 
-        if($paySystem === 'cb') {
+        if ($paySystem === 'cb') {
             $paySystemUrlPart = 'cb/ocb';
         } elseif ($paySystem === 'braintree') {
             $paySystemUrlPart = 'braintree/buy';
@@ -60,7 +59,7 @@ class NecktieBuyController extends Controller
         }
 
         if ($billingPlanId) {
-            $billingPlan = $em->getRepository('VeniceAppBundle:BillingPlan')->findOneBy(['necktieId' => $billingPlanId]);
+            $billingPlan = $entityManager->getRepository('VeniceAppBundle:BillingPlan')->findOneBy(['necktieId' => $billingPlanId]);
             if (!$billingPlan) {
                 throw new NotFoundHttpException('No billing plan found');
             }

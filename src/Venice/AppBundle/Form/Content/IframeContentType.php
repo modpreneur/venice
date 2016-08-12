@@ -8,7 +8,6 @@
 
 namespace Venice\AppBundle\Form\Content;
 
-
 use KMS\FroalaEditorBundle\Form\Type\FroalaEditorType;
 use Symfony\Component\Form\FormBuilderInterface;
 
@@ -19,7 +18,6 @@ class IframeContentType extends ContentType
         parent::buildForm($builder, $options);
 
         $builder
-            ->add("html", FroalaEditorType::class, ["required" => false]);
+            ->add('html', FroalaEditorType::class, ['required' => false]);
     }
-
 }

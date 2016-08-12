@@ -8,7 +8,6 @@
 
 namespace Venice\AppBundle\Entity;
 
-
 use Doctrine\Common\Collections\ArrayCollection;
 
 class Invoice
@@ -131,8 +130,7 @@ class Invoice
      */
     public function addItem($item)
     {
-        if(!$this->items->contains($item))
-        {
+        if (!$this->items->contains($item)) {
             $this->items->add($item);
         }
 
@@ -150,7 +148,4 @@ class Invoice
 
         return $this;
     }
-
-
-
 }

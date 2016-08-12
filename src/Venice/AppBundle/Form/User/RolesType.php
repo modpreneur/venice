@@ -8,14 +8,13 @@
 
 namespace Venice\AppBundle\Form\User;
 
-
-use Venice\AppBundle\Form\BaseType;
-use Venice\AppBundle\Services\EntityOverrideHandler;
-use Venice\AppBundle\Services\RolesLoader;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Venice\AppBundle\Form\BaseType;
+use Venice\AppBundle\Services\EntityOverrideHandler;
+use Venice\AppBundle\Services\RolesLoader;
 
 class RolesType extends BaseType
 {
@@ -27,8 +26,11 @@ class RolesType extends BaseType
      * @param EntityOverrideHandler $entityOverrideHandler
      * @param RolesLoader $rolesLoader
      */
-    public function __construct(EntityManagerInterface $entityManager, EntityOverrideHandler $entityOverrideHandler, RolesLoader $rolesLoader)
-    {
+    public function __construct(
+        EntityManagerInterface $entityManager,
+        EntityOverrideHandler $entityOverrideHandler,
+        RolesLoader $rolesLoader
+    ) {
         parent::__construct($entityManager, $entityOverrideHandler);
 
         $this->roles = $rolesLoader->readRolesFile();
@@ -44,13 +46,13 @@ class RolesType extends BaseType
         parent::buildForm($builder, $options);
 
         $builder->add(
-            "roles",
+            'roles',
             ChoiceType::class,
             [
-                "expanded" => true,
-                "multiple" => true,
-                "choices" => array_keys($this->roles),
-                "choice_label" => function ($value) {
+                'expanded' => true,
+                'multiple' => true,
+                'choices' => array_keys($this->roles),
+                'choice_label' => function ($value) {
                     return $this->roles[$value];
                 },
             ]
@@ -59,12 +61,12 @@ class RolesType extends BaseType
 
     /**
      * @param OptionsResolver $resolver
+     * @throws \Symfony\Component\OptionsResolver\Exception\AccessException
      */
     public function configureOptions(OptionsResolver $resolver)
     {
         parent::configureOptions($resolver);
 
-        $resolver->setDefault("data_class", "Venice\AppBundle\\Entity\\User");
+        $resolver->setDefault('data_class', "Venice\AppBundle\\Entity\\User");
     }
-
 }

@@ -16,8 +16,6 @@ use Venice\AppBundle\Entity\Content\Content;
 use Venice\AppBundle\Entity\ContentProduct;
 use Venice\AppBundle\Entity\ProductAccess;
 use Venice\AppBundle\Entity\User;
-use Venice\AppBundle\Form\Product\FreeProductType;
-use Venice\AppBundle\Form\Product\StandardProductType;
 
 /**
  * Class BaseProduct
@@ -60,6 +58,13 @@ abstract class Product extends BaseProduct
      * @var ArrayCollection<BlogArticle>
      */
     protected $articles;
+
+    /**
+     * Get the product type string
+     *
+     * @return string
+     */
+    abstract public function getType();
 
     public function __construct()
     {
@@ -243,7 +248,7 @@ abstract class Product extends BaseProduct
      *
      * @param string $type Could be formatted like StandardProduct, FreeProduct,
      *                     Venice\AppBundle\\Entity\\Product\\StandardProduct, ...
-     * @param array  $args
+     * @param array $args
      *
      * @return Product
      */
@@ -266,8 +271,8 @@ abstract class Product extends BaseProduct
     {
         $type = ucfirst($type);
 
-        if (!strpos($type, "Product")) {
-            $type .= "Product";
+        if (!strpos($type, 'Product')) {
+            $type .= 'Product';
         }
 
         if (!strpos($type, "Venice\\AppBundle\\Entity\\Product\\")) {
@@ -277,28 +282,6 @@ abstract class Product extends BaseProduct
         return $type;
     }
 
-
-    /**
-     * Get the product type string
-     *
-     * @return string
-     */
-    abstract public function getType();
-
-    /**
-     * Get form type of product
-     *
-     * @return StandardProductType|FreeProductType
-     */
-    public function getFormTypeClass()
-    {
-        throw new \Exception("DEPRECATED");
-
-        $name = get_class($this) . "Type";
-        $name = str_replace('Entity', 'Form', $name);
-
-        return $name;
-    }
 
     /**
      * Get all Content of the product.
@@ -363,7 +346,7 @@ abstract class Product extends BaseProduct
     /**
      * Get all available content by type without information about delay and order.
      *
-     * @param User   $user
+     * @param User $user
      * @param string $type Type of the content (html, text, video, mp3, ...)
      *
      * @return Content[]

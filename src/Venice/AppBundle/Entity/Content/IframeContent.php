@@ -59,6 +59,6 @@ class IframeContent extends Content
      */
     public function getType()
     {
-        return "iframe";
+        return 'iframe';
     }
 }

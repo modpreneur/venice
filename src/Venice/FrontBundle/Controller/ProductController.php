@@ -8,11 +8,8 @@
 
 namespace Venice\FrontBundle\Controller;
 
-
-use FOS\RestBundle\Controller\Annotations\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Venice\AppBundle\Entity\Product\Product;
-use Venice\AppBundle\Entity\User;
 
 /**
  * Class ProductController
@@ -21,6 +18,7 @@ class ProductController extends Controller
 {
     /**
      * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \LogicException
      */
     public function indexAction()
     {
@@ -43,7 +41,8 @@ class ProductController extends Controller
      */
     public function showAction(Product $product)
     {
-        return $this->render('VeniceFrontBundle:Product:show.html.twig',
+        return $this->render(
+            'VeniceFrontBundle:Product:show.html.twig',
             ['product' => $product, 'urlGenerator' => $this->get('venice.app.buy_url_generator')]
         );
     }

@@ -13,6 +13,8 @@ class ContentProductRepository extends EntityRepository
      * @param int $productId
      *
      * @return int
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function getCountByProduct(int $productId)
     {
@@ -31,6 +33,8 @@ class ContentProductRepository extends EntityRepository
      * @param int $contentId
      *
      * @return int
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function getCountByContent(int $contentId)
     {

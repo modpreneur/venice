@@ -8,14 +8,13 @@
 
 namespace Venice\AppBundle\Services;
 
-
-use Venice\AppBundle\Entity\User;
-use Venice\AppBundle\Exceptions\UnsuccessfulNecktieResponseException;
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\ServerException;
 use Psr\Http\Message\MessageInterface;
+use Venice\AppBundle\Entity\User;
+use Venice\AppBundle\Exceptions\UnsuccessfulNecktieResponseException;
 
 class NecktieConnector
 {
@@ -50,7 +49,7 @@ class NecktieConnector
      */
     public function setBaseUri(string $baseUri)
     {
-        $client = new Client(["base_uri" => $baseUri]);
+        $client = new Client(['base_uri' => $baseUri]);
 
         $this->setClient($client);
     }
@@ -65,6 +64,8 @@ class NecktieConnector
      * @param bool $sendAsJson
      *
      * @return null|string
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \RuntimeException
      * @throws UnsuccessfulNecktieResponseException
      * @throws \Exception
      */
@@ -86,9 +87,8 @@ class NecktieConnector
             $response = $this->createRequest($method, $uri, $options);
         } catch (ServerException $e) {
             throw new UnsuccessfulNecktieResponseException($e->getResponse()->getBody()->getContents());
-        }
-        catch (ClientException $e) {
-            if($e->getCode() === 404) {
+        } catch (ClientException $e) {
+            if ($e->getCode() === 404) {
                 return null;
             }
 
@@ -106,6 +106,7 @@ class NecktieConnector
      * @param string $uri
      * @param array $options
      * @return \Psr\Http\Message\ResponseInterface
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     protected function createRequest(string $method, string $uri, array $options = [])
     {
@@ -121,7 +122,6 @@ class NecktieConnector
      *
      * @param User $user
      * @param string $accessTokenString
-
      * @return mixed
      * @throws \Exception
      */
@@ -130,14 +130,14 @@ class NecktieConnector
         if ($user !== null) {
             $usersAccessToken = $user->getLastAccessToken();
 
-            if($usersAccessToken !== null) {
+            if ($usersAccessToken !== null) {
                 return $usersAccessToken;
             }
         }
 
 
         if ($accessTokenString === null) {
-            throw new \Exception("User has no access token or the given accessToken is null.");
+            throw new \Exception('User has no access token or the given accessToken is null.');
         }
 
         return $accessTokenString;
@@ -154,15 +154,15 @@ class NecktieConnector
      */
     protected function prepareOptions(string $method, array $data = [], string $accessToken = null, bool $sendAsJson = false)
     {
-        $options = ["headers" => ["Authorization" => "Bearer {$accessToken}"],];
+        $options = ['headers' => ['Authorization' => "Bearer {$accessToken}"],];
 
-        if (strtolower($method) === "get") {
-            $options["query"] = $data;
-        } else if (strtolower($method) === "post") {
+        if (strtolower($method) === 'get') {
+            $options['query'] = $data;
+        } elseif (strtolower($method) === 'post') {
             if ($sendAsJson) {
-                $options["json"] = $data;
+                $options['json'] = $data;
             } else {
-                $options["form_params"] = $data;
+                $options['form_params'] = $data;
             }
         }
 
@@ -172,6 +172,7 @@ class NecktieConnector
     /**
      * @param MessageInterface $response
      * @return string
+     * @throws \RuntimeException
      */
     protected function getBodyFromResponse(MessageInterface $response)
     {

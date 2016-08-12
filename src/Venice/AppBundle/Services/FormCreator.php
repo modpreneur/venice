@@ -2,11 +2,14 @@
 
 namespace Venice\AppBundle\Services;
 
-
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Routing\RouterInterface;
 use Trinity\FrameworkBundle\Services\TrinityFormCreator;
 
+/**
+ * Class FormCreator
+ * @package Venice\AppBundle\Services
+ */
 class FormCreator extends TrinityFormCreator
 {
     /**
@@ -22,5 +25,4 @@ class FormCreator extends TrinityFormCreator
         $this->formFactory = $formFactory;
         $this->router = $router;
     }
-
 }

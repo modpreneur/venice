@@ -24,7 +24,7 @@ use Trinity\NotificationBundle\Entity\NotificationEntityInterface;
  */
 class StandardProduct extends Product implements NotificationEntityInterface
 {
-    const TYPE = "standard";
+    const TYPE = 'standard';
 
     /**
      * @var integer
@@ -41,15 +41,9 @@ class StandardProduct extends Product implements NotificationEntityInterface
     protected $defaultBillingPlan;
 
 
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
-
     /**
      * @N\AssociationGetter
-     * 
+     *
      * @return BillingPlan
      */
     public function getDefaultBillingPlan()
@@ -60,7 +54,7 @@ class StandardProduct extends Product implements NotificationEntityInterface
 
     /**
      * @N\AssociationSetter(targetEntity="Venice\AppBundle\Entity\BillingPlan")
-     * 
+     *
      * @param BillingPlan $defaultBillingPlan
      */
     public function setDefaultBillingPlan(BillingPlan $defaultBillingPlan)

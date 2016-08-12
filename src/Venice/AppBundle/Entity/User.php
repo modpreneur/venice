@@ -34,8 +34,8 @@ class User extends BaseUser implements NotificationEntityInterface
 {
     use Timestampable;
 
-    const PREFERRED_UNITS_IMPERIAL = "imperial";
-    const PREFERRED_UNITS_METRIC = "metric";
+    const PREFERRED_UNITS_IMPERIAL = 'imperial';
+    const PREFERRED_UNITS_METRIC = 'metric';
     const DEFAULT_PREFERRED_METRICS = self::PREFERRED_UNITS_IMPERIAL;
 
     /**
@@ -78,8 +78,8 @@ class User extends BaseUser implements NotificationEntityInterface
     {
         parent::__construct();
 
-        $this->password = "";
-        $this->salt = "";
+        $this->password = '';
+        $this->salt = '';
         $this->productAccesses = new ArrayCollection();
         $this->OAuthTokens = new ArrayCollection();
         $this->preferredUnits = self::DEFAULT_PREFERRED_METRICS;
@@ -111,16 +111,18 @@ class User extends BaseUser implements NotificationEntityInterface
      * @param string $preferredUnits
      *
      * @return User
+     * @throws \InvalidArgumentException
      */
     public function setPreferredUnits($preferredUnits)
     {
         if ($preferredUnits !== self::PREFERRED_UNITS_METRIC || $preferredUnits !== self::PREFERRED_UNITS_IMPERIAL) {
             throw new InvalidArgumentException(
-                "Preferred units has to be one of " .
+                'Preferred units has to be one of ' .
                 self::PREFERRED_UNITS_METRIC .
-                " or " .
+                ' or ' .
                 self::PREFERRED_UNITS_IMPERIAL .
-                ", $preferredUnits given.");
+                ", $preferredUnits given."
+            );
         }
 
         $this->preferredUnits = $preferredUnits;
@@ -408,7 +410,7 @@ class User extends BaseUser implements NotificationEntityInterface
     public function giveAccessToProduct(Product $product, \DateTime $fromDate, \DateTime $toDate = null, $necktieId = null)
     {
         $productAccess = $this->getProductAccess($product);
-        $now = new \DateTime("now");
+        $now = new \DateTime('now');
 
         // If the user does not have an access - 3 situations:
         // 1st - the productAccess between this user and product does not exist
@@ -429,10 +431,10 @@ class User extends BaseUser implements NotificationEntityInterface
 
             return $productAccess;
         } // 2nd - set the toDate property to given toDate
-        else if ($productAccess->getToDate() !== null && $productAccess->getToDate() < $now) {
+        elseif ($productAccess->getToDate() !== null && $productAccess->getToDate() < $now) {
             $productAccess->setToDate($toDate);
         } //3rd - set the fromDate property to given fromDate
-        else if ($productAccess->getFromDate() > $now) {
+        elseif ($productAccess->getFromDate() > $now) {
             $productAccess->setFromDate($fromDate);
         }
 

@@ -45,7 +45,7 @@ class MessagesConsumer
         $this->clientIdentification = $clientIdentification;
     }
 
-    public function readMessage($data, Message $message, Channel $channel, Client $client)
+    public function readMessage($data, Message $message, Channel $channel)
     {
         if (function_exists('dump')) {
             dump($data, $message);
@@ -62,7 +62,5 @@ class MessagesConsumer
             }
             $channel->nack($message, false, false);
         }
-
-
     }
 }

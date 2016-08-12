@@ -8,11 +8,14 @@
 
 namespace Venice\AppBundle\Form\Content;
 
-
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 
+/**
+ * Class Mp3ContentType
+ * @package Venice\AppBundle\Form\Content
+ */
 class Mp3ContentType extends ContentType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -21,16 +24,15 @@ class Mp3ContentType extends ContentType
 
         $builder
             ->add(
-                "link",
+                'link',
                 TextType::class
             )
             ->add(
-                "duration",
+                'duration',
                 NumberType::class,
                 [
-                    "label" => "Duration in seconds"
+                    'label' => 'Duration in seconds'
                 ]
             );
     }
-
 }

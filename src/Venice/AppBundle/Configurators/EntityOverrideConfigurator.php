@@ -8,7 +8,10 @@
 
 namespace Venice\AppBundle\Configurators;
 
-
+/**
+ * Class EntityOverrideConfigurator
+ * @package Venice\AppBundle\Configurators
+ */
 class EntityOverrideConfigurator extends BaseConfigurator
 {
 }

@@ -11,7 +11,6 @@ namespace Venice\BunnyBundle;
 use Trinity\Bundle\BunnyBundle\AbstractProducer;
 use Trinity\Bundle\BunnyBundle\Annotation\Producer;
 
-
 /**
  * @Producer(
  *     exchange="clients_to_necktie_messages",

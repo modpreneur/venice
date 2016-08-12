@@ -5,6 +5,7 @@ namespace Venice\AppBundle\Entity\Repositories;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\NonUniqueResultException;
 use Trinity\NotificationBundle\Interfaces\NotificationEntityRepositoryInterface;
+use Venice\AppBundle\Entity\ProductAccess;
 
 /**
  * ProductAccessRepository
@@ -16,7 +17,7 @@ class ProductAccessRepository extends EntityRepository implements NotificationEn
      *
      * @param $id
      *
-     * @return BillingPlan|null
+     * @return ProductAccess|null
      *
      * @throws NonUniqueResultException
      */
@@ -36,6 +37,8 @@ class ProductAccessRepository extends EntityRepository implements NotificationEn
      * @param $userId
      *
      * @return int
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function count($userId)
     {

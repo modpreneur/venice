@@ -11,6 +11,8 @@ class ContentInGroupRepository extends EntityRepository
 {
     /**
      * @return int
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function count()
     {

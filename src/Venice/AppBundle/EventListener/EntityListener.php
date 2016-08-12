@@ -8,7 +8,6 @@
 
 namespace Venice\AppBundle\EventListener;
 
-
 use Doctrine\ORM\Event\OnFlushEventArgs;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Validator\ConstraintViolationInterface;
@@ -36,6 +35,7 @@ class EntityListener
 
     /**
      * @param OnFlushEventArgs $args
+     * @throws \Symfony\Component\Validator\Exception\ValidatorException
      */
     public function processChanges(OnFlushEventArgs $args)
     {
@@ -61,16 +61,22 @@ class EntityListener
      * Check validation on entity
      *
      * @param $entity
+     * @throws \Symfony\Component\Validator\Exception\ValidatorException
+     * @throws \Symfony\Component\DependencyInjection\Exception\ServiceCircularReferenceException
+     * @throws \Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException
      */
     protected function checkViolations($entity)
     {
-        $violations = $this->container->get("validator")->validate($entity);
-        $message = "";
+        $violations = $this->container->get('validator')->validate($entity);
+        $message = '';
 
         if ($violations->count() !== 0) {
             /** @var ConstraintViolationInterface $violation */
             foreach ($violations as $violation) {
-                $message .= "Validation failed for entity: ".get_class($entity)." at property: ".$violation->getPropertyPath().": ".$violation->getMessage()."The value is:".$violation->getInvalidValue();
+                $message .= 'Validation failed for entity: ' . get_class($entity) .
+                    ' at property: ' . $violation->getPropertyPath() . ': ' .
+                    $violation->getMessage() . 'The value is:' . $violation->getInvalidValue()
+                ;
             }
 
             throw new ValidatorException($message);

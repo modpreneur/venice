@@ -8,14 +8,17 @@
 
 namespace Venice\AppBundle\EventListener;
 
-
 use Venice\AppBundle\Event\NecktieLoginSuccessfulEvent;
 
+/**
+ * Class LoginListener
+ * @package Venice\AppBundle\EventListener
+ */
 class LoginListener
 {
     public function onSuccessfulLogin(NecktieLoginSuccessfulEvent $event)
     {
         $user = $event->getUser();
-        $user->setLastLogin(new \DateTime("now"));
+        $user->setLastLogin(new \DateTime('now'));
     }
 }

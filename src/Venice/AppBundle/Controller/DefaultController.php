@@ -15,8 +15,10 @@ use Symfony\Component\HttpFoundation\Request;
 class DefaultController extends Controller
 {
     /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \Symfony\Component\DependencyInjection\Exception\InvalidArgumentException
      */
-    public function indexAction(Request $request)
+    public function indexAction()
     {
         return $this->render(
             'VeniceAppBundle:default:index.html.twig',

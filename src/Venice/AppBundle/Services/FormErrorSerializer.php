@@ -1,23 +1,27 @@
 <?php
 
 namespace Venice\AppBundle\Services;
+
+use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormInterface;
 
-
 /**
-* From passed form create will create nice serialized array prepared for json response
-* Source: https://gist.github.com/Graceas/6505663
-* Note: Small changes on lines 50 and 52
-* Hint: Using $flat_array = true and $add_form_name = true, keys represents Ids of input fields (probably in call cases)
-* Class FormErrorSerializer.
-*/
+ * From passed form create will create nice serialized array prepared for json response
+ * Source: https://gist.github.com/Graceas/6505663
+ * Hint: Using $flatArray=true and $addFormName=true, keys represents Ids of input fields (probably in call cases)
+ * Class FormErrorSerializer.
+ */
 class FormErrorSerializer
 {
-    public function serializeFormErrors(FormInterface $form, $flat_array = false, $add_form_name = false, $glue_keys = '_')
-    {
-        $errors = array();
-        $errors['global'] = array();
-        $errors['fields'] = array();
+    public function serializeFormErrors(
+        FormInterface $form,
+        $flatArray = false,
+        $addFormName = false,
+        $glueKeys = '_'
+    ) {
+        $errors = [];
+        $errors['global'] = [];
+        $errors['fields'] = [];
 
         foreach ($form->getErrors() as $error) {
             $errors['global'][] = $error->getMessage();
@@ -25,23 +29,26 @@ class FormErrorSerializer
 
         $errors['fields'] = $this->serialize($form);
 
-        if ($flat_array) {
-            $errors['fields'] = $this->arrayFlatten($errors['fields'],
-                $glue_keys, (($add_form_name) ? $form->getName() : ''));
+        if ($flatArray) {
+            $errors['fields'] = $this->arrayFlatten(
+                $errors['fields'],
+                $glueKeys,
+                $addFormName ? $form->getName() : ''
+            );
         }
 
         return $errors;
     }
 
-    private function serialize(\Symfony\Component\Form\Form $form)
+    private function serialize(Form $form)
     {
-        $local_errors = array();
+        $local_errors = [];
         foreach ($form->getIterator() as $key => $child) {
             foreach ($child->getErrors() as $error) {
                 $local_errors[$key] = $error->getMessage();
             }
 
-            if (count($child->getIterator()) > 0 && ($child instanceof \Symfony\Component\Form\Form)) {
+            if (count($child->getIterator()) > 0 && ($child instanceof Form)) {
                 $childErrors = $this->serialize($child);
                 if (!empty($childErrors)) {
                     $local_errors[$key] = $childErrors;
@@ -52,17 +59,21 @@ class FormErrorSerializer
         return $local_errors;
     }
 
-    private function arrayFlatten($array, $separator = '_', $flattened_key = '')
+    private function arrayFlatten($array, $separator = '_', $flattenedKey = '')
     {
-        $flattenedArray = array();
+        $flattenedArray = [];
         foreach ($array as $key => $value) {
             if (is_array($value)) {
-                $flattenedArray = array_merge($flattenedArray,
-                    $this->arrayFlatten($value, $separator,
-                        (strlen($flattened_key) > 0 ? $flattened_key.$separator : '').$key)
+                $flattenedArray = array_merge(
+                    $flattenedArray,
+                    $this->arrayFlatten(
+                        $value,
+                        $separator,
+                        (strlen($flattenedKey) > 0 ? $flattenedKey . $separator : '') . $key
+                    )
                 );
             } else {
-                $flattenedArray[(strlen($flattened_key) > 0 ? $flattened_key.$separator : '').$key] = $value;
+                $flattenedArray[(strlen($flattenedKey) > 0 ? $flattenedKey . $separator : '') . $key] = $value;
             }
         }
 

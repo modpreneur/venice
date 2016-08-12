@@ -8,21 +8,21 @@
 
 namespace Venice\AdminBundle\Controller;
 
-
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Component\HttpFoundation\Request;
-
+/**
+ * Class DashboardController
+ * @package Venice\AdminBundle\Controller
+ */
 class DashboardController extends BaseAdminController
 {
     /**
-     * @param Request $request
-     *
      * @return \Symfony\Component\HttpFoundation\Response
+     * @internal param Request $request
+     *
      */
-    public function indexAction(Request $request)
+    public function indexAction()
     {
         $this->getBreadcrumbs();
 
-        return $this->render("VeniceAdminBundle:Dashboard:dashboard.html.twig");
+        return $this->render('VeniceAdminBundle:Dashboard:dashboard.html.twig');
     }
 }

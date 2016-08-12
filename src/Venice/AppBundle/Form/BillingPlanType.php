@@ -8,7 +8,6 @@
 
 namespace Venice\AppBundle\Form;
 
-
 use Venice\AppBundle\Form\DataTransformer\EntityToNumberTransformer;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
@@ -23,33 +22,33 @@ class BillingPlanType extends BaseType
 
         $builder
             ->add(
-                "initialPrice",
+                'initialPrice',
                 IntegerType::class
             )
             ->add(
-                "rebillPrice",
+                'rebillPrice',
                 IntegerType::class
             )
             ->add(
-                "frequency",
+                'frequency',
                 IntegerType::class
             )
             ->add(
-                "rebillTimes",
+                'rebillTimes',
                 IntegerType::class
             )
             ->add(
-                "product",
+                'product',
                 HiddenType::class,
                 [
                     // Uses model transformer
-                    "data" => $options["product"],
-                    "data_class" => null,
-                    "label" => false,
+                    'data' => $options['product'],
+                    'data_class' => null,
+                    'label' => false,
                 ]
             );
 
-        $builder->get("product")
+        $builder->get('product')
             ->addModelTransformer(
                 new EntityToNumberTransformer(
                     $this->entityManager,
@@ -60,15 +59,15 @@ class BillingPlanType extends BaseType
 
     /**
      * @param OptionsResolver $resolver
+     * @throws \Symfony\Component\OptionsResolver\Exception\AccessException
      */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(
             [
-                "data_class" => "Venice\AppBundle\\Entity\\BillingPlan",
-                "product" => null,
+                'data_class' => "Venice\AppBundle\\Entity\\BillingPlan",
+                'product' => null,
             ]
         );
     }
-
 }

@@ -36,18 +36,17 @@ class MessagesEventListener
 
         $message = $event->getMessage();
         $routingKey = $message->getDestination();
+        $producerName = 'Messages';
 
         if ($message->getType() === 'notification') {
             $producerName = 'Notifications';
-        } else {
-            $producerName = 'Messages';
         }
 
         $input = new ArrayInput([
             'command' => 'bunny:producer',
             'producer-name' => $producerName,
             'message' => $message->pack(),
-            'routing-key' => ($routingKey === '')? null : $routingKey
+            'routing-key' => ($routingKey === '') ? null : $routingKey
         ]);
 
         $output = new BufferedOutput();

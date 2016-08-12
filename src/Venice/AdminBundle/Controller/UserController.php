@@ -8,40 +8,36 @@
 
 namespace Venice\AdminBundle\Controller;
 
-
-use Venice\AppBundle\Entity\User;
-use Venice\AppBundle\Form\User\RolesType;
-use Venice\AppBundle\Form\User\UserType;
-use Venice\AppBundle\Services\RolesManager;
 use Doctrine\DBAL\DBALException;
-use FOS\RestBundle\Controller\Annotations\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Venice\AppBundle\Entity\User;
+use Venice\AppBundle\Form\User\RolesType;
 
 /**
  * Class UserController
  */
 class UserController extends BaseAdminController
 {
-
     /**
      * @Security("is_granted('ROLE_ADMIN_USER_VIEW')")
+     * @return Response
+     * @throws \LogicException
+     * @throws \Trinity\Bundle\SettingsBundle\Exception\PropertyNotExistsException
+     * @throws \Trinity\Bundle\GridBundle\Exception\DuplicateColumnException
+     * @internal param Request $request
      *
-     * @param Request $request
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function indexAction(Request $request)
+    public function indexAction()
     {
         $this->getBreadcrumbs()
-            ->addRouteItem("Users", "admin_user_index");
+            ->addRouteItem('Users', 'admin_user_index');
 
         $count = $this->getDoctrine()->getRepository('VeniceAppBundle:User')->count();
 
-        $url = $this->generateUrl('grid_default', array('entity' => 'User'));
+        $url = $this->generateUrl('grid_default', ['entity' => 'User']);
 
         $gridConfBuilder = $this->get('trinity.grid.grid_configuration_service')->createGridConfigurationBuilder(
             $url,
@@ -56,8 +52,8 @@ class UserController extends BaseAdminController
 
 
         return $this->render(
-            "VeniceAdminBundle:User:index.html.twig",
-            ['gridConfiguration'=>$gridConfBuilder->getJSON(), 'count'=>$count]
+            'VeniceAdminBundle:User:index.html.twig',
+            ['gridConfiguration' => $gridConfBuilder->getJSON(), 'count' => $count]
         );
     }
 
@@ -65,16 +61,15 @@ class UserController extends BaseAdminController
     /**
      * @Security("is_granted('ROLE_ADMIN_USER_VIEW')")
      *
-     * @param Request $request
      * @param User $user
-     *
      * @return Response
+     * @internal param Request $request
      */
-    public function showAction(Request $request, User $user)
+    public function showAction(User $user)
     {
         return $this->render(
-            "VeniceAdminBundle:User:show.html.twig",
-            ["user" => $user,]
+            'VeniceAdminBundle:User:show.html.twig',
+            ['user' => $user,]
         );
     }
 
@@ -89,19 +84,19 @@ class UserController extends BaseAdminController
     public function tabsAction(User $user)
     {
         $this->getBreadcrumbs()
-            ->addRouteItem("Users", "admin_user_index")
-            ->addRouteItem($user->getFullNameOrUsername(), "admin_user_tabs", ["id" => $user->getId()]);
+            ->addRouteItem('Users', 'admin_user_index')
+            ->addRouteItem($user->getFullNameOrUsername(), 'admin_user_tabs', ['id' => $user->getId()]);
 
         $necktieUserShowUrl = null;
 
-        $necktieUserShowUrl = $this->getParameter("necktie_show_user_url");
-        $necktieUserShowUrl = str_replace(":id", $user->getNecktieId(), $necktieUserShowUrl);
+        $necktieUserShowUrl = $this->getParameter('necktie_show_user_url');
+        $necktieUserShowUrl = str_replace(':id', $user->getNecktieId(), $necktieUserShowUrl);
 
         return $this->render(
             'VeniceAdminBundle:User:tabs.html.twig',
             [
-                "user" => $user,
-                "necktieUserShowUrl" => $necktieUserShowUrl
+                'user' => $user,
+                'necktieUserShowUrl' => $necktieUserShowUrl
             ]
         );
     }
@@ -183,6 +178,11 @@ class UserController extends BaseAdminController
      * @param User $user
      *
      * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \Symfony\Component\OptionsResolver\Exception\InvalidOptionsException
+     * @throws \Symfony\Component\Form\Exception\AlreadySubmittedException
+     * @throws \Symfony\Component\Routing\Exception\InvalidParameterException
+     * @throws \Symfony\Component\Form\Exception\LogicException
+     * @throws \LogicException
      */
     public function editAction(User $user)
     {
@@ -190,15 +190,15 @@ class UserController extends BaseAdminController
             ->createEditForm(
                 $user,
                 $this->getEntityFormMatcher()->getFormClassForEntity($user),
-                "admin_user",
-                ["id" => $user->getId(),]
+                'admin_user',
+                ['id' => $user->getId(),]
             );
 
         return $this->render(
             'VeniceAdminBundle:User:edit.html.twig',
             [
-                "user" => $user,
-                "form" => $form->createView(),
+                'user' => $user,
+                'form' => $form->createView(),
             ]
         );
     }
@@ -211,6 +211,15 @@ class UserController extends BaseAdminController
      * @param User $user
      *
      * @return JsonResponse
+     * @throws \Symfony\Component\OptionsResolver\Exception\InvalidOptionsException
+     * @throws \Symfony\Component\Routing\Exception\InvalidParameterException
+     * @throws \Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException
+     * @throws \Symfony\Component\Form\Exception\AlreadySubmittedException
+     * @throws \Symfony\Component\DependencyInjection\Exception\ServiceCircularReferenceException
+     * @throws \Symfony\Component\Form\Exception\LogicException
+     * @throws \LogicException
+     * @throws \OutOfBoundsException
+     * @throws \RuntimeException
      */
     public function updateAction(Request $request, User $user)
     {
@@ -220,8 +229,8 @@ class UserController extends BaseAdminController
             ->createEditForm(
                 $user,
                 $this->getEntityFormMatcher()->getFormClassForEntity($user),
-                "admin_user",
-                ["id" => $user->getId(),]
+                'admin_user',
+                ['id' => $user->getId(),]
             );
 
         $originalPassword = $user->getPassword();
@@ -229,7 +238,7 @@ class UserController extends BaseAdminController
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $plainPassword = $form->get("plainPassword")->getData();
+            $plainPassword = $form->get('plainPassword')->getData();
 
             if (!empty($plainPassword)) {
                 //encode the password
@@ -247,7 +256,7 @@ class UserController extends BaseAdminController
             } catch (DBALException $e) {
                 return new JsonResponse(
                     [
-                        "error" => ["db" => $e->getMessage(),]
+                        'error' => ['db' => $e->getMessage(),]
                     ],
                     400
                 );
@@ -255,7 +264,7 @@ class UserController extends BaseAdminController
 
             return new JsonResponse(
                 [
-                    "message" => "User successfully updated",
+                    'message' => 'User successfully updated',
                 ]
             );
         } else {
@@ -269,17 +278,21 @@ class UserController extends BaseAdminController
      * @param User $user
      *
      * @return Response
+     * @throws \Symfony\Component\OptionsResolver\Exception\InvalidOptionsException
+     * @throws \Symfony\Component\Form\Exception\AlreadySubmittedException
+     * @throws \Symfony\Component\Routing\Exception\InvalidParameterException
+     * @throws \Symfony\Component\Form\Exception\LogicException
      *
      */
     public function deleteTabAction(User $user)
     {
         $form = $this->getFormCreator()
-            ->createDeleteForm("admin_user", $user->getId());
+            ->createDeleteForm('admin_user', $user->getId());
 
         return $this
             ->render(
-                "VeniceAdminBundle:User:tabDelete.html.twig",
-                ["form" => $form->createView(),]
+                'VeniceAdminBundle:User:tabDelete.html.twig',
+                ['form' => $form->createView(),]
             );
     }
 
@@ -291,11 +304,15 @@ class UserController extends BaseAdminController
      * @param User $user
      *
      * @return JsonResponse
+     * @throws \Symfony\Component\OptionsResolver\Exception\InvalidOptionsException
+     * @throws \Symfony\Component\Form\Exception\AlreadySubmittedException
+     * @throws \Symfony\Component\Routing\Exception\InvalidParameterException
+     * @throws \Symfony\Component\Form\Exception\LogicException
      */
     public function deleteAction(Request $request, User $user)
     {
         $form = $this->getFormCreator()
-            ->createDeleteForm("admin_user", $user->getId());
+            ->createDeleteForm('admin_user', $user->getId());
 
         $form->handleRequest($request);
 
@@ -307,8 +324,8 @@ class UserController extends BaseAdminController
             } catch (DBALException $e) {
                 return new JsonResponse(
                     [
-                        "error" => ["db" => $e->getMessage(),],
-                        "message" => "Could not delete.",
+                        'error' => ['db' => $e->getMessage(),],
+                        'message' => 'Could not delete.',
                     ],
                     400
                 );
@@ -317,8 +334,8 @@ class UserController extends BaseAdminController
 
         return new JsonResponse(
             [
-                "message" => "User successfully deleted.",
-                "location" => $this->generateUrl("admin_user_index"),
+                'message' => 'User successfully deleted.',
+                'location' => $this->generateUrl('admin_user_index'),
             ],
             302
         );
@@ -330,6 +347,10 @@ class UserController extends BaseAdminController
      * @param User $user
      *
      * @return Response
+     * @throws \Symfony\Component\OptionsResolver\Exception\InvalidOptionsException
+     * @throws \Symfony\Component\Form\Exception\AlreadySubmittedException
+     * @throws \Symfony\Component\Routing\Exception\InvalidParameterException
+     * @throws \Symfony\Component\Form\Exception\LogicException
      */
     public function rolesEditAction(User $user)
     {
@@ -337,14 +358,14 @@ class UserController extends BaseAdminController
             ->createEditForm(
                 $user,
                 $this->getFormOverrideHandler()->getFormClass(RolesType::class),
-                "admin_user_roles",
-                ["id" => $user->getId()]
+                'admin_user_roles',
+                ['id' => $user->getId()]
             );
 
         return $this->render(
-            "VeniceAdminBundle:User:roles.html.twig",
+            'VeniceAdminBundle:User:roles.html.twig',
             [
-                "form" => $form->createView()
+                'form' => $form->createView()
             ]
         );
     }
@@ -356,16 +377,20 @@ class UserController extends BaseAdminController
      * @param User $user
      *
      * @return Response
+     * @throws \Symfony\Component\OptionsResolver\Exception\InvalidOptionsException
+     * @throws \Symfony\Component\Form\Exception\AlreadySubmittedException
+     * @throws \Symfony\Component\Routing\Exception\InvalidParameterException
+     * @throws \Symfony\Component\Form\Exception\LogicException
      */
     public function rolesUpdateAction(Request $request, User $user)
     {
-        $userManager = $this->get("fos_user.user_manager");
+        $userManager = $this->get('fos_user.user_manager');
         $form = $this->getFormCreator()
             ->createEditForm(
                 $user,
                 $this->getFormOverrideHandler()->getFormClass(RolesType::class),
-                "admin_user_roles",
-                ["id" => $user->getId()]
+                'admin_user_roles',
+                ['id' => $user->getId()]
             );
 
         $form->handleRequest($request);
@@ -375,7 +400,7 @@ class UserController extends BaseAdminController
 
             return new JsonResponse(
                 [
-                    "message" => "Permissions successfully updated.",
+                    'message' => 'Permissions successfully updated.',
                 ]
             );
         } else {

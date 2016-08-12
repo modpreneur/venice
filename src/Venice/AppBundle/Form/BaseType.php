@@ -8,7 +8,6 @@
 
 namespace Venice\AppBundle\Form;
 
-
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\AbstractType;
 use Venice\AppBundle\Services\EntityOverrideHandler;
@@ -26,6 +25,4 @@ abstract class BaseType extends AbstractType
         $this->entityManager = $entityManager;
         $this->entityOverrideHandler = $entityOverrideHandler;
     }
-
-
 }

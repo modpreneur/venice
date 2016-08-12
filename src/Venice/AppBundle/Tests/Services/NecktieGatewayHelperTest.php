@@ -16,8 +16,8 @@ use Venice\AppBundle\Tests\BaseTest;
 
 class NecktieGatewayHelperTest extends BaseTest
 {
-    const ACCESS_TOKEN = "ZTcxZDNmYjU1ZTQ2NWExYmQ0YTRmMDBiZGJmZDEyOTBkNzhiYWQyNWQxM2UyZTMzMjQwMzY5OGRlODVhNzAwNw";
-    const REFRESH_TOKEN = "ODBmZGRlZDUwYjRjY2Q2MGZjYjI0YWFmOTJmZTdhYTMxNDg4ZjRjN2UzNWYzMTQ3ZGMyNGZjZGFjZDNjMjhlZg";
+    const ACCESS_TOKEN = 'ZTcxZDNmYjU1ZTQ2NWExYmQ0YTRmMDBiZGJmZDEyOTBkNzhiYWQyNWQxM2UyZTMzMjQwMzY5OGRlODVhNzAwNw';
+    const REFRESH_TOKEN = 'ODBmZGRlZDUwYjRjY2Q2MGZjYjI0YWFmOTJmZTdhYTMxNDg4ZjRjN2UzNWYzMTQ3ZGMyNGZjZGFjZDNjMjhlZg';
 
     /** @var  NecktieGatewayHelper */
     protected $helper;
@@ -38,7 +38,7 @@ class NecktieGatewayHelperTest extends BaseTest
             $this->assertEquals($expectedOutput->getAccessToken(), $result->getAccessToken());
             $this->assertEquals($expectedOutput->getRefreshToken(), $result->getRefreshToken());
             $this->assertEquals($expectedOutput->getScope(), $result->getScope());
-            $this->assertDatesTimeEquals($expectedOutput->getValidTo(), $result->getValidTo(), "", 20);
+            $this->assertDatesTimeEquals($expectedOutput->getValidTo(), $result->getValidTo(), '', 20);
         } else {
             $this->assertEquals($expectedOutput, $result);
         }
@@ -122,36 +122,36 @@ class NecktieGatewayHelperTest extends BaseTest
             // Mock only those methods
             ->setMethods(
                 [
-                    "isAccessTokenExpiredResponse",
-                    "isAccessTokenInvalidResponse",
-                    "isRefreshTokenExpiredResponse",
-                    "isInvalidClientResponse",
-                    "hasError"
+                    'isAccessTokenExpiredResponse',
+                    'isAccessTokenInvalidResponse',
+                    'isRefreshTokenExpiredResponse',
+                    'isInvalidClientResponse',
+                    'hasError'
                 ]
             )
             ->getMock();
 
         $helperMock->expects($this->once())
-            ->method("isAccessTokenExpiredResponse")
+            ->method('isAccessTokenExpiredResponse')
             ->will($this->returnValue(false));
 
         $helperMock->expects($this->once())
-            ->method("isAccessTokenInvalidResponse")
+            ->method('isAccessTokenInvalidResponse')
             ->will($this->returnValue(false));
 
         $helperMock->expects($this->once())
-            ->method("isRefreshTokenExpiredResponse")
+            ->method('isRefreshTokenExpiredResponse')
             ->will($this->returnValue(false));
 
         $helperMock->expects($this->once())
-            ->method("isInvalidClientResponse")
+            ->method('isInvalidClientResponse')
             ->will($this->returnValue(false));
 
         $helperMock->expects($this->once())
-            ->method("hasError")
+            ->method('hasError')
             ->will($this->returnValue(false));
 
-        $this->assertTrue($helperMock->isResponseOk("response"));
+        $this->assertTrue($helperMock->isResponseOk('response'));
     }
 
     /*
@@ -164,7 +164,7 @@ class NecktieGatewayHelperTest extends BaseTest
         $accessToken = new OAuthToken();
         $accessToken->setAccessToken(self::ACCESS_TOKEN);
         $accessToken->setRefreshToken(self::REFRESH_TOKEN);
-        $accessToken->setScope("edit");
+        $accessToken->setScope('edit');
         $accessToken->setValidToByLifetime(3600);
 
         return [
@@ -173,10 +173,10 @@ class NecktieGatewayHelperTest extends BaseTest
 
                 //input data
                 [
-                    "access_token" => self::ACCESS_TOKEN,
-                    "refresh_token" => self::REFRESH_TOKEN,
-                    "scope" => "edit",
-                    "expires_in" => 3600,
+                    'access_token' => self::ACCESS_TOKEN,
+                    'refresh_token' => self::REFRESH_TOKEN,
+                    'scope' => 'edit',
+                    'expires_in' => 3600,
                 ],
                 //expected result
                 $accessToken
@@ -185,11 +185,11 @@ class NecktieGatewayHelperTest extends BaseTest
             [
                 //input data
                 [
-                    "access_token" => self::ACCESS_TOKEN,
-                    "refresh_token" => self::REFRESH_TOKEN,
-                    "scope" => "edit",
-                    "expires_in" => 3600,
-                    "expires_in2" => 3600,
+                    'access_token' => self::ACCESS_TOKEN,
+                    'refresh_token' => self::REFRESH_TOKEN,
+                    'scope' => 'edit',
+                    'expires_in' => 3600,
+                    'expires_in2' => 3600,
                 ],
                 //expected result
                 $accessToken
@@ -198,9 +198,9 @@ class NecktieGatewayHelperTest extends BaseTest
             [
                 //input data
                 [
-                    "access_token" => self::ACCESS_TOKEN,
-                    "refresh_token" => self::REFRESH_TOKEN,
-                    "expires_in" => 3600,
+                    'access_token' => self::ACCESS_TOKEN,
+                    'refresh_token' => self::REFRESH_TOKEN,
+                    'expires_in' => 3600,
                 ],
                 //expected result
                 null
@@ -209,9 +209,9 @@ class NecktieGatewayHelperTest extends BaseTest
             [
                 //input data
                 [
-                    "refresh_token" => self::REFRESH_TOKEN,
-                    "scope" => "edit",
-                    "expires_in" => 3600,
+                    'refresh_token' => self::REFRESH_TOKEN,
+                    'scope' => 'edit',
+                    'expires_in' => 3600,
                 ],
                 //expected result
                 null
@@ -220,9 +220,9 @@ class NecktieGatewayHelperTest extends BaseTest
             [
                 //input data
                 [
-                    "access_token" => self::ACCESS_TOKEN,
-                    "scope" => "edit",
-                    "expires_in" => 3600,
+                    'access_token' => self::ACCESS_TOKEN,
+                    'scope' => 'edit',
+                    'expires_in' => 3600,
                 ],
                 //expected result
                 null
@@ -231,9 +231,9 @@ class NecktieGatewayHelperTest extends BaseTest
             [
                 //input data
                 [
-                    "access_token" => self::ACCESS_TOKEN,
-                    "refresh_token" => self::REFRESH_TOKEN,
-                    "scope" => "edit",
+                    'access_token' => self::ACCESS_TOKEN,
+                    'refresh_token' => self::REFRESH_TOKEN,
+                    'scope' => 'edit',
                 ],
                 //expected result
                 null
@@ -243,11 +243,11 @@ class NecktieGatewayHelperTest extends BaseTest
             [
                 //input data
                 [
-                    "access_token" => self::ACCESS_TOKEN,
-                    "refresh_token" => self::REFRESH_TOKEN,
-                    "scope" => "edit",
-                    "expires_in" => 3600,
-                    "expires_in2" => 3600,
+                    'access_token' => self::ACCESS_TOKEN,
+                    'refresh_token' => self::REFRESH_TOKEN,
+                    'scope' => 'edit',
+                    'expires_in' => 3600,
+                    'expires_in2' => 3600,
                 ],
                 //expected result
                 $accessToken
@@ -261,23 +261,23 @@ class NecktieGatewayHelperTest extends BaseTest
         $invoice
             ->setId(1)
             ->setTotalPrice(133)
-            ->setTransactionTime(new \DateTime("2016-01-24T17:21:01+0100"))
-            ->setTransactionType("sale");
+            ->setTransactionTime(new \DateTime('2016-01-24T17:21:01+0100'))
+            ->setTransactionType('sale');
 
         return [
             //#0 test data - normal data
             [
                 //input data
                 [
-                    "invoices" => [
+                    'invoices' => [
                         [
-                            "id" => 1,
-                            "total_customer_price" => 133,
-                            "transaction_time" => "2016-01-24T17:21:01+0100",
-                            "transaction_type" => "sale",
-                            "items" => [
-                                "product" => [
-                                    "name" => "productName"
+                            'id' => 1,
+                            'total_customer_price' => 133,
+                            'transaction_time' => '2016-01-24T17:21:01+0100',
+                            'transaction_type' => 'sale',
+                            'items' => [
+                                'product' => [
+                                    'name' => 'productName'
                                 ]
                             ]
                         ]
@@ -290,16 +290,16 @@ class NecktieGatewayHelperTest extends BaseTest
             [
                 //input data
                 [
-                    "invoices" => [
+                    'invoices' => [
                         [
-                            "id" => 1,
-                            "total_customer_price" => 133,
-                            "transaction_time" => "2016-01-24T17:21:01+0100",
-                            "transaction_type" => "sale",
-                            "transaction_type2" => "sa2le",
-                            "items" => [
-                                "product" => [
-                                    "name" => "productName"
+                            'id' => 1,
+                            'total_customer_price' => 133,
+                            'transaction_time' => '2016-01-24T17:21:01+0100',
+                            'transaction_type' => 'sale',
+                            'transaction_type2' => 'sa2le',
+                            'items' => [
+                                'product' => [
+                                    'name' => 'productName'
                                 ]
                             ]
                         ]
@@ -312,14 +312,14 @@ class NecktieGatewayHelperTest extends BaseTest
             [
                 //input data
                 [
-                    "invoices" => [
+                    'invoices' => [
                         [
-                            "total_customer_price" => 133,
-                            "transaction_time" => "2016-01-24T17:21:01+0100",
-                            "transaction_type" => "sale",
-                            "items" => [
-                                "product" => [
-                                    "name" => "productName"
+                            'total_customer_price' => 133,
+                            'transaction_time' => '2016-01-24T17:21:01+0100',
+                            'transaction_type' => 'sale',
+                            'items' => [
+                                'product' => [
+                                    'name' => 'productName'
                                 ]
                             ]
                         ]
@@ -332,14 +332,14 @@ class NecktieGatewayHelperTest extends BaseTest
             [
                 //input data
                 [
-                    "invoices" => [
+                    'invoices' => [
                         [
-                            "id" => 1,
-                            "transaction_time" => "2016-01-24T17:21:01+0100",
-                            "transaction_type" => "sale",
-                            "items" => [
-                                "product" => [
-                                    "name" => "productName"
+                            'id' => 1,
+                            'transaction_time' => '2016-01-24T17:21:01+0100',
+                            'transaction_type' => 'sale',
+                            'items' => [
+                                'product' => [
+                                    'name' => 'productName'
                                 ]
                             ]
                         ]
@@ -352,12 +352,12 @@ class NecktieGatewayHelperTest extends BaseTest
             [
                 //input data
                 [
-                    "invoices" => [
+                    'invoices' => [
                         [
-                            "total_customer_price" => 133,
-                            "transaction_time" => "2016-01-24T17:21:01+0100",
-                            "transaction_type" => "sale",
-                            "transaction_type2" => "sa2le",
+                            'total_customer_price' => 133,
+                            'transaction_time' => '2016-01-24T17:21:01+0100',
+                            'transaction_type' => 'sale',
+                            'transaction_type2' => 'sa2le',
                         ]
                     ]
                 ],
@@ -368,14 +368,14 @@ class NecktieGatewayHelperTest extends BaseTest
             [
                 //input data
                 [
-                    "invoices" => [
+                    'invoices' => [
                         [
-                            "id" => 1,
-                            "total_customer_price" => 133,
-                            "transaction_type" => "sale",
-                            "items" => [
-                                "product" => [
-                                    "name" => "productName"
+                            'id' => 1,
+                            'total_customer_price' => 133,
+                            'transaction_type' => 'sale',
+                            'items' => [
+                                'product' => [
+                                    'name' => 'productName'
                                 ]
                             ]
                         ]
@@ -388,14 +388,14 @@ class NecktieGatewayHelperTest extends BaseTest
             [
                 //input data
                 [
-                    "invoices" => [
+                    'invoices' => [
                         [
-                            "id" => 1,
-                            "total_customer_price" => 133,
-                            "transaction_time" => "2016-01-24T17:21:01+0100",
-                            "items" => [
-                                "product" => [
-                                    "name" => "productName"
+                            'id' => 1,
+                            'total_customer_price' => 133,
+                            'transaction_time' => '2016-01-24T17:21:01+0100',
+                            'items' => [
+                                'product' => [
+                                    'name' => 'productName'
                                 ]
                             ]
                         ]
@@ -408,12 +408,12 @@ class NecktieGatewayHelperTest extends BaseTest
             [
                 //input data
                 [
-                    "invoices" => [
+                    'invoices' => [
                         [
-                            "id" => 1,
-                            "total_customer_price" => 133,
-                            "transaction_time" => "2016-01-24T17:21:01+0100",
-                            "transaction_type" => "sale",
+                            'id' => 1,
+                            'total_customer_price' => 133,
+                            'transaction_time' => '2016-01-24T17:21:01+0100',
+                            'transaction_type' => 'sale',
                         ]
                     ]
                 ],
@@ -424,7 +424,7 @@ class NecktieGatewayHelperTest extends BaseTest
             [
                 //input data
                 [
-                    "invoices" => 3
+                    'invoices' => 3
                 ],
                 //expected result
                 []
@@ -433,7 +433,7 @@ class NecktieGatewayHelperTest extends BaseTest
             [
                 //input data
                 [
-                    "invoices" => [
+                    'invoices' => [
 
                     ]
                 ],
@@ -447,9 +447,9 @@ class NecktieGatewayHelperTest extends BaseTest
     public function providerTestGetUserInfoFromNecktieProfileResponse()
     {
         $userInfo = [
-            "id" => 2,
-            "username" => "superAdmin",
-            "email" => "superAdmin@webvalley.cz"
+            'id' => 2,
+            'username' => 'superAdmin',
+            'email' => 'superAdmin@webvalley.cz'
         ];
 
         return [
@@ -457,10 +457,10 @@ class NecktieGatewayHelperTest extends BaseTest
             [
                 //input data
                 [
-                    "user" => [
-                        "username" => "superAdmin",
-                        "email" => "superAdmin@webvalley.cz",
-                        "id" => 2
+                    'user' => [
+                        'username' => 'superAdmin',
+                        'email' => 'superAdmin@webvalley.cz',
+                        'id' => 2
                     ]
                 ],
                 //expected result
@@ -470,12 +470,12 @@ class NecktieGatewayHelperTest extends BaseTest
             [
                 //input data
                 [
-                    "user" => [
-                        "username" => "superAdmin",
-                        "email" => "superAdmin@webvalley.cz",
-                        "id" => 2,
-                        "extra field" => "field",
-                        "extra field2" => "field2",
+                    'user' => [
+                        'username' => 'superAdmin',
+                        'email' => 'superAdmin@webvalley.cz',
+                        'id' => 2,
+                        'extra field' => 'field',
+                        'extra field2' => 'field2',
                     ]
                 ],
                 //expected result
@@ -485,9 +485,9 @@ class NecktieGatewayHelperTest extends BaseTest
             [
                 //input data
                 [
-                    "user" => [
-                        "username" => "superAdmin",
-                        "email" => "superAdmin@webvalley.cz",
+                    'user' => [
+                        'username' => 'superAdmin',
+                        'email' => 'superAdmin@webvalley.cz',
                     ]
                 ],
                 //expected result
@@ -497,7 +497,7 @@ class NecktieGatewayHelperTest extends BaseTest
             [
                 //input data
                 [
-                    "not array"
+                    'not array'
                 ],
                 //expected result
                 null
@@ -520,7 +520,7 @@ class NecktieGatewayHelperTest extends BaseTest
             [
                 //input data
                 [
-                    "error" => "some error"
+                    'error' => 'some error'
                 ],
                 //expected result
                 true
@@ -529,9 +529,9 @@ class NecktieGatewayHelperTest extends BaseTest
             [
                 //input data
                 [
-                    "user" => [
-                        "username" => "superAdmin",
-                        "email" => "superAdmin@webvalley.cz",
+                    'user' => [
+                        'username' => 'superAdmin',
+                        'email' => 'superAdmin@webvalley.cz',
                     ]
                 ],
                 //expected result
@@ -541,7 +541,7 @@ class NecktieGatewayHelperTest extends BaseTest
             [
                 //input data
                 [
-                    "valid response"
+                    'valid response'
                 ],
                 //expected result
                 false
@@ -551,7 +551,7 @@ class NecktieGatewayHelperTest extends BaseTest
                 //input data
                 [
                     [
-                        "response" => "valid!"
+                        'response' => 'valid!'
                     ]
                 ],
                 //expected result
@@ -582,7 +582,7 @@ class NecktieGatewayHelperTest extends BaseTest
             //#2 test data - valid string
             [
                 //input data
-                "valid response",
+                'valid response',
                 //expected result
                 false
             ],
@@ -590,7 +590,7 @@ class NecktieGatewayHelperTest extends BaseTest
             [
                 //input data
                 [
-                    "response" => "valid!"
+                    'response' => 'valid!'
                 ],
                 //expected result
                 false
@@ -618,7 +618,7 @@ class NecktieGatewayHelperTest extends BaseTest
             //#2 test data - valid string
             [
                 //input data
-                "valid response",
+                'valid response',
                 //expected result
                 false
             ],
@@ -626,7 +626,7 @@ class NecktieGatewayHelperTest extends BaseTest
             [
                 //input data
                 [
-                    "response" => "valid!"
+                    'response' => 'valid!'
                 ],
                 //expected result
                 false
@@ -654,7 +654,7 @@ class NecktieGatewayHelperTest extends BaseTest
             //#2 test data - valid string
             [
                 //input data
-                "valid response",
+                'valid response',
                 //expected result
                 false
             ],
@@ -662,7 +662,7 @@ class NecktieGatewayHelperTest extends BaseTest
             [
                 //input data
                 [
-                    "response" => "valid!"
+                    'response' => 'valid!'
                 ],
                 //expected result
                 false
@@ -690,7 +690,7 @@ class NecktieGatewayHelperTest extends BaseTest
             //#2 test data - valid string
             [
                 //input data
-                "valid response",
+                'valid response',
                 //expected result
                 false
             ],
@@ -698,7 +698,7 @@ class NecktieGatewayHelperTest extends BaseTest
             [
                 //input data
                 [
-                    "response" => "valid!"
+                    'response' => 'valid!'
                 ],
                 //expected result
                 false

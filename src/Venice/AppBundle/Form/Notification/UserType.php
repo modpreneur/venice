@@ -8,18 +8,17 @@
 
 namespace Venice\AppBundle\Form\Notification;
 
-
+use Doctrine\DBAL\Types\StringType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CountryType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Trinity\NotificationBundle\Interfaces\NotificationTypeInterface;
 use Venice\AppBundle\Entity\User;
-
-
 
 /**
  * Class UserType
@@ -39,8 +38,8 @@ class UserType extends AbstractType implements NotificationTypeInterface
                 'username'
             )
             ->add(
-                'email'
-                , EmailType::class)
+                'email',
+                EmailType::class)
             ->add(
                 'locked'
             )
@@ -55,14 +54,12 @@ class UserType extends AbstractType implements NotificationTypeInterface
             )
             ->add(
                 'website',
-                UrlType::class, ['required' => false]
+                UrlType::class,
+                ['required' => false]
             )
             ->add(
                 'country',
-                CountryType::class, [
-                    'placeholder' => 'Choose an option',
-                    'preferred_choices' => ['US', 'CZ']
-                ]
+                TextType::class
             )
             ->add(
                 'region'

@@ -8,12 +8,12 @@
 
 namespace Venice\AppBundle\Entity;
 
-use Trinity\Component\Core\Interfaces\EntityInterface;
-use Venice\AppBundle\Entity\Product\Product;
-use Venice\AppBundle\Traits\Timestampable;
 use Cocur\Slugify\Slugify;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
+use Trinity\Component\Core\Interfaces\EntityInterface;
+use Venice\AppBundle\Entity\Product\Product;
+use Venice\AppBundle\Traits\Timestampable;
 
 /**
  * Class BlogArticle
@@ -107,8 +107,7 @@ class BlogArticle implements EntityInterface
      */
     public function setHandle($handle)
     {
-        if($handle !== null)
-        {
+        if ($handle !== null) {
             $this->handle = $handle;
         }
     }
@@ -236,12 +235,9 @@ class BlogArticle implements EntityInterface
      */
     public function isPublished(DateTime $dateTime = null)
     {
-        if($dateTime != null)
-        {
+        if ($dateTime != null) {
             return $this->dateToPublish >= $dateTime;
-        }
-        else
-        {
+        } else {
             return $this->dateToPublish >= new DateTime();
         }
     }
@@ -253,38 +249,31 @@ class BlogArticle implements EntityInterface
      */
     public function getPreview()
     {
-        $firstPEnd = strpos($this->content,"</p>");
+        $firstPEnd = strpos($this->content, '</p>');
 
-        if($firstPEnd !== false)
-        {
-            $stringToFirstPEnd = strip_tags(substr($this->content,0,$firstPEnd));
+        if ($firstPEnd !== false) {
+            $stringToFirstPEnd = strip_tags(substr($this->content, 0, $firstPEnd));
 
-            if(strlen($stringToFirstPEnd) > $this->maxCountOfCharacters)
-            {
+            if (strlen($stringToFirstPEnd) > $this->maxCountOfCharacters) {
                 //because we don't want to cut the sentence in half, we delete it entirely
-                while(strlen($stringToFirstPEnd) > $this->maxCountOfCharacters)
-                {
-                    $positionOfTheLastDot = strrpos($stringToFirstPEnd, ".");
+                while (strlen($stringToFirstPEnd) > $this->maxCountOfCharacters) {
+                    $positionOfTheLastDot = strrpos($stringToFirstPEnd, '.');
                     $stringToFirstPEnd = substr($stringToFirstPEnd, 0, $positionOfTheLastDot);
                 }
 
-                $stringToFirstPEnd .= ".";
+                $stringToFirstPEnd .= '.';
             }
 
             return $stringToFirstPEnd;
-        }
-        else
-        {
+        } else {
             $offset = min($this->lastAllowedDotPosition, strlen($this->content));
-            $dotPosition = strpos($this->content, ".", $offset);
+            $dotPosition = strpos($this->content, '.', $offset);
 
-            if($dotPosition === false)
-            {
+            if ($dotPosition === false) {
                 $length = min($this->maxCountOfCharacters, strlen($this->content));
-                return substr($this->content, 0, $length) . "...";
-            }
-            else
-            {
+
+                return substr($this->content, 0, $length) . '...';
+            } else {
                 return substr($this->content, 0, $dotPosition + 1);
             }
         }
@@ -307,8 +296,7 @@ class BlogArticle implements EntityInterface
      */
     public function addProduct(Product $product)
     {
-        if(!$this->products->contains($product))
-        {
+        if (!$this->products->contains($product)) {
             $product->addBlogArticle($this);
             $this->products->add($product);
         }

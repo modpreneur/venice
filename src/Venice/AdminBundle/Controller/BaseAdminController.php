@@ -39,6 +39,7 @@ class BaseAdminController extends FOSRestController
 
     /**
      * @return ObjectManager
+     * @throws \LogicException
      */
     public function getEntityManager()
     {
@@ -148,10 +149,10 @@ class BaseAdminController extends FOSRestController
     {
         $breadcrumbs = $this->get('white_october_breadcrumbs');
 
-        if ($setHome)
+        if ($setHome) {
             $breadcrumbs->addRouteItem('Home', 'admin_dashboard');
+        }
 
         return $breadcrumbs;
     }
-
 }

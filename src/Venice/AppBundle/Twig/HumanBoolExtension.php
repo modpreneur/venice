@@ -8,18 +8,22 @@
 
 namespace Venice\AppBundle\Twig;
 
+/**
+ * Class HumanBoolExtension
+ * @package Venice\AppBundle\Twig
+ */
 class HumanBoolExtension extends \Twig_Extension
 {
     public function getFilters()
     {
-        return array(
-            new \Twig_SimpleFilter('humanBool', array($this, 'boolFilter')),
-        );
+        return [
+            new \Twig_SimpleFilter('humanBool', [$this, 'boolFilter']),
+        ];
     }
 
     public function boolFilter($bool)
     {
-        return $bool? "yes" : "no";
+        return $bool ? 'yes' : 'no';
     }
 
     public function getName()

@@ -55,7 +55,6 @@ class PdfContent extends Content
      */
     public function getType()
     {
-        return "pdf";
+        return 'pdf';
     }
-
 }

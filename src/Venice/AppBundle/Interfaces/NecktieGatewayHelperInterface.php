@@ -8,8 +8,6 @@
 
 namespace Venice\AppBundle\Interfaces;
 
-
-use Venice\AppBundle\Entity\NecktieToken;
 use Venice\AppBundle\Entity\OAuthToken;
 
 interface NecktieGatewayHelperInterface

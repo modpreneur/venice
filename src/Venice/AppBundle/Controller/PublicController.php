@@ -8,8 +8,6 @@
 
 namespace Venice\AppBundle\Controller;
 
-
-use FOS\RestBundle\Controller\Annotations\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -23,6 +21,6 @@ class PublicController extends Controller
      */
     public function publicAction()
     {
-        return $this->render("VeniceAppBundle:public:welcome.html.twig");
+        return $this->render('VeniceAppBundle:public:welcome.html.twig');
     }
 }

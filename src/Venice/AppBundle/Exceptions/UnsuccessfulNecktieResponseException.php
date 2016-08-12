@@ -8,8 +8,10 @@
 
 namespace Venice\AppBundle\Exceptions;
 
-
+/**
+ * Class UnsuccessfulNecktieResponseException
+ * @package Venice\AppBundle\Exceptions
+ */
 class UnsuccessfulNecktieResponseException extends \Exception
 {
-
 }

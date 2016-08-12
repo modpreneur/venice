@@ -17,8 +17,6 @@ use Trinity\Bundle\GridBundle\Grid\BaseGrid;
  */
 class ProductGrid extends BaseGrid
 {
-
-
     /**
      * Set up grid (template)
      *

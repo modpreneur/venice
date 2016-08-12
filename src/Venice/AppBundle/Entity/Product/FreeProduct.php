@@ -8,9 +8,7 @@
 
 namespace Venice\AppBundle\Entity\Product;
 
-
 use Doctrine\ORM\Mapping as ORM;
-
 
 /**
  * Class FreeProduct
@@ -18,7 +16,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class FreeProduct extends Product
 {
-    const TYPE = "free";
+    const TYPE = 'free';
 
     public function getType()
     {

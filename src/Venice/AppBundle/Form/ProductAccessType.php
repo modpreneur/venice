@@ -8,7 +8,6 @@
 
 namespace Venice\AppBundle\Form;
 
-
 use Venice\AppBundle\Form\DataTransformer\EntityToNumberTransformer;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -21,6 +20,7 @@ class ProductAccessType extends BaseType
     /**
      * @param FormBuilderInterface $builder
      * @param array $options
+     * @throws \Symfony\Component\Form\Exception\InvalidArgumentException
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -28,46 +28,46 @@ class ProductAccessType extends BaseType
 
         $builder
             ->add(
-                "product",
+                'product',
                 EntityType::class,
                 [
-                    "class" => "Venice\AppBundle\\Entity\\Product\\Product",
-                    "choice_label" => "Name",
-                    "required" => true
+                    'class' => "Venice\AppBundle\\Entity\\Product\\Product",
+                    'choice_label' => 'Name',
+                    'required' => true
                 ]
             )
             ->add(
-                "fromDate",
+                'fromDate',
                 DateType::class,
                 [
-                    "required" => true,
+                    'required' => true,
                     'widget' => 'single_text',
                 ]
             )
             ->add(
-                "toDate",
+                'toDate',
                 DateType::class,
                 [
-                    "required" => false,
+                    'required' => false,
                     'widget' => 'single_text',
                 ]
             )
             ->add(
-                "user",
+                'user',
                 HiddenType::class,
                 [
                     // Uses model transformer
-                    "data" => $options["user"],
-                    "data_class" => null,
-                    "label" => false,
+                    'data' => $options['user'],
+                    'data_class' => null,
+                    'label' => false,
                 ]
             );
 
-        $builder->get("user")
+        $builder->get('user')
             ->addModelTransformer(
                 new EntityToNumberTransformer(
                     $this->entityManager,
-                    "VeniceAppBundle:User"
+                    'VeniceAppBundle:User'
                 )
             );
     }
@@ -75,14 +75,15 @@ class ProductAccessType extends BaseType
 
     /**
      * @param OptionsResolver $resolver
+     * @throws \Symfony\Component\OptionsResolver\Exception\AccessException
      */
     public function configureOptions(OptionsResolver $resolver)
     {
         parent::configureOptions($resolver);
 
         $resolver->setDefaults([
-            "data_class" => "Venice\AppBundle\\Entity\\ProductAccess",
-            "user" => null
+            'data_class' => "Venice\AppBundle\\Entity\\ProductAccess",
+            'user' => null
         ]);
     }
 }

@@ -8,7 +8,6 @@
 
 namespace Venice\AppBundle\Interfaces;
 
-
 use Venice\AppBundle\Entity\ProductAccess;
 use Venice\AppBundle\Entity\User;
 

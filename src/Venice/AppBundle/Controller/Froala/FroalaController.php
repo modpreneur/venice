@@ -8,8 +8,6 @@
 
 namespace Venice\AppBundle\Controller\Froala;
 
-
-use FOS\RestBundle\Controller\Annotations\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -29,35 +27,35 @@ class FroalaController extends Controller
     public function uploadFileAction(Request $request)
     {
         /** @var UploadedFile $file */
-        $file = $request->files->get("file");
-        $uploader = $this->get("venice.app.file_uploader");
+        $file = $request->files->get('file');
+        $uploader = $this->get('venice.app.file_uploader');
         $key = $uploader->upload($file);
 
         $url = $uploader->genUrl($key);
 
-        return new JsonResponse(["link" => $url]);
+        return new JsonResponse(['link' => $url]);
     }
 
     /**
      * @param Request $request
-     * 
+     *
      * @return JsonResponse
      */
     public function uploadImageAction(Request $request)
     {
         /** @var UploadedFile $file */
-        $file = $request->files->get("file");
-        $uploader = $this->get("venice.app.file_uploader");
+        $file = $request->files->get('file');
+        $uploader = $this->get('venice.app.file_uploader');
         $key = $uploader->upload($file);
 
         $url = $uploader->genUrl($key);
 
-        return new JsonResponse(["link" => $url]);
+        return new JsonResponse(['link' => $url]);
     }
 
     /**
      * @param Request $request
-     * 
+     *
      * @return Response
      */
     public function deleteImageAction(Request $request)
@@ -67,7 +65,7 @@ class FroalaController extends Controller
 
     /**
      * @param Request $request
-     * 
+     *
      * @return JsonResponse
      */
     public function loadImagesAction(Request $request)

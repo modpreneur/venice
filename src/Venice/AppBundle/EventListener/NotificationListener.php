@@ -8,13 +8,16 @@
 
 namespace Venice\AppBundle\EventListener;
 
-
 use Doctrine\ORM\EntityManagerInterface;
 use Trinity\Component\Utils\Services\PriceStringGenerator;
 use Trinity\NotificationBundle\Event\BeforeDeleteEntityEvent;
 use Trinity\NotificationBundle\Event\ChangesDoneEvent;
 use Venice\AppBundle\Entity\BillingPlan;
 
+/**
+ * Class NotificationListener
+ * @package Venice\AppBundle\EventListener
+ */
 class NotificationListener
 {
     /** @var  PriceStringGenerator */
@@ -37,6 +40,8 @@ class NotificationListener
 
     /**
      * @param ChangesDoneEvent $event
+     * @throws \Trinity\Bundle\SettingsBundle\Exception\PropertyNotExistsException
+     * @throws \Symfony\Component\Intl\Exception\MethodArgumentValueNotImplementedException
      */
     public function onChangesDone(ChangesDoneEvent $event)
     {

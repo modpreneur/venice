@@ -8,7 +8,6 @@
 
 namespace Venice\AppBundle\Form\Product;
 
-
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 
@@ -19,7 +18,6 @@ class FreeProductType extends ProductType
         parent::buildForm($builder, $options);
 
         $builder
-            ->add("submit", SubmitType::class, ["label" => "Create"]);
+            ->add('submit', SubmitType::class, ['label' => 'Create']);
     }
-
 }

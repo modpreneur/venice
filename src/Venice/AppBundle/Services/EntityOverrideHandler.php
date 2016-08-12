@@ -4,6 +4,10 @@ namespace Venice\AppBundle\Services;
 
 use Venice\AppBundle\Interfaces\ConfiguratorInterface;
 
+/**
+ * Class EntityOverrideHandler
+ * @package Venice\AppBundle\Services
+ */
 class EntityOverrideHandler
 {
     /** @var ConfiguratorInterface */
@@ -45,7 +49,5 @@ class EntityOverrideHandler
 
             return $reflection->newInstanceArgs($constructorArgs);
         }
-
-
     }
 }

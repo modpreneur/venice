@@ -8,11 +8,14 @@
 
 namespace Venice\AppBundle\Form\Product;
 
-
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 
+/**
+ * Class StandardProductType
+ * @package Venice\AppBundle\Form\Product
+ */
 class StandardProductType extends ProductType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -20,15 +23,14 @@ class StandardProductType extends ProductType
         parent::buildForm($builder, $options);
 
         $builder
-            ->add("necktieId", NumberType::class, ["required" => true])
+            ->add('necktieId', NumberType::class, ['required' => true])
             ->add(
-                "submit",
+                'submit',
                 SubmitType::class,
                 [
-                    "label" => "Create"
+                    'label' => 'Create'
                 ]
             )
         ;
     }
-
 }

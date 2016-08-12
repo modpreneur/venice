@@ -27,8 +27,8 @@ class AppLogicTest extends BaseTest
     public function testAllMethodsReturnBool()
     {
         $this->containerMock->expects($this->once())
-            ->method("hasParameter")
-            ->with("necktie_url")
+            ->method('hasParameter')
+            ->with('necktie_url')
             ->will($this->returnValue(false));
 
         $appLogic = new AppLogic($this->containerMock);
@@ -37,11 +37,11 @@ class AppLogicTest extends BaseTest
         $methods = $reflection->getMethods(\ReflectionMethod::IS_PUBLIC);
 
         foreach ($methods as $method) {
-            if($method->getName() === "__construct") {
+            if($method->getName() === '__construct') {
                 continue;
             }
 
-            $this->assertInternalType("bool", $method->invoke($appLogic));
+            $this->assertInternalType('bool', $method->invoke($appLogic));
         }
     }
 
@@ -49,8 +49,8 @@ class AppLogicTest extends BaseTest
     public function testAllMethodsReturnsForcedValue()
     {
         $this->containerMock->expects($this->exactly(2))
-            ->method("hasParameter")
-            ->with("necktie_url")
+            ->method('hasParameter')
+            ->with('necktie_url')
             ->will($this->returnValue(true));
 
         $this->assertAllMethodsReturnsForcedValue(true);
@@ -66,7 +66,7 @@ class AppLogicTest extends BaseTest
         $methods = $reflection->getMethods(\ReflectionMethod::IS_PUBLIC);
 
         foreach ($methods as $method) {
-            if($method->getName() === "__construct" || $method->getName() === "hasForceReturn") {
+            if($method->getName() === '__construct' || $method->getName() === 'hasForceReturn') {
                 continue;
             }
 

@@ -8,7 +8,6 @@
 
 namespace Venice\AppBundle\Form;
 
-
 use Venice\AppBundle\Entity\BlogArticle;
 use Venice\AppBundle\Entity\Product\Product;
 use KMS\FroalaEditorBundle\Form\Type\FroalaEditorType;
@@ -24,49 +23,49 @@ class BlogArticleType extends BaseType
     {
         parent::buildForm($builder, $options);
 
-        $currentYear = (int)(new \DateTime())->format("Y");
+        $currentYear = (int)(new \DateTime())->format('Y');
 
         $builder
             ->add(
-                "title",
+                'title',
                 TextType::class,
                 [
-                    "required" => true
+                    'required' => true
                 ]
             )
             ->add(
-                "handle",
+                'handle',
                 TextType::class,
                 [
-                    "required" => false
+                    'required' => false
                 ]
             )
             ->add(
-                "dateToPublish",
+                'dateToPublish',
                 DateTimeType::class,
                 [
                     'widget' => 'single_text',
-                    "required" => true,
+                    'required' => true,
                     'attr' => ['data-limit' => json_encode(['min' =>'now','max'=>['year'=>$currentYear+4]])],
                 ]
             )
             ->add(
-                "products",
+                'products',
                 EntityType::class,
                 [
-                    "class" => Product::class,
-                    "choice_label" => "name",
-                    "multiple" => true,
-                    "expanded" => true,
-                    "label" => "In products",
+                    'class' => Product::class,
+                    'choice_label' => 'name',
+                    'multiple' => true,
+                    'expanded' => true,
+                    'label' => 'In products',
                 ]
             )
 
             ->add(
-                "content",
+                'content',
                 FroalaEditorType::class,
                 [
-                    "required" => false,
+                    'required' => false,
                 ]
             )
         ;
@@ -77,7 +76,7 @@ class BlogArticleType extends BaseType
     {
         $resolver->setDefaults(
             [
-                "data_class" => $this->entityOverrideHandler->getEntityClass(BlogArticle::class),
+                'data_class' => $this->entityOverrideHandler->getEntityClass(BlogArticle::class),
             ]
         );
     }

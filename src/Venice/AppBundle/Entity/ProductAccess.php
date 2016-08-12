@@ -221,6 +221,4 @@ class ProductAccess implements NotificationEntityInterface
     {
         return [];
     }
-
 }
-

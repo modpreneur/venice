@@ -8,17 +8,13 @@
 
 namespace Venice\AdminBundle\Controller;
 
-use Venice\AppBundle\Entity\BillingPlan;
-use Venice\AppBundle\Entity\Product\StandardProduct;
-use Venice\AppBundle\Form\BillingPlanType;
 use Doctrine\DBAL\DBALException;
-use FOS\RestBundle\Controller\Annotations\View;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Venice\AppBundle\Entity\BillingPlan;
+use Venice\AppBundle\Entity\Product\StandardProduct;
 
 /**
  * Class BillingPlanController
@@ -26,16 +22,17 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class BillingPlanController extends BaseAdminController
 {
-
     /**
      * Get information about billing plan of given product.
      *
-     * @param Request $request
      * @param int $id
-     *
      * @return array
+     * @throws \LogicException
+     * @throws \Trinity\Bundle\GridBundle\Exception\DuplicateColumnException
+     * @throws \Trinity\Bundle\SettingsBundle\Exception\PropertyNotExistsException
+     * @internal param Request $request
      */
-    public function indexAction(Request $request, int $id)
+    public function indexAction(int $id)
     {
         $count = $this->getDoctrine()->getRepository('VeniceAppBundle:BillingPlan')->countByProduct($id);
         $url = $this->generateUrl('grid_default', ['entity' => 'BillingPlan']);
@@ -68,16 +65,15 @@ class BillingPlanController extends BaseAdminController
     /**
      * @Security("is_granted('ROLE_ADMIN_BILLING_PLAN_VIEW')")
      *
-     * @param Request $request
      * @param BillingPlan $billingPlan
-     *
      * @return Response
+     * @internal param Request $request
      */
-    public function showAction(Request $request, BillingPlan $billingPlan)
+    public function showAction(BillingPlan $billingPlan)
     {
         return $this->render(
-            "VeniceAdminBundle:BillingPlan:show.html.twig",
-            ["billingPlan" => $billingPlan]
+            'VeniceAdminBundle:BillingPlan:show.html.twig',
+            ['billingPlan' => $billingPlan]
         );
     }
 
@@ -85,34 +81,33 @@ class BillingPlanController extends BaseAdminController
     /**
      * @Security("is_granted('ROLE_ADMIN_BILLING_PLAN_VIEW')")
      *
-     * @param Request $request
      * @param BillingPlan $billingPlan
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
+     * @internal param Request $request
      */
-    public function tabsAction(Request $request, BillingPlan $billingPlan)
+    public function tabsAction(BillingPlan $billingPlan)
     {
         $this->getBreadcrumbs()
-            ->addRouteItem("Products", "admin_product_index")
+            ->addRouteItem('Products', 'admin_product_index')
             ->addRouteItem(
                 $billingPlan->getProduct()->getName(),
-                "admin_product_tabs",
-                ["id" => $billingPlan->getProduct()->getId()]
+                'admin_product_tabs',
+                ['id' => $billingPlan->getProduct()->getId()]
             )
             ->addRouteItem(
-                "Billing plan ".$billingPlan->getId(),
-                "admin_billing_plan_tabs",
-                ["id" => $billingPlan->getId()]
+                'Billing plan ' . $billingPlan->getId(),
+                'admin_billing_plan_tabs',
+                ['id' => $billingPlan->getId()]
             );
 
-        $necktieBillingPlanShowUrl = $this->getParameter("necktie_show_product_url");
-        $necktieBillingPlanShowUrl = str_replace(":id", $billingPlan->getNecktieId(), $necktieBillingPlanShowUrl);
+        $necktieBillingPlanShowUrl = $this->getParameter('necktie_show_product_url');
+        $necktieBillingPlanShowUrl = str_replace(':id', $billingPlan->getNecktieId(), $necktieBillingPlanShowUrl);
 
         return $this->render(
-            "VeniceAdminBundle:BillingPlan:tabs.html.twig",
+            'VeniceAdminBundle:BillingPlan:tabs.html.twig',
             [
-                "billingPlan" => $billingPlan,
-                "necktieBillingPlanShowUrl" => $necktieBillingPlanShowUrl
+                'billingPlan' => $billingPlan,
+                'necktieBillingPlanShowUrl' => $necktieBillingPlanShowUrl
             ]
         );
     }
@@ -126,27 +121,33 @@ class BillingPlanController extends BaseAdminController
      * @param BillingPlan $billingPlan
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @throws \LogicException
      *
      */
     public function setDefaultBillingPlanAction(BillingPlan $billingPlan)
     {
-        $em = $this->getDoctrine()->getManager();
+        $entityManager = $this->getDoctrine()->getManager();
 
         $billingPlan->getProduct()->setDefaultBillingPlan($billingPlan);
 
         try {
-            $em->persist($billingPlan);
-            $em->persist($billingPlan->getProduct());
-            $em->flush();
+            $entityManager->persist($billingPlan);
+            $entityManager->persist($billingPlan->getProduct());
+            $entityManager->flush();
         } catch (DBALException $e) {
             $this->get('session')->getFlashBag()->add('danger', $e->getMessage());
+
             return new JsonResponse(
-                ['status'=>'error','error' => ['db' => $e->getMessage()], 'message'=>'Default billing plan could not be changed.'],
+                [
+                    'status' => 'error',
+                    'error' => ['db' => $e->getMessage()],
+                    'message' => 'Default billing plan could not be changed.'
+                ],
                 400
             );
         }
 
-        return new JsonResponse(['status'=>'success', 'message'=>'Successfully changed'], 200);
+        return new JsonResponse(['status' => 'success', 'message' => 'Successfully changed'], 200);
     }
 
 
@@ -155,29 +156,35 @@ class BillingPlanController extends BaseAdminController
      *
      * @Security("is_granted('ROLE_ADMIN_BILLING_PLAN_EDIT')")
      *
-     * @param Request $request
      * @param BillingPlan $billingPlan
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
+     * @throws \Symfony\Component\Routing\Exception\MissingMandatoryParametersException
+     * @throws \Symfony\Component\Form\Exception\UnexpectedTypeException
+     * @throws \Symfony\Component\OptionsResolver\Exception\InvalidOptionsException
+     * @throws \Symfony\Component\Routing\Exception\RouteNotFoundException
+     * @throws \Symfony\Component\Routing\Exception\InvalidParameterException
+     * @throws \Symfony\Component\Form\Exception\AlreadySubmittedException
+     * @throws \Symfony\Component\Form\Exception\LogicException
+     * @throws \LogicException
+     * @internal param Request $request
      */
-    public function editAction(Request $request, BillingPlan $billingPlan)
+    public function editAction(BillingPlan $billingPlan)
     {
         $billingPlanForm = $this->getFormCreator()
             ->createEditForm(
                 $billingPlan,
                 $this->getEntityFormMatcher()->getFormClassForEntity($billingPlan),
-                "admin_billing_plan",
-                ["id" => $billingPlan->getId(),],
-                ["product" => $billingPlan->getProduct()]
+                'admin_billing_plan',
+                ['id' => $billingPlan->getId(),],
+                ['product' => $billingPlan->getProduct()]
             );
 
         return $this->render(
-            "VeniceAdminBundle:BillingPlan:edit.html.twig",
+            'VeniceAdminBundle:BillingPlan:edit.html.twig',
             [
-                "entity" => $billingPlan,
-                "form" => $billingPlanForm->createView(),
+                'entity' => $billingPlan,
+                'form' => $billingPlanForm->createView(),
             ]
-
         );
     }
 
@@ -191,39 +198,50 @@ class BillingPlanController extends BaseAdminController
      * @param BillingPlan $billingPlan
      *
      * @return JsonResponse
+     * @throws \Symfony\Component\Routing\Exception\MissingMandatoryParametersException
+     * @throws \Symfony\Component\Form\Exception\UnexpectedTypeException
+     * @throws \Symfony\Component\OptionsResolver\Exception\InvalidOptionsException
+     * @throws \Symfony\Component\Routing\Exception\RouteNotFoundException
+     * @throws \Symfony\Component\Routing\Exception\InvalidParameterException
+     * @throws \Symfony\Component\Intl\Exception\MethodArgumentValueNotImplementedException
+     * @throws \Symfony\Component\Form\Exception\AlreadySubmittedException
+     * @throws \Symfony\Component\Intl\Exception\MethodArgumentNotImplementedException
+     * @throws \Symfony\Component\Form\Exception\LogicException
+     * @throws \LogicException
+     * @throws \Trinity\Bundle\SettingsBundle\Exception\PropertyNotExistsException
      */
     public function updateAction(Request $request, BillingPlan $billingPlan)
     {
-        $em = $this->getEntityManager();
+        $entityManager = $this->getEntityManager();
 
         $billingPlanForm = $this->getFormCreator()
             ->createEditForm(
                 $billingPlan,
                 $this->getEntityFormMatcher()->getFormClassForEntity($billingPlan),
-                "admin_billing_plan",
-                ["id" => $billingPlan->getId(),],
-                ["product" => $billingPlan->getProduct()]
+                'admin_billing_plan',
+                ['id' => $billingPlan->getId(),],
+                ['product' => $billingPlan->getProduct()]
             );
 
         $billingPlanForm->handleRequest($request);
 
         if ($billingPlanForm->isValid()) {
-            $priceGenerator = $this->get("trinity.services.price_string_generator");
+            $priceGenerator = $this->get('trinity.services.price_string_generator');
             $billingPlan->setPrice($priceGenerator->generateFullPriceStr($billingPlan));
 
-            $em->persist($billingPlan);
+            $entityManager->persist($billingPlan);
 
             try {
-                $em->flush();
+                $entityManager->flush();
             } catch (DBALException $e) {
                 return new JsonResponse(
-                    ["error" => ["db" => $e->getMessage(),]],
+                    ['error' => ['db' => $e->getMessage(),]],
                     400
                 );
             }
 
             return new JsonResponse(
-                ["message" => "BillingPlan successfully updated",]
+                ['message' => 'BillingPlan successfully updated',]
             );
         } else {
             return $this->returnFormErrorsJsonResponse($billingPlanForm);
@@ -236,24 +254,31 @@ class BillingPlanController extends BaseAdminController
      *
      * @Security("is_granted('ROLE_ADMIN_BILLING_PLAN_EDIT')")
      *
-     * @param Request $request
      * @param StandardProduct $product
-     *
      * @return Response
+     * @throws \Symfony\Component\Routing\Exception\MissingMandatoryParametersException
+     * @throws \Symfony\Component\Form\Exception\UnexpectedTypeException
+     * @throws \Symfony\Component\OptionsResolver\Exception\InvalidOptionsException
+     * @throws \Symfony\Component\Routing\Exception\RouteNotFoundException
+     * @throws \Symfony\Component\Routing\Exception\InvalidParameterException
+     * @throws \Symfony\Component\Form\Exception\AlreadySubmittedException
+     * @throws \Symfony\Component\Form\Exception\LogicException
+     * @throws \LogicException
+     * @internal param Request $request
      */
-    public function newAction(Request $request, StandardProduct $product)
+    public function newAction(StandardProduct $product)
     {
         $this->getBreadcrumbs()
-            ->addRouteItem("Products", "admin_product_index")
+            ->addRouteItem('Products', 'admin_product_index')
             ->addRouteItem(
                 $product->getName(),
-                "admin_product_tabs",
-                ["id" => $product->getId()]
+                'admin_product_tabs',
+                ['id' => $product->getId()]
             )
             ->addRouteItem(
-                "New billing plan",
-                "admin_billing_plan_new",
-                ["id" => $product->getId()]
+                'New billing plan',
+                'admin_billing_plan_new',
+                ['id' => $product->getId()]
             );
 
         $billingPlan = $this->getEntityOverrideHandler()->getEntityInstance(BillingPlan::class);
@@ -262,9 +287,9 @@ class BillingPlanController extends BaseAdminController
             ->createCreateForm(
                 $billingPlan,
                 $this->getEntityFormMatcher()->getFormClassForEntity($billingPlan),
-                "admin_billing_plan",
-                ["id" => $product->getId(),],
-                ["product" => $product]
+                'admin_billing_plan',
+                ['id' => $product->getId(),],
+                ['product' => $product]
             );
 
         return $this->render(
@@ -286,31 +311,42 @@ class BillingPlanController extends BaseAdminController
      * @param StandardProduct $product
      *
      * @return JsonResponse
+     * @throws \Symfony\Component\Routing\Exception\MissingMandatoryParametersException
+     * @throws \Symfony\Component\Form\Exception\UnexpectedTypeException
+     * @throws \Symfony\Component\OptionsResolver\Exception\InvalidOptionsException
+     * @throws \Symfony\Component\Routing\Exception\RouteNotFoundException
+     * @throws \Symfony\Component\Routing\Exception\InvalidParameterException
+     * @throws \Symfony\Component\Intl\Exception\MethodArgumentValueNotImplementedException
+     * @throws \Symfony\Component\Form\Exception\AlreadySubmittedException
+     * @throws \Symfony\Component\Intl\Exception\MethodArgumentNotImplementedException
+     * @throws \Symfony\Component\Form\Exception\LogicException
+     * @throws \LogicException
+     * @throws \Trinity\Bundle\SettingsBundle\Exception\PropertyNotExistsException
      */
     public function createAction(Request $request, StandardProduct $product)
     {
-        $em = $this->getEntityManager();
+        $entityManager = $this->getEntityManager();
         $billingPlan = $this->getEntityOverrideHandler()->getEntityInstance(BillingPlan::class);
 
         $form = $this->getFormCreator()
             ->createCreateForm(
                 $billingPlan,
                 $this->getEntityFormMatcher()->getFormClassForEntity($billingPlan),
-                "admin_billing_plan",
-                ["id" => $product->getId(),],
-                ["product" => $product]
+                'admin_billing_plan',
+                ['id' => $product->getId(),],
+                ['product' => $product]
             );
 
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $priceGenerator = $this->get("trinity.services.price_string_generator");
+            $priceGenerator = $this->get('trinity.services.price_string_generator');
             $billingPlan->setPrice($priceGenerator->generateFullPriceStr($billingPlan));
 
-            $em->persist($billingPlan);
+            $entityManager->persist($billingPlan);
 
             try {
-                $em->flush();
+                $entityManager->flush();
             } catch (DBALException $e) {
                 return new JsonResponse(
                     ['errors' => ['db' => $e->getMessage(),]]
@@ -319,8 +355,8 @@ class BillingPlanController extends BaseAdminController
 
             return new JsonResponse(
                 [
-                    "message" => "Billing plan successfully created",
-                    "location" => $this->generateUrl("admin_product_tabs", ["id" => $product->getId()])."#tab4",
+                    'message' => 'Billing plan successfully created',
+                    'location' => $this->generateUrl('admin_product_tabs', ['id' => $product->getId()]) . '#tab4',
                 ],
                 302
             );
@@ -336,60 +372,75 @@ class BillingPlanController extends BaseAdminController
      * @param BillingPlan $billingPlan
      *
      * @return Response
+     * @throws \Symfony\Component\Routing\Exception\MissingMandatoryParametersException
+     * @throws \Symfony\Component\Form\Exception\UnexpectedTypeException
+     * @throws \Symfony\Component\OptionsResolver\Exception\InvalidOptionsException
+     * @throws \Symfony\Component\Routing\Exception\RouteNotFoundException
+     * @throws \Symfony\Component\Form\Exception\AlreadySubmittedException
+     * @throws \Symfony\Component\Routing\Exception\InvalidParameterException
+     * @throws \Symfony\Component\Form\Exception\LogicException
      *
      */
     public function deleteTabAction(BillingPlan $billingPlan)
     {
         $form = $this->getFormCreator()
-            ->createDeleteForm("admin_billing_plan", $billingPlan->getId());
+            ->createDeleteForm('admin_billing_plan', $billingPlan->getId());
 
         return $this
             ->render(
-                "VeniceAdminBundle:BillingPlan:tabDelete.html.twig",
-                ["form" => $form->createView(),]
+                'VeniceAdminBundle:BillingPlan:tabDelete.html.twig',
+                ['form' => $form->createView(),]
             );
     }
 
 
     /**
+     * todo: the aciton is not longer used, should be removed?
+     *
      * @Security("is_granted('ROLE_ADMIN_BILLING_PLAN_EDIT')")
      *
      * @param Request $request
      * @param BillingPlan $billingPlan
      *
      * @return JsonResponse
+     * @throws \Symfony\Component\Routing\Exception\MissingMandatoryParametersException
+     * @throws \Symfony\Component\Form\Exception\UnexpectedTypeException
+     * @throws \Symfony\Component\OptionsResolver\Exception\InvalidOptionsException
+     * @throws \Symfony\Component\Routing\Exception\RouteNotFoundException
+     * @throws \Symfony\Component\Form\Exception\AlreadySubmittedException
+     * @throws \Symfony\Component\Routing\Exception\InvalidParameterException
+     * @throws \Symfony\Component\Form\Exception\LogicException
      */
     public function deleteAction(Request $request, BillingPlan $billingPlan)
     {
         $form = $this->getFormCreator()
-            ->createDeleteForm("admin_billing_plan", $billingPlan->getId());
+            ->createDeleteForm('admin_billing_plan', $billingPlan->getId());
 
         $form->handleRequest($request);
 
+        $product = $billingPlan->getProduct();
         if ($form->isValid()) {
-            $product = $billingPlan->getProduct();
             try {
-                $em = $this->getEntityManager();
-                $em->remove($billingPlan);
-                $em->flush();
+                $entityManager = $this->getEntityManager();
+                $entityManager->remove($billingPlan);
+                $entityManager->flush();
             } catch (DBALException $e) {
                 return new JsonResponse(
                     [
-                        "error" => ["db" => $e->getMessage()],
-                        "message" => "Could not delete.",
+                        'error' => ['db' => $e->getMessage()],
+                        'message' => 'Could not delete.',
                     ],
                     400
                 );
             }
         }
-//todo: variable $product? is deleting allowed?
+
         return new JsonResponse(
             [
-                "message" => "BillingPlan successfully deleted.",
-                "location" => $this->generateUrl("admin_product_tabs", ["id" => $product->getId()])."#tab4",
+                'message' => 'BillingPlan successfully deleted.',
+                'location' => $this->generateUrl('admin_product_tabs', ['id' => $product->getId()]) . '#tab4',
             ],
             302
         );
     }
-
 }

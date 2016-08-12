@@ -6,11 +6,10 @@
  * Time: 17:08
  */
 
-namespace OAuthBundle;
-
+namespace Venice\OAuthBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-class OAuthBundle extends Bundle
+class VeniceOAuthBundle extends Bundle
 {
 }

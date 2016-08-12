@@ -8,7 +8,6 @@
 
 namespace Venice\BunnyBundle;
 
-
 use Trinity\Bundle\BunnyBundle\AbstractProducer;
 use Trinity\Bundle\BunnyBundle\Annotation\Producer;
 

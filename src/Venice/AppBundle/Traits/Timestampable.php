@@ -8,11 +8,9 @@
 
 namespace Venice\AppBundle\Traits;
 
-
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Knp\DoctrineBehaviors\Model\Timestampable\TimestampableMethods;
-
 
 trait Timestampable
 {
@@ -33,5 +31,4 @@ trait Timestampable
      * @Gedmo\Timestampable(on="update")
      */
     protected $updatedAt;
-
 }

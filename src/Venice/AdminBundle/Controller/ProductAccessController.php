@@ -29,12 +29,17 @@ class ProductAccessController extends BaseAdminController
      * @param int $id
      *
      * @return array
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws \InvalidArgumentException
+     * @throws \LogicException
+     * @throws \Trinity\Bundle\SettingsBundle\Exception\PropertyNotExistsException
+     * @throws \Trinity\Bundle\GridBundle\Exception\DuplicateColumnException
      */
     public function indexAction(int $id)
     {
         $entityManager = $this->getDoctrine()->getManager();
 
-        $necktieUrl = $this->getParameter("necktie_show_product_access_url");
+        $necktieUrl = $this->getParameter('necktie_show_product_access_url');
 
         $count = $entityManager->getRepository('VeniceAppBundle:ProductAccess')->count($id);
         $url = $this->generateUrl('grid_default', ['entity'=>'ProductAccess']);
@@ -55,7 +60,7 @@ class ProductAccessController extends BaseAdminController
             [
                 'gridConfiguration' => $gridConfBuilder->getJSON(),
                 'userId' => $id,'count'=>$count,
-                "necktieUrl" => $necktieUrl
+                'necktieUrl' => $necktieUrl
             ]
         );
     }
@@ -70,9 +75,9 @@ class ProductAccessController extends BaseAdminController
     public function showAction(ProductAccess $productAccess)
     {
         return $this->render(
-            "VeniceAdminBundle:ProductAccess:show.html.twig",
+            'VeniceAdminBundle:ProductAccess:show.html.twig',
             [
-                "productAccess" => $productAccess,
+                'productAccess' => $productAccess,
             ]
         );
     }
@@ -90,27 +95,26 @@ class ProductAccessController extends BaseAdminController
         $user = $productAccess->getUser();
 
         $this->getBreadcrumbs()
-            ->addRouteItem("Users", "admin_user_index")
-            ->addRouteItem($user->getFullNameOrUsername(), "admin_user_tabs", ["id" => $user->getId()])
+            ->addRouteItem('Users', 'admin_user_index')
+            ->addRouteItem($user->getFullNameOrUsername(), 'admin_user_tabs', ['id' => $user->getId()])
             ->addRouteItem(
-                "Product access ".$productAccess->getId(),
-                "admin_product_access_tabs",
-                ["id" => $productAccess->getId()]
+                'Product access ' .$productAccess->getId(),
+                'admin_product_access_tabs',
+                ['id' => $productAccess->getId()]
             );
 
-        $necktieUrl = $this->getParameter("necktie_show_product_access_url");
-        $necktieUrl = str_replace(":userId", $user->getNecktieId(), $necktieUrl);
-        $necktieUrl = str_replace(":productAccessId", $productAccess->getNecktieId(), $necktieUrl);
+        $necktieUrl = $this->getParameter('necktie_show_product_access_url');
+        $necktieUrl = str_replace(':userId', $user->getNecktieId(), $necktieUrl);
+        $necktieUrl = str_replace(':productAccessId', $productAccess->getNecktieId(), $necktieUrl);
 
         return $this->render(
-            "VeniceAdminBundle:ProductAccess:tabs.html.twig",
+            'VeniceAdminBundle:ProductAccess:tabs.html.twig',
             [
-                "productAccess" => $productAccess,
-                "displayEditTab" => $this->getLogic()->displayEditTabForProductAccess(),
-                "displayDeleteTab" => $this->getLogic()->displayDeleteTabForProductAccess(),
-                "necktieProductAccessShowUrl" => $necktieUrl
+                'productAccess' => $productAccess,
+                'displayEditTab' => $this->getLogic()->displayEditTabForProductAccess(),
+                'displayDeleteTab' => $this->getLogic()->displayDeleteTabForProductAccess(),
+                'necktieProductAccessShowUrl' => $necktieUrl
             ]
         );
     }
-
 }

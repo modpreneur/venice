@@ -8,8 +8,6 @@
 
 namespace Venice\FrontBundle\Controller;
 
-
-use FOS\RestBundle\Controller\Annotations\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 /**
@@ -19,14 +17,15 @@ class FrontController extends Controller
 {
     /**
      * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \LogicException
      */
     public function indexAction()
     {
         $groups = $this->getDoctrine()->getRepository("VeniceAppBundle:Content\\GroupContent")->findAll();
 
         return $this->render(
-            "VeniceFrontBundle:Front:index.html.twig",
-            ["groups" => $groups,]
+            'VeniceFrontBundle:Front:index.html.twig',
+            ['groups' => $groups,]
         );
     }
 }

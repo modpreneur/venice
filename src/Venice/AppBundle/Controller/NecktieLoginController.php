@@ -8,7 +8,6 @@
 
 namespace Venice\AppBundle\Controller;
 
-
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\Request;
@@ -32,9 +31,10 @@ class NecktieLoginController extends Controller
 
     /**
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @throws \Symfony\Component\Routing\Exception\InvalidParameterException
      * @throws \InvalidArgumentException
      */
-    public function redirectToNecktieLoginAction(Request $request)
+    public function redirectToNecktieLoginAction()
     {
         $necktieGateway = $this->getGateway();
 
@@ -182,7 +182,7 @@ class NecktieLoginController extends Controller
         $cookieValue = $request->cookies->get($necktieGateway::STATE_COOKIE_NAME);
 
         if (!is_string($cookieValue)) {
-            throw new AccessDeniedHttpException("Please, enable cookies in your browser.");
+            throw new AccessDeniedHttpException('Please, enable cookies in your browser.');
         }
 
         if ($cookieValue !== $request->get('state')) {

@@ -8,7 +8,6 @@
 
 namespace Venice\AppBundle\Services;
 
-
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class AppLogic
@@ -31,7 +30,7 @@ class AppLogic
     public function __construct(ContainerInterface $container, bool $forceReturn = null)
     {
         $this->container = $container;
-        $this->connectedToNecktie = $this->container->hasParameter("necktie_url");
+        $this->connectedToNecktie = $this->container->hasParameter('necktie_url');
 
         $this->setForceReturn($forceReturn);
     }
@@ -192,5 +191,4 @@ class AppLogic
     {
         $this->forceReturn = $forceReturn;
     }
-
 }

@@ -8,7 +8,6 @@
 
 namespace Venice\AppBundle\Form\Content;
 
-
 use Venice\AppBundle\Entity\Content\GroupContent;
 use Venice\AppBundle\Form\Collection\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -30,35 +29,36 @@ class GroupContentType extends ContentType
 
         $builder
             ->add(
-                "handle",
+                'handle',
                 TextType::class,
                 [
-                    "required" => false,
+                    'required' => false,
                 ]
             )
             ->add(
-                "items",
+                'items',
                 CollectionType::class,
                 [
-                    "type" => ContentInGroupType::class,
-                    "options" => ["groupContent" => $options["groupContent"]],
-                    "required" => false,
-                    "label" => "Contents",
-                    "allow_add" => true,
-                    "allow_delete" => true,
+                    'type' => ContentInGroupType::class,
+                    'options' => ['groupContent' => $options['groupContent']],
+                    'required' => false,
+                    'label' => 'Contents',
+                    'allow_add' => true,
+                    'allow_delete' => true,
                 ]
             );
     }
 
     /**
      * @param OptionsResolver $resolver
+     * @throws \Symfony\Component\OptionsResolver\Exception\AccessException
      */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(
             [
-                "data_class" => "Venice\AppBundle\\Entity\\Content\\GroupContent",
-                "groupContent" => null
+                'data_class' => "Venice\AppBundle\\Entity\\Content\\GroupContent",
+                'groupContent' => null
             ]
         );
     }

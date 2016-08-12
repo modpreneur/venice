@@ -208,6 +208,4 @@ class OAuthToken
 
         return $this;
     }
-
-
 }

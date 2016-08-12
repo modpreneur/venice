@@ -8,7 +8,6 @@
 
 namespace Venice\AppBundle\Form\Notification;
 
-
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -19,7 +18,6 @@ use Venice\AppBundle\Entity\BillingPlan;
 use Venice\AppBundle\Entity\Product\StandardProduct;
 use Venice\AppBundle\Form\BaseType;
 
-
 /**
  * Class BillingPlanType
  */
@@ -27,6 +25,7 @@ class BillingPlanType extends BaseType implements NotificationTypeInterface
 {
     /**
      * {@inheritdoc}
+     * @throws \Symfony\Component\Form\Exception\InvalidArgumentException
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -60,7 +59,7 @@ class BillingPlanType extends BaseType implements NotificationTypeInterface
                 IntegerType::class,
                 ['property_path' => 'necktieId']
             );
-        
+
         $builder->get('product')
             ->addModelTransformer(
                 new NotificationTransformer(

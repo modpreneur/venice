@@ -8,7 +8,6 @@
 
 namespace Venice\FrontBundle;
 
-
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 class VeniceFrontBundle extends Bundle

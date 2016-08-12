@@ -71,7 +71,7 @@ class VideoContent extends AbstractPlayableContent
 
     public function getContent()
     {
-       return $this->videoHd;
+        return $this->videoHd;
     }
 
 
@@ -168,7 +168,7 @@ class VideoContent extends AbstractPlayableContent
      */
     public function getType()
     {
-        return "video";
+        return 'video';
     }
 
 

@@ -29,7 +29,7 @@ class MessageUserProvider implements MessageUserProviderInterface
      * MessageUserProvider constructor.
      *
      * @param TokenStorageInterface $tokenStorage
-     * @param string                $clientIdentification
+     * @param string $clientIdentification
      */
     public function __construct(TokenStorageInterface $tokenStorage, string $clientIdentification)
     {

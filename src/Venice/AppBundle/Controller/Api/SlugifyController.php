@@ -8,7 +8,6 @@
 
 namespace Venice\AppBundle\Controller\Api;
 
-
 use Cocur\Slugify\Slugify;
 use FOS\RestBundle\Controller\Annotations\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -27,9 +26,9 @@ class SlugifyController extends Controller
      */
     public function slugifyAction(Request $request)
     {
-        $string = $request->request->get("string");
+        $string = $request->request->get('string');
         $slugify = new Slugify();
 
-        return new JsonResponse(['handle'=>$slugify->slugify($string)],200);
+        return new JsonResponse(['handle'=>$slugify->slugify($string)], 200);
     }
 }

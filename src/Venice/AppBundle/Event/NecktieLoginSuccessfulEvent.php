@@ -8,7 +8,6 @@
 
 namespace Venice\AppBundle\Event;
 
-
 use Venice\AppBundle\Entity\User;
 use Symfony\Component\EventDispatcher\Event;
 
