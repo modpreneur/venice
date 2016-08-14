@@ -3,9 +3,8 @@
  * Created by PhpStorm.
  * User: Jakub Fajkus
  * Date: 08.10.15
- * Time: 10:11
+ * Time: 10:11.
  */
-
 namespace Venice\AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -21,9 +20,7 @@ use Venice\AppBundle\Exceptions\UnsuccessfulNecktieResponseException;
 use Venice\AppBundle\Services\NecktieGateway;
 
 /**
- *
- * Class NecktieLoginController
- * @package Venice\AppBundle\Controller
+ * Class NecktieLoginController.
  */
 class NecktieLoginController extends Controller
 {
@@ -31,6 +28,9 @@ class NecktieLoginController extends Controller
 
     /**
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     *
+     * @throws \Symfony\Component\Routing\Exception\RouteNotFoundException
+     * @throws \Symfony\Component\Routing\Exception\MissingMandatoryParametersException
      * @throws \Symfony\Component\Routing\Exception\InvalidParameterException
      * @throws \InvalidArgumentException
      */
@@ -59,6 +59,9 @@ class NecktieLoginController extends Controller
      * @param Request $request
      *
      * @return Response
+     *
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \RuntimeException
      * @throws \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      * @throws \LogicException
@@ -86,7 +89,7 @@ class NecktieLoginController extends Controller
         try {
             $user = $this->getAndLoginUser($necktieGateway, $request, $necktieToken);
         } catch (UnsuccessfulNecktieResponseException $e) {
-            throw new UnsuccessfulNecktieResponseException('Could not get user from necktie.' . $e->getMessage());
+            throw new UnsuccessfulNecktieResponseException('Could not get user from necktie.'.$e->getMessage());
         }
 
         try {
@@ -108,7 +111,7 @@ class NecktieLoginController extends Controller
     }
 
     /**
-     * Create response for the login action
+     * Create response for the login action.
      *
      * @param Request $request
      *
@@ -127,8 +130,6 @@ class NecktieLoginController extends Controller
         }
 
         return $this->redirectToRoute('homepage');
-
-
     }
 
     /**
@@ -136,6 +137,10 @@ class NecktieLoginController extends Controller
      * @param                $user
      *
      * @throws \Venice\AppBundle\Exceptions\UnsuccessfulNecktieResponseException
+     * @throws \RuntimeException
+     * @throws \Exception
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Venice\AppBundle\Exceptions\ExpiredRefreshTokenException
      */
     protected function performNecktieCalls(NecktieGateway $necktieGateway, $user)
     {
@@ -143,15 +148,19 @@ class NecktieLoginController extends Controller
     }
 
     /**
-     * Get user from necktie by access token and log him in
+     * Get user from necktie by access token and log him in.
      *
      * @param NecktieGateway $necktieGateway
      * @param Request        $request
      * @param OAuthToken     $necktieToken
      *
      * @return \Venice\AppBundle\Entity\User|null
+     *
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \RuntimeException
      * @throws \Venice\AppBundle\Exceptions\UnsuccessfulNecktieResponseException
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     * @throws \Exception
      */
     protected function getAndLoginUser(NecktieGateway $necktieGateway, Request $request, OAuthToken $necktieToken)
     {
@@ -170,7 +179,7 @@ class NecktieLoginController extends Controller
     }
 
     /**
-     * Validate cookie and it's value with the "state" parameter from query string
+     * Validate cookie and it's value with the "state" parameter from query string.
      *
      * @param NecktieGateway $necktieGateway
      * @param Request        $request
@@ -191,7 +200,7 @@ class NecktieLoginController extends Controller
     }
 
     /**
-     * Get OAuthToken or null from request
+     * Get OAuthToken or null from request.
      *
      * @param $request
      * @param $necktieGateway
@@ -204,7 +213,7 @@ class NecktieLoginController extends Controller
     }
 
     /**
-     * Get login manager
+     * Get login manager.
      *
      * @return \FOS\UserBundle\Security\LoginManager
      */

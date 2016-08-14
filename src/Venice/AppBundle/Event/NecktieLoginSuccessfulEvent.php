@@ -3,14 +3,16 @@
  * Created by PhpStorm.
  * User: Jakub Fajkus
  * Date: 18.01.16
- * Time: 16:13
+ * Time: 16:13.
  */
-
 namespace Venice\AppBundle\Event;
 
 use Venice\AppBundle\Entity\User;
 use Symfony\Component\EventDispatcher\Event;
 
+/**
+ * {@inheritdoc}
+ */
 class NecktieLoginSuccessfulEvent extends Event
 {
     /** @var User */
@@ -18,11 +20,12 @@ class NecktieLoginSuccessfulEvent extends Event
 
     /**
      * NecktieLoginSuccessfulEvent constructor.
+     *
      * @param User $user
      */
     public function __construct(User $user)
     {
-        $this->user= $user;
+        $this->user = $user;
     }
 
     public function getUser()

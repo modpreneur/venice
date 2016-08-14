@@ -3,33 +3,34 @@
  * Created by PhpStorm.
  * User: Jakub Fajkus
  * Date: 16.01.16
- * Time: 15:43
+ * Time: 15:43.
  */
-
 namespace Venice\FrontBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Venice\AppBundle\Entity\Product\Product;
 
 /**
- * Class ProductController
+ * Class ProductController.
  */
 class ProductController extends Controller
 {
     /**
      * @return \Symfony\Component\HttpFoundation\Response
+     *
      * @throws \LogicException
      */
     public function indexAction()
     {
-        $products = $this->getDoctrine()->getRepository("VeniceAppBundle:Product\\Product")->findAll();
+        $entityClass = $this->get('venice.app.entity_override_handler')->getEntityClass(Product::class);
+        $products = $this->getDoctrine()->getRepository($entityClass)->findAll();
         $urlGenerator = $this->get('venice.app.buy_url_generator');
 
         return $this->render(
             'VeniceFrontBundle:Product:index.html.twig',
             [
                 'products' => $products,
-                'urlGenerator' => $urlGenerator
+                'urlGenerator' => $urlGenerator,
             ]
         );
     }

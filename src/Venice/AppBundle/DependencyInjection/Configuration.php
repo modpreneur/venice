@@ -3,22 +3,23 @@
  * Created by PhpStorm.
  * User: Jakub Fajkus
  * Date: 23.07.16
- * Time: 13:52
+ * Time: 13:52.
  */
-
 namespace Venice\AppBundle\DependencyInjection;
-
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
+/**
+ * {@inheritdoc}
+ */
 class Configuration implements ConfigurationInterface
 {
-
     /**
      * Generates the configuration tree builder.
      *
      * @return \Symfony\Component\Config\Definition\Builder\TreeBuilder The tree builder
+     *
      * @throws \RuntimeException
      */
     public function getConfigTreeBuilder()

@@ -3,15 +3,17 @@
  * Created by PhpStorm.
  * User: Jakub Fajkus
  * Date: 16.02.16
- * Time: 14:25
+ * Time: 14:25.
  */
-
 namespace Venice\AppBundle\Traits;
 
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Knp\DoctrineBehaviors\Model\Timestampable\TimestampableMethods;
 
+/**
+ * {@inheritdoc}
+ */
 trait Timestampable
 {
     use TimestampableMethods;

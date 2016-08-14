@@ -3,7 +3,7 @@
 namespace Venice\AppBundle\Entity\Repositories;
 
 /**
- * Mp3ContentRepository
+ * Mp3ContentRepository.
  */
 class Mp3ContentRepository extends ContentRepository
 {

@@ -5,12 +5,13 @@ namespace Venice\AppBundle\Entity\Repositories;
 use Doctrine\ORM\EntityRepository;
 
 /**
- * OAuthTokenRepository
+ * OAuthTokenRepository.
  */
 class OAuthTokenRepository extends EntityRepository
 {
     /**
      * @return int
+     *
      * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
      */

@@ -3,9 +3,8 @@
  * Created by PhpStorm.
  * User: Jakub Fajkus
  * Date: 28.04.16
- * Time: 12:43
+ * Time: 12:43.
  */
-
 namespace Venice\AppBundle\Form\Notification;
 
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
@@ -19,12 +18,13 @@ use Venice\AppBundle\Entity\Product\StandardProduct;
 use Venice\AppBundle\Form\BaseType;
 
 /**
- * Class BillingPlanType
+ * Class BillingPlanType.
  */
 class BillingPlanType extends BaseType implements NotificationTypeInterface
 {
     /**
      * {@inheritdoc}
+     *
      * @throws \Symfony\Component\Form\Exception\InvalidArgumentException
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -70,9 +70,9 @@ class BillingPlanType extends BaseType implements NotificationTypeInterface
             );
     }
 
-
     /**
      * {@inheritdoc}
+     *
      * @throws \Symfony\Component\OptionsResolver\Exception\AccessException
      */
     public function configureOptions(OptionsResolver $resolver)
@@ -83,14 +83,13 @@ class BillingPlanType extends BaseType implements NotificationTypeInterface
             [
                 'data_class' => BillingPlan::class,
                 'csrf_protection' => false,
-                'standardProductClass' => StandardProduct::class
+                'standardProductClass' => StandardProduct::class,
             ]
         );
     }
 
-
     /**
-     * Will be called after the
+     * Will be called after the.
      *
      * @return mixed
      */
@@ -98,7 +97,6 @@ class BillingPlanType extends BaseType implements NotificationTypeInterface
     {
         // TODO: Implement onSuccess() method.
     }
-
 
     /**
      * @return mixed

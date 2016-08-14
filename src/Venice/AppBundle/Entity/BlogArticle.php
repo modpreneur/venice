@@ -3,9 +3,8 @@
  * Created by PhpStorm.
  * User: Jakub Fajkus
  * Date: 02.10.15
- * Time: 17:47
+ * Time: 17:47.
  */
-
 namespace Venice\AppBundle\Entity;
 
 use Cocur\Slugify\Slugify;
@@ -16,7 +15,7 @@ use Venice\AppBundle\Entity\Product\Product;
 use Venice\AppBundle\Traits\Timestampable;
 
 /**
- * Class BlogArticle
+ * Class BlogArticle.
  */
 class BlogArticle implements EntityInterface
 {
@@ -27,42 +26,35 @@ class BlogArticle implements EntityInterface
      */
     protected $lastAllowedDotPosition = 200;
 
-
     /**
      * @var int Used for creating a preview
      */
     protected $maxCountOfCharacters = 400;
-
 
     /**
      * @var int
      */
     protected $id;
 
-
     /**
      * @var string
      */
     protected $handle;
-
 
     /**
      * @var User
      */
     protected $publisher;
 
-
     /**
      * @var DateTime
      */
     protected $dateToPublish;
 
-
     /**
      * @var string
      */
     protected $title;
-
 
     /**
      * @var string
@@ -74,24 +66,21 @@ class BlogArticle implements EntityInterface
      */
     protected $products;
 
-
     public function __construct()
     {
         $this->updateTimestamps();
         $this->products = new ArrayCollection();
     }
 
-
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
         return $this->id;
     }
-
 
     /**
      * @return string
@@ -100,7 +89,6 @@ class BlogArticle implements EntityInterface
     {
         return $this->handle;
     }
-
 
     /**
      * @param string $handle
@@ -112,7 +100,6 @@ class BlogArticle implements EntityInterface
         }
     }
 
-
     /**
      * Create a new handle from given source and set it to the entity.
      *
@@ -123,9 +110,8 @@ class BlogArticle implements EntityInterface
         $this->handle = (new Slugify())->slugify($source);
     }
 
-
     /**
-     * Get publisher
+     * Get publisher.
      *
      * @return User
      */
@@ -134,11 +120,11 @@ class BlogArticle implements EntityInterface
         return $this->publisher;
     }
 
-
     /**
-     * Set publisher
+     * Set publisher.
      *
      * @param User $publisher
+     *
      * @return BlogArticle
      */
     public function setPublisher(User $publisher)
@@ -148,9 +134,8 @@ class BlogArticle implements EntityInterface
         return $this;
     }
 
-
     /**
-     * Get dateToPublish
+     * Get dateToPublish.
      *
      * @return DateTime
      */
@@ -159,11 +144,11 @@ class BlogArticle implements EntityInterface
         return $this->dateToPublish;
     }
 
-
     /**
-     * Set dateToPublish
+     * Set dateToPublish.
      *
      * @param DateTime $dateToPublish
+     *
      * @return BlogArticle
      */
     public function setDateToPublish(DateTime $dateToPublish)
@@ -173,9 +158,8 @@ class BlogArticle implements EntityInterface
         return $this;
     }
 
-
     /**
-     * Get title
+     * Get title.
      *
      * @return string
      */
@@ -184,11 +168,11 @@ class BlogArticle implements EntityInterface
         return $this->title;
     }
 
-
     /**
-     * Set title
+     * Set title.
      *
      * @param string $title
+     *
      * @return BlogArticle
      */
     public function setTitle($title)
@@ -200,9 +184,8 @@ class BlogArticle implements EntityInterface
         return $this;
     }
 
-
     /**
-     * Get content
+     * Get content.
      *
      * @return string
      */
@@ -211,11 +194,11 @@ class BlogArticle implements EntityInterface
         return $this->content;
     }
 
-
     /**
-     * Set content
+     * Set content.
      *
      * @param string $content
+     *
      * @return BlogArticle
      */
     public function setContent($content)
@@ -224,7 +207,6 @@ class BlogArticle implements EntityInterface
 
         return $this;
     }
-
 
     /**
      * Check if the article will be available in given DateTime.
@@ -272,14 +254,12 @@ class BlogArticle implements EntityInterface
             if ($dotPosition === false) {
                 $length = min($this->maxCountOfCharacters, strlen($this->content));
 
-                return substr($this->content, 0, $length) . '...';
+                return substr($this->content, 0, $length).'...';
             } else {
                 return substr($this->content, 0, $dotPosition + 1);
             }
         }
-
     }
-
 
     /**
      * @return ArrayCollection<Product>
@@ -289,9 +269,9 @@ class BlogArticle implements EntityInterface
         return $this->products;
     }
 
-
     /**
      * @param Product $product
+     *
      * @return $this
      */
     public function addProduct(Product $product)
@@ -304,9 +284,9 @@ class BlogArticle implements EntityInterface
         return $this;
     }
 
-
     /**
      * @param Product $product
+     *
      * @return $this
      */
     public function removeProduct(Product $product)

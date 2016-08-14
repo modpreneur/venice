@@ -2,13 +2,12 @@
 
 namespace Venice\AppBundle\Entity\Repositories;
 
-use Doctrine\ORM\EntityRepository;
 use Trinity\NotificationBundle\Interfaces\NotificationEntityRepositoryInterface;
 use Venice\AppBundle\Entity\Product\Product;
 use Venice\AppBundle\Entity\Product\StandardProduct;
 
 /**
- * StandardProductRepository
+ * StandardProductRepository.
  */
 class StandardProductRepository extends ProductRepository implements NotificationEntityRepositoryInterface
 {
@@ -16,6 +15,8 @@ class StandardProductRepository extends ProductRepository implements Notificatio
      * @see http://jayroman.com/blog/symfony2-quirks-with-doctrine-inheritance-and-unique-constraints
      *
      * @param string[] $criteria format: array('user' => <user_id>, 'name' => <name>)
+     *
+     * @return array|\Venice\AppBundle\Entity\Content\Content[]|\Venice\AppBundle\Entity\Product\Product[]|\Venice\AppBundle\Entity\Product\StandardProduct[]
      */
     public function findByUniqueCriteria(array $criteria)
     {

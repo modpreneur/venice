@@ -3,9 +3,8 @@
  * Created by PhpStorm.
  * User: Jakub Fajkus
  * Date: 05.10.15
- * Time: 17:17
+ * Time: 17:17.
  */
-
 namespace Venice\AdminBundle\Services;
 
 use Trinity\AdminBundle\Event\MenuEvent;
@@ -14,6 +13,7 @@ class MenuListener
 {
     /**
      * @param MenuEvent $event
+     *
      * @throws \InvalidArgumentException
      * @throws \Trinity\AdminBundle\Exception\MenuException
      */
@@ -103,7 +103,6 @@ class MenuListener
         //    ->addChild('Logout', array('route' => 'fos_user_security_logout'))
         //    ->setExtra('orderNumber', 3);
     }
-
 
     /**
      * @param MenuEvent $event

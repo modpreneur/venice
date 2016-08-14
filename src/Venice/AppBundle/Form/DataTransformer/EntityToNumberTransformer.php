@@ -3,9 +3,8 @@
  * Created by PhpStorm.
  * User: Jakub Fajkus
  * Date: 24.12.15
- * Time: 11:51
+ * Time: 11:51.
  */
-
 namespace Venice\AppBundle\Form\DataTransformer;
 
 use Doctrine\ORM\EntityManagerInterface;
@@ -13,8 +12,7 @@ use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Exception\TransformationFailedException;
 
 /**
- * Class EntityToNumberTransformer
- * @package Venice\AppBundle\Form\DataTransformer
+ * Class EntityToNumberTransformer.
  */
 class EntityToNumberTransformer implements DataTransformerInterface
 {
@@ -22,14 +20,13 @@ class EntityToNumberTransformer implements DataTransformerInterface
     protected $entityManager;
 
     /** @var  string */
-    protected $entityName;
+    protected $entityClass;
 
-    public function __construct(EntityManagerInterface $entityManager, $entityName)
+    public function __construct(EntityManagerInterface $entityManager, $entityClass)
     {
         $this->entityManager = $entityManager;
-        $this->entityName = $entityName;
+        $this->entityClass = $entityClass;
     }
-
 
     /**
      * Transforms a value from the original representation to a transformed representation.
@@ -72,7 +69,6 @@ class EntityToNumberTransformer implements DataTransformerInterface
             }
         }
 
-
         throw new TransformationFailedException('Given value is not an object');
     }
 
@@ -103,12 +99,12 @@ class EntityToNumberTransformer implements DataTransformerInterface
     public function reverseTransform($value)
     {
         if ($value === null || empty($value)) {
-            return null;
+            return;
         }
 
         return $this
             ->entityManager
-            ->getRepository($this->entityName)
+            ->getRepository($this->entityClass)
             ->find($value);
     }
 }

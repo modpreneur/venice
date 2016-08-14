@@ -3,16 +3,14 @@
  * Created by PhpStorm.
  * User: Jakub Fajkus
  * Date: 20.10.15
- * Time: 19:15
+ * Time: 19:15.
  */
-
 namespace Venice\AppBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 
 class Invoice
 {
-
     protected $id;
 
     protected $totalPrice;
@@ -36,7 +34,6 @@ class Invoice
         return $this->id;
     }
 
-
     /**
      * @param int $id
      *
@@ -49,7 +46,6 @@ class Invoice
         return $this;
     }
 
-
     /**
      * @return float
      */
@@ -57,7 +53,6 @@ class Invoice
     {
         return $this->totalPrice;
     }
-
 
     /**
      * @param float $totalPrice
@@ -71,7 +66,6 @@ class Invoice
         return $this;
     }
 
-
     /**
      * @return \DateTime
      */
@@ -79,7 +73,6 @@ class Invoice
     {
         return $this->transactionTime;
     }
-
 
     /**
      * @param \DateTime $transactionTime
@@ -93,7 +86,6 @@ class Invoice
         return $this;
     }
 
-
     /**
      * @return string
      */
@@ -101,7 +93,6 @@ class Invoice
     {
         return $this->transactionType;
     }
-
 
     /**
      * @param string $transactionType
@@ -123,9 +114,9 @@ class Invoice
         return $this->items;
     }
 
-
     /**
      * @param string $item
+     *
      * @return $this
      */
     public function addItem($item)
@@ -137,9 +128,9 @@ class Invoice
         return $this;
     }
 
-
     /**
      * @param string $item
+     *
      * @return $this
      */
     public function removeItem($item)

@@ -3,9 +3,8 @@
  * Created by PhpStorm.
  * User: Jakub Fajkus
  * Date: 22.10.15
- * Time: 20:32
+ * Time: 20:32.
  */
-
 namespace Venice\AppBundle\Entity\Product;
 
 use Venice\AppBundle\Entity\BillingPlan;
@@ -27,19 +26,16 @@ class StandardProduct extends Product implements NotificationEntityInterface
     const TYPE = 'standard';
 
     /**
-     * @var integer
+     * @var int
      *
      * @SerializedName("id")
      */
     protected $necktieId;
 
-
     /**
      * @var BillingPlan Billing plan of the product
-     *
      */
     protected $defaultBillingPlan;
-
 
     /**
      * @N\AssociationGetter
@@ -51,7 +47,6 @@ class StandardProduct extends Product implements NotificationEntityInterface
         return $this->defaultBillingPlan;
     }
 
-
     /**
      * @N\AssociationSetter(targetEntity="Venice\AppBundle\Entity\BillingPlan")
      *
@@ -62,13 +57,13 @@ class StandardProduct extends Product implements NotificationEntityInterface
         $this->defaultBillingPlan = $defaultBillingPlan;
     }
 
-
-
+    /**
+     * {@inheritdoc}
+     */
     public function getType()
     {
         return self::TYPE;
     }
-
 
     /**
      * @return int
@@ -77,7 +72,6 @@ class StandardProduct extends Product implements NotificationEntityInterface
     {
         return $this->necktieId;
     }
-
 
     /**
      * @param int $necktieId
@@ -90,7 +84,6 @@ class StandardProduct extends Product implements NotificationEntityInterface
 
         return $this;
     }
-
 
     /** @return ClientInterface[] */
     public function getClients()

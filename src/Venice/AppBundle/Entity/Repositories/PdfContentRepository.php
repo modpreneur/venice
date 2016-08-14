@@ -3,7 +3,7 @@
 namespace Venice\AppBundle\Entity\Repositories;
 
 /**
- * PdfContentRepository
+ * PdfContentRepository.
  */
 class PdfContentRepository extends ContentRepository
 {

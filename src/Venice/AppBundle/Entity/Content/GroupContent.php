@@ -3,18 +3,16 @@
  * Created by PhpStorm.
  * User: Jakub Fajkus
  * Date: 30.11.15
- * Time: 16:03
+ * Time: 16:03.
  */
-
 namespace Venice\AppBundle\Entity\Content;
 
 use Cocur\Slugify\Slugify;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
- * Class GroupContent
+ * Class GroupContent.
  */
 class GroupContent extends Content
 {
@@ -23,12 +21,10 @@ class GroupContent extends Content
      */
     protected $items;
 
-
     /**
      * @var string
      */
     protected $handle;
-
 
     /**
      * @param ExecutionContextInterface $context
@@ -38,8 +34,8 @@ class GroupContent extends Content
         $count = $this->items->count();
 
         //the for cycle is used for better indexing
-        /** @noinspection ForeachInvariantsInspection */
-        for ($i = 0; $i < $count; $i++) {
+        /* @noinspection ForeachInvariantsInspection */
+        for ($i = 0; $i < $count; ++$i) {
             if ($this->items[$i]->getContent() && $this->id == $this->items[$i]->getContent()->getId()) {
                 $context
                     ->buildViolation('Group content can not contain itself in "items" collection')
@@ -48,7 +44,7 @@ class GroupContent extends Content
 
                 break;
             }
-            for ($j = $i + 1; $j < $count; $j++) {
+            for ($j = $i + 1; $j < $count; ++$j) {
                 // If the item i in the collection twice
                 if ($this->items[$i]->getGroup() == $this->items[$j]->getGroup()
                     && $this->items[$i]->getContent() == $this->items[$j]->getContent()
@@ -64,11 +60,9 @@ class GroupContent extends Content
 
                     break;
                 }
-
             }
         }
     }
-
 
     public function __construct()
     {
@@ -76,7 +70,6 @@ class GroupContent extends Content
 
         $this->items = new ArrayCollection();
     }
-
 
     /**
      * @return ArrayCollection<ContentInGroup>
@@ -86,15 +79,14 @@ class GroupContent extends Content
         return $this->items;
     }
 
-
     public function setItems($items)
     {
         $this->items = $items;
     }
 
-
     /**
      * @param ContentInGroup $item
+     *
      * @return $this
      */
     public function addItem(ContentInGroup $item)
@@ -106,9 +98,9 @@ class GroupContent extends Content
         return $this;
     }
 
-
     /**
      * @param ContentInGroup $item
+     *
      * @return $this
      */
     public function removeItem(ContentInGroup $item)
@@ -120,7 +112,6 @@ class GroupContent extends Content
         return $this;
     }
 
-
     /**
      * @return string
      */
@@ -129,13 +120,15 @@ class GroupContent extends Content
         return $this->handle;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function setName($name)
     {
         parent::setName($name);
 
         $this->createHandle($name);
     }
-
 
     /**
      * @param string $handle
@@ -149,7 +142,6 @@ class GroupContent extends Content
         }
     }
 
-
     /**
      * Create a new handle from given source and set it to the entity.
      *
@@ -160,27 +152,24 @@ class GroupContent extends Content
         $this->handle = (new Slugify())->slugify($source);
     }
 
-
     /**
      * Return Content's content no matter what concrete implementation is.
      *
      * @return string
-     *
      */
     public function getContent()
     {
         $names = '';
 
         foreach ($this->items as $item) {
-            $names .= $item->getContent()->getName() . ', ';
+            $names .= $item->getContent()->getName().', ';
         }
 
         return $names;
     }
 
-
     /**
-     * Get the content type string
+     * Get the content type string.
      *
      * @return string
      */

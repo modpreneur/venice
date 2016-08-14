@@ -3,17 +3,12 @@
  * Created by PhpStorm.
  * User: Jakub Fajkus
  * Date: 04.10.15
- * Time: 15:57
+ * Time: 15:57.
  */
-
 namespace Venice\AppBundle\Entity\Content;
 
-use Doctrine\ORM\Mapping as ORM;
-
 /**
- * Class VideoContent
- *
- * @package Venice\AppBundle\Entity\Content
+ * Class VideoContent.
  */
 class VideoContent extends AbstractPlayableContent
 {
@@ -22,30 +17,25 @@ class VideoContent extends AbstractPlayableContent
      */
     protected $previewImage;
 
-
     /**
      * @var string Url to the video in the mobile quality
      */
     protected $videoMobile;
-
 
     /**
      * @var string Url to the video in the low quality
      */
     protected $videoLq;
 
-
     /**
      * @var string Url to the video in the high quality
      */
     protected $videoHq;
 
-
     /**
      * @var string Url to the video in the high definition
      */
     protected $videoHd;
-
 
     /**
      * @return int Duration(length) in seconds.
@@ -54,7 +44,6 @@ class VideoContent extends AbstractPlayableContent
     {
         return $this->duration;
     }
-
 
     /**
      * @param int $seconds Duration in seconds.
@@ -68,12 +57,13 @@ class VideoContent extends AbstractPlayableContent
         return $this;
     }
 
-
+    /**
+     * {@inheritdoc}
+     */
     public function getContent()
     {
         return $this->videoHd;
     }
-
 
     /**
      * @return string
@@ -82,7 +72,6 @@ class VideoContent extends AbstractPlayableContent
     {
         return $this->videoMobile;
     }
-
 
     /**
      * @param string $videoMobile
@@ -96,7 +85,6 @@ class VideoContent extends AbstractPlayableContent
         return $this;
     }
 
-
     /**
      * @return string
      */
@@ -104,7 +92,6 @@ class VideoContent extends AbstractPlayableContent
     {
         return $this->videoLq;
     }
-
 
     /**
      * @param string $videoLq
@@ -118,7 +105,6 @@ class VideoContent extends AbstractPlayableContent
         return $this;
     }
 
-
     /**
      * @return string
      */
@@ -126,7 +112,6 @@ class VideoContent extends AbstractPlayableContent
     {
         return $this->videoHq;
     }
-
 
     /**
      * @param string $videoHq
@@ -140,7 +125,6 @@ class VideoContent extends AbstractPlayableContent
         return $this;
     }
 
-
     /**
      * @return string
      */
@@ -148,7 +132,6 @@ class VideoContent extends AbstractPlayableContent
     {
         return $this->videoHd;
     }
-
 
     /**
      * @param string $videoHd
@@ -162,15 +145,13 @@ class VideoContent extends AbstractPlayableContent
         return $this;
     }
 
-
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getType()
     {
         return 'video';
     }
-
 
     /**
      * @return string
@@ -179,7 +160,6 @@ class VideoContent extends AbstractPlayableContent
     {
         return $this->previewImage;
     }
-
 
     /**
      * @param string $previewImage

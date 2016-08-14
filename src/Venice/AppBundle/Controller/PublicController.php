@@ -3,16 +3,15 @@
  * Created by PhpStorm.
  * User: Jakub Fajkus
  * Date: 16.01.16
- * Time: 12:08
+ * Time: 12:08.
  */
-
 namespace Venice\AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Class PublicController
+ * Class PublicController.
  */
 class PublicController extends Controller
 {

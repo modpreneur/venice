@@ -3,11 +3,12 @@
  * Created by PhpStorm.
  * User: Jakub Fajkus
  * Date: 22.01.16
- * Time: 14:03
+ * Time: 14:03.
  */
-
 namespace Venice\AppBundle\Form;
 
+use Venice\AppBundle\Entity\Product\Product;
+use Venice\AppBundle\Entity\ProductAccess;
 use Venice\AppBundle\Form\DataTransformer\EntityToNumberTransformer;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -19,7 +20,8 @@ class ProductAccessType extends BaseType
 {
     /**
      * @param FormBuilderInterface $builder
-     * @param array $options
+     * @param array                $options
+     *
      * @throws \Symfony\Component\Form\Exception\InvalidArgumentException
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -31,9 +33,9 @@ class ProductAccessType extends BaseType
                 'product',
                 EntityType::class,
                 [
-                    'class' => "Venice\AppBundle\\Entity\\Product\\Product",
+                    'class' => Product::class,
                     'choice_label' => 'Name',
-                    'required' => true
+                    'required' => true,
                 ]
             )
             ->add(
@@ -72,9 +74,9 @@ class ProductAccessType extends BaseType
             );
     }
 
-
     /**
      * @param OptionsResolver $resolver
+     *
      * @throws \Symfony\Component\OptionsResolver\Exception\AccessException
      */
     public function configureOptions(OptionsResolver $resolver)
@@ -82,8 +84,8 @@ class ProductAccessType extends BaseType
         parent::configureOptions($resolver);
 
         $resolver->setDefaults([
-            'data_class' => "Venice\AppBundle\\Entity\\ProductAccess",
-            'user' => null
+            'data_class' => ProductAccess::class,
+            'user' => null,
         ]);
     }
 }

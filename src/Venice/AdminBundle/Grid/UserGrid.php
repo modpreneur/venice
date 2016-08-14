@@ -6,21 +6,17 @@ use Trinity\Bundle\GridBundle\Grid\BaseGrid;
 use Trinity\Bundle\SearchBundle\NQL\NQLQuery;
 
 /**
- * Class UserGrid
- * @package Venice\AdminBundle\Grid
+ * Class UserGrid.
  */
 class UserGrid extends BaseGrid
 {
     /**
-     * Set up grid (template)
-     *
-     * @return void
+     * Set up grid (template).
      */
     public function setUp()
     {
         $this->addTemplate('VeniceAdminBundle:User:grid.html.twig');
     }
-
 
     /**
      * @param NQLQuery $query

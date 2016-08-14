@@ -3,9 +3,8 @@
  * Created by PhpStorm.
  * User: Jakub Fajkus
  * Date: 22.01.16
- * Time: 15:45
+ * Time: 15:45.
  */
-
 namespace Venice\AppBundle\Services;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -21,9 +20,9 @@ class AppLogic
     /** @var  bool|null The value which will be returned by all methods if not null. */
     protected $forceReturn;
 
-
     /**
      * AppLogic constructor.
+     *
      * @param ContainerInterface $container
      * @param $forceReturn bool|null If bool all methods will return the given value
      */
@@ -35,7 +34,6 @@ class AppLogic
         $this->setForceReturn($forceReturn);
     }
 
-
     /**
      * Is the logic in the test mode?
      *
@@ -45,7 +43,6 @@ class AppLogic
     {
         return is_bool($this->forceReturn);
     }
-
 
     /**
      * Is the app connected to necktie.
@@ -61,7 +58,6 @@ class AppLogic
         return $this->connectedToNecktie;
     }
 
-
     /**
      * Allow adding new ProductAccesses.
      *
@@ -75,7 +71,6 @@ class AppLogic
 
         return !$this->connectedToNecktie;
     }
-
 
     /**
      * Display necktie id field in ProductAccess template.
@@ -91,7 +86,6 @@ class AppLogic
         return $this->connectedToNecktie;
     }
 
-
     /**
      * Display edit tab in ProductAccess template.
      *
@@ -105,7 +99,6 @@ class AppLogic
 
         return !$this->connectedToNecktie;
     }
-
 
     /**
      * Display delete tab in ProductAccess template.
@@ -121,7 +114,6 @@ class AppLogic
         return !$this->connectedToNecktie;
     }
 
-
     /**
      * Allow adding new billing plans.
      *
@@ -136,9 +128,8 @@ class AppLogic
         return !$this->connectedToNecktie;
     }
 
-
     /**
-     * Display necktie id field in ProductAccess template
+     * Display necktie id field in ProductAccess template.
      *
      * @return bool
      */
@@ -150,7 +141,6 @@ class AppLogic
 
         return $this->connectedToNecktie;
     }
-
 
     /**
      * Display edit tab in ProductAccess template.
@@ -166,7 +156,6 @@ class AppLogic
         return !$this->connectedToNecktie;
     }
 
-
     /**
      * Display edit tab in ProductAccess template.
      *
@@ -180,7 +169,6 @@ class AppLogic
 
         return !$this->connectedToNecktie;
     }
-
 
     /**
      * Set the value which will be returned by all methods.

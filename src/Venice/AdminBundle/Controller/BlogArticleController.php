@@ -3,9 +3,8 @@
  * Created by PhpStorm.
  * User: Jakub Fajkus
  * Date: 03.12.15
- * Time: 19:05
+ * Time: 19:05.
  */
-
 namespace Venice\AdminBundle\Controller;
 
 use Doctrine\DBAL\DBALException;
@@ -16,14 +15,16 @@ use Symfony\Component\HttpFoundation\Response;
 use Venice\AppBundle\Entity\BlogArticle;
 
 /**
- * Class BlogArticleController
- * @package Venice\AdminBundle\Controller
+ * Class BlogArticleController.
  */
 class BlogArticleController extends BaseAdminController
 {
     /**
      * @Security("is_granted('ROLE_ADMIN_BLOG_VIEW')")
+     *
      * @return string
+     *
+     * @throws \Doctrine\ORM\NoResultException
      * @throws \LogicException
      * @throws \Doctrine\ORM\NonUniqueResultException
      * @throws \Trinity\Bundle\SettingsBundle\Exception\PropertyNotExistsException
@@ -48,16 +49,14 @@ class BlogArticleController extends BaseAdminController
         $gridConfBuilder->addColumn('handle', 'Handle');
         $gridConfBuilder->addColumn('details', ' ', ['allowOrder' => false]);
 
-
         return $this->render(
             'VeniceAdminBundle:BlogArticle:index.html.twig',
             [
                 'gridConfiguration' => $gridConfBuilder->getJSON(),
-                'count' => $max
+                'count' => $max,
             ]
         );
     }
-
 
     /**
      * Render page for blog article tabs.
@@ -67,6 +66,7 @@ class BlogArticleController extends BaseAdminController
      * @param BlogArticle $article
      *
      * @return \Symfony\Component\HttpFoundation\Response
+     *
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      */
     public function tabsAction(BlogArticle $article)
@@ -85,13 +85,12 @@ class BlogArticleController extends BaseAdminController
         );
     }
 
-
     /**
      * @Security("is_granted('ROLE_ADMIN_BLOG_VIEW')")
      *
      * @param BlogArticle $article
+     *
      * @return Response
-     * @internal param Request $request
      */
     public function showAction(BlogArticle $article)
     {
@@ -101,12 +100,13 @@ class BlogArticleController extends BaseAdminController
         );
     }
 
-
     /**
      * Display a form to create a new BlogArticle entity.
      *
      * @Security("is_granted('ROLE_ADMIN_BLOG_EDIT')")
+     *
      * @return Response
+     *
      * @throws \Symfony\Component\Routing\Exception\InvalidParameterException
      * @throws \Symfony\Component\Routing\Exception\RouteNotFoundException
      * @throws \Symfony\Component\Routing\Exception\MissingMandatoryParametersException
@@ -115,7 +115,6 @@ class BlogArticleController extends BaseAdminController
      * @throws \Symfony\Component\Form\Exception\AlreadySubmittedException
      * @throws \Symfony\Component\Form\Exception\LogicException
      * @throws \LogicException
-     *
      */
     public function newAction()
     {
@@ -144,7 +143,6 @@ class BlogArticleController extends BaseAdminController
         );
     }
 
-
     /**
      * Process a request to create a new BlogArticle entity.
      *
@@ -153,6 +151,7 @@ class BlogArticleController extends BaseAdminController
      * @param Request $request
      *
      * @return JsonResponse
+     *
      * @throws \Symfony\Component\Routing\Exception\RouteNotFoundException
      * @throws \Symfony\Component\Routing\Exception\MissingMandatoryParametersException
      * @throws \Symfony\Component\OptionsResolver\Exception\InvalidOptionsException
@@ -161,7 +160,6 @@ class BlogArticleController extends BaseAdminController
      * @throws \Symfony\Component\Routing\Exception\InvalidParameterException
      * @throws \Symfony\Component\Form\Exception\LogicException
      * @throws \LogicException
-     *
      */
     public function createAction(Request $request)
     {
@@ -187,8 +185,8 @@ class BlogArticleController extends BaseAdminController
                     'message' => 'Blog article successfully created',
                     'location' => $this->generateUrl(
                         'admin_blog_article_tabs',
-                        ['id' => $blogArticle->getId(),]
-                    )
+                        ['id' => $blogArticle->getId()]
+                    ),
                 ],
                 302
             );
@@ -197,14 +195,15 @@ class BlogArticleController extends BaseAdminController
         }
     }
 
-
     /**
      * Display a form to edit a BlogArticle entity.
      *
      * @Security("is_granted('ROLE_ADMIN_BLOG_EDIT')")
      *
      * @param BlogArticle $blogArticle
+     *
      * @return Response
+     *
      * @throws \Symfony\Component\Routing\Exception\InvalidParameterException
      * @throws \Symfony\Component\Routing\Exception\RouteNotFoundException
      * @throws \Symfony\Component\Routing\Exception\MissingMandatoryParametersException
@@ -213,7 +212,6 @@ class BlogArticleController extends BaseAdminController
      * @throws \Symfony\Component\Form\Exception\AlreadySubmittedException
      * @throws \Symfony\Component\Form\Exception\LogicException
      * @throws \LogicException
-     * @internal param Request $request
      */
     public function editAction(BlogArticle $blogArticle)
     {
@@ -222,7 +220,7 @@ class BlogArticleController extends BaseAdminController
                 $blogArticle,
                 $this->getEntityFormMatcher()->getFormClassForEntity($blogArticle),
                 'admin_blog_article',
-                ['id',]
+                ['id']
             );
         //        $dateFormat = $this->get('trinity.settings')->get('date');
         $dateFormat = 'y-m-d';
@@ -238,16 +236,16 @@ class BlogArticleController extends BaseAdminController
         );
     }
 
-
     /**
      * Process a request to update a BlogArticle entity.
      *
      * @Security("is_granted('ROLE_ADMIN_BLOG_EDIT')")
      *
-     * @param Request $request
+     * @param Request     $request
      * @param BlogArticle $blogArticle
      *
      * @return JsonResponse
+     *
      * @throws \Symfony\Component\Routing\Exception\RouteNotFoundException
      * @throws \Symfony\Component\Routing\Exception\MissingMandatoryParametersException
      * @throws \Symfony\Component\OptionsResolver\Exception\InvalidOptionsException
@@ -278,14 +276,14 @@ class BlogArticleController extends BaseAdminController
             } catch (DBALException $e) {
                 return new JsonResponse(
                     [
-                        'errors' => ['db' => $e->getMessage(),],
-                        'message' => 'Could not update'
+                        'errors' => ['db' => $e->getMessage()],
+                        'message' => 'Could not update',
                     ]
                 );
             }
 
             return new JsonResponse(
-                ['message' => 'Blog article successfully updated',]
+                ['message' => 'Blog article successfully updated']
             );
         } else {
             return $this->returnFormErrorsJsonResponse($blogArticleForm);
@@ -298,6 +296,7 @@ class BlogArticleController extends BaseAdminController
      * @param BlogArticle $blogArticle
      *
      * @return Response
+     *
      * @throws \Symfony\Component\Routing\Exception\RouteNotFoundException
      * @throws \Symfony\Component\Routing\Exception\MissingMandatoryParametersException
      * @throws \Symfony\Component\OptionsResolver\Exception\InvalidOptionsException
@@ -317,17 +316,18 @@ class BlogArticleController extends BaseAdminController
         return $this
             ->render(
                 'VeniceAdminBundle:BlogArticle:tabDelete.html.twig',
-                ['form' => $form->createView(),]
+                ['form' => $form->createView()]
             );
     }
 
     /**
      * @Security("is_granted('ROLE_ADMIN_BLOG_EDIT')")
      *
-     * @param Request $request
+     * @param Request     $request
      * @param BlogArticle $blogArticle
      *
      * @return JsonResponse
+     *
      * @throws \Symfony\Component\Routing\Exception\RouteNotFoundException
      * @throws \Symfony\Component\Routing\Exception\MissingMandatoryParametersException
      * @throws \Symfony\Component\OptionsResolver\Exception\InvalidOptionsException
@@ -335,6 +335,7 @@ class BlogArticleController extends BaseAdminController
      * @throws \Symfony\Component\Form\Exception\AlreadySubmittedException
      * @throws \Symfony\Component\Routing\Exception\InvalidParameterException
      * @throws \Symfony\Component\Form\Exception\LogicException
+     * @throws \LogicException
      */
     public function deleteAction(Request $request, BlogArticle $blogArticle)
     {
@@ -351,14 +352,13 @@ class BlogArticleController extends BaseAdminController
             } catch (DBALException $e) {
                 return new JsonResponse(
                     [
-                        'errors' => ['db' => $e->getMessage(),],
-                        'message' => 'Could not delete.'
+                        'errors' => ['db' => $e->getMessage()],
+                        'message' => 'Could not delete.',
                     ],
                     400
                 );
             }
         }
-
 
         return new JsonResponse(
             [

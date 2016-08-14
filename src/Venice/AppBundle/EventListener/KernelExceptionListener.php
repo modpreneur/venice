@@ -3,9 +3,8 @@
  * Created by PhpStorm.
  * User: Jakub Fajkus
  * Date: 24.10.15
- * Time: 20:23
+ * Time: 20:23.
  */
-
 namespace Venice\AppBundle\EventListener;
 
 use Symfony\Component\HttpFoundation\RedirectResponse;

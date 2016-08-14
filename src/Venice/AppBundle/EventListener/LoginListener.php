@@ -3,16 +3,14 @@
  * Created by PhpStorm.
  * User: Jakub Fajkus
  * Date: 16.02.16
- * Time: 16:21
+ * Time: 16:21.
  */
-
 namespace Venice\AppBundle\EventListener;
 
 use Venice\AppBundle\Event\NecktieLoginSuccessfulEvent;
 
 /**
- * Class LoginListener
- * @package Venice\AppBundle\EventListener
+ * Class LoginListener.
  */
 class LoginListener
 {

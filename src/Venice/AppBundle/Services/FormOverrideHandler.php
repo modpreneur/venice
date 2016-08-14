@@ -9,7 +9,6 @@ use Venice\AppBundle\Interfaces\ConfiguratorInterface;
  * It checks if the given form was overridden and if so it returns the overridden form.
  *
  * Class FormOverrideHandler
- * @package Venice\AppBundle\Services
  */
 class FormOverrideHandler
 {
@@ -18,6 +17,7 @@ class FormOverrideHandler
 
     /**
      * FormOverrideHandler constructor.
+     *
      * @param $configurator
      */
     public function __construct(ConfiguratorInterface $configurator)
@@ -27,6 +27,7 @@ class FormOverrideHandler
 
     /**
      * @param string $formClass
+     *
      * @return mixed|string
      */
     public function getFormClass(string $formClass)

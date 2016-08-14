@@ -10,6 +10,9 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * {@inheritdoc}
+ */
 class CollectionType extends AbstractType
 {
     /**
@@ -19,16 +22,15 @@ class CollectionType extends AbstractType
     {
         if ($options['allow_add'] && $options['prototype']) {
             // To be unique for every level. Must be generated here
-            $options['prototype_name'] = '__name' . Random::generate(5) . '__';
+            $options['prototype_name'] = '__name'.Random::generate(5).'__';
 
             $prototype = $builder->create($options['prototype_name'], $options['type'], array_replace([
-                'label' => $options['prototype_name'] . 'label__',
+                'label' => $options['prototype_name'].'label__',
             ], $options['options']));
             $builder->setAttribute('prototype', $prototype->getForm());
             //Add data options attribute with valid prototype_name
             $options['dataOptions']['prototype_name'] = $options['prototype_name'];
             $builder->setAttribute('dataOptions', json_encode($options['dataOptions']));
-
         }
 
         $resizeListener = new ResizeFormListener(
@@ -70,6 +72,7 @@ class CollectionType extends AbstractType
 
     /**
      * {@inheritdoc}
+     *
      * @throws \Symfony\Component\OptionsResolver\Exception\AccessException
      * @throws \Symfony\Component\OptionsResolver\Exception\UndefinedOptionsException
      */

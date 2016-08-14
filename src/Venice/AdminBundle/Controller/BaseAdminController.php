@@ -3,9 +3,8 @@
  * Created by PhpStorm.
  * User: Jakub Fajkus
  * Date: 04.11.15
- * Time: 12:21
+ * Time: 12:21.
  */
-
 namespace Venice\AdminBundle\Controller;
 
 use Doctrine\Common\Persistence\ObjectManager;
@@ -19,6 +18,9 @@ use Venice\AppBundle\Services\FormCreator;
 use Venice\AppBundle\Services\FormErrorSerializer;
 use Venice\AppBundle\Services\FormOverrideHandler;
 
+/**
+ * {@inheritdoc}
+ */
 class BaseAdminController extends FOSRestController
 {
     /** @var AppLogic */
@@ -36,16 +38,15 @@ class BaseAdminController extends FOSRestController
     /** @var EntityOverrideHandler */
     private $entityOverrideHandler;
 
-
     /**
      * @return ObjectManager
+     *
      * @throws \LogicException
      */
     public function getEntityManager()
     {
         return $this->getDoctrine()->getManager();
     }
-
 
     /**
      * @return FormErrorSerializer
@@ -54,7 +55,6 @@ class BaseAdminController extends FOSRestController
     {
         return $this->get('venice.app.form_error_serializer');
     }
-
 
     /**
      * @return AppLogic
@@ -121,10 +121,9 @@ class BaseAdminController extends FOSRestController
         return $this->entityOverrideHandler;
     }
 
-
     /**
      * @param FormInterface $form
-     * @param string $message
+     * @param string        $message
      *
      * @return JsonResponse
      */
@@ -135,7 +134,7 @@ class BaseAdminController extends FOSRestController
         return new JsonResponse(
             [
                 'error' => $errors,
-                'message' => $message
+                'message' => $message,
             ],
             400
         );
@@ -143,6 +142,7 @@ class BaseAdminController extends FOSRestController
 
     /**
      * @param bool $setHome
+     *
      * @return \WhiteOctober\BreadcrumbsBundle\Model\Breadcrumbs
      */
     public function getBreadcrumbs($setHome = true)

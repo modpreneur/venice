@@ -3,11 +3,9 @@
  * Created by PhpStorm.
  * User: Jakub Fajkus
  * Date: 30.01.16
- * Time: 21:12
+ * Time: 21:12.
  */
-
 namespace Venice\AppBundle\Tests\Services;
-
 
 use Venice\AppBundle\Services\AppLogic;
 use Venice\AppBundle\Tests\BaseTest;
@@ -17,7 +15,9 @@ class AppLogicTest extends BaseTest
 {
     protected $containerMock;
 
-
+    /**
+     * {@inheritdoc}
+     */
     public function setUp()
     {
         $this->containerMock = $this->getMockBuilder(Container::class)
@@ -37,14 +37,13 @@ class AppLogicTest extends BaseTest
         $methods = $reflection->getMethods(\ReflectionMethod::IS_PUBLIC);
 
         foreach ($methods as $method) {
-            if($method->getName() === '__construct') {
+            if ($method->getName() === '__construct') {
                 continue;
             }
 
             $this->assertInternalType('bool', $method->invoke($appLogic));
         }
     }
-
 
     public function testAllMethodsReturnsForcedValue()
     {
@@ -57,7 +56,6 @@ class AppLogicTest extends BaseTest
         $this->assertAllMethodsReturnsForcedValue(false);
     }
 
-
     protected function assertAllMethodsReturnsForcedValue($forcedValue)
     {
         $appLogic = new AppLogic($this->containerMock, $forcedValue);
@@ -66,7 +64,7 @@ class AppLogicTest extends BaseTest
         $methods = $reflection->getMethods(\ReflectionMethod::IS_PUBLIC);
 
         foreach ($methods as $method) {
-            if($method->getName() === '__construct' || $method->getName() === 'hasForceReturn') {
+            if ($method->getName() === '__construct' || $method->getName() === 'hasForceReturn') {
                 continue;
             }
 

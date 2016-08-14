@@ -8,7 +8,7 @@ use Trinity\NotificationBundle\Interfaces\NotificationEntityRepositoryInterface;
 use Venice\AppBundle\Entity\User;
 
 /**
- * UserRepository
+ * UserRepository.
  */
 class UserRepository extends EntityRepository implements NotificationEntityRepositoryInterface
 {
@@ -35,6 +35,7 @@ class UserRepository extends EntityRepository implements NotificationEntityRepos
 
     /**
      * @return int
+     *
      * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
@@ -45,6 +46,7 @@ class UserRepository extends EntityRepository implements NotificationEntityRepos
               FROM  VeniceAppBundle:User AS user
             ')
         ;
+
         return $query->getSingleScalarResult();
     }
 }

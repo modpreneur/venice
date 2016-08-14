@@ -3,10 +3,10 @@ parameters:
     bowtie_path: "%kernel.root_dir%/../vendor/modpreneur/bowtie/src/less"
     create_new_entity_on_necktie_notification: true
     app_version: 2.0.0
-    necktie_show_product_url: %necktie_url%/admin/product/:id
-    necktie_show_user_url: %necktie_url%/admin/user/:id
-    necktie_show_product_access_url: %necktie_url%/admin/user/:userId/product-access/:productAccessId
-    necktie_show_billing_plan_url: %necktie_url%/admin/product/:productId/billing-plan/:billingPlanId
+    necktie_show_product_url: "%necktie_url%/admin/product/:id"
+    necktie_show_user_url: "%necktie_url%/admin/user/:id"
+    necktie_show_product_access_url: "%necktie_url%/admin/user/:userId/product-access/:productAccessId"
+    necktie_show_billing_plan_url: "%necktie_url%/admin/product/:productId/billing-plan/:billingPlanId"
     trinity.search.detail_url_provider: "trinity.search.detail_url_provider"
 
 trinity_messages:
@@ -33,7 +33,7 @@ trinity_notification:
         user: Venice\AppBundle\Entity\User
         product-access: Venice\AppBundle\Entity\ProductAccess
     mode: client
-    client_id: %necktie_client_short_id%
+    client_id: "%necktie_client_short_id%"
     client_secret_provider: "@venice.app.client_secret_provider"
     forms:
         product: Venice\AppBundle\Form\Notification\ProductType
@@ -86,7 +86,7 @@ twig:
     form_themes:
         - 'VeniceAdminBundle::formLayout.html.twig'
     globals:
-        root_path: %kernel.root_dir%
+        root_path: "%kernel.root_dir%"
         admin_manager: "@trinity.admin.service.admin_manager"
         appLogic: "@venice.app.app_logic"
 
@@ -107,46 +107,46 @@ assetic:
     assets:
         necktie_ttf:
             inputs:
-               - %kernel.root_dir%/../vendor/modpreneur/bowtie/administration/fonts/necktie.ttf
+               - "%kernel.root_dir%/../vendor/modpreneur/bowtie/administration/fonts/necktie.ttf"
             output: "fonts/necktie.ttf"
         necktie_woff:
             inputs:
-               - %kernel.root_dir%/../vendor/modpreneur/bowtie/administration/fonts/necktie.woff
+               - "%kernel.root_dir%/../vendor/modpreneur/bowtie/administration/fonts/necktie.woff"
             output: "fonts/necktie.woff"
         necktie_icons:
            inputs:
-              - %kernel.root_dir%/../vendor/modpreneur/bowtie/administration/css/necktie-icons.css
+              - "%kernel.root_dir%/../vendor/modpreneur/bowtie/administration/css/necktie-icons.css"
         trinity_eot:
             inputs:
-              - %kernel.root_dir%/../vendor/trinity/admin/AdminBundle/Resources/Public/fonts/trinity.eot
+              - "%kernel.root_dir%/../vendor/trinity/admin/AdminBundle/Resources/Public/fonts/trinity.eot"
             output: "fonts/trinity.eot"
         trinity_ttf:
             inputs:
-                - %kernel.root_dir%/../vendor/trinity/admin/AdminBundle/Resources/Public/fonts/trinity.ttf
+                - "%kernel.root_dir%/../vendor/trinity/admin/AdminBundle/Resources/Public/fonts/trinity.ttf"
             output: "fonts/trinity.ttf"
         trinity_woff:
             inputs:
-                - %kernel.root_dir%/../vendor/trinity/admin/AdminBundle/Resources/Public/fonts/trinity.woff
+                - "%kernel.root_dir%/../vendor/trinity/admin/AdminBundle/Resources/Public/fonts/trinity.woff"
             output: "fonts/trinity.wof"
         trinity_svg:
             inputs:
-                - %kernel.root_dir%/../vendor/trinity/admin/AdminBundle/Resources/Public/fonts/trinity.svg
+                - "%kernel.root_dir%/../vendor/trinity/admin/AdminBundle/Resources/Public/fonts/trinity.svg"
             output: "fonts/trinity.svg"
         ticones_eot:
             inputs:
-                - %kernel.root_dir%/../vendor/modpreneur/bowtie/src/fonts/tiecons/tiecons.eot
+                - "%kernel.root_dir%/../vendor/modpreneur/bowtie/src/fonts/tiecons/tiecons.eot"
             outpoutput: "fonts/tiecons/tiecons.eot"
         ticones_svg:
             inputs:
-                - %kernel.root_dir%/../vendor/modpreneur/bowtie/src/fonts/tiecons/tiecons.svg
+                - "%kernel.root_dir%/../vendor/modpreneur/bowtie/src/fonts/tiecons/tiecons.svg"
             output: "fonts/tiecons/tiecons.svg"
         ticones_ttf:
             inputs:
-                - %kernel.root_dir%/../vendor/modpreneur/bowtie/src/fonts/tiecons/tiecons.ttf
+                - "%kernel.root_dir%/../vendor/modpreneur/bowtie/src/fonts/tiecons/tiecons.ttf"
             output: "fonts/tiecons/tiecons.ttf"
         ticones_woff:
             inputs:
-                - %kernel.root_dir%/../vendor/modpreneur/bowtie/src/fonts/tiecons/tiecons.woff
+                - "%kernel.root_dir%/../vendor/modpreneur/bowtie/src/fonts/tiecons/tiecons.woff"
             output: "fonts/tiecons/tiecons.woff"
 
 # Doctrine Configuration
@@ -223,7 +223,7 @@ snc_redis:
         default:
             type: predis
             alias: default
-            dsn: %redis_dsn%
+            dsn: "%redis_dsn%"
             logging: false
             options:
                 replication: true
@@ -238,7 +238,7 @@ trinity_settings:
 
 kms_froala_editor:
     language: "en_gb"
-    serialNumber: %froala_editor_key%
+    serialNumber: "%froala_editor_key%"
     charCounterCount: false
 #    pluginsDisabled: does not have an effect
     imageUploadURL: app_froala_upload_image
@@ -251,7 +251,7 @@ knp_gaufrette:
         froala_editor_storage:
             aws_s3:
                 service_id: venice.app.s3_client
-                bucket_name: %amazon_s3_bucket%
+                bucket_name: "%amazon_s3_bucket%"
                 options:
                     create: true
 #                    directory: "froala" todo: create a directory for froala files

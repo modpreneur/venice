@@ -3,9 +3,8 @@
  * Created by PhpStorm.
  * User: Jakub Fajkus
  * Date: 05.06.16
- * Time: 15:10
+ * Time: 15:10.
  */
-
 namespace Venice\BunnyBundle;
 
 use Trinity\Bundle\BunnyBundle\AbstractProducer;

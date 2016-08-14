@@ -5,8 +5,7 @@ namespace Venice\AppBundle\Services;
 use Venice\AppBundle\Interfaces\ConfiguratorInterface;
 
 /**
- * Class EntityOverrideHandler
- * @package Venice\AppBundle\Services
+ * Class EntityOverrideHandler.
  */
 class EntityOverrideHandler
 {
@@ -15,6 +14,7 @@ class EntityOverrideHandler
 
     /**
      * FormOverrideHandler constructor.
+     *
      * @param $configurator
      */
     public function __construct(ConfiguratorInterface $configurator)
@@ -24,6 +24,7 @@ class EntityOverrideHandler
 
     /**
      * @param string $entityClass
+     *
      * @return mixed|string
      */
     public function getEntityClass(string $entityClass)
@@ -35,7 +36,8 @@ class EntityOverrideHandler
      * Get instance of the given entity class.
      *
      * @param string $entityClass
-     * @param array $constructorArgs
+     * @param array  $constructorArgs
+     *
      * @return object
      */
     public function getEntityInstance(string $entityClass, array $constructorArgs = [])
@@ -43,7 +45,7 @@ class EntityOverrideHandler
         $class = $this->getEntityClass($entityClass);
 
         if (count($constructorArgs) < 1) {
-            return new $class;
+            return new $class();
         } else {
             $reflection = new \ReflectionClass($class);
 

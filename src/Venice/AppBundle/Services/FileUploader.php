@@ -6,17 +6,16 @@ use Gaufrette\Filesystem;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
- * todo: Copied from necktie, needs review
+ * todo: Copied from necktie, needs review.
  *
  * Class FileUploader
- * @package Venice\AppBundle\Services
  */
 class FileUploader
 {
     private $allowedMimeTypes = [
         'image/jpeg',
         'image/png',
-        'image/gif'
+        'image/gif',
     ];
 
     private $filesystem;
@@ -51,11 +50,11 @@ class FileUploader
         return $filename;
     }
 
-
     /**
-     * Generate full URL for file from s3 key(file identifier)
+     * Generate full URL for file from s3 key(file identifier).
      *
      * @param string
+     *
      * @return string
      */
     public function genUrl($key)
@@ -64,9 +63,10 @@ class FileUploader
     }
 
     /**
-     * Extract file identifier from full URL
+     * Extract file identifier from full URL.
      *
      * @param string
+     *
      * @return string
      */
     public function urlToKey($url)
@@ -78,14 +78,15 @@ class FileUploader
         if (substr($url, 0, strlen($prefix)) == $prefix) {
             $key = substr($url, strlen($prefix));
         }
+
         return $key;
     }
 
-
     /**
-     * Return all pictures in bucket
+     * Return all pictures in bucket.
      *
      * @param string
+     *
      * @return array of string
      */
     public function getAllUrls()
@@ -103,5 +104,4 @@ class FileUploader
 
         return $urls;
     }
-
 }

@@ -3,7 +3,7 @@
 namespace Venice\AppBundle\Entity\Repositories;
 
 /**
- * HtmlContentRepository
+ * HtmlContentRepository.
  */
 class HtmlContentRepository extends ContentRepository
 {

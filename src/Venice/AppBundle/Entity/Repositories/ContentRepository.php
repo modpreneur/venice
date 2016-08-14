@@ -5,7 +5,7 @@ namespace Venice\AppBundle\Entity\Repositories;
 use Doctrine\ORM\EntityRepository;
 
 /**
- * ContentRepository
+ * ContentRepository.
  */
 class ContentRepository extends EntityRepository
 {
@@ -13,6 +13,8 @@ class ContentRepository extends EntityRepository
      * @see http://jayroman.com/blog/symfony2-quirks-with-doctrine-inheritance-and-unique-constraints
      *
      * @param string[] $criteria format: array('user' => <user_id>, 'name' => <name>)
+     *
+     * @return array|\Venice\AppBundle\Entity\Content\Content[]
      */
     public function findByUniqueCriteria(array $criteria)
     {
@@ -27,6 +29,7 @@ class ContentRepository extends EntityRepository
      * @param int $productId
      *
      * @return int
+     *
      * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
@@ -39,11 +42,13 @@ class ContentRepository extends EntityRepository
             ')
             ->setParameter('productId', $productId)
         ;
+
         return $query->getSingleScalarResult();
     }
 
     /**
      * @return int
+     *
      * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
@@ -54,6 +59,7 @@ class ContentRepository extends EntityRepository
               FROM  VeniceAppBundle:Content\Content AS content
             ')
         ;
+
         return $query->getSingleScalarResult();
     }
 }

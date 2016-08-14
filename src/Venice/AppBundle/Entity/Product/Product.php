@@ -3,9 +3,8 @@
  * Created by PhpStorm.
  * User: Jakub Fajkus
  * Date: 03.10.15
- * Time: 13:28
+ * Time: 13:28.
  */
-
 namespace Venice\AppBundle\Entity\Product;
 
 use Cocur\Slugify\Slugify;
@@ -18,9 +17,7 @@ use Venice\AppBundle\Entity\ProductAccess;
 use Venice\AppBundle\Entity\User;
 
 /**
- * Class BaseProduct
- *
- * @package Venice\AppBundle\Entity\Product
+ * Class BaseProduct.
  */
 abstract class Product extends BaseProduct
 {
@@ -40,7 +37,7 @@ abstract class Product extends BaseProduct
     protected $enabled;
 
     /**
-     * @var integer
+     * @var int
      */
     protected $orderNumber;
 
@@ -60,7 +57,7 @@ abstract class Product extends BaseProduct
     protected $articles;
 
     /**
-     * Get the product type string
+     * Get the product type string.
      *
      * @return string
      */
@@ -121,6 +118,9 @@ abstract class Product extends BaseProduct
         $this->handle = (new Slugify())->slugify($source);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function setName($name)
     {
         $this->name = $name;
@@ -244,26 +244,25 @@ abstract class Product extends BaseProduct
     }
 
     /**
-     * Creates new instance of product from type (first part of entity name ends with Product)
+     * Creates new instance of product from type (first part of entity name ends with Product).
      *
      * @param string $type Could be formatted like StandardProduct, FreeProduct,
      *                     Venice\AppBundle\\Entity\\Product\\StandardProduct, ...
-     * @param array $args
+     * @param array  $args
      *
      * @return Product
      */
-    public static function createProductByType($type, $args = [])
+    public static function createProductByType($type, array $args = [])
     {
         $class = new \ReflectionClass(static::createProductClassByType($type));
 
         return $class->newInstanceArgs($args);
     }
 
-
     /**
-     * Return a class of content from type (first part of entity name ends with Content)
+     * Return a class of content from type (first part of entity name ends with Content).
      *
-     * @param string $type Could be formatted like HtmlContent, Mp3Content, Venice\AppBundle\\Entity\\Content\\PdfContent, ...
+     * @param string $type Could be formatted like HtmlContent, Mp3Content, Venice\AppBundle\\Entity\Content\PdfContent
      *
      * @return Content
      */
@@ -275,13 +274,12 @@ abstract class Product extends BaseProduct
             $type .= 'Product';
         }
 
-        if (!strpos($type, "Venice\\AppBundle\\Entity\\Product\\")) {
-            $type = "Venice\\AppBundle\\Entity\\Product\\" . $type;
+        if (!strpos($type, 'Venice\\AppBundle\\Entity\\Product\\')) {
+            $type = 'Venice\\AppBundle\\Entity\\Product\\'.$type;
         }
 
         return $type;
     }
-
 
     /**
      * Get all Content of the product.
@@ -346,7 +344,7 @@ abstract class Product extends BaseProduct
     /**
      * Get all available content by type without information about delay and order.
      *
-     * @param User $user
+     * @param User   $user
      * @param string $type Type of the content (html, text, video, mp3, ...)
      *
      * @return Content[]
@@ -428,7 +426,7 @@ abstract class Product extends BaseProduct
             if ($lastDelay === $contentProduct->getDelay()) {
                 $content[$index][] = $contentProduct;
             } else {
-                $index++;
+                ++$index;
                 $content[$index][] = $contentProduct;
                 $lastDelay = $contentProduct->getDelay();
             }

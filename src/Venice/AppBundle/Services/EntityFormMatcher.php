@@ -5,11 +5,9 @@ namespace Venice\AppBundle\Services;
 use Venice\AppBundle\Interfaces\ConfiguratorInterface;
 
 /**
- * Class EntityFormMatcher
+ * Class EntityFormMatcher.
  *
  * Gets the appropriate Form(Type) for the given entity
- *
- * @package Venice\AppBundle\Services
  */
 class EntityFormMatcher
 {
@@ -18,6 +16,7 @@ class EntityFormMatcher
 
     /**
      * EntityFormMatcher constructor.
+     *
      * @param ConfiguratorInterface $configurator
      */
     public function __construct(ConfiguratorInterface $configurator)
@@ -26,11 +25,12 @@ class EntityFormMatcher
     }
 
     /**
-     * Get the appropriate form for given entity
+     * Get the appropriate form for given entity.
      *
      * @param object|string $entity
      *
      * @return string
+     *
      * @throws \LogicException
      */
     public function getFormClassForEntity($entity)
@@ -53,9 +53,10 @@ class EntityFormMatcher
     }
 
     /**
-     * Get entity class with the fixed doctrine proxy namespace
+     * Get entity class with the fixed doctrine proxy namespace.
      *
      * @param object $entity
+     *
      * @return string
      */
     protected function getEntityClass($entity) : string

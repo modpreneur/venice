@@ -3,9 +3,8 @@
  * Created by PhpStorm.
  * User: Jakub Fajkus
  * Date: 24.10.15
- * Time: 20:35
+ * Time: 20:35.
  */
-
 namespace Venice\AppBundle\Interfaces;
 
 use Venice\AppBundle\Entity\User;
@@ -20,21 +19,20 @@ interface NecktieGatewayInterface extends GatewayInterface
      * This method should be typically called only in the login process.
      *
      *
-     * @param string     $accessToken
-     * @param bool       $createNewUser
-     * @param bool       $persistNewUser
+     * @param string $accessToken
+     * @param bool   $createNewUser
+     * @param bool   $persistNewUser
      *
      * @return User|null
+     *
      * @throws UnsuccessfulNecktieResponseException
      */
     public function getUserByAccessToken(string $accessToken, bool $createNewUser = false, bool $persistNewUser = true);
-
 
     /**
      * @return Cookie
      */
     public function getStateCookie();
-
 
     /**
      * @param User $user
@@ -42,7 +40,6 @@ interface NecktieGatewayInterface extends GatewayInterface
      * @throws ExpiredRefreshTokenException
      */
     public function refreshAccessToken(User $user);
-
 
     /**
      * @param User $user

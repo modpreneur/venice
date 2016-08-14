@@ -3,9 +3,8 @@
  * Created by PhpStorm.
  * User: Jakub Fajkus
  * Date: 19.01.16
- * Time: 12:03
+ * Time: 12:03.
  */
-
 namespace Venice\AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -16,15 +15,20 @@ use Venice\AppBundle\Entity\Product\StandardProduct;
 use Venice\AppBundle\Entity\User;
 
 /**
- * Class NecktieBuyController
+ * Class NecktieBuyController.
  */
 class NecktieBuyController extends Controller
 {
     /**
-     * @param Request $request
+     * @param Request         $request
      * @param StandardProduct $product
+     * @param string          $paySystem
      *
      * @return RedirectResponse
+     *
+     * @throws \Venice\AppBundle\Exceptions\UnsuccessfulNecktieResponseException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \RuntimeException
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      * @throws \Venice\AppBundle\Exceptions\ExpiredRefreshTokenException
      * @throws \LogicException
@@ -32,6 +36,7 @@ class NecktieBuyController extends Controller
      * @throws \Symfony\Component\Intl\Exception\MethodArgumentValueNotImplementedException
      * @throws \Trinity\Bundle\SettingsBundle\Exception\PropertyNotExistsException
      * @throws \InvalidArgumentException
+     * @throws \Exception
      */
     public function redirectToNecktieBuy(Request $request, StandardProduct $product, string $paySystem)
     {
@@ -55,7 +60,7 @@ class NecktieBuyController extends Controller
         } elseif ($paySystem === 'braintree') {
             $paySystemUrlPart = 'braintree/buy';
         } else {
-            throw new NotFoundHttpException('Unsupported pay system: ' . $paySystem);
+            throw new NotFoundHttpException('Unsupported pay system: '.$paySystem);
         }
 
         if ($billingPlanId) {
@@ -67,14 +72,14 @@ class NecktieBuyController extends Controller
             $price = $priceStringGenerator->generateFullPriceStr($billingPlan);
 
             return new RedirectResponse(
-                $this->getParameter('necktie_url') . "/payment/{$paySystemUrlPart}/billing/{$billingPlanId}?access_token={$token}&{$useStoredCC}&price={$price}",
+                $this->getParameter('necktie_url')."/payment/{$paySystemUrlPart}/billing/{$billingPlanId}?access_token={$token}&{$useStoredCC}&price={$price}",
                 302
             );
         } else {
             $price = $priceStringGenerator->generateFullPriceStr($product->getDefaultBillingPlan());
 
             return new RedirectResponse(
-                $this->getParameter('necktie_url') . "/payment/{$paySystemUrlPart}/{$productId}?access_token={$token}&{$useStoredCC}&price={$price}",
+                $this->getParameter('necktie_url')."/payment/{$paySystemUrlPart}/{$productId}?access_token={$token}&{$useStoredCC}&price={$price}",
                 302
             );
         }

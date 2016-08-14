@@ -39,12 +39,12 @@ use Venice\AppBundle\Form\User\UserType;
  * But that approach would require hardcoding the namespaces for over 30 classes.
  *
  * Class EntityFormConfigurator
- * @package Venice\AppBundle\Configurators
  */
 class EntityFormConfigurator extends BaseConfigurator
 {
     /**
      * EntityFormConfigurator constructor.
+     *
      * @param array $configuration
      */
     public function __construct(array $configuration = [])

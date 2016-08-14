@@ -3,9 +3,8 @@
  * Created by PhpStorm.
  * User: Jakub Fajkus
  * Date: 28.12.15
- * Time: 18:19
+ * Time: 18:19.
  */
-
 namespace Venice\AdminBundle\Controller;
 
 use Doctrine\DBAL\DBALException;
@@ -17,18 +16,20 @@ use Venice\AppBundle\Entity\User;
 use Venice\AppBundle\Form\User\RolesType;
 
 /**
- * Class UserController
+ * Class UserController.
  */
 class UserController extends BaseAdminController
 {
     /**
      * @Security("is_granted('ROLE_ADMIN_USER_VIEW')")
+     *
      * @return Response
+     *
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws \Doctrine\ORM\NoResultException
      * @throws \LogicException
      * @throws \Trinity\Bundle\SettingsBundle\Exception\PropertyNotExistsException
      * @throws \Trinity\Bundle\GridBundle\Exception\DuplicateColumnException
-     * @internal param Request $request
-     *
      */
     public function indexAction()
     {
@@ -50,29 +51,26 @@ class UserController extends BaseAdminController
         $gridConfBuilder->addColumn('fullName', 'Full Name');
         $gridConfBuilder->addColumn('details', ' ', ['allowOrder' => false]);
 
-
         return $this->render(
             'VeniceAdminBundle:User:index.html.twig',
             ['gridConfiguration' => $gridConfBuilder->getJSON(), 'count' => $count]
         );
     }
 
-
     /**
      * @Security("is_granted('ROLE_ADMIN_USER_VIEW')")
      *
      * @param User $user
+     *
      * @return Response
-     * @internal param Request $request
      */
     public function showAction(User $user)
     {
         return $this->render(
             'VeniceAdminBundle:User:show.html.twig',
-            ['user' => $user,]
+            ['user' => $user]
         );
     }
-
 
     /**
      * @Security("is_granted('ROLE_ADMIN_USER_VIEW')")
@@ -96,11 +94,10 @@ class UserController extends BaseAdminController
             'VeniceAdminBundle:User:tabs.html.twig',
             [
                 'user' => $user,
-                'necktieUserShowUrl' => $necktieUserShowUrl
+                'necktieUserShowUrl' => $necktieUserShowUrl,
             ]
         );
     }
-
 
 //    /**
 //     * @Security("is_granted('ROLE_ADMIN_USER_EDIT')")
@@ -128,14 +125,13 @@ class UserController extends BaseAdminController
 //        );
 //    }
 
-
 //    /**
 //     * @Security("is_granted('ROLE_ADMIN_USER_EDIT')")
 //     */
 //    public function createAction(Request $request)
 //    {
 //        $user = new User();
-//        $em = $this->getEntityManager();
+//        $entityManager = $this->getEntityManager();
 //
 //        $productForm = $this->getFormCreator()
 //            ->createCreateForm(
@@ -147,10 +143,10 @@ class UserController extends BaseAdminController
 //        $productForm->handleRequest($request);
 //
 //        if ($productForm->isValid()) {
-//            $em->persist($user);
+//            $entityManager->persist($user);
 //
 //            try {
-//                $em->flush();
+//                $entityManager->flush();
 //            } catch (DBALException $e) {
 //                return new JsonResponse(
 //                    [
@@ -171,13 +167,16 @@ class UserController extends BaseAdminController
 //        }
 //    }
 
-
     /**
      * @Security("is_granted('ROLE_ADMIN_USER_EDIT')")
      *
      * @param User $user
      *
      * @return \Symfony\Component\HttpFoundation\Response
+     *
+     * @throws \Symfony\Component\Form\Exception\UnexpectedTypeException
+     * @throws \Symfony\Component\Routing\Exception\RouteNotFoundException
+     * @throws \Symfony\Component\Routing\Exception\MissingMandatoryParametersException
      * @throws \Symfony\Component\OptionsResolver\Exception\InvalidOptionsException
      * @throws \Symfony\Component\Form\Exception\AlreadySubmittedException
      * @throws \Symfony\Component\Routing\Exception\InvalidParameterException
@@ -191,7 +190,7 @@ class UserController extends BaseAdminController
                 $user,
                 $this->getEntityFormMatcher()->getFormClassForEntity($user),
                 'admin_user',
-                ['id' => $user->getId(),]
+                ['id' => $user->getId()]
             );
 
         return $this->render(
@@ -203,14 +202,17 @@ class UserController extends BaseAdminController
         );
     }
 
-
     /**
      * @Security("is_granted('ROLE_ADMIN_USER_EDIT')")
      *
      * @param Request $request
-     * @param User $user
+     * @param User    $user
      *
      * @return JsonResponse
+     *
+     * @throws \Symfony\Component\Form\Exception\UnexpectedTypeException
+     * @throws \Symfony\Component\Routing\Exception\RouteNotFoundException
+     * @throws \Symfony\Component\Routing\Exception\MissingMandatoryParametersException
      * @throws \Symfony\Component\OptionsResolver\Exception\InvalidOptionsException
      * @throws \Symfony\Component\Routing\Exception\InvalidParameterException
      * @throws \Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException
@@ -223,14 +225,14 @@ class UserController extends BaseAdminController
      */
     public function updateAction(Request $request, User $user)
     {
-        $em = $this->getEntityManager();
+        $entityManager = $this->getEntityManager();
 
         $form = $this->getFormCreator()
             ->createEditForm(
                 $user,
                 $this->getEntityFormMatcher()->getFormClassForEntity($user),
                 'admin_user',
-                ['id' => $user->getId(),]
+                ['id' => $user->getId()]
             );
 
         $originalPassword = $user->getPassword();
@@ -249,14 +251,14 @@ class UserController extends BaseAdminController
                 $user->setPassword($originalPassword);
             }
 
-            $em->persist($user);
+            $entityManager->persist($user);
 
             try {
-                $em->flush();
+                $entityManager->flush();
             } catch (DBALException $e) {
                 return new JsonResponse(
                     [
-                        'error' => ['db' => $e->getMessage(),]
+                        'error' => ['db' => $e->getMessage()],
                     ],
                     400
                 );
@@ -278,11 +280,14 @@ class UserController extends BaseAdminController
      * @param User $user
      *
      * @return Response
+     *
+     * @throws \Symfony\Component\Form\Exception\UnexpectedTypeException
+     * @throws \Symfony\Component\Routing\Exception\RouteNotFoundException
+     * @throws \Symfony\Component\Routing\Exception\MissingMandatoryParametersException
      * @throws \Symfony\Component\OptionsResolver\Exception\InvalidOptionsException
      * @throws \Symfony\Component\Form\Exception\AlreadySubmittedException
      * @throws \Symfony\Component\Routing\Exception\InvalidParameterException
      * @throws \Symfony\Component\Form\Exception\LogicException
-     *
      */
     public function deleteTabAction(User $user)
     {
@@ -292,22 +297,26 @@ class UserController extends BaseAdminController
         return $this
             ->render(
                 'VeniceAdminBundle:User:tabDelete.html.twig',
-                ['form' => $form->createView(),]
+                ['form' => $form->createView()]
             );
     }
-
 
     /**
      * @Security("is_granted('ROLE_ADMIN_USER_EDIT')")
      *
      * @param Request $request
-     * @param User $user
+     * @param User    $user
      *
      * @return JsonResponse
+     *
+     * @throws \Symfony\Component\Form\Exception\UnexpectedTypeException
+     * @throws \Symfony\Component\Routing\Exception\RouteNotFoundException
+     * @throws \Symfony\Component\Routing\Exception\MissingMandatoryParametersException
      * @throws \Symfony\Component\OptionsResolver\Exception\InvalidOptionsException
      * @throws \Symfony\Component\Form\Exception\AlreadySubmittedException
      * @throws \Symfony\Component\Routing\Exception\InvalidParameterException
      * @throws \Symfony\Component\Form\Exception\LogicException
+     * @throws \LogicException
      */
     public function deleteAction(Request $request, User $user)
     {
@@ -318,13 +327,13 @@ class UserController extends BaseAdminController
 
         if ($form->isValid()) {
             try {
-                $em = $this->getEntityManager();
-                $em->remove($user);
-                $em->flush();
+                $entityManager = $this->getEntityManager();
+                $entityManager->remove($user);
+                $entityManager->flush();
             } catch (DBALException $e) {
                 return new JsonResponse(
                     [
-                        'error' => ['db' => $e->getMessage(),],
+                        'error' => ['db' => $e->getMessage()],
                         'message' => 'Could not delete.',
                     ],
                     400
@@ -347,6 +356,10 @@ class UserController extends BaseAdminController
      * @param User $user
      *
      * @return Response
+     *
+     * @throws \Symfony\Component\Form\Exception\UnexpectedTypeException
+     * @throws \Symfony\Component\Routing\Exception\RouteNotFoundException
+     * @throws \Symfony\Component\Routing\Exception\MissingMandatoryParametersException
      * @throws \Symfony\Component\OptionsResolver\Exception\InvalidOptionsException
      * @throws \Symfony\Component\Form\Exception\AlreadySubmittedException
      * @throws \Symfony\Component\Routing\Exception\InvalidParameterException
@@ -365,18 +378,22 @@ class UserController extends BaseAdminController
         return $this->render(
             'VeniceAdminBundle:User:roles.html.twig',
             [
-                'form' => $form->createView()
+                'form' => $form->createView(),
             ]
         );
     }
 
-
     /**
      * @Security("is_granted('ROLE_ADMIN_USER_EDIT')")
      *
-     * @param User $user
+     * @param User    $user
+     * @param Request $request
      *
      * @return Response
+     *
+     * @throws \Symfony\Component\Form\Exception\UnexpectedTypeException
+     * @throws \Symfony\Component\Routing\Exception\RouteNotFoundException
+     * @throws \Symfony\Component\Routing\Exception\MissingMandatoryParametersException
      * @throws \Symfony\Component\OptionsResolver\Exception\InvalidOptionsException
      * @throws \Symfony\Component\Form\Exception\AlreadySubmittedException
      * @throws \Symfony\Component\Routing\Exception\InvalidParameterException

@@ -3,9 +3,8 @@
  * Created by PhpStorm.
  * User: Jakub Fajkus
  * Date: 30.11.15
- * Time: 21:08
+ * Time: 21:08.
  */
-
 namespace Venice\AppBundle\Form\Content;
 
 use Venice\AppBundle\Entity\Content\GroupContent;
@@ -14,6 +13,9 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * {@inheritdoc}
+ */
 class GroupContentType extends ContentType
 {
     /** @var  GroupContent */
@@ -21,7 +23,7 @@ class GroupContentType extends ContentType
 
     /**
      * @param FormBuilderInterface $builder
-     * @param array $options
+     * @param array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -51,14 +53,15 @@ class GroupContentType extends ContentType
 
     /**
      * @param OptionsResolver $resolver
+     *
      * @throws \Symfony\Component\OptionsResolver\Exception\AccessException
      */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(
             [
-                'data_class' => "Venice\AppBundle\\Entity\\Content\\GroupContent",
-                'groupContent' => null
+                'data_class' => GroupContent::class,
+                'groupContent' => null,
             ]
         );
     }

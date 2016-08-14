@@ -3,9 +3,8 @@
  * Created by PhpStorm.
  * User: Jakub Fajkus
  * Date: 07.11.15
- * Time: 13:43
+ * Time: 13:43.
  */
-
 namespace Venice\AdminBundle\Controller;
 
 use Doctrine\Common\Collections\ArrayCollection;
@@ -24,17 +23,16 @@ use Venice\AppBundle\Entity\ContentProduct;
 use Venice\AppBundle\Form\ContentProduct\ContentProductTypeWithHiddenContent;
 
 /**
- * Class ContentController
- * @package Venice\AdminBundle\Controller
+ * Class ContentController.
  */
 class ContentController extends BaseAdminController
 {
     /**
      * @Security("is_granted('ROLE_ADMIN_CONTENT_VIEW')")
      *
-     * @param Request $request
-     *
      * @return string
+     *
+     * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
      * @throws \LogicException
      * @throws \Trinity\Bundle\SettingsBundle\Exception\PropertyNotExistsException
@@ -63,16 +61,16 @@ class ContentController extends BaseAdminController
             'VeniceAdminBundle:Content:index.html.twig',
             [
                 'gridConfiguration' => $gridConfBuilder->getJSON(),
-                'count' => $max
+                'count' => $max,
             ]
         );
     }
-
 
     /**
      * @param Content $content
      *
      * @return Response
+     *
      * @throws \LogicException
      */
     public function indexForContentAction(Content $content)
@@ -84,33 +82,31 @@ class ContentController extends BaseAdminController
 
         return $this->render(
             'VeniceAdminBundle:ContentProduct:contentIndex.html.twig',
-            ['contentProducts' => $contentProducts,]
+            ['contentProducts' => $contentProducts]
         );
     }
-
 
     /**
      * @Security("is_granted('ROLE_ADMIN_CONTENT_VIEW')")
      *
      * @param Content $content
+     *
      * @return Response
-     * @internal param Request $request
      */
     public function showAction(Content $content)
     {
         return $this->render(
-            'VeniceAdminBundle:Content:show' . ucfirst($content->getType()) . '.html.twig',
+            'VeniceAdminBundle:Content:show'.ucfirst($content->getType()).'.html.twig',
             ['content' => $content]
         );
     }
-
 
     /**
      * @Security("is_granted('ROLE_ADMIN_CONTENT_VIEW')")
      *
      * @param Content $content
+     *
      * @return Response
-     * @internal param Request $request
      */
     public function tabsAction(Content $content)
     {
@@ -118,17 +114,22 @@ class ContentController extends BaseAdminController
             ->addRouteItem('Contents', 'admin_content_index')
             ->addRouteItem($content->getName(), 'admin_content_tabs', ['id' => $content->getId()]);
 
-        return $this->render('VeniceAdminBundle:Content:tabs.html.twig', ['content' => $content,]);
+        return $this->render('VeniceAdminBundle:Content:tabs.html.twig', ['content' => $content]);
     }
-
 
     /**
      * @Security("is_granted('ROLE_ADMIN_CONTENT_EDIT')")
+     *
      * @return Response
+     *
+     * @throws \Symfony\Component\Form\Exception\UnexpectedTypeException
+     * @throws \Symfony\Component\Routing\Exception\RouteNotFoundException
+     * @throws \Symfony\Component\Routing\Exception\MissingMandatoryParametersException
+     * @throws \Symfony\Component\Form\Exception\LogicException
+     * @throws \Symfony\Component\Routing\Exception\InvalidParameterException
+     * @throws \Symfony\Component\Form\Exception\AlreadySubmittedException
      * @throws \Symfony\Component\OptionsResolver\Exception\InvalidOptionsException
      * @throws \LogicException
-     * @internal param Request $request
-     *
      */
     public function newAction()
     {
@@ -153,22 +154,27 @@ class ContentController extends BaseAdminController
             'VeniceAdminBundle:Content:new.html.twig',
             [
                 'entity' => $content,
-                'form' => $form->createView()
+                'form' => $form->createView(),
             ]
         );
     }
-
 
     /**
      * @Security("is_granted('ROLE_ADMIN_PRODUCT_EDIT')")
      *
      * @param $contentType
+     *
      * @return Response
+     *
+     * @throws \Symfony\Component\Form\Exception\UnexpectedTypeException
+     * @throws \Symfony\Component\Routing\Exception\RouteNotFoundException
+     * @throws \Symfony\Component\Form\Exception\LogicException
+     * @throws \Symfony\Component\Routing\Exception\InvalidParameterException
+     * @throws \Symfony\Component\Routing\Exception\MissingMandatoryParametersException
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      * @throws \Symfony\Component\OptionsResolver\Exception\InvalidOptionsException
      * @throws \LogicException
      * @throws \Symfony\Component\Form\Exception\AlreadySubmittedException
-     * @internal param Request $request
      */
     public function newFormAction($contentType)
     {
@@ -176,14 +182,14 @@ class ContentController extends BaseAdminController
             $contentClass = Content::createContentClassByType($contentType);
             $content = $this->getEntityOverrideHandler()->getEntityInstance($contentClass);
         } catch (ReflectionException $e) {
-            throw new NotFoundHttpException('Content type: ' . $contentType . ' not found.');
+            throw new NotFoundHttpException('Content type: '.$contentType.' not found.');
         }
         $form = $this->getFormCreator()
             ->createCreateForm(
                 $content,
                 $this->getEntityFormMatcher()->getFormClassForEntity($content),
                 'admin_content',
-                ['contentType' => $contentType,]
+                ['contentType' => $contentType]
             );
 
         // Remove items field for now. todo: remove it in future?
@@ -203,7 +209,6 @@ class ContentController extends BaseAdminController
         );
     }
 
-
     /**
      * Process a request to create a new Content entity.
      *
@@ -213,6 +218,10 @@ class ContentController extends BaseAdminController
      * @param         $contentType
      *
      * @return JsonResponse
+     *
+     * @throws \Symfony\Component\Form\Exception\UnexpectedTypeException
+     * @throws \Symfony\Component\Routing\Exception\RouteNotFoundException
+     * @throws \Symfony\Component\Routing\Exception\MissingMandatoryParametersException
      * @throws \Symfony\Component\OptionsResolver\Exception\InvalidOptionsException
      * @throws \Symfony\Component\Routing\Exception\InvalidParameterException
      * @throws \Symfony\Component\Form\Exception\AlreadySubmittedException
@@ -226,15 +235,15 @@ class ContentController extends BaseAdminController
             $contentClass = Content::createContentClassByType($contentType);
             $content = $this->getEntityOverrideHandler()->getEntityInstance($contentClass);
         } catch (ReflectionException $e) {
-            throw new NotFoundHttpException('Content type: ' . $contentType . ' not found.');
+            throw new NotFoundHttpException('Content type: '.$contentType.' not found.');
         }
 
-        $em = $this->getEntityManager();
+        $entityManager = $this->getEntityManager();
 
         $formOptions = [];
 
         if ($content instanceof GroupContent) {
-            $formOptions = ['groupContent' => ($content instanceof GroupContent) ? $content : null,];
+            $formOptions = ['groupContent' => ($content instanceof GroupContent) ? $content : null];
         }
 
         $form = $this->getFormCreator()
@@ -249,16 +258,16 @@ class ContentController extends BaseAdminController
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $em->persist($content);
-            $em->flush();
+            $entityManager->persist($content);
+            $entityManager->flush();
 
             return new JsonResponse(
                 [
                     'message' => 'Content successfully created',
                     'location' => $this->generateUrl(
                         'admin_content_tabs',
-                        ['id' => $content->getId(),]
-                    )
+                        ['id' => $content->getId()]
+                    ),
                 ],
                 302
             );
@@ -267,24 +276,30 @@ class ContentController extends BaseAdminController
         }
     }
 
-
     /**
      * Display a form to edit a Content entity.
      *
      * @Security("is_granted('ROLE_ADMIN_CONTENT_EDIT')")
      *
      * @param Content $content
+     *
      * @return Response
+     *
+     * @throws \Symfony\Component\Form\Exception\UnexpectedTypeException
+     * @throws \Symfony\Component\Routing\Exception\RouteNotFoundException
+     * @throws \Symfony\Component\Routing\Exception\MissingMandatoryParametersException
+     * @throws \Symfony\Component\Form\Exception\LogicException
+     * @throws \Symfony\Component\Routing\Exception\InvalidParameterException
+     * @throws \Symfony\Component\Form\Exception\AlreadySubmittedException
      * @throws \Symfony\Component\OptionsResolver\Exception\InvalidOptionsException
      * @throws \LogicException
-     * @internal param Request $request
      */
     public function editAction(Content $content)
     {
         $formOptions = [];
 
         if ($content instanceof GroupContent) {
-            $formOptions = ['groupContent' => ($content instanceof GroupContent) ? $content : null,];
+            $formOptions = ['groupContent' => ($content instanceof GroupContent) ? $content : null];
         }
 
         $form = $this->getFormCreator()
@@ -305,7 +320,6 @@ class ContentController extends BaseAdminController
         );
     }
 
-
     /**
      * Process a request to update a Content entity.
      *
@@ -315,9 +329,15 @@ class ContentController extends BaseAdminController
      * @param Content $content
      *
      * @return JsonResponse
+     *
+     * @throws \Symfony\Component\Form\Exception\UnexpectedTypeException
+     * @throws \Symfony\Component\OptionsResolver\Exception\InvalidOptionsException
+     * @throws \Symfony\Component\Routing\Exception\RouteNotFoundException
+     * @throws \Symfony\Component\Routing\Exception\MissingMandatoryParametersException
      * @throws \Symfony\Component\Form\Exception\AlreadySubmittedException
      * @throws \Symfony\Component\Routing\Exception\InvalidParameterException
      * @throws \Symfony\Component\Form\Exception\LogicException
+     * @throws \LogicException
      */
     public function updateAction(Request $request, Content $content)
     {
@@ -328,12 +348,15 @@ class ContentController extends BaseAdminController
         }
     }
 
-
     /**
      * @param Request $request
      * @param Content $content
      *
      * @return JsonResponse
+     *
+     * @throws \Symfony\Component\Form\Exception\UnexpectedTypeException
+     * @throws \Symfony\Component\Routing\Exception\RouteNotFoundException
+     * @throws \Symfony\Component\Routing\Exception\MissingMandatoryParametersException
      * @throws \Symfony\Component\OptionsResolver\Exception\InvalidOptionsException
      * @throws \Symfony\Component\Form\Exception\AlreadySubmittedException
      * @throws \Symfony\Component\Routing\Exception\InvalidParameterException
@@ -342,7 +365,7 @@ class ContentController extends BaseAdminController
      */
     protected function updateNonGroupContent(Request $request, Content $content)
     {
-        $em = $this->getEntityManager();
+        $entityManager = $this->getEntityManager();
 
         $form = $this->getFormCreator()
             ->createEditForm(
@@ -354,21 +377,21 @@ class ContentController extends BaseAdminController
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $em->persist($content);
+            $entityManager->persist($content);
 
             try {
-                $em->flush();
+                $entityManager->flush();
             } catch (DBALException $e) {
                 return new JsonResponse(
                     [
-                        'error' => ['db' => $e->getMessage(),],
+                        'error' => ['db' => $e->getMessage()],
                     ],
                     400
                 );
             }
 
             return new JsonResponse(
-                ['message' => 'Content successfully updated',]
+                ['message' => 'Content successfully updated']
             );
         } else {
             return $this->returnFormErrorsJsonResponse($form);
@@ -376,10 +399,14 @@ class ContentController extends BaseAdminController
     }
 
     /**
-     * @param Request $request
+     * @param Request      $request
      * @param GroupContent $content
      *
      * @return JsonResponse
+     *
+     * @throws \Symfony\Component\Form\Exception\UnexpectedTypeException
+     * @throws \Symfony\Component\Routing\Exception\RouteNotFoundException
+     * @throws \Symfony\Component\Routing\Exception\MissingMandatoryParametersException
      * @throws \Symfony\Component\OptionsResolver\Exception\InvalidOptionsException
      * @throws \Symfony\Component\Form\Exception\AlreadySubmittedException
      * @throws \Symfony\Component\Routing\Exception\InvalidParameterException
@@ -393,10 +420,10 @@ class ContentController extends BaseAdminController
                 $content,
                 $this->getEntityFormMatcher()->getFormClassForEntity($content),
                 'admin_content',
-                ['groupContent' => $content,]
+                ['groupContent' => $content]
             );
 
-        $em = $this->getEntityManager();
+        $entityManager = $this->getEntityManager();
 
         //Copy original items
         $originalItems = new ArrayCollection();
@@ -410,31 +437,30 @@ class ContentController extends BaseAdminController
             foreach ($originalItems as $originalItem) {
                 // If the item is not in the field data it was removed. So remove it from collection.
                 if (!$content->getItems()->contains($originalItem)) {
-                    $em->remove($originalItem);
+                    $entityManager->remove($originalItem);
                 }
             }
 
-            $em->persist($content);
+            $entityManager->persist($content);
 
             try {
-                $em->flush();
+                $entityManager->flush();
             } catch (DBALException $e) {
                 return new JsonResponse(
                     [
-                        'error' => ['db' => $e->getMessage(),],
+                        'error' => ['db' => $e->getMessage()],
                     ],
                     400
                 );
             }
 
             return new JsonResponse(
-                ['message' => 'Content successfully updated',]
+                ['message' => 'Content successfully updated']
             );
         } else {
             return $this->returnFormErrorsJsonResponse($contentForm);
         }
     }
-
 
     /**
      * @Security("is_granted('ROLE_ADMIN_CONTENT_EDIT')")
@@ -442,11 +468,14 @@ class ContentController extends BaseAdminController
      * @param Content $content
      *
      * @return Response
+     *
+     * @throws \Symfony\Component\Form\Exception\UnexpectedTypeException
+     * @throws \Symfony\Component\Routing\Exception\RouteNotFoundException
+     * @throws \Symfony\Component\Routing\Exception\MissingMandatoryParametersException
      * @throws \Symfony\Component\OptionsResolver\Exception\InvalidOptionsException
      * @throws \Symfony\Component\Form\Exception\AlreadySubmittedException
      * @throws \Symfony\Component\Routing\Exception\InvalidParameterException
      * @throws \Symfony\Component\Form\Exception\LogicException
-     *
      */
     public function deleteTabAction(Content $content)
     {
@@ -457,11 +486,10 @@ class ContentController extends BaseAdminController
             ->render(
                 'VeniceAdminBundle:Content:tabDelete.html.twig',
                 [
-                    'form' => $form->createView()
+                    'form' => $form->createView(),
                 ]
             );
     }
-
 
     /**
      * @Security("is_granted('ROLE_ADMIN_CONTENT_EDIT')")
@@ -470,14 +498,19 @@ class ContentController extends BaseAdminController
      * @param Content $content
      *
      * @return JsonResponse
+     *
+     * @throws \Symfony\Component\Form\Exception\UnexpectedTypeException
+     * @throws \Symfony\Component\Routing\Exception\RouteNotFoundException
+     * @throws \Symfony\Component\Routing\Exception\MissingMandatoryParametersException
      * @throws \Symfony\Component\OptionsResolver\Exception\InvalidOptionsException
      * @throws \Symfony\Component\Form\Exception\AlreadySubmittedException
      * @throws \Symfony\Component\Routing\Exception\InvalidParameterException
      * @throws \Symfony\Component\Form\Exception\LogicException
+     * @throws \LogicException
      */
     public function deleteAction(Request $request, Content $content)
     {
-        $em = $this->getEntityManager();
+        $entityManager = $this->getEntityManager();
 
         $form = $this->getFormCreator()
             ->createDeleteForm('admin_content', $content->getId());
@@ -490,16 +523,16 @@ class ContentController extends BaseAdminController
                 if ($content instanceof GroupContent) {
                     /** @var ContentInGroup $item */
                     foreach ($content->getItems() as $item) {
-                        $em->remove($item);
+                        $entityManager->remove($item);
                     }
                 }
 
-                $em->remove($content);
-                $em->flush();
+                $entityManager->remove($content);
+                $entityManager->flush();
             } catch (DBALException $e) {
                 return new JsonResponse(
                     [
-                        'error' => ['db' => $e->getMessage(),],
+                        'error' => ['db' => $e->getMessage()],
                         'message' => 'Could not delete.',
                     ],
                     400
@@ -516,11 +549,12 @@ class ContentController extends BaseAdminController
         );
     }
 
-
     /**
      * @param Content $content
      *
      * @return Response
+     *
+     * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
      * @throws \LogicException
      * @throws \Trinity\Bundle\SettingsBundle\Exception\PropertyNotExistsException
@@ -544,26 +578,32 @@ class ContentController extends BaseAdminController
         $gridConfBuilder->addColumn('delay', 'Delay[hours]');
         $gridConfBuilder->addColumn('details', ' ', ['allowOrder' => false]);
 
-        $gridConfBuilder->setProperty('filter', 'content=' . $content->getId());
+        $gridConfBuilder->setProperty('filter', 'content='.$content->getId());
 
         return $this->render(
             'VeniceAdminBundle:Content:contentProductIndex.html.twig',
             [
                 'gridConfiguration' => $gridConfBuilder->getJSON(),
                 'count' => $count,
-                'content' => $content
+                'content' => $content,
             ]
         );
     }
-
 
     /**
      * @Security("is_granted('ROLE_ADMIN_CONTENT_PRODUCT_EDIT')")
      *
      * @param Content $content
+     *
      * @return Response
+     *
+     * @throws \Symfony\Component\Form\Exception\UnexpectedTypeException
+     * @throws \Symfony\Component\Routing\Exception\RouteNotFoundException
+     * @throws \Symfony\Component\Routing\Exception\MissingMandatoryParametersException
+     * @throws \Symfony\Component\Form\Exception\LogicException
+     * @throws \Symfony\Component\Routing\Exception\InvalidParameterException
+     * @throws \Symfony\Component\Form\Exception\AlreadySubmittedException
      * @throws \Symfony\Component\OptionsResolver\Exception\InvalidOptionsException
-     * @internal param Request $request
      */
     public function contentProductNewAction(Content $content)
     {
@@ -588,15 +628,14 @@ class ContentController extends BaseAdminController
                 ),
                 'admin_content_content_product',
                 [],
-                ['content' => $content,]
+                ['content' => $content]
             );
 
         return $this->render(
             'VeniceAdminBundle:ContentProduct:new.html.twig',
-            ['form' => $form->createView(),]
+            ['form' => $form->createView()]
         );
     }
-
 
     /**
      * @Security("is_granted('ROLE_ADMIN_CONTENT_PRODUCT_EDIT')")
@@ -604,6 +643,10 @@ class ContentController extends BaseAdminController
      * @param Request $request
      *
      * @return \Symfony\Component\HttpFoundation\Response
+     *
+     * @throws \Symfony\Component\Form\Exception\UnexpectedTypeException
+     * @throws \Symfony\Component\Routing\Exception\RouteNotFoundException
+     * @throws \Symfony\Component\Routing\Exception\MissingMandatoryParametersException
      * @throws \Symfony\Component\OptionsResolver\Exception\InvalidOptionsException
      * @throws \Symfony\Component\Form\Exception\AlreadySubmittedException
      * @throws \Symfony\Component\Routing\Exception\InvalidParameterException
@@ -627,38 +670,36 @@ class ContentController extends BaseAdminController
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($contentProduct);
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($contentProduct);
 
             try {
-                $em->flush();
+                $entityManager->flush();
             } catch (DBALException $e) {
                 return new JsonResponse(
                     [
-                        'error' => ['db' => $e->getMessage(),],
+                        'error' => ['db' => $e->getMessage()],
                     ],
                     400
                 );
             }
 
             $url = $this->generateUrl(
-                    'admin_content_tabs',
-                    ['id' => $contentProduct->getContent()->getId()]
-                ) . '#tab3';
+                'admin_content_tabs',
+                ['id' => $contentProduct->getContent()->getId()]
+            ).'#tab3';
 
             return new JsonResponse(
                 [
                     'message' => 'Successfully created',
-                    'location' => $url
+                    'location' => $url,
                 ],
                 302
             );
         } else {
             return $this->returnFormErrorsJsonResponse($form);
         }
-
     }
-
 
     /**
      * @Security("is_granted('ROLE_ADMIN_CONTENT_PRODUCT_EDIT')")
@@ -666,6 +707,10 @@ class ContentController extends BaseAdminController
      * @param ContentProduct $contentProduct
      *
      * @return \Symfony\Component\HttpFoundation\Response
+     *
+     * @throws \Symfony\Component\Form\Exception\UnexpectedTypeException
+     * @throws \Symfony\Component\Routing\Exception\RouteNotFoundException
+     * @throws \Symfony\Component\Routing\Exception\MissingMandatoryParametersException
      * @throws \Symfony\Component\OptionsResolver\Exception\InvalidOptionsException
      * @throws \Symfony\Component\Form\Exception\AlreadySubmittedException
      * @throws \Symfony\Component\Routing\Exception\InvalidParameterException
@@ -680,7 +725,7 @@ class ContentController extends BaseAdminController
                     ContentProductTypeWithHiddenContent::class
                 ),
                 'admin_content_content_product',
-                ['id' => $contentProduct->getId(),],
+                ['id' => $contentProduct->getId()],
                 ['content' => $contentProduct->getContent()]
             );
 
@@ -693,19 +738,22 @@ class ContentController extends BaseAdminController
         );
     }
 
-
     /**
      * @Security("is_granted('ROLE_ADMIN_CONTENT_PRODUCT_EDIT')")
      *
-     * @param Request $request
+     * @param Request        $request
      * @param ContentProduct $contentProduct
      *
      * @return JsonResponse
+     *
+     * @throws \Symfony\Component\Form\Exception\UnexpectedTypeException
+     * @throws \Symfony\Component\Routing\Exception\RouteNotFoundException
+     * @throws \Symfony\Component\Routing\Exception\MissingMandatoryParametersException
      * @throws \Symfony\Component\OptionsResolver\Exception\InvalidOptionsException
      * @throws \Symfony\Component\Form\Exception\AlreadySubmittedException
      * @throws \Symfony\Component\Routing\Exception\InvalidParameterException
      * @throws \Symfony\Component\Form\Exception\LogicException
-     *
+     * @throws \LogicException
      */
     public function contentProductUpdateAction(Request $request, ContentProduct $contentProduct)
     {
@@ -716,36 +764,35 @@ class ContentController extends BaseAdminController
                     ContentProductTypeWithHiddenContent::class
                 ),
                 'admin_content_content_product',
-                ['id' => $contentProduct->getId(),],
+                ['id' => $contentProduct->getId()],
                 ['content' => $contentProduct->getContent()]
             );
 
-        $em = $this->getEntityManager();
+        $entityManager = $this->getEntityManager();
 
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $em->persist($contentProduct);
+            $entityManager->persist($contentProduct);
 
             try {
-                $em->flush();
+                $entityManager->flush();
             } catch (DBALException $e) {
                 return new JsonResponse(
                     [
-                        'error' => ['db' => $e->getMessage(),],
+                        'error' => ['db' => $e->getMessage()],
                     ],
                     400
                 );
             }
 
             return new JsonResponse(
-                ['message' => 'Association successfully updated',]
+                ['message' => 'Association successfully updated']
             );
         } else {
             return $this->returnFormErrorsJsonResponse($form);
         }
     }
-
 
     /**
      * @Security("is_granted('ROLE_ADMIN_CONTENT_PRODUCT_VIEW')")
@@ -764,17 +811,16 @@ class ContentController extends BaseAdminController
                 ['id' => $contentProduct->getContent()->getId()]
             )
             ->addRouteItem(
-                'Association with ' . $contentProduct->getProduct()->getName(),
+                'Association with '.$contentProduct->getProduct()->getName(),
                 'admin_content_content_product_tabs',
                 ['id' => $contentProduct->getId()]
             );
 
         return $this->render(
             'VeniceAdminBundle:Content:contentProductTabs.html.twig',
-            ['contentProduct' => $contentProduct,]
+            ['contentProduct' => $contentProduct]
         );
     }
-
 
     /**
      * @Security("is_granted('ROLE_ADMIN_CONTENT_PRODUCT_EDIT')")
@@ -782,6 +828,10 @@ class ContentController extends BaseAdminController
      * @param ContentProduct $contentProduct
      *
      * @return Response
+     *
+     * @throws \Symfony\Component\Form\Exception\UnexpectedTypeException
+     * @throws \Symfony\Component\Routing\Exception\RouteNotFoundException
+     * @throws \Symfony\Component\Routing\Exception\MissingMandatoryParametersException
      * @throws \Symfony\Component\OptionsResolver\Exception\InvalidOptionsException
      * @throws \Symfony\Component\Form\Exception\AlreadySubmittedException
      * @throws \Symfony\Component\Routing\Exception\InvalidParameterException
@@ -796,23 +846,27 @@ class ContentController extends BaseAdminController
             ->render(
                 'VeniceAdminBundle:ContentProduct:tabDelete.html.twig',
                 [
-                    'form' => $form->createView()
+                    'form' => $form->createView(),
                 ]
             );
     }
 
-
     /**
      * @Security("is_granted('ROLE_ADMIN_CONTENT_PRODUCT_EDIT')")
      *
-     * @param Request $request
+     * @param Request        $request
      * @param ContentProduct $contentProduct
      *
      * @return JsonResponse
+     *
+     * @throws \Symfony\Component\Form\Exception\UnexpectedTypeException
+     * @throws \Symfony\Component\Routing\Exception\RouteNotFoundException
+     * @throws \Symfony\Component\Routing\Exception\MissingMandatoryParametersException
      * @throws \Symfony\Component\OptionsResolver\Exception\InvalidOptionsException
      * @throws \Symfony\Component\Form\Exception\AlreadySubmittedException
      * @throws \Symfony\Component\Routing\Exception\InvalidParameterException
      * @throws \Symfony\Component\Form\Exception\LogicException
+     * @throws \LogicException
      */
     public function contentProductDeleteAction(Request $request, ContentProduct $contentProduct)
     {
@@ -823,13 +877,13 @@ class ContentController extends BaseAdminController
 
         if ($form->isValid()) {
             try {
-                $em = $this->getEntityManager();
-                $em->remove($contentProduct);
-                $em->flush();
+                $entityManager = $this->getEntityManager();
+                $entityManager->remove($contentProduct);
+                $entityManager->flush();
             } catch (DBALException $e) {
                 return new JsonResponse(
                     [
-                        'error' => ['db' => $e->getMessage(),],
+                        'error' => ['db' => $e->getMessage()],
                         'message' => 'Could not delete.',
                     ],
                     400

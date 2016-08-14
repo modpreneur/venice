@@ -24,6 +24,7 @@ class DoctrineDiscriminatorListener implements EventSubscriber
 
     /**
      * DoctrineDiscriminatorListener constructor.
+     *
      * @param array $mapping
      */
     public function __construct($mapping)

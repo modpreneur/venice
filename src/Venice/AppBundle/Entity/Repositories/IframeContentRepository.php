@@ -3,7 +3,7 @@
 namespace Venice\AppBundle\Entity\Repositories;
 
 /**
- * IframeContentRepository
+ * IframeContentRepository.
  */
 class IframeContentRepository extends ContentRepository
 {

@@ -8,7 +8,7 @@ use Trinity\NotificationBundle\Interfaces\NotificationEntityRepositoryInterface;
 use Venice\AppBundle\Entity\ProductAccess;
 
 /**
- * ProductAccessRepository
+ * ProductAccessRepository.
  */
 class ProductAccessRepository extends EntityRepository implements NotificationEntityRepositoryInterface
 {
@@ -37,6 +37,7 @@ class ProductAccessRepository extends EntityRepository implements NotificationEn
      * @param $userId
      *
      * @return int
+     *
      * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
      */

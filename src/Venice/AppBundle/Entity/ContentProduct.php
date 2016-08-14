@@ -3,9 +3,8 @@
  * Created by PhpStorm.
  * User: Jakub Fajkus
  * Date: 04.10.15
- * Time: 14:49
+ * Time: 14:49.
  */
-
 namespace Venice\AppBundle\Entity;
 
 use DateTime;
@@ -14,9 +13,7 @@ use Venice\AppBundle\Entity\Product\Product;
 use Venice\AppBundle\Traits\Timestampable;
 
 /**
- * Class ContentProduct
- *
- * @package Venice\AppBundle\Entity
+ * Class ContentProduct.
  */
 class ContentProduct
 {
@@ -27,30 +24,25 @@ class ContentProduct
      */
     protected $id;
 
-
     /**
      * @var Content
      */
     protected $content;
-
 
     /**
      * @var Product
      */
     protected $product;
 
-
     /**
      * @var int delay in hours
      */
     protected $delay;
 
-
     /**
      * @var
      */
     protected $orderNumber;
-
 
     public function __construct()
     {
@@ -61,7 +53,6 @@ class ContentProduct
         $this->updateTimestamps();
     }
 
-
     /**
      * @return int
      */
@@ -70,7 +61,6 @@ class ContentProduct
         return $this->id;
     }
 
-
     /**
      * @return Content
      */
@@ -78,7 +68,6 @@ class ContentProduct
     {
         return $this->content;
     }
-
 
     /**
      * @param Content $content
@@ -92,7 +81,6 @@ class ContentProduct
         return $this;
     }
 
-
     /**
      * @return Product
      */
@@ -100,7 +88,6 @@ class ContentProduct
     {
         return $this->product;
     }
-
 
     /**
      * @param Product $product
@@ -114,7 +101,6 @@ class ContentProduct
         return $this;
     }
 
-
     /**
      * @return int delay in hours
      */
@@ -122,7 +108,6 @@ class ContentProduct
     {
         return $this->delay;
     }
-
 
     /**
      * @param int $delay delay in hours
@@ -136,7 +121,6 @@ class ContentProduct
         return $this;
     }
 
-
     /**
      * @return int
      */
@@ -144,7 +128,6 @@ class ContentProduct
     {
         return $this->orderNumber;
     }
-
 
     /**
      * @param int $orderNumber
@@ -163,6 +146,7 @@ class ContentProduct
      *
      * @param User $user
      * @param bool $checkAccessToProduct Check access to product
+     *
      * @return bool true - the user has access to the parent product and the delay of this contentProduct + delay < now
      */
     public function isAvailableFor(User $user, $checkAccessToProduct = true)
@@ -190,10 +174,10 @@ class ContentProduct
         return $timeOfAccess < $now;
     }
 
-
     /**
      * @param User $user
-     * @return DateTime
+     *
+     * @return DateTime|null
      */
     public function willBeAvailableOn(User $user)
     {
@@ -205,7 +189,7 @@ class ContentProduct
         $productAccess = $user->getProductAccess($this->product);
 
         if (!$productAccess) {
-            return null;
+            return;
         }
 
         // Clone product access Datetime object to avoid weird errors.

@@ -3,17 +3,18 @@
  * Created by PhpStorm.
  * User: Jakub Fajkus
  * Date: 31.12.15
- * Time: 10:41
+ * Time: 10:41.
  */
-
 namespace Venice\AppBundle\Twig;
 
 /**
- * Class HumanBoolExtension
- * @package Venice\AppBundle\Twig
+ * Class HumanBoolExtension.
  */
 class HumanBoolExtension extends \Twig_Extension
 {
+    /**
+     * {@inheritdoc}
+     */
     public function getFilters()
     {
         return [
@@ -26,6 +27,9 @@ class HumanBoolExtension extends \Twig_Extension
         return $bool ? 'yes' : 'no';
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getName()
     {
         return 'venice_app_bundle_human_bool_twig_extension';

@@ -3,9 +3,8 @@
  * Created by PhpStorm.
  * User: Jakub Fajkus
  * Date: 03.12.15
- * Time: 19:16
+ * Time: 19:16.
  */
-
 namespace Venice\AppBundle\Form;
 
 use Venice\AppBundle\Entity\BlogArticle;
@@ -19,25 +18,28 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class BlogArticleType extends BaseType
 {
+    /**
+     * {@inheritdoc}
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         parent::buildForm($builder, $options);
 
-        $currentYear = (int)(new \DateTime())->format('Y');
+        $currentYear = (int) (new \DateTime())->format('Y');
 
         $builder
             ->add(
                 'title',
                 TextType::class,
                 [
-                    'required' => true
+                    'required' => true,
                 ]
             )
             ->add(
                 'handle',
                 TextType::class,
                 [
-                    'required' => false
+                    'required' => false,
                 ]
             )
             ->add(
@@ -46,7 +48,7 @@ class BlogArticleType extends BaseType
                 [
                     'widget' => 'single_text',
                     'required' => true,
-                    'attr' => ['data-limit' => json_encode(['min' =>'now','max'=>['year'=>$currentYear+4]])],
+                    'attr' => ['data-limit' => json_encode(['min' => 'now', 'max' => ['year' => $currentYear + 4]])],
                 ]
             )
             ->add(
@@ -69,9 +71,13 @@ class BlogArticleType extends BaseType
                 ]
             )
         ;
-
     }
 
+    /**
+     * {@inheritdoc}
+     *
+     * @throws \Symfony\Component\OptionsResolver\Exception\AccessException
+     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(

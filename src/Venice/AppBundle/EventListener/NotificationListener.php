@@ -3,9 +3,8 @@
  * Created by PhpStorm.
  * User: Jakub Fajkus
  * Date: 21.05.16
- * Time: 21:20
+ * Time: 21:20.
  */
-
 namespace Venice\AppBundle\EventListener;
 
 use Doctrine\ORM\EntityManagerInterface;
@@ -15,8 +14,7 @@ use Trinity\NotificationBundle\Event\ChangesDoneEvent;
 use Venice\AppBundle\Entity\BillingPlan;
 
 /**
- * Class NotificationListener
- * @package Venice\AppBundle\EventListener
+ * Class NotificationListener.
  */
 class NotificationListener
 {
@@ -40,8 +38,10 @@ class NotificationListener
 
     /**
      * @param ChangesDoneEvent $event
+     *
      * @throws \Trinity\Bundle\SettingsBundle\Exception\PropertyNotExistsException
      * @throws \Symfony\Component\Intl\Exception\MethodArgumentValueNotImplementedException
+     * @throws \Symfony\Component\Intl\Exception\MethodArgumentNotImplementedException
      */
     public function onChangesDone(ChangesDoneEvent $event)
     {
@@ -64,7 +64,7 @@ class NotificationListener
         $entity = $event->getEntity();
 
         if ($entity instanceof BillingPlan) {
-            /** @var $entity BillingPlan */
+            /* @var $entity BillingPlan */
             $entity->setProduct(null);
         }
     }

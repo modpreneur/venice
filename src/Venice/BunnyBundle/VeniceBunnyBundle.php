@@ -5,8 +5,7 @@ namespace Venice\BunnyBundle;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 /**
- * Class VeniceBunnyBundle
- * @package Venice\BunnyBundle
+ * Class VeniceBunnyBundle.
  */
 class VeniceBunnyBundle extends Bundle
 {

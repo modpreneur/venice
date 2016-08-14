@@ -3,17 +3,12 @@
  * Created by PhpStorm.
  * User: Jakub Fajkus
  * Date: 04.10.15
- * Time: 13:07
+ * Time: 13:07.
  */
-
 namespace Venice\AppBundle\Entity\Content;
 
-use Doctrine\ORM\Mapping as ORM;
-
 /**
- * Class PdfContent
- *
- * @package Venice\AppBundle\Entity\Content
+ * Class PdfContent.
  */
 class PdfContent extends Content
 {
@@ -21,7 +16,6 @@ class PdfContent extends Content
      * @var string Url address to the file.
      */
     protected $link;
-
 
     /**
      * {@inheritdoc}
@@ -31,7 +25,6 @@ class PdfContent extends Content
         return $this->link;
     }
 
-
     /**
      * {@inheritdoc}
      */
@@ -39,7 +32,6 @@ class PdfContent extends Content
     {
         $this->link = $link;
     }
-
 
     /**
      * {@inheritdoc}
@@ -49,9 +41,8 @@ class PdfContent extends Content
         return $this->link;
     }
 
-
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getType()
     {

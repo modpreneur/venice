@@ -6,6 +6,7 @@ interface ConfiguratorInterface
 {
     /**
      * ConfiguratorInterface constructor.
+     *
      * @param array $configuration
      */
     public function __construct(array $configuration = []);
@@ -23,6 +24,7 @@ interface ConfiguratorInterface
     /**
      * @param $key
      * @param null $default
+     *
      * @return string|mixed
      */
     public function getValueFromKey($key, $default = null);
@@ -30,6 +32,7 @@ interface ConfiguratorInterface
     /**
      * @param $value
      * @param null $default
+     *
      * @return mixed
      */
     public function getKeyFromValue($value, $default = null);

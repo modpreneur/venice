@@ -3,20 +3,19 @@
  * Created by PhpStorm.
  * User: Jakub Fajkus
  * Date: 05.06.16
- * Time: 15:10
+ * Time: 15:10.
  */
-
 namespace Venice\BunnyBundle;
 
 use Bunny\Channel;
-use Bunny\Client;
 use Bunny\Message;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Trinity\Bundle\BunnyBundle\Annotation\Consumer;
 use Trinity\Bundle\MessagesBundle\Event\UnpackMessageEvent;
 
 /**
- * //todo: see http://ac5.modpreneur.com/projects/6?modal=Task-453-6
+ * //todo: see http://ac5.modpreneur.com/projects/6?modal=Task-453-6.
+ *
  * @Consumer(
  *     queue="client_3",
  *     maxMessages=1000,

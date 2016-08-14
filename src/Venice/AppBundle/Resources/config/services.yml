@@ -45,10 +45,10 @@ services:
             - "@router"
             - "@venice.app.necktie_gateway_helper"
             - "@venice.app.necktie_connector"
-            - %necktie_url%
-            - %necktie_client_id%
-            - %necktie_client_secret%
-            - %login_response_route%
+            - "%necktie_url%"
+            - "%necktie_client_id%"
+            - "%necktie_client_secret%"
+            - "%login_response_route%"
 
 #    todo: Remove
     necktie:
@@ -67,14 +67,14 @@ services:
         class: Venice\AppBundle\Services\LogoutSuccessHandler
         arguments:
             - "@router.default"
-            - %necktie_url%
+            - "%necktie_url%"
 
     venice.app.buy_url_generator:
         class: Venice\AppBundle\Services\BuyUrlGenerator
         arguments:
             - "@router"
             - "@doctrine.orm.entity_manager"
-            - %necktie_url%
+            - "%necktie_url%"
 
     venice.app.roles_loader:
         class: Venice\AppBundle\Services\RolesLoader
@@ -85,17 +85,17 @@ services:
         factory_method: 'factory'
         arguments:
             -   version: latest
-                region: %amazon_s3_region%
+                region: "%amazon_s3_region%"
                 credentials:
-                      secret: %amazon_s3_secret%
-                      key: %amazon_s3_key%
+                      secret: "%amazon_s3_secret%"
+                      key: "%amazon_s3_key%"
 
     venice.app.file_uploader:
         class: Venice\AppBundle\Services\FileUploader
         arguments:
             - "@froala_editor_storage_filesystem"
-            - %amazon_s3_region%
-            - %amazon_s3_bucket%
+            - "%amazon_s3_region%"
+            - "%amazon_s3_bucket%"
 
     venice.app.client_secret_provider:
         class: Venice\AppBundle\Services\ClientSecretProvider

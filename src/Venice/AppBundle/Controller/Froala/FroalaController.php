@@ -3,9 +3,8 @@
  * Created by PhpStorm.
  * User: Jakub Fajkus
  * Date: 20.02.16
- * Time: 9:56
+ * Time: 9:56.
  */
-
 namespace Venice\AppBundle\Controller\Froala;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -15,7 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Class FroalaController
+ * Class FroalaController.
  */
 class FroalaController extends Controller
 {
@@ -60,7 +59,7 @@ class FroalaController extends Controller
      */
     public function deleteImageAction(Request $request)
     {
-
+        //todo
     }
 
     /**
@@ -70,6 +69,6 @@ class FroalaController extends Controller
      */
     public function loadImagesAction(Request $request)
     {
-
+        //todo
     }
 }

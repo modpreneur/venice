@@ -3,10 +3,15 @@
 namespace Venice\AppBundle\Kernel;
 
 use Symfony\Component\HttpKernel\Kernel;
-use Symfony\Component\HttpKernel\TerminableInterface;
 
+/**
+ * {@inheritdoc}
+ */
 abstract class VeniceKernel extends Kernel
 {
+    /**
+     * {@inheritdoc}
+     */
     public function registerBundles()
     {
         $bundles = [
@@ -46,7 +51,7 @@ abstract class VeniceKernel extends Kernel
             new \Trinity\Bundle\SearchBundle\SearchBundle(),
             new \Trinity\Bundle\GridBundle\GridBundle(),
             new \Trinity\Bundle\BunnyBundle\TrinityBunnyBundle(),
-            new \Trinity\Bundle\LoggerBundle\LoggerBundle()
+            new \Trinity\Bundle\LoggerBundle\LoggerBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'])) {

@@ -7,8 +7,7 @@ use Symfony\Component\Routing\RouterInterface;
 use Trinity\FrameworkBundle\Services\TrinityFormCreator;
 
 /**
- * Class FormCreator
- * @package Venice\AppBundle\Services
+ * Class FormCreator.
  */
 class FormCreator extends TrinityFormCreator
 {
@@ -16,7 +15,7 @@ class FormCreator extends TrinityFormCreator
      * FormFactory constructor.
      *
      * @param FormFactoryInterface $formFactory
-     * @param RouterInterface $router
+     * @param RouterInterface      $router
      */
     public function __construct(FormFactoryInterface $formFactory, RouterInterface $router)
     {

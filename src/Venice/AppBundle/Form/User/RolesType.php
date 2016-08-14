@@ -3,15 +3,15 @@
  * Created by PhpStorm.
  * User: Jakub Fajkus
  * Date: 04.02.16
- * Time: 11:59
+ * Time: 11:59.
  */
-
 namespace Venice\AppBundle\Form\User;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Venice\AppBundle\Entity\User;
 use Venice\AppBundle\Form\BaseType;
 use Venice\AppBundle\Services\EntityOverrideHandler;
 use Venice\AppBundle\Services\RolesLoader;
@@ -22,9 +22,10 @@ class RolesType extends BaseType
 
     /**
      * RolesType constructor.
+     *
      * @param EntityManagerInterface $entityManager
-     * @param EntityOverrideHandler $entityOverrideHandler
-     * @param RolesLoader $rolesLoader
+     * @param EntityOverrideHandler  $entityOverrideHandler
+     * @param RolesLoader            $rolesLoader
      */
     public function __construct(
         EntityManagerInterface $entityManager,
@@ -36,10 +37,9 @@ class RolesType extends BaseType
         $this->roles = $rolesLoader->readRolesFile();
     }
 
-
     /**
      * @param FormBuilderInterface $builder
-     * @param array $options
+     * @param array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -61,12 +61,13 @@ class RolesType extends BaseType
 
     /**
      * @param OptionsResolver $resolver
+     *
      * @throws \Symfony\Component\OptionsResolver\Exception\AccessException
      */
     public function configureOptions(OptionsResolver $resolver)
     {
         parent::configureOptions($resolver);
 
-        $resolver->setDefault('data_class', "Venice\AppBundle\\Entity\\User");
+        $resolver->setDefault('data_class', User::class);
     }
 }

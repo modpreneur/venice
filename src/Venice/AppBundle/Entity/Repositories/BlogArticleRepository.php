@@ -5,8 +5,7 @@ namespace Venice\AppBundle\Entity\Repositories;
 use Doctrine\ORM\EntityRepository;
 
 /**
- * BlogArticleRepository
- *
+ * BlogArticleRepository.
  */
 class BlogArticleRepository extends EntityRepository
 {
@@ -14,6 +13,7 @@ class BlogArticleRepository extends EntityRepository
      * @param int $productId
      *
      * @return int
+     *
      * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
@@ -27,11 +27,13 @@ class BlogArticleRepository extends EntityRepository
             ')
             ->setParameter('productId', $productId)
         ;
+
         return $query->getSingleScalarResult();
     }
 
     /**
      * @return int
+     *
      * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
@@ -42,6 +44,7 @@ class BlogArticleRepository extends EntityRepository
               FROM  VeniceAppBundle:BlogArticle AS article
             ')
         ;
+
         return $query->getSingleScalarResult();
     }
 }

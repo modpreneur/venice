@@ -3,16 +3,12 @@
  * Created by PhpStorm.
  * User: Jakub Fajkus
  * Date: 30.10.15
- * Time: 9:27
+ * Time: 9:27.
  */
-
 namespace Venice\AppBundle\Entity\Content;
 
-use Doctrine\ORM\Mapping as ORM;
-
 /**
- * Class HtmlContent
- * @package Venice\AppBundle\Entity\Content
+ * Class HtmlContent.
  */
 class HtmlContent extends Content
 {
@@ -20,7 +16,6 @@ class HtmlContent extends Content
      * @var string
      */
     protected $html;
-
 
     /**
      * Return Content's content no matter what concrete implementation is.
@@ -32,7 +27,6 @@ class HtmlContent extends Content
         return $this->html;
     }
 
-
     /**
      * @return string
      */
@@ -41,12 +35,10 @@ class HtmlContent extends Content
         return $this->html;
     }
 
-
     /**
      * @param string $html
      *
      * @return HtmlContent
-     *
      */
     public function setHtml($html)
     {
@@ -55,9 +47,8 @@ class HtmlContent extends Content
         return $this;
     }
 
-
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getType()
     {

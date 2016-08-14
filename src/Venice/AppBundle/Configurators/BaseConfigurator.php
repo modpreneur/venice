@@ -10,6 +10,7 @@ class BaseConfigurator implements ConfiguratorInterface
 
     /**
      * ConfiguratorInterface constructor.
+     *
      * @param array $configuration
      */
     public function __construct(array $configuration = [])
@@ -36,6 +37,7 @@ class BaseConfigurator implements ConfiguratorInterface
     /**
      * @param $key
      * @param null $default
+     *
      * @return string|mixed
      */
     public function getValueFromKey($key, $default = null)
@@ -50,6 +52,7 @@ class BaseConfigurator implements ConfiguratorInterface
     /**
      * @param $value
      * @param null $default
+     *
      * @return mixed|string
      */
     public function getKeyFromValue($value, $default = null)

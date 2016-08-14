@@ -5,7 +5,7 @@ namespace Venice\AppBundle\Entity\Repositories;
 use Doctrine\ORM\EntityRepository;
 
 /**
- * ContentProductRepository
+ * ContentProductRepository.
  */
 class ContentProductRepository extends EntityRepository
 {
@@ -13,6 +13,7 @@ class ContentProductRepository extends EntityRepository
      * @param int $productId
      *
      * @return int
+     *
      * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
@@ -26,6 +27,7 @@ class ContentProductRepository extends EntityRepository
             ')
             ->setParameter('productId', $productId)
         ;
+
         return $query->getSingleScalarResult();
     }
 
@@ -33,6 +35,7 @@ class ContentProductRepository extends EntityRepository
      * @param int $contentId
      *
      * @return int
+     *
      * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
@@ -46,6 +49,7 @@ class ContentProductRepository extends EntityRepository
             ')
             ->setParameter('contentId', $contentId)
         ;
+
         return $query->getSingleScalarResult();
     }
 }

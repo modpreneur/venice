@@ -3,16 +3,14 @@
  * Created by PhpStorm.
  * User: Jakub Fajkus
  * Date: 02.10.15
- * Time: 17:36
+ * Time: 17:36.
  */
-
 namespace Venice\AppBundle\Entity;
 
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use InvalidArgumentException;
 use JMS\Serializer\Annotation\SerializedName;
-use Symfony\Component\Validator\Constraints as Assert;
 use Trinity\Component\Core\Interfaces\ClientInterface;
 use Trinity\Component\EntityCore\Entity\BaseUser;
 use Trinity\NotificationBundle\Annotations as N;
@@ -22,13 +20,11 @@ use Venice\AppBundle\Entity\Product\Product;
 use Venice\AppBundle\Traits\Timestampable;
 
 /**
- * Class User
+ * Class User.
  *
  * @N\Source(columns="necktieId, username, email, firstName, lastName, avatar, locked, phoneNumber, website, country, region, city, addressLine1, addressLine2, postalCode")
  * Users cannot be created on client so there is no need to use POST
  * @N\Methods(types={"put", "delete"})
- *
- * @package Venice\AppBundle\Entity
  */
 class User extends BaseUser implements NotificationEntityInterface
 {
@@ -39,7 +35,7 @@ class User extends BaseUser implements NotificationEntityInterface
     const DEFAULT_PREFERRED_METRICS = self::PREFERRED_UNITS_IMPERIAL;
 
     /**
-     * @var integer
+     * @var int
      *
      * @SerializedName("id")
      */
@@ -55,25 +51,24 @@ class User extends BaseUser implements NotificationEntityInterface
      */
     protected $productAccesses;
 
-
     /**
      * @var DateTime
      */
     protected $birthDate;
-
 
     /**
      * @var ArrayCollection<OAuthToken>
      */
     protected $OAuthTokens;
 
-
     /**
      * @var []
      */
     protected $status;
 
-
+    /**
+     * {@inheritdoc}
+     */
     public function __construct()
     {
         parent::__construct();
@@ -88,7 +83,6 @@ class User extends BaseUser implements NotificationEntityInterface
         $this->updateTimestamps();
     }
 
-
     /**
      * @return int
      */
@@ -96,7 +90,6 @@ class User extends BaseUser implements NotificationEntityInterface
     {
         return $this->necktieId;
     }
-
 
     /**
      * @return string
@@ -106,21 +99,21 @@ class User extends BaseUser implements NotificationEntityInterface
         return $this->preferredUnits;
     }
 
-
     /**
      * @param string $preferredUnits
      *
      * @return User
+     *
      * @throws \InvalidArgumentException
      */
     public function setPreferredUnits($preferredUnits)
     {
         if ($preferredUnits !== self::PREFERRED_UNITS_METRIC || $preferredUnits !== self::PREFERRED_UNITS_IMPERIAL) {
             throw new InvalidArgumentException(
-                'Preferred units has to be one of ' .
-                self::PREFERRED_UNITS_METRIC .
-                ' or ' .
-                self::PREFERRED_UNITS_IMPERIAL .
+                'Preferred units has to be one of '.
+                self::PREFERRED_UNITS_METRIC.
+                ' or '.
+                self::PREFERRED_UNITS_IMPERIAL.
                 ", $preferredUnits given."
             );
         }
@@ -138,9 +131,9 @@ class User extends BaseUser implements NotificationEntityInterface
         return $this->productAccesses;
     }
 
-
     /**
      * @param ProductAccess $productAccess
+     *
      * @return $this
      */
     public function addProductAccess(ProductAccess $productAccess)
@@ -152,9 +145,9 @@ class User extends BaseUser implements NotificationEntityInterface
         return $this;
     }
 
-
     /**
      * @param ProductAccess $productAccess
+     *
      * @return $this
      */
     public function removeProductAccess(ProductAccess $productAccess)
@@ -164,7 +157,6 @@ class User extends BaseUser implements NotificationEntityInterface
         return $this;
     }
 
-
     /**
      * @return DateTime
      */
@@ -172,7 +164,6 @@ class User extends BaseUser implements NotificationEntityInterface
     {
         return $this->birthDate;
     }
-
 
     /**
      * @param DateTime $birthDate
@@ -186,7 +177,6 @@ class User extends BaseUser implements NotificationEntityInterface
         return $this;
     }
 
-
     /**
      * @param int $necktieId
      *
@@ -198,7 +188,6 @@ class User extends BaseUser implements NotificationEntityInterface
 
         return $this;
     }
-
 
     /**
      * Get the last refresh token string.
@@ -212,10 +201,7 @@ class User extends BaseUser implements NotificationEntityInterface
         if (false !== $token) {
             return $token->getAccessToken();
         }
-
-        return null;
     }
-
 
     /**
      * Check if the last OAuth access token is valid based on stored lifetime.
@@ -226,7 +212,6 @@ class User extends BaseUser implements NotificationEntityInterface
     {
         return $this->getLastToken()->isAccessTokenValid();
     }
-
 
     /**
      * Get the last refresh token string.
@@ -240,10 +225,7 @@ class User extends BaseUser implements NotificationEntityInterface
         if (false !== $token) {
             return $token->getRefreshToken();
         }
-
-        return null;
     }
-
 
     /**
      * Get the last OAuthToken object.
@@ -255,7 +237,6 @@ class User extends BaseUser implements NotificationEntityInterface
         return $this->OAuthTokens->last();
     }
 
-
     /**
      * Get all OAuthTokens.
      *
@@ -266,9 +247,9 @@ class User extends BaseUser implements NotificationEntityInterface
         return $this->OAuthTokens;
     }
 
-
     /**
      * @param OAuthToken $OAuthToken
+     *
      * @return $this
      */
     public function addOAuthToken(OAuthToken $OAuthToken)
@@ -280,9 +261,9 @@ class User extends BaseUser implements NotificationEntityInterface
         return $this;
     }
 
-
     /**
      * @param OAuthToken $OAuthToken
+     *
      * @return $this
      */
     public function removeOAuthToken(OAuthToken $OAuthToken)
@@ -305,7 +286,6 @@ class User extends BaseUser implements NotificationEntityInterface
             return $this->getUsername();
         }
     }
-
 
     /**
      * @param Product $product
@@ -345,7 +325,6 @@ class User extends BaseUser implements NotificationEntityInterface
             return $timeOfStart < $now && $timeOfEnd > $now;
         }
     }
-
 
 //    /**
 //     * @param Product $product
@@ -400,15 +379,19 @@ class User extends BaseUser implements NotificationEntityInterface
 //    }
 
     /**
-     * @param Product $product
-     * @param DateTime $fromDate
+     * @param Product       $product
+     * @param DateTime      $fromDate
      * @param DateTime|null $toDate
-     * @param int|null $necktieId
+     * @param int|null      $necktieId
      *
      * @return ProductAccess|null
      */
-    public function giveAccessToProduct(Product $product, \DateTime $fromDate, \DateTime $toDate = null, $necktieId = null)
-    {
+    public function giveAccessToProduct(
+        Product $product,
+        \DateTime $fromDate,
+        \DateTime $toDate = null,
+        $necktieId = null
+    ) {
         $productAccess = $this->getProductAccess($product);
         $now = new \DateTime('now');
 
@@ -447,11 +430,11 @@ class User extends BaseUser implements NotificationEntityInterface
         return [];
     }
 
-
     /**
      * Get productAccess entity for this user and given product.
      *
      * @param Product $product
+     *
      * @return ProductAccess|null
      */
     public function getProductAccess(Product $product)
@@ -462,7 +445,5 @@ class User extends BaseUser implements NotificationEntityInterface
                 return $productAccess;
             }
         }
-
-        return null;
     }
 }

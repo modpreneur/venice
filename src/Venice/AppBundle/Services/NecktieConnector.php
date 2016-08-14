@@ -3,9 +3,8 @@
  * Created by PhpStorm.
  * User: Jakub Fajkus
  * Date: 23.01.16
- * Time: 13:02
+ * Time: 13:02.
  */
-
 namespace Venice\AppBundle\Services;
 
 use GuzzleHttp\Client;
@@ -21,7 +20,6 @@ class NecktieConnector
     /** @var  ClientInterface */
     protected $client;
 
-
     /**
      * @return ClientInterface
      */
@@ -30,9 +28,8 @@ class NecktieConnector
         return $this->client;
     }
 
-
     /**
-     * Set client object
+     * Set client object.
      *
      * @param Client $client
      */
@@ -41,9 +38,8 @@ class NecktieConnector
         $this->client = $client;
     }
 
-
     /**
-     * Create a client with $baseUri and set ti to the $client property
+     * Create a client with $baseUri and set ti to the $client property.
      *
      * @param string $baseUri
      */
@@ -54,16 +50,16 @@ class NecktieConnector
         $this->setClient($client);
     }
 
-
     /**
      * @param User $user
      * @param $method string
      * @param $uri string
-     * @param array $data
+     * @param array       $data
      * @param null|string $accessToken
-     * @param bool $sendAsJson
+     * @param bool        $sendAsJson
      *
      * @return null|string
+     *
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \RuntimeException
      * @throws UnsuccessfulNecktieResponseException
@@ -76,8 +72,7 @@ class NecktieConnector
         array $data = [],
         string $accessToken = null,
         bool $sendAsJson = false
-    )
-    {
+    ) {
         $accessToken = $this->getAccessToken($user, $accessToken);
         $options = $this->prepareOptions($method, $data, $accessToken, $sendAsJson);
 
@@ -89,7 +84,7 @@ class NecktieConnector
             throw new UnsuccessfulNecktieResponseException($e->getResponse()->getBody()->getContents());
         } catch (ClientException $e) {
             if ($e->getCode() === 404) {
-                return null;
+                return;
             }
 
             throw new UnsuccessfulNecktieResponseException($e->getResponse()->getBody()->getContents());
@@ -98,14 +93,15 @@ class NecktieConnector
         return $this->getBodyFromResponse($response);
     }
 
-
     /**
-     * Create request and return response
+     * Create request and return response.
      *
      * @param string $method
      * @param string $uri
-     * @param array $options
+     * @param array  $options
+     *
      * @return \Psr\Http\Message\ResponseInterface
+     *
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
     protected function createRequest(string $method, string $uri, array $options = [])
@@ -118,11 +114,13 @@ class NecktieConnector
     }
 
     /**
-     * Get User's access token or provided access token
+     * Get User's access token or provided access token.
      *
-     * @param User $user
+     * @param User   $user
      * @param string $accessTokenString
+     *
      * @return mixed
+     *
      * @throws \Exception
      */
     protected function getAccessToken(User $user = null, string $accessTokenString = null)
@@ -134,7 +132,6 @@ class NecktieConnector
                 return $usersAccessToken;
             }
         }
-
 
         if ($accessTokenString === null) {
             throw new \Exception('User has no access token or the given accessToken is null.');
@@ -150,11 +147,16 @@ class NecktieConnector
      * @param $data
      * @param $accessToken
      * @param $sendAsJson
+     *
      * @return array
      */
-    protected function prepareOptions(string $method, array $data = [], string $accessToken = null, bool $sendAsJson = false)
-    {
-        $options = ['headers' => ['Authorization' => "Bearer {$accessToken}"],];
+    protected function prepareOptions(
+        string $method,
+        array $data = [],
+        string $accessToken = null,
+        bool $sendAsJson = false
+    ) {
+        $options = ['headers' => ['Authorization' => "Bearer {$accessToken}"]];
 
         if (strtolower($method) === 'get') {
             $options['query'] = $data;
@@ -171,7 +173,9 @@ class NecktieConnector
 
     /**
      * @param MessageInterface $response
+     *
      * @return string
+     *
      * @throws \RuntimeException
      */
     protected function getBodyFromResponse(MessageInterface $response)

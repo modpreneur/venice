@@ -3,9 +3,8 @@
  * Created by PhpStorm.
  * User: Jakub Fajkus
  * Date: 03.12.15
- * Time: 13:55
+ * Time: 13:55.
  */
-
 namespace Venice\AppBundle\Form\Content;
 
 use Doctrine\ORM\EntityRepository;
@@ -14,6 +13,8 @@ use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Venice\AppBundle\Entity\Content\Content;
+use Venice\AppBundle\Entity\Content\ContentInGroup;
 use Venice\AppBundle\Entity\Content\GroupContent;
 use Venice\AppBundle\Form\BaseType;
 use Venice\AppBundle\Form\DataTransformer\EntityToNumberTransformer;
@@ -22,7 +23,8 @@ class ContentInGroupType extends BaseType
 {
     /**
      * @param FormBuilderInterface $builder
-     * @param array $options
+     * @param array                $options
+     *
      * @throws \Symfony\Component\Form\Exception\InvalidArgumentException
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -34,12 +36,12 @@ class ContentInGroupType extends BaseType
                 'content',
                 EntityType::class,
                 [
-                    'class' => "Venice\AppBundle\\Entity\\Content\\Content",
+                    'class' => Content::class,
                     'query_builder' => $this->getQueryBuilderFunction($options['groupContent']),
                     'choice_label' => 'name',
                     'label' => 'Content',
                     'placeholder' => 'Choose content',
-                    'required' => true
+                    'required' => true,
                 ]
             )
             ->add(
@@ -58,7 +60,7 @@ class ContentInGroupType extends BaseType
                 [
                     'empty_data' => 0,
                     'required' => false,
-                    'attr' => ['placeholder' => 'Delay[hours]']
+                    'attr' => ['placeholder' => 'Delay[hours]'],
                 ]
             )
             ->add(
@@ -67,7 +69,7 @@ class ContentInGroupType extends BaseType
                 [
                     'empty_data' => 0,
                     'required' => false,
-                    'attr' => ['placeholder' => 'Order number']
+                    'attr' => ['placeholder' => 'Order number'],
                 ]
             );
 
@@ -75,28 +77,28 @@ class ContentInGroupType extends BaseType
             ->addModelTransformer(
                 new EntityToNumberTransformer(
                     $this->entityManager,
-                    "VeniceAppBundle:Content\\GroupContent"
+                    GroupContent::class
                 )
             );
     }
 
     /**
      * @param OptionsResolver $resolver
+     *
      * @throws \Symfony\Component\OptionsResolver\Exception\AccessException
      */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(
             [
-                'data_class' => "Venice\AppBundle\\Entity\\Content\\ContentInGroup",
-                'groupContent' => null
+                'data_class' => ContentInGroup::class,
+                'groupContent' => null,
             ]
         );
     }
 
-
     /**
-     * Get query builder function to query entities from database
+     * Get query builder function to query entities from database.
      *
      * @param GroupContent $groupContent
      *
@@ -109,15 +111,15 @@ class ContentInGroupType extends BaseType
         if ($groupContent && $groupContent->getId()) {
             $groupId = $groupContent->getId();
 
-            return function (EntityRepository $er) use ($groupId) {
-                return $er
+            return function (EntityRepository $entityRepository) use ($groupId) {
+                return $entityRepository
                     ->createQueryBuilder('c')
                     ->andWhere('c.id != :id')
                     ->setParameter('id', $groupId);
             };
         } else {
-            return function (EntityRepository $er) {
-                return $er->createQueryBuilder('c');
+            return function (EntityRepository $entityRepository) {
+                return $entityRepository->createQueryBuilder('c');
             };
         }
     }

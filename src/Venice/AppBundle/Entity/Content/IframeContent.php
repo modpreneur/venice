@@ -3,17 +3,12 @@
  * Created by PhpStorm.
  * User: Jakub Fajkus
  * Date: 04.10.15
- * Time: 12:36
+ * Time: 12:36.
  */
-
 namespace Venice\AppBundle\Entity\Content;
 
-use Doctrine\ORM\Mapping as ORM;
-
 /**
- * Class IFrameContent
- *
- * @package Venice\AppBundle\Entity\Content
+ * Class IFrameContent.
  */
 class IframeContent extends Content
 {
@@ -22,7 +17,6 @@ class IframeContent extends Content
      */
     protected $html;
 
-
     /**
      * @return string
      */
@@ -30,7 +24,6 @@ class IframeContent extends Content
     {
         return $this->html;
     }
-
 
     /**
      * @param string $html
@@ -44,7 +37,6 @@ class IframeContent extends Content
         return $this;
     }
 
-
     /**
      * {@inheritdoc}
      */
@@ -53,9 +45,8 @@ class IframeContent extends Content
         return $this->html;
     }
 
-
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getType()
     {

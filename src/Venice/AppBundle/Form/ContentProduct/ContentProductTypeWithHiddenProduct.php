@@ -3,9 +3,8 @@
  * Created by PhpStorm.
  * User: Jakub Fajkus
  * Date: 01.02.16
- * Time: 17:57
+ * Time: 17:57.
  */
-
 namespace Venice\AppBundle\Form\ContentProduct;
 
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -13,14 +12,20 @@ use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Venice\AppBundle\Entity\Content\Content;
+use Venice\AppBundle\Entity\Product\Product;
 use Venice\AppBundle\Form\DataTransformer\EntityToNumberTransformer;
 
 /**
- * Class ContentProductTypeWithHiddenProduct
- * @package Venice\AppBundle\Form\ContentProduct
+ * Class ContentProductTypeWithHiddenProduct.
  */
 class ContentProductTypeWithHiddenProduct extends ContentProductType
 {
+    /**
+     * {@inheritdoc}
+     *
+     * @throws \Symfony\Component\Form\Exception\InvalidArgumentException
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         parent::buildForm($builder, $options);
@@ -30,8 +35,8 @@ class ContentProductTypeWithHiddenProduct extends ContentProductType
                 'content',
                 EntityType::class,
                 [
-                    'class' => "Venice\AppBundle\\Entity\\Content\\Content",
-                    'choice_label' => 'name'
+                    'class' => Content::class,
+                    'choice_label' => 'name',
                 ]
             )
             ->add(
@@ -50,7 +55,7 @@ class ContentProductTypeWithHiddenProduct extends ContentProductType
                 [
                     'required' => true,
                     'empty_data' => 0,
-                    'attr' => ['placeholder' => 'Delay[hours]']
+                    'attr' => ['placeholder' => 'Delay[hours]'],
                 ]
             )
             ->add(
@@ -59,24 +64,23 @@ class ContentProductTypeWithHiddenProduct extends ContentProductType
                 [
                     'required' => true,
                     'empty_data' => 0,
-                    'attr' => ['placeholder' => 'Order number']
+                    'attr' => ['placeholder' => 'Order number'],
                 ]
             );
-
 
         $builder
             ->get('product')
             ->addModelTransformer(
                 new EntityToNumberTransformer(
                     $this->entityManager,
-                    "VeniceAppBundle:Product\\Product"
+                    Product::class
                 )
             );
-
     }
 
     /**
      * @param OptionsResolver $resolver
+     *
      * @throws \Symfony\Component\OptionsResolver\Exception\AccessException
      */
     public function configureOptions(OptionsResolver $resolver)

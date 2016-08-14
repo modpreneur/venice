@@ -3,11 +3,9 @@
  * Created by PhpStorm.
  * User: Jakub Fajkus
  * Date: 26.01.16
- * Time: 11:56
+ * Time: 11:56.
  */
-
 namespace Venice\AppBundle\Tests\Services;
-
 
 use Venice\AppBundle\Entity\OAuthToken;
 use Venice\AppBundle\Entity\Product\ProductRepository;
@@ -50,6 +48,9 @@ class NecktieGatewayTest extends BaseTest
     /** @var  \PHPUnit_Framework_MockObject_MockBuilder */
     protected $necktieGatewayMockBuilder;
 
+    /**
+     * {@inheritdoc}
+     */
     public function setUp()
     {
         $this->entityManagerMock = $this
@@ -98,11 +99,10 @@ class NecktieGatewayTest extends BaseTest
                         $this->necktieUrl,
                         $this->necktieClientId,
                         $this->necktieClientSecret,
-                        $this->loginResponseRoute
+                        $this->loginResponseRoute,
                     ]
                 );
     }
-
 
     public function testGetLoginUrl()
     {
@@ -125,7 +125,6 @@ class NecktieGatewayTest extends BaseTest
         $this->assertInstanceOf(Cookie::class, $cookie);
     }
 
-
     public function testCreateStateCookie()
     {
         $createdCookie = $this->invokeMethod($this->necktieGateway, 'createStateCookie');
@@ -133,12 +132,10 @@ class NecktieGatewayTest extends BaseTest
         $this->assertInstanceOf(Cookie::class, $createdCookie);
     }
 
-
     public function testGetHelper()
     {
         $this->assertEquals($this->helperMock, $this->necktieGateway->getHelper());
     }
-
 
     public function testCreateNewUserNoPersist()
     {
@@ -153,7 +150,6 @@ class NecktieGatewayTest extends BaseTest
         $this->assertEquals($expectedUser->getUsername(), $user->getUsername());
         $this->assertEquals($expectedUser->getEmail(), $user->getEmail());
     }
-
 
     public function testCreateNewUserPersist()
     {
@@ -171,12 +167,10 @@ class NecktieGatewayTest extends BaseTest
             ->expects($this->once())
             ->method('flush');
 
-
         $user = $this->invokeMethod($this->necktieGateway, 'createNewUser', [['username' => 'username', 'email' => 'email@mail.com', 'id' => 3], true]);
 
         $this->assertEquals($expectedUser, $user);
     }
-
 
     /**
      * @expectedException \Exception
@@ -190,7 +184,6 @@ class NecktieGatewayTest extends BaseTest
 
         $this->refreshAccessToken(null, false);
     }
-
 
     /**
      * @expectedException Venice\AppBundle\Exceptions\ExpiredRefreshTokenException
@@ -207,7 +200,6 @@ class NecktieGatewayTest extends BaseTest
 
         $this->refreshAccessToken($connectorResponse, true);
     }
-
 
     public function testRefreshAccessTokenTokenCreated()
     {
@@ -240,7 +232,6 @@ class NecktieGatewayTest extends BaseTest
 
         $this->refreshAccessToken($connectorResponse);
     }
-
 
     /**
      * @expectedException \Exception
@@ -277,7 +268,6 @@ class NecktieGatewayTest extends BaseTest
         $this->refreshAccessToken($connectorResponse);
     }
 
-
     public function testRefreshAccessTokenIfNeededValidLastToken()
     {
         $necktieGatewayMock = $this->necktieGatewayMockBuilder
@@ -306,7 +296,6 @@ class NecktieGatewayTest extends BaseTest
         $necktieGatewayMock->refreshAccessTokenIfNeeded($this->userMock);
     }
 
-
     public function testRefreshAccessTokenIfNeededInvalidLastToken()
     {
         $necktieGatewayMock = $this->necktieGatewayMockBuilder
@@ -328,16 +317,13 @@ class NecktieGatewayTest extends BaseTest
             ->method('getLastToken')
             ->will($this->returnValue($token));
 
-
         $necktieGatewayMock
             ->expects($this->once())
             ->method('refreshAccessToken')
             ->will($this->returnValue(null));
 
         $necktieGatewayMock->refreshAccessTokenIfNeeded($this->userMock);
-
     }
-
 
     public function testGetUserByAccessTokenExistingUser()
     {
@@ -346,7 +332,7 @@ class NecktieGatewayTest extends BaseTest
         $userInfo = [
             'id' => 3,
             'username' => 'username',
-            'email' => 'email@mail.com'
+            'email' => 'email@mail.com',
         ];
 
         $repositoryUser = new User();
@@ -381,7 +367,6 @@ class NecktieGatewayTest extends BaseTest
         $this->assertEquals($repositoryUser->getEmail(), $foundUser->getEmail());
     }
 
-
     public function testGetUserByAccessTokenNoUserInfo()
     {
         $responseData = [];
@@ -389,7 +374,7 @@ class NecktieGatewayTest extends BaseTest
         $userInfo = [
             'id' => 3,
             'username' => 'username',
-            'email' => 'email@mail.com'
+            'email' => 'email@mail.com',
         ];
 
         $repositoryUser = new User();
@@ -418,7 +403,6 @@ class NecktieGatewayTest extends BaseTest
         $this->assertNull($foundUser);
     }
 
-
     public function testGetUserByAccessTokenNoUserFoundDoNotCreate()
     {
         $responseData = ['id' => 3, 'username' => 'username', 'email' => 'email@mail.com'];
@@ -426,7 +410,7 @@ class NecktieGatewayTest extends BaseTest
         $userInfo = [
             'id' => 3,
             'username' => 'username',
-            'email' => 'email@mail.com'
+            'email' => 'email@mail.com',
         ];
 
         $repositoryUser = new User();
@@ -460,7 +444,6 @@ class NecktieGatewayTest extends BaseTest
         $this->assertNull($foundUser);
     }
 
-
     public function testGetUserByAccessTokenNoUserFoundDoCreate()
     {
         $responseData = ['id' => 3, 'username' => 'username', 'email' => 'email@mail.com'];
@@ -469,7 +452,7 @@ class NecktieGatewayTest extends BaseTest
         $userInfo = [
             'id' => 3,
             'username' => 'username',
-            'email' => 'email@mail.com'
+            'email' => 'email@mail.com',
         ];
 
         $repositoryUser = new User();
@@ -502,13 +485,12 @@ class NecktieGatewayTest extends BaseTest
         $this->assertEquals('createNewUserResult', $result);
     }
 
-
     public function testGetUserByAccessTokenInvalidResponse()
     {
         $userInfo = [
             'id' => 3,
             'username' => 'username',
-            'email' => 'email@mail.com'
+            'email' => 'email@mail.com',
         ];
 
         $repositoryUser = new User();
@@ -537,7 +519,6 @@ class NecktieGatewayTest extends BaseTest
         $this->assertEquals(null, $result);
     }
 
-
     protected function getUserByAccessToken($responseData, $userInfo, $createNewUser, $persistNewUser)
     {
         $accessToken = 'accessTokenString';
@@ -565,16 +546,14 @@ class NecktieGatewayTest extends BaseTest
             ->will($this->returnValue('createNewUserResult'));
 
         return $necktieGatewayMock->getUserByAccessToken($accessToken, $createNewUser, $persistNewUser);
-
     }
-
 
     public function testGetInvoicesSuccessfully()
     {
         $responseData = [
             'invoices' => [
 
-            ]
+            ],
         ];
 
         $jsonResponseData = json_encode($responseData);
@@ -605,7 +584,6 @@ class NecktieGatewayTest extends BaseTest
         $this->assertNotEmpty($invoices);
     }
 
-
     public function testGetInvoicesResponseNotArray()
     {
         $responseData = null;
@@ -633,7 +611,6 @@ class NecktieGatewayTest extends BaseTest
 
         $this->assertEmpty($invoices);
     }
-
 
     public function testGetInvoicesResponseNoInvoicesKey()
     {
@@ -758,8 +735,8 @@ class NecktieGatewayTest extends BaseTest
                 ['productAccesses' => [
                     [
                         'product' => 0,
-                        'from_date' => '2016-03-04T00:00:00+0100'
-                    ]
+                        'from_date' => '2016-03-04T00:00:00+0100',
+                    ],
                 ]],
                 //expected data
                 [],
@@ -771,8 +748,8 @@ class NecktieGatewayTest extends BaseTest
                 ['productAccesses' => [
                     [
                         'product' => 0,
-                        'from_date' => 'invalid'
-                    ]
+                        'from_date' => 'invalid',
+                    ],
                 ]],
                 //expected data
                 [],
@@ -785,12 +762,12 @@ class NecktieGatewayTest extends BaseTest
                     [
                         'product' => 1,
                         'from_date' => '2016-03-04T00:00:00+0100',
-                        'id' => 3 //necktie id
-                    ]
+                        'id' => 3, //necktie id
+                    ],
                 ]],
                 //expected data
                 [
-                    'givenProductAccess'
+                    'givenProductAccess',
                 ],
                 // changes to user mock
             ],
@@ -802,8 +779,8 @@ class NecktieGatewayTest extends BaseTest
                         'product' => 1,
                         'from_date' => '2016-03-04T00:00:00+0100',
                         'to_date' => '2016-03-05T00:00:00+0100',
-                        'id' => 3 //necktie id
-                    ]
+                        'id' => 3, //necktie id
+                    ],
                 ]],
                 //expected data
                 ['givenProductAccess'],
@@ -818,8 +795,8 @@ class NecktieGatewayTest extends BaseTest
                         'product' => 1,
                         'from_date' => 'invalid',
                         'to_date' => '2016-03-05T00:00:00+0100',
-                        'id' => 3 //necktie id
-                    ]
+                        'id' => 3, //necktie id
+                    ],
                 ]],
                 //expected data
                 [],
@@ -829,14 +806,12 @@ class NecktieGatewayTest extends BaseTest
         ];
     }
 
-
     protected function refreshAccessToken($connectorResponse)
     {
         $this->userMock
             ->expects($this->once())
             ->method('getLastRefreshToken')
             ->will($this->returnValue('lastRefreshToken'));
-
 
         $this->connectorMock
             ->expects($this->once())
@@ -849,7 +824,7 @@ class NecktieGatewayTest extends BaseTest
                     'client_id' => $this->necktieClientId,
                     'client_secret' => $this->necktieClientSecret,
                     'grant_type' => 'refresh_token',
-                    'refresh_token' => 'lastRefreshToken'
+                    'refresh_token' => 'lastRefreshToken',
 
                 ]
             )
@@ -862,11 +837,8 @@ class NecktieGatewayTest extends BaseTest
     {
         if ($array['necktieId'] == 1) {
             return new StandardProduct();
-
         } else {
-            return null;
+            return;
         }
-
     }
-
 }

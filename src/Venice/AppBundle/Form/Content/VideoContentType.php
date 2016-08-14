@@ -3,9 +3,8 @@
  * Created by PhpStorm.
  * User: Jakub Fajkus
  * Date: 03.11.15
- * Time: 18:58
+ * Time: 18:58.
  */
-
 namespace Venice\AppBundle\Form\Content;
 
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
@@ -13,11 +12,13 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
- * Class VideoContentType
- * @package Venice\AppBundle\Form\Content
+ * Class VideoContentType.
  */
 class VideoContentType extends ContentType
 {
+    /**
+     * {@inheritdoc}
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         parent::buildForm($builder, $options);
@@ -27,7 +28,7 @@ class VideoContentType extends ContentType
                 'duration',
                 NumberType::class,
                 [
-                    'required' => true
+                    'required' => true,
                 ]
             )
             ->add(
@@ -42,28 +43,28 @@ class VideoContentType extends ContentType
                 'videoMobile',
                 TextType::class,
                 [
-                    'required' => false
+                    'required' => false,
                 ]
             )
             ->add(
                 'videoLq',
                 TextType::class,
                 [
-                    'required' => false
+                    'required' => false,
                 ]
             )
             ->add(
                 'videoHq',
                 TextType::class,
                 [
-                    'required' => false
+                    'required' => false,
                 ]
             )
             ->add(
                 'videoHd',
                 TextType::class,
                 [
-                    'required' => false
+                    'required' => false,
                 ]
             );
     }

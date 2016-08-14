@@ -3,16 +3,14 @@
  * Created by PhpStorm.
  * User: Jakub Fajkus
  * Date: 04.02.16
- * Time: 15:14
+ * Time: 15:14.
  */
-
 namespace Venice\AppBundle\Services;
 
 use Symfony\Component\Yaml\Parser;
 
 /**
- * Class RolesLoader
- * @package Venice\AppBundle\Services
+ * Class RolesLoader.
  */
 class RolesLoader
 {

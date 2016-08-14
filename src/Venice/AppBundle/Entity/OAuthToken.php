@@ -3,17 +3,14 @@
  * Created by PhpStorm.
  * User: Jakub Fajkus
  * Date: 22.10.15
- * Time: 9:27
+ * Time: 9:27.
  */
-
 namespace Venice\AppBundle\Entity;
 
 use Venice\AppBundle\Traits\Timestampable;
 
 /**
- *
- * Class OAuthToken
- * @package Venice\AppBundle\Entity
+ * Class OAuthToken.
  */
 class OAuthToken
 {
@@ -24,44 +21,37 @@ class OAuthToken
      */
     protected $id;
 
-
     /**
      * @var
      */
     protected $user;
-
 
     /**
      * @var string
      */
     protected $accessToken;
 
-
     /**
      * @var string
      */
     protected $refreshToken;
 
-
     /**
-     * Datetime to which will be token valid
+     * Datetime to which will be token valid.
      *
      * @var \DateTime
      */
     protected $validTo;
-
 
     /**
      * @var string
      */
     protected $scope;
 
-
     public function __construct()
     {
         $this->updateTimestamps();
     }
-
 
     /**
      * @return int
@@ -71,7 +61,6 @@ class OAuthToken
         return $this->id;
     }
 
-
     /**
      * @return string
      */
@@ -79,7 +68,6 @@ class OAuthToken
     {
         return $this->accessToken;
     }
-
 
     /**
      * @param string $accessToken
@@ -93,7 +81,6 @@ class OAuthToken
         return $this;
     }
 
-
     /**
      * @return string
      */
@@ -101,7 +88,6 @@ class OAuthToken
     {
         return $this->refreshToken;
     }
-
 
     /**
      * @param string $refreshToken
@@ -115,7 +101,6 @@ class OAuthToken
         return $this;
     }
 
-
     /**
      * @return \DateTime
      */
@@ -124,15 +109,13 @@ class OAuthToken
         return $this->validTo;
     }
 
-
     /**
      * @return bool
      */
     public function isAccessTokenValid()
     {
-         return $this->validTo->getTimestamp() > (new \DateTime())->getTimestamp();
+        return $this->validTo->getTimestamp() > (new \DateTime())->getTimestamp();
     }
-
 
     /**
      * @param \DateTime $validTo
@@ -146,14 +129,12 @@ class OAuthToken
         return $this;
     }
 
-
     /**
-     * Set validTo by current time + given lifetime
+     * Set validTo by current time + given lifetime.
      *
      * @param $lifetime
      *
      * @return OAuthToken
-     *
      */
     public function setValidToByLifetime($lifetime)
     {
@@ -165,7 +146,6 @@ class OAuthToken
         return $this;
     }
 
-
     /**
      * @return string
      */
@@ -173,7 +153,6 @@ class OAuthToken
     {
         return $this->scope;
     }
-
 
     /**
      * @param string $scope
@@ -187,7 +166,6 @@ class OAuthToken
         return $this;
     }
 
-
     /**
      * @return mixed
      */
@@ -195,7 +173,6 @@ class OAuthToken
     {
         return $this->user;
     }
-
 
     /**
      * @param mixed $user

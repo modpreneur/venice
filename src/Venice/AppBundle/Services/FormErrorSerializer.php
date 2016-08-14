@@ -42,21 +42,21 @@ class FormErrorSerializer
 
     private function serialize(Form $form)
     {
-        $local_errors = [];
+        $localErrors = [];
         foreach ($form->getIterator() as $key => $child) {
             foreach ($child->getErrors() as $error) {
-                $local_errors[$key] = $error->getMessage();
+                $localErrors[$key] = $error->getMessage();
             }
 
             if (count($child->getIterator()) > 0 && ($child instanceof Form)) {
                 $childErrors = $this->serialize($child);
                 if (!empty($childErrors)) {
-                    $local_errors[$key] = $childErrors;
+                    $localErrors[$key] = $childErrors;
                 }
             }
         }
 
-        return $local_errors;
+        return $localErrors;
     }
 
     private function arrayFlatten($array, $separator = '_', $flattenedKey = '')
@@ -69,11 +69,11 @@ class FormErrorSerializer
                     $this->arrayFlatten(
                         $value,
                         $separator,
-                        (strlen($flattenedKey) > 0 ? $flattenedKey . $separator : '') . $key
+                        (strlen($flattenedKey) > 0 ? $flattenedKey.$separator : '').$key
                     )
                 );
             } else {
-                $flattenedArray[(strlen($flattenedKey) > 0 ? $flattenedKey . $separator : '') . $key] = $value;
+                $flattenedArray[(strlen($flattenedKey) > 0 ? $flattenedKey.$separator : '').$key] = $value;
             }
         }
 

@@ -3,14 +3,11 @@
  * Created by PhpStorm.
  * User: Jakub Fajkus
  * Date: 28.04.16
- * Time: 12:43
+ * Time: 12:43.
  */
-
 namespace Venice\AppBundle\Form\Notification;
 
-use Doctrine\DBAL\Types\StringType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CountryType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -21,11 +18,10 @@ use Trinity\NotificationBundle\Interfaces\NotificationTypeInterface;
 use Venice\AppBundle\Entity\User;
 
 /**
- * Class UserType
+ * Class UserType.
  */
 class UserType extends AbstractType implements NotificationTypeInterface
 {
-    
     /**
      * {@inheritdoc}
      */
@@ -34,58 +30,25 @@ class UserType extends AbstractType implements NotificationTypeInterface
         parent::buildForm($builder, $options);
 
         $builder
-            ->add(
-                'username'
-            )
-            ->add(
-                'email',
-                EmailType::class)
-            ->add(
-                'locked'
-            )
-            ->add(
-                'firstName'
-            )
-            ->add(
-                'lastName'
-            )
-            ->add(
-                'phoneNumber'
-            )
-            ->add(
-                'website',
-                UrlType::class,
-                ['required' => false]
-            )
-            ->add(
-                'country',
-                TextType::class
-            )
-            ->add(
-                'region'
-            )
-            ->add(
-                'city'
-            )
-            ->add(
-                'postalCode'
-            )
-            ->add(
-                'addressLine1'
-            )
-            ->add(
-                'addressLine2'
-            )
-            ->add(
-                'id',
-                IntegerType::class,
-                ['property_path' => 'necktieId']
-            );
+            ->add('username')
+            ->add('email', EmailType::class)
+            ->add('locked')
+            ->add('firstName')
+            ->add('lastName')
+            ->add('phoneNumber')
+            ->add('website', UrlType::class, ['required' => false])
+            ->add('country', TextType::class)
+            ->add('region')
+            ->add('city')
+            ->add('postalCode')
+            ->add('addressLine1')
+            ->add('addressLine2')
+            ->add('id', IntegerType::class, ['property_path' => 'necktieId']);
     }
-
 
     /**
      * {@inheritdoc}
+     *
      * @throws \Symfony\Component\OptionsResolver\Exception\AccessException
      */
     public function configureOptions(OptionsResolver $resolver)
@@ -100,9 +63,8 @@ class UserType extends AbstractType implements NotificationTypeInterface
         );
     }
 
-
     /**
-     * Will be called after the
+     * Will be called after the.
      *
      * @return mixed
      */
@@ -110,7 +72,6 @@ class UserType extends AbstractType implements NotificationTypeInterface
     {
         // TODO: Implement onSuccess() method.
     }
-
 
     /**
      * @return mixed

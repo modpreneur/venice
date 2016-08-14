@@ -3,9 +3,8 @@
  * Created by PhpStorm.
  * User: Jakub Fajkus
  * Date: 19.01.16
- * Time: 10:52
+ * Time: 10:52.
  */
-
 namespace Venice\AppBundle\Services;
 
 use Doctrine\ORM\EntityManagerInterface;
@@ -32,14 +31,15 @@ class BuyUrlGenerator
     }
 
     /**
-     * Generate buy url
+     * Generate buy url.
      *
      * @param StandardProduct $product
-     * @param int $billingPlanId
-     * @param bool $useStoredCreditCard
+     * @param int             $billingPlanId
+     * @param bool            $useStoredCreditCard
+     * @param string          $paySystem
      *
-     * @param string $paySystem
      * @return string
+     *
      * @throws \Exception
      */
     public function generateBuyUrl(
@@ -57,19 +57,20 @@ class BuyUrlGenerator
 
     /**
      * @param StandardProduct $product
-     * @param int $billingPlanVeniceId
-     * @param bool $useStoredCreditCard
-     * @param string $paySystem
+     * @param int             $billingPlanVeniceId
+     * @param bool            $useStoredCreditCard
+     * @param string          $paySystem
      *
      * @return string
+     *
      * @throws \Exception
      */
     protected function generateNecktieBuyUrl(
         StandardProduct $product,
         int $billingPlanVeniceId = null,
         bool $useStoredCreditCard = false,
-        string $paySystem = '') : string
-    {
+        string $paySystem = ''
+    ) : string {
         $router = $this->router;
         $billingPlanNecktieId = null;
 
@@ -77,10 +78,10 @@ class BuyUrlGenerator
             'necktie_buy_product',
             [
                 'id' => $product->getId(),
-                'paySystem' => $paySystem
+                'paySystem' => $paySystem,
             ],
             $router::ABSOLUTE_URL
-        ) . '?';
+        ).'?';
 
         // Id not specified - use default
         if ($billingPlanVeniceId === null) {
@@ -104,6 +105,7 @@ class BuyUrlGenerator
 
     /**
      * @param $billingPlanVeniceId
+     *
      * @return BillingPlan|null
      */
     protected function getBillingPlan($billingPlanVeniceId)

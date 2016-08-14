@@ -3,9 +3,8 @@
  * Created by PhpStorm.
  * User: Jakub Fajkus
  * Date: 24.10.15
- * Time: 19:56
+ * Time: 19:56.
  */
-
 namespace Venice\AppBundle\Interfaces;
 
 use Venice\AppBundle\Entity\BillingPlan;
@@ -25,7 +24,6 @@ interface ConnectionManagerInterface
      */
     public function getLoginUrl();
 
-
     /**
      * Update product accesses for given user.
      *
@@ -36,7 +34,6 @@ interface ConnectionManagerInterface
      * @return ProductAccess[]
      */
     public function updateProductAccesses(User $user);
-
 
     /**
      * Get invoices for given user.
@@ -49,7 +46,6 @@ interface ConnectionManagerInterface
      */
     public function getInvoices(User $user);
 
-
     /**
      * Get billing plan by id.
      *
@@ -60,12 +56,10 @@ interface ConnectionManagerInterface
      */
     public function getBillingPlan(User $user, $id);
 
-
     /**
      * Get all billing plans for given product.
      *
      * @param User            $user
-     *
      * @param StandardProduct $product
      *
      * @return \Venice\AppBundle\Entity\BillingPlan[]

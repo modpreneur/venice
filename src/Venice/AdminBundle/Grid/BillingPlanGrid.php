@@ -5,15 +5,12 @@ namespace Venice\AdminBundle\Grid;
 use Trinity\Bundle\GridBundle\Grid\BaseGrid;
 
 /**
- * Class billingPlanGrid
- * @package Venice\AdminBundle\Grid
+ * Class billingPlanGrid.
  */
 class BillingPlanGrid extends BaseGrid
 {
     /**
-     * Set up grid (template)
-     *
-     * @return void
+     * Set up grid (template).
      */
     public function setUp()
     {

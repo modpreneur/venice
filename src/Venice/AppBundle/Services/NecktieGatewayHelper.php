@@ -3,9 +3,8 @@
  * Created by PhpStorm.
  * User: Jakub Fajkus
  * Date: 22.10.15
- * Time: 14:31
+ * Time: 14:31.
  */
-
 namespace Venice\AppBundle\Services;
 
 use Venice\AppBundle\Entity\BillingPlan;
@@ -21,36 +20,33 @@ class NecktieGatewayHelper implements NecktieGatewayHelperInterface
     const NECKTIE_EXPIRED_REFRESH_TOKEN_ERROR = '{"error":"invalid_grant","error_description":"Invalid refresh token"}';
     const NECKTIE_INVALID_CLIENT_ERROR = '{"error":"invalid_token","error_description":"The client credentials are invalid"}';
 
-
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getUserInfoFromNecktieProfileResponse(array $response)
     {
         $requiredFields = ['username', 'email', 'id'];
         $userInfo = [];
 
-
         if (is_array($response) && array_key_exists('user', $response)) {
             $response = $response['user'];
         } else {
-            return null;
+            return;
         }
 
         foreach ($requiredFields as $requiredFiled) {
             if (is_array($response) && array_key_exists($requiredFiled, $response)) {
                 $userInfo[$requiredFiled] = $response[$requiredFiled];
             } else {
-                return null;
+                return;
             }
         }
 
         return $userInfo;
     }
 
-
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function createOAuthTokenFromArray(array $array)
     {
@@ -67,13 +63,12 @@ class NecktieGatewayHelper implements NecktieGatewayHelperInterface
 
             return $necktieToken;
         } else {
-            return null;
+            return;
         }
     }
 
-
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getInvoicesFromNecktieResponse(array $response)
     {
@@ -82,7 +77,6 @@ class NecktieGatewayHelper implements NecktieGatewayHelperInterface
         } else {
             return [];
         }
-
 
         $invoices = [];
 
@@ -94,7 +88,6 @@ class NecktieGatewayHelper implements NecktieGatewayHelperInterface
             } else {
                 continue;
             }
-
 
             if (array_key_exists('total_customer_price', $invoice)) {
                 $invoiceObject->setTotalPrice($invoice['total_customer_price']);
@@ -117,7 +110,8 @@ class NecktieGatewayHelper implements NecktieGatewayHelperInterface
 
             if (array_key_exists('items', $invoice)) {
                 foreach ($invoice['items'] as $invoiceItem) {
-                    if (array_key_exists('product', $invoiceItem) && array_key_exists('name', $invoiceItem['product'])) {
+                    if (array_key_exists('product', $invoiceItem)
+                        && array_key_exists('name', $invoiceItem['product'])) {
                         $invoiceObject->addItem($invoiceItem['product']['name']);
                     }
                 }
@@ -131,9 +125,8 @@ class NecktieGatewayHelper implements NecktieGatewayHelperInterface
         return $invoices;
     }
 
-
     /**
-     * todo: test or remove
+     * todo: test or remove.
      *
      * @param $response
      *
@@ -172,9 +165,8 @@ class NecktieGatewayHelper implements NecktieGatewayHelperInterface
         return $billingPlan;
     }
 
-
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function isResponseOk($response)
     {
@@ -186,9 +178,8 @@ class NecktieGatewayHelper implements NecktieGatewayHelperInterface
         );
     }
 
-
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function isAccessTokenInvalidResponse($response)
     {
@@ -202,9 +193,8 @@ class NecktieGatewayHelper implements NecktieGatewayHelperInterface
         }
     }
 
-
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function isAccessTokenExpiredResponse($response)
     {
@@ -215,12 +205,10 @@ class NecktieGatewayHelper implements NecktieGatewayHelperInterface
         } else {
             return false;
         }
-
     }
 
-
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function isRefreshTokenExpiredResponse($response)
     {
@@ -233,9 +221,8 @@ class NecktieGatewayHelper implements NecktieGatewayHelperInterface
         }
     }
 
-
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function isInvalidClientResponse($response)
     {
@@ -248,9 +235,8 @@ class NecktieGatewayHelper implements NecktieGatewayHelperInterface
         }
     }
 
-
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function hasError($response)
     {

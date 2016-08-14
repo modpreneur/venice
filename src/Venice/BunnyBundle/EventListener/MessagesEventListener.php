@@ -10,8 +10,7 @@ use Symfony\Component\HttpKernel\KernelInterface;
 use Trinity\Bundle\MessagesBundle\Event\SendMessageEvent;
 
 /**
- * Class MessagesEventListener
- * @package Venice\BunnyBundle\EventListener
+ * Class MessagesEventListener.
  */
 class MessagesEventListener
 {
@@ -46,7 +45,7 @@ class MessagesEventListener
             'command' => 'bunny:producer',
             'producer-name' => $producerName,
             'message' => $message->pack(),
-            'routing-key' => ($routingKey === '') ? null : $routingKey
+            'routing-key' => ($routingKey === '') ? null : $routingKey,
         ]);
 
         $output = new BufferedOutput();

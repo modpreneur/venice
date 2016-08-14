@@ -3,17 +3,15 @@
  * Created by PhpStorm.
  * User: Jakub Fajkus
  * Date: 30.11.15
- * Time: 16:09
+ * Time: 16:09.
  */
-
 namespace Venice\AppBundle\Entity\Content;
 
 use Venice\AppBundle\Entity\Product\Product;
 use Venice\AppBundle\Entity\User;
 
 /**
- * Class ContentInGroup
- * @package Venice\AppBundle\Entity\Content
+ * Class ContentInGroup.
  */
 class ContentInGroup
 {
@@ -22,37 +20,31 @@ class ContentInGroup
      */
     protected $id;
 
-
     /**
      * @var GroupContent
      */
     protected $group;
-
 
     /**
      * @var Content
      */
     protected $content;
 
-
     /**
      * @var int
      */
     protected $delay;
-
 
     /**
      * @var int
      */
     protected $orderNumber;
 
-
     public function __construct()
     {
         $this->delay = 0;
         $this->orderNumber = 0;
     }
-
 
     /**
      * @return int
@@ -62,7 +54,6 @@ class ContentInGroup
         return $this->id;
     }
 
-
     /**
      * @return GroupContent
      */
@@ -70,7 +61,6 @@ class ContentInGroup
     {
         return $this->group;
     }
-
 
     /**
      * @param GroupContent $group
@@ -84,7 +74,6 @@ class ContentInGroup
         return $this;
     }
 
-
     /**
      * @return Content
      */
@@ -92,7 +81,6 @@ class ContentInGroup
     {
         return $this->content;
     }
-
 
     /**
      * @param Content $content
@@ -106,7 +94,6 @@ class ContentInGroup
         return $this;
     }
 
-
     /**
      * @return int
      */
@@ -114,7 +101,6 @@ class ContentInGroup
     {
         return $this->delay;
     }
-
 
     /**
      * @param int $delay
@@ -128,7 +114,6 @@ class ContentInGroup
         return $this;
     }
 
-
     /**
      * @return int
      */
@@ -136,7 +121,6 @@ class ContentInGroup
     {
         return $this->orderNumber;
     }
-
 
     /**
      * @param int $orderNumber
@@ -150,13 +134,12 @@ class ContentInGroup
         return $this;
     }
 
-
     /**
      * Check if the given user has access to this ContentInGroup.
      *
-     * @param User $user
-     * @param Product $product The Product which is associated with the GroupContent
-     * @param bool $checkAccessToProduct Check access to product?
+     * @param User    $user
+     * @param Product $product              The Product which is associated with the GroupContent
+     * @param bool    $checkAccessToProduct Check access to product?
      *
      * @return bool true - the user has access to the parent Product and the delay of this ContentInGroup + delay < now
      */

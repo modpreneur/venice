@@ -3,9 +3,8 @@
  * Created by PhpStorm.
  * User: Jakub Fajkus
  * Date: 09.06.16
- * Time: 16:10
+ * Time: 16:10.
  */
-
 namespace Venice\BunnyBundle\Services;
 
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
@@ -14,8 +13,7 @@ use Trinity\Bundle\MessagesBundle\Message\Message;
 use Venice\AppBundle\Entity\User;
 
 /**
- * Class MessageUserProvider
- * @package Necktie\AppBundle\Service
+ * Class MessageUserProvider.
  */
 class MessageUserProvider implements MessageUserProviderInterface
 {
@@ -29,7 +27,7 @@ class MessageUserProvider implements MessageUserProviderInterface
      * MessageUserProvider constructor.
      *
      * @param TokenStorageInterface $tokenStorage
-     * @param string $clientIdentification
+     * @param string                $clientIdentification
      */
     public function __construct(TokenStorageInterface $tokenStorage, string $clientIdentification)
     {

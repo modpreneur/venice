@@ -6,14 +6,12 @@ use Trinity\Component\Core\Interfaces\ClientInterface;
 use Trinity\NotificationBundle\Entity\NotificationEntityInterface;
 use Venice\AppBundle\Entity\Product\Product;
 use Venice\AppBundle\Traits\Timestampable;
-use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 use Trinity\NotificationBundle\Annotations as N;
 
 /**
- * ProductAccess
+ * ProductAccess.
  *
  * @UniqueEntity(fields={"user", "product"}, errorPath="product")
  */
@@ -22,12 +20,12 @@ class ProductAccess implements NotificationEntityInterface
     use Timestampable;
 
     /**
-     * @var integer
+     * @var int
      */
     private $id;
 
     /**
-     * @var integer
+     * @var int
      */
     protected $necktieId;
 
@@ -51,12 +49,10 @@ class ProductAccess implements NotificationEntityInterface
      */
     private $toDate;
 
-
     public function __construct()
     {
         $this->updateTimestamps();
     }
-
 
     /**
      * @param ExecutionContextInterface $context
@@ -71,20 +67,18 @@ class ProductAccess implements NotificationEntityInterface
         }
     }
 
-
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
         return $this->id;
     }
 
-
     /**
-     * Set user
+     * Set user.
      *
      * @N\AssociationSetter(targetEntity="Venice\AppBundle\Entity\User")
      *
@@ -99,9 +93,8 @@ class ProductAccess implements NotificationEntityInterface
         return $this;
     }
 
-
     /**
-     * Get user
+     * Get user.
      *
      * @N\AssociationGetter
      *
@@ -112,9 +105,8 @@ class ProductAccess implements NotificationEntityInterface
         return $this->user;
     }
 
-
     /**
-     * Set product
+     * Set product.
      *
      * @N\AssociationSetter(targetEntity="Venice\AppBundle\Entity\Product\Product")
      *
@@ -129,9 +121,8 @@ class ProductAccess implements NotificationEntityInterface
         return $this;
     }
 
-
     /**
-     * Get product
+     * Get product.
      *
      * @N\AssociationGetter
      *
@@ -142,9 +133,8 @@ class ProductAccess implements NotificationEntityInterface
         return $this->product;
     }
 
-
     /**
-     * Set fromDate
+     * Set fromDate.
      *
      * @param \DateTime $fromDate
      *
@@ -157,9 +147,8 @@ class ProductAccess implements NotificationEntityInterface
         return $this;
     }
 
-
     /**
-     * Get fromDate
+     * Get fromDate.
      *
      * @return \DateTime
      */
@@ -168,9 +157,8 @@ class ProductAccess implements NotificationEntityInterface
         return $this->fromDate;
     }
 
-
     /**
-     * Set toDate
+     * Set toDate.
      *
      * @param \DateTime $toDate
      *
@@ -183,9 +171,8 @@ class ProductAccess implements NotificationEntityInterface
         return $this;
     }
 
-
     /**
-     * Get toDate
+     * Get toDate.
      *
      * @return \DateTime
      */
@@ -194,7 +181,6 @@ class ProductAccess implements NotificationEntityInterface
         return $this->toDate;
     }
 
-
     /**
      * @return int
      */
@@ -202,7 +188,6 @@ class ProductAccess implements NotificationEntityInterface
     {
         return $this->necktieId;
     }
-
 
     /**
      * @param int $necktieId

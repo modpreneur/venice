@@ -3,24 +3,19 @@
  * Created by PhpStorm.
  * User: Jakub Fajkus
  * Date: 31.01.16
- * Time: 10:50
+ * Time: 10:50.
  */
-
 namespace Venice\AdminBundle\Grid;
 
 use Trinity\Bundle\GridBundle\Grid\BaseGrid;
 
 /**
- * Class ContentProductGrid
- *
- * @package Venice\AdminBundle\Grid
+ * Class ContentProductGrid.
  */
 class ContentProductGrid extends BaseGrid
 {
     /**
-     * Set up grid (template)
-     *
-     * @return void
+     * Set up grid (template).
      */
     public function setUp()
     {

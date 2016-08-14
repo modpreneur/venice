@@ -3,17 +3,12 @@
  * Created by PhpStorm.
  * User: Jakub Fajkus
  * Date: 04.10.15
- * Time: 15:43
+ * Time: 15:43.
  */
-
 namespace Venice\AppBundle\Entity\Content;
 
-use Doctrine\ORM\Mapping as ORM;
-
 /**
- * Class Mp3Content
- *
- * @package Venice\AppBundle\Entity\Content
+ * Class Mp3Content.
  */
 class Mp3Content extends AbstractPlayableContent
 {
@@ -21,7 +16,6 @@ class Mp3Content extends AbstractPlayableContent
      * @var string Url address to the file.
      */
     protected $link;
-
 
     /**
      * {@inheritdoc}
@@ -31,7 +25,6 @@ class Mp3Content extends AbstractPlayableContent
         return $this->link;
     }
 
-
     /**
      * {@inheritdoc}
      */
@@ -40,7 +33,6 @@ class Mp3Content extends AbstractPlayableContent
         $this->link = $link;
     }
 
-
     /**
      * {@inheritdoc}
      */
@@ -48,7 +40,6 @@ class Mp3Content extends AbstractPlayableContent
     {
         return $this->duration;
     }
-
 
     /**
      * {@inheritdoc}
@@ -60,7 +51,6 @@ class Mp3Content extends AbstractPlayableContent
         return $this;
     }
 
-
     /**
      * {@inheritdoc}
      */
@@ -69,9 +59,8 @@ class Mp3Content extends AbstractPlayableContent
         return $this->link;
     }
 
-
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getType()
     {

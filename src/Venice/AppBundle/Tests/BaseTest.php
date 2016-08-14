@@ -3,11 +3,13 @@
  * Created by PhpStorm.
  * User: Jakub Fajkus
  * Date: 25.01.16
- * Time: 14:23
+ * Time: 14:23.
  */
-
 namespace Venice\AppBundle\Tests;
 
+/**
+ * {@inheritdoc}
+ */
 abstract class BaseTest extends \PHPUnit_Framework_TestCase
 {
     /**
@@ -28,14 +30,13 @@ abstract class BaseTest extends \PHPUnit_Framework_TestCase
         return $method->invokeArgs($object, $parameters);
     }
 
-
     /**
-     * Assert that two DateTime's are equal withing given delta(difference tolleration)
+     * Assert that two DateTime's are equal withing given delta(difference tolleration).
      *
      * @param \DateTime $expected
      * @param \DateTime $actual
-     * @param string $message
-     * @param int $delta
+     * @param string    $message
+     * @param int       $delta
      */
     public function assertDatesTimeEquals(\DateTime $expected, \DateTime $actual, $message = '', $delta = 1)
     {

@@ -3,9 +3,8 @@
  * Created by PhpStorm.
  * User: Jakub Fajkus
  * Date: 18.01.16
- * Time: 16:21
+ * Time: 16:21.
  */
-
 namespace Venice\AppBundle\EventListener;
 
 use Doctrine\ORM\Event\OnFlushEventArgs;
@@ -20,27 +19,28 @@ class EntityListener
      */
     protected $container;
 
-
     public function __construct(ContainerInterface $container)
     {
         $this->container = $container;
     }
-
 
     public function onFlush(OnFlushEventArgs $args)
     {
         $this->processChanges($args);
     }
 
-
     /**
      * @param OnFlushEventArgs $args
+     *
      * @throws \Symfony\Component\Validator\Exception\ValidatorException
+     * @throws \Symfony\Component\DependencyInjection\Exception\ServiceCircularReferenceException
+     * @throws \LogicException
+     * @throws \Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException
      */
     public function processChanges(OnFlushEventArgs $args)
     {
-        $em = $args->getEntityManager();
-        $uow = $em->getUnitOfWork();
+        $entityManager = $args->getEntityManager();
+        $uow = $entityManager->getUnitOfWork();
 
         foreach ($uow->getScheduledEntityInsertions() as $entity) {
             $this->checkViolations($entity);
@@ -58,9 +58,10 @@ class EntityListener
     }
 
     /**
-     * Check validation on entity
+     * Check validation on entity.
      *
      * @param $entity
+     *
      * @throws \Symfony\Component\Validator\Exception\ValidatorException
      * @throws \Symfony\Component\DependencyInjection\Exception\ServiceCircularReferenceException
      * @throws \Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException
@@ -73,9 +74,9 @@ class EntityListener
         if ($violations->count() !== 0) {
             /** @var ConstraintViolationInterface $violation */
             foreach ($violations as $violation) {
-                $message .= 'Validation failed for entity: ' . get_class($entity) .
-                    ' at property: ' . $violation->getPropertyPath() . ': ' .
-                    $violation->getMessage() . 'The value is:' . $violation->getInvalidValue()
+                $message .= 'Validation failed for entity: '.get_class($entity).
+                    ' at property: '.$violation->getPropertyPath().': '.
+                    $violation->getMessage().'The value is:'.$violation->getInvalidValue()
                 ;
             }
 
