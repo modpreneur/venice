@@ -62,22 +62,4 @@ class UserType extends AbstractType implements NotificationTypeInterface
             ]
         );
     }
-
-    /**
-     * Will be called after the.
-     *
-     * @return mixed
-     */
-    public function onSuccess()
-    {
-        // TODO: Implement onSuccess() method.
-    }
-
-    /**
-     * @return mixed
-     */
-    public function onFailure()
-    {
-        // TODO: Implement onFailure() method.
-    }
 }
