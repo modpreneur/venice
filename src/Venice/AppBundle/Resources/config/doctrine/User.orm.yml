@@ -1,4 +1,3 @@
-#todo: try to remove fields from trinity
 Venice\AppBundle\Entity\User:
     type: entity
     table: user
@@ -45,103 +44,6 @@ Venice\AppBundle\Entity\User:
             nullable: false
             precision: 0
             column: date_of_birth
-        status:
-            type: array
-            scale: 0
-            length: null
-            unique: false
-            nullable: true
-            precision: 0
-        firstName:
-            type: string
-            scale: 0
-            length: 255
-            unique: false
-            nullable: true
-            precision: 0
-            column: first_name
-        lastName:
-            type: string
-            scale: 0
-            length: 255
-            unique: false
-            nullable: true
-            precision: 0
-            column: last_name
-        phoneNumber:
-            type: string
-            scale: 0
-            length: 255
-            unique: false
-            nullable: true
-            precision: 0
-            column: phone_number
-        website:
-            type: string
-            scale: 0
-            length: 255
-            unique: false
-            nullable: true
-            precision: 0
-        avatar:
-            type: string
-            scale: 0
-            length: 255
-            unique: false
-            nullable: true
-            precision: 0
-        public:
-            type: boolean
-            scale: 0
-            length: null
-            unique: false
-            nullable: true
-            precision: 0
-        country:
-            type: string
-            scale: 0
-            length: 2
-            unique: false
-            nullable: true
-            precision: 0
-        region:
-            type: string
-            scale: 0
-            length: 32
-            unique: false
-            nullable: true
-            precision: 0
-        city:
-            type: string
-            scale: 0
-            length: 32
-            unique: false
-            nullable: true
-            precision: 0
-        addressLine1:
-            type: string
-            scale: 0
-            length: 255
-            unique: false
-            nullable: true
-            precision: 0
-            column: address_line1
-        addressLine2:
-            type: string
-            scale: 0
-            length: 255
-            unique: false
-            nullable: true
-            precision: 0
-            column: address_line2
-        postalCode:
-            type: string
-            scale: 0
-            length: 10
-            unique: false
-            nullable: true
-            precision: 0
-            column: postal_code
     oneToMany:
         productAccesses:
             targetEntity: Venice\AppBundle\Entity\ProductAccess

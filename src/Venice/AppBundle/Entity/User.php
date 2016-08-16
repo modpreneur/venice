@@ -62,11 +62,6 @@ class User extends BaseUser implements NotificationEntityInterface
     protected $OAuthTokens;
 
     /**
-     * @var []
-     */
-    protected $status;
-
-    /**
      * {@inheritdoc}
      */
     public function __construct()
@@ -79,7 +74,6 @@ class User extends BaseUser implements NotificationEntityInterface
         $this->OAuthTokens = new ArrayCollection();
         $this->preferredUnits = self::DEFAULT_PREFERRED_METRICS;
         $this->birthDate = new DateTime();
-        $this->status = [];
         $this->updateTimestamps();
     }
 
