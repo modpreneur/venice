@@ -20,27 +20,27 @@
         <input type="radio" name="tab" id="tab1" class="tab-head" checked />
         <label for="tab1">Show</label>
 
-        {% if is_granted('ROLE_ADMIN_BILLING_PLAN_EDIT') %}
-            {% if appLogic.displayEditTabForBillingPlan %}
-                <input type="radio" name="tab" id="tab2" class="tab-head" />
-                <label for="tab2">Edit</label>
-            {% endif %}
-            {% if appLogic.displayDeleteTabForBillingPlan %}
-                <input type="radio" name="tab" id="tab3" class="tab-head" />
-                <label for="tab3">Danger zone</label>
-            {% endif %}
-        {% endif %}
+        {#{% if is_granted('ROLE_ADMIN_BILLING_PLAN_EDIT') %}#}
+            {#{% if appLogic.displayEditTabForBillingPlan %}#}
+                {#<input type="radio" name="tab" id="tab2" class="tab-head" />#}
+                {#<label for="tab2">Edit</label>#}
+            {#{% endif %}#}
+            {#{% if appLogic.displayDeleteTabForBillingPlan %}#}
+                {#<input type="radio" name="tab" id="tab3" class="tab-head" />#}
+                {#<label for="tab3">Danger zone</label>#}
+            {#{% endif %}#}
+        {#{% endif %}#}
 
         <div class="tab-body-wrapper">
             <div id="tab-body-1" class="tab-body" data-source="{{ path('admin_billing_plan_show', {'id': billingPlan.id}) }}"></div>
-            {% if is_granted('ROLE_ADMIN_BILLING_PLAN_EDIT') %}
-                {% if appLogic.displayEditTabForBillingPlan %}
-                    <div id="tab-body-2" class="tab-body" data-source="{{ path('admin_billing_plan_edit', {'id': billingPlan.id}) }}"></div>
-                {% endif %}
-                {% if appLogic.displayDeleteTabForBillingPlan %}
-                    <div id="tab-body-3" class="tab-body" data-source="{{ path('admin_billing_plan_delete_tab', {'id': billingPlan.id}) }}"></div>
-                {% endif %}
-            {% endif %}
+            {#{% if is_granted('ROLE_ADMIN_BILLING_PLAN_EDIT') %}#}
+                {#{% if appLogic.displayEditTabForBillingPlan %}#}
+                    {#<div id="tab-body-2" class="tab-body" data-source="{{ path('admin_billing_plan_edit', {'id': billingPlan.id}) }}"></div>#}
+                {#{% endif %}#}
+                {#{% if appLogic.displayDeleteTabForBillingPlan %}#}
+                    {#<div id="tab-body-3" class="tab-body" data-source="{{ path('admin_billing_plan_delete_tab', {'id': billingPlan.id}) }}"></div>#}
+                {#{% endif %}#}
+            {#{% endif %}#}
         </div>
     </div>
 
