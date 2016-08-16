@@ -24,6 +24,7 @@ class BillingPlanController extends BaseAdminController
      * Get information about billing plan of given product.
      *
      * @param int $id
+     * @param Request $request
      *
      * @return array
      *
@@ -31,7 +32,7 @@ class BillingPlanController extends BaseAdminController
      * @throws \Trinity\Bundle\GridBundle\Exception\DuplicateColumnException
      * @throws \Trinity\Bundle\SettingsBundle\Exception\PropertyNotExistsException
      */
-    public function indexAction(int $id)
+    public function indexAction(Request $request, int $id)
     {
         $count = $this->getDoctrine()->getRepository('VeniceAppBundle:BillingPlan')->countByProduct($id);
         $url = $this->generateUrl('grid_default', ['entity' => 'BillingPlan']);
@@ -63,11 +64,12 @@ class BillingPlanController extends BaseAdminController
     /**
      * @Security("is_granted('ROLE_ADMIN_BILLING_PLAN_VIEW')")
      *
+     * @param Request $request
      * @param BillingPlan $billingPlan
      *
      * @return Response
      */
-    public function showAction(BillingPlan $billingPlan)
+    public function showAction(Request $request, BillingPlan $billingPlan)
     {
         return $this->render(
             'VeniceAdminBundle:BillingPlan:show.html.twig',
@@ -78,11 +80,12 @@ class BillingPlanController extends BaseAdminController
     /**
      * @Security("is_granted('ROLE_ADMIN_BILLING_PLAN_VIEW')")
      *
+     * @param Request $request
      * @param BillingPlan $billingPlan
      *
      * @return Response
      */
-    public function tabsAction(BillingPlan $billingPlan)
+    public function tabsAction(Request $request, BillingPlan $billingPlan)
     {
         $this->getBreadcrumbs()
             ->addRouteItem('Products', 'admin_product_index')
@@ -114,13 +117,14 @@ class BillingPlanController extends BaseAdminController
      *
      * @Security("is_granted('ROLE_ADMIN_PRODUCT_EDIT')")
      *
+     * @param Request $request
      * @param BillingPlan $billingPlan
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      *
      * @throws \LogicException
      */
-    public function setDefaultBillingPlanAction(BillingPlan $billingPlan)
+    public function setDefaultBillingPlanAction(Request $request, BillingPlan $billingPlan)
     {
         $entityManager = $this->getDoctrine()->getManager();
 
@@ -151,6 +155,7 @@ class BillingPlanController extends BaseAdminController
      *
      * @Security("is_granted('ROLE_ADMIN_BILLING_PLAN_EDIT')")
      *
+     * @param Request $request
      * @param BillingPlan $billingPlan
      *
      * @return Response
@@ -164,7 +169,7 @@ class BillingPlanController extends BaseAdminController
      * @throws \Symfony\Component\Form\Exception\LogicException
      * @throws \LogicException
      */
-    public function editAction(BillingPlan $billingPlan)
+    public function editAction(Request $request, BillingPlan $billingPlan)
     {
         $billingPlanForm = $this->getFormCreator()
             ->createEditForm(
@@ -249,6 +254,7 @@ class BillingPlanController extends BaseAdminController
      *
      * @Security("is_granted('ROLE_ADMIN_BILLING_PLAN_EDIT')")
      *
+     * @param Request $request
      * @param StandardProduct $product
      *
      * @return Response
@@ -262,7 +268,7 @@ class BillingPlanController extends BaseAdminController
      * @throws \Symfony\Component\Form\Exception\LogicException
      * @throws \LogicException
      */
-    public function newAction(StandardProduct $product)
+    public function newAction(Request $request, StandardProduct $product)
     {
         $this->getBreadcrumbs()
             ->addRouteItem('Products', 'admin_product_index')

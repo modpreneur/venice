@@ -23,6 +23,8 @@ class UserController extends BaseAdminController
     /**
      * @Security("is_granted('ROLE_ADMIN_USER_VIEW')")
      *
+     * @param Request $request
+     *
      * @return Response
      *
      * @throws \Doctrine\ORM\NonUniqueResultException
@@ -31,7 +33,7 @@ class UserController extends BaseAdminController
      * @throws \Trinity\Bundle\SettingsBundle\Exception\PropertyNotExistsException
      * @throws \Trinity\Bundle\GridBundle\Exception\DuplicateColumnException
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
         $this->getBreadcrumbs()
             ->addRouteItem('Users', 'admin_user_index');
@@ -60,11 +62,12 @@ class UserController extends BaseAdminController
     /**
      * @Security("is_granted('ROLE_ADMIN_USER_VIEW')")
      *
+     * @param Request $request
      * @param User $user
      *
      * @return Response
      */
-    public function showAction(User $user)
+    public function showAction(Request $request, User $user)
     {
         return $this->render(
             'VeniceAdminBundle:User:show.html.twig',
@@ -75,11 +78,12 @@ class UserController extends BaseAdminController
     /**
      * @Security("is_granted('ROLE_ADMIN_USER_VIEW')")
      *
+     * @param Request $request
      * @param User $user
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function tabsAction(User $user)
+    public function tabsAction(Request $request, User $user)
     {
         $this->getBreadcrumbs()
             ->addRouteItem('Users', 'admin_user_index')
@@ -170,6 +174,7 @@ class UserController extends BaseAdminController
     /**
      * @Security("is_granted('ROLE_ADMIN_USER_EDIT')")
      *
+     * @param Request $request
      * @param User $user
      *
      * @return \Symfony\Component\HttpFoundation\Response
@@ -183,7 +188,7 @@ class UserController extends BaseAdminController
      * @throws \Symfony\Component\Form\Exception\LogicException
      * @throws \LogicException
      */
-    public function editAction(User $user)
+    public function editAction(Request $request, User $user)
     {
         $form = $this->getFormCreator()
             ->createEditForm(
@@ -277,6 +282,7 @@ class UserController extends BaseAdminController
     /**
      * @Security("is_granted('ROLE_ADMIN_USER_EDIT')")
      *
+     * @param Request $request
      * @param User $user
      *
      * @return Response
@@ -289,7 +295,7 @@ class UserController extends BaseAdminController
      * @throws \Symfony\Component\Routing\Exception\InvalidParameterException
      * @throws \Symfony\Component\Form\Exception\LogicException
      */
-    public function deleteTabAction(User $user)
+    public function deleteTabAction(Request $request, User $user)
     {
         $form = $this->getFormCreator()
             ->createDeleteForm('admin_user', $user->getId());
@@ -353,6 +359,7 @@ class UserController extends BaseAdminController
     /**
      * @Security("is_granted('ROLE_ADMIN_USER_EDIT')")
      *
+     * @param Request $request
      * @param User $user
      *
      * @return Response
@@ -365,7 +372,7 @@ class UserController extends BaseAdminController
      * @throws \Symfony\Component\Routing\Exception\InvalidParameterException
      * @throws \Symfony\Component\Form\Exception\LogicException
      */
-    public function rolesEditAction(User $user)
+    public function rolesEditAction(Request $request, User $user)
     {
         $form = $this->getFormCreator()
             ->createEditForm(

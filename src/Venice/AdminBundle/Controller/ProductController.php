@@ -9,7 +9,6 @@ namespace Venice\AdminBundle\Controller;
 
 use Doctrine\DBAL\DBALException;
 use ReflectionException;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -26,6 +25,8 @@ class ProductController extends BaseAdminController
     /**
      * @Security("is_granted('ROLE_ADMIN_PRODUCT_VIEW')")
      *
+     * @param Request $request
+     *
      * @return Response
      *
      * @throws \Doctrine\ORM\NoResultException
@@ -34,7 +35,7 @@ class ProductController extends BaseAdminController
      * @throws \Trinity\Bundle\SettingsBundle\Exception\PropertyNotExistsException
      * @throws \Trinity\Bundle\GridBundle\Exception\DuplicateColumnException
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
         $this->getBreadcrumbs()->addRouteItem('Products', 'admin_product_index');
 
@@ -69,6 +70,7 @@ class ProductController extends BaseAdminController
     /**
      * @Security("is_granted('ROLE_ADMIN_BLOG_VIEW')")
      *
+     * @param Request $request
      * @param Product $product
      *
      * @return string
@@ -79,7 +81,7 @@ class ProductController extends BaseAdminController
      * @throws \Trinity\Bundle\SettingsBundle\Exception\PropertyNotExistsException
      * @throws \Trinity\Bundle\GridBundle\Exception\DuplicateColumnException
      */
-    public function blogArticleIndexAction(Product $product)
+    public function blogArticleIndexAction(Request $request, Product $product)
     {
         $max = $this->getEntityManager()->getRepository('VeniceAppBundle:BlogArticle')
             ->getCountByProduct($product->getId());
@@ -111,11 +113,12 @@ class ProductController extends BaseAdminController
     /**
      * @Security("is_granted('ROLE_ADMIN_PRODUCT_VIEW')")
      *
+     * @param Request $request
      * @param Product $product
      *
      * @return Response
      */
-    public function showAction(Product $product)
+    public function showAction(Request $request, Product $product)
     {
         return $this->render(
             'VeniceAdminBundle:Product:show.html.twig',
@@ -126,11 +129,12 @@ class ProductController extends BaseAdminController
     /**
      * @Security("is_granted('ROLE_ADMIN_PRODUCT_VIEW')")
      *
+     * @param Request $request
      * @param Product $product
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function tabsAction(Product $product)
+    public function tabsAction(Request $request, Product $product)
     {
         $this->getBreadcrumbs()
             ->addRouteItem('Products', 'admin_product_index')
@@ -155,6 +159,8 @@ class ProductController extends BaseAdminController
     /**
      * @Security("is_granted('ROLE_ADMIN_PRODUCT_EDIT')")
      *
+     * @param Request $request
+     *
      * @return \Symfony\Component\HttpFoundation\Response
      *
      * @throws \Symfony\Component\Form\Exception\UnexpectedTypeException
@@ -166,7 +172,7 @@ class ProductController extends BaseAdminController
      * @throws \Symfony\Component\Form\Exception\LogicException
      * @throws \LogicException
      */
-    public function newAction()
+    public function newAction(Request $request)
     {
         $this->getBreadcrumbs()
             ->addRouteItem('Products', 'admin_product_index')
@@ -209,7 +215,7 @@ class ProductController extends BaseAdminController
      * @throws \Symfony\Component\Form\Exception\LogicException
      * @throws \LogicException
      */
-    public function createAction(Request $request, $productType)
+    public function createAction(Request $request, string $productType)
     {
         try {
             $product = Product::createProductByType($productType);
@@ -259,6 +265,7 @@ class ProductController extends BaseAdminController
      *
      * @Security("is_granted('ROLE_ADMIN_PRODUCT_EDIT')")
      *
+     * @param Request $request
      * @param Product $product
      *
      * @return Response
@@ -272,7 +279,7 @@ class ProductController extends BaseAdminController
      * @throws \Symfony\Component\OptionsResolver\Exception\InvalidOptionsException
      * @throws \LogicException
      */
-    public function editAction(Product $product)
+    public function editAction(Request $request, Product $product)
     {
         $productForm = $this->getFormCreator()
             ->createEditForm(
@@ -294,6 +301,7 @@ class ProductController extends BaseAdminController
     /**
      * @Security("is_granted('ROLE_ADMIN_PRODUCT_EDIT')")
      *
+     * @param Request $request
      * @param Product $product
      *
      * @return Response
@@ -306,7 +314,7 @@ class ProductController extends BaseAdminController
      * @throws \Symfony\Component\Routing\Exception\InvalidParameterException
      * @throws \Symfony\Component\Form\Exception\LogicException
      */
-    public function deleteTabAction(Product $product)
+    public function deleteTabAction(Request $request, Product $product)
     {
         $form = $this->getFormCreator()
             ->createDeleteForm('admin_product', $product->getId());
@@ -372,13 +380,14 @@ class ProductController extends BaseAdminController
     /**
      * @Security("is_granted('ROLE_ADMIN_PRODUCT_EDIT')")
      *
+     * @param Request $request
      * @param Product $product
      *
      * @return JsonResponse
      *
      * @throws \LogicException
      */
-    public function deleteAction(Product $product)
+    public function deleteAction(Request $request, Product $product)
     {
         //remove all billing plans
         $entityManager = $this->getDoctrine()->getManager();
@@ -406,6 +415,7 @@ class ProductController extends BaseAdminController
     }
 
     /**
+     * @param Request $request
      * @param Product $product
      *
      * @return Response
@@ -416,7 +426,7 @@ class ProductController extends BaseAdminController
      * @throws \Trinity\Bundle\SettingsBundle\Exception\PropertyNotExistsException
      * @throws \Trinity\Bundle\GridBundle\Exception\DuplicateColumnException
      */
-    public function contentProductIndexAction(Product $product)
+    public function contentProductIndexAction(Request $request, Product $product)
     {
         $url = $this->generateUrl('grid_default', ['entity' => 'ContentProduct']);
         $count = $this->getEntityManager()->getRepository('VeniceAppBundle:ContentProduct')
@@ -450,11 +460,12 @@ class ProductController extends BaseAdminController
     /**
      * @Security("is_granted('ROLE_ADMIN_PRODUCT_VIEW')")
      *
+     * @param Request $request
      * @param ContentProduct $contentProduct
      *
      * @return Response
      */
-    public function contentProductShowAction(ContentProduct $contentProduct)
+    public function contentProductShowAction(Request $request, ContentProduct $contentProduct)
     {
         return $this->render(
             'VeniceAdminBundle:ContentProduct:show.html.twig',
@@ -463,9 +474,9 @@ class ProductController extends BaseAdminController
     }
 
     /**
-     * @Method("GET")
      * @Security("is_granted('ROLE_ADMIN_CONTENT_PRODUCT_EDIT')")
      *
+     * @param Request $request
      * @param Product $product
      *
      * @return Response
@@ -478,7 +489,7 @@ class ProductController extends BaseAdminController
      * @throws \Symfony\Component\Routing\Exception\InvalidParameterException
      * @throws \Symfony\Component\OptionsResolver\Exception\InvalidOptionsException
      */
-    public function contentProductNewAction(Product $product)
+    public function contentProductNewAction(Request $request, Product $product)
     {
         $this->getBreadcrumbs()
             ->addRouteItem('Products', 'admin_product_index')
@@ -513,6 +524,7 @@ class ProductController extends BaseAdminController
     /**
      * @Security("is_granted('ROLE_ADMIN_CONTENT_PRODUCT_EDIT')")
      *
+     * @param Request $request
      * @param ContentProduct $contentProduct
      *
      * @return \Symfony\Component\HttpFoundation\Response
@@ -525,7 +537,7 @@ class ProductController extends BaseAdminController
      * @throws \Symfony\Component\Routing\Exception\InvalidParameterException
      * @throws \Symfony\Component\Form\Exception\LogicException
      */
-    public function contentProductEditAction(ContentProduct $contentProduct)
+    public function contentProductEditAction(Request $request, ContentProduct $contentProduct)
     {
         $contentForm = $this->getFormCreator()
             ->createEditForm(
@@ -606,11 +618,12 @@ class ProductController extends BaseAdminController
     /**
      * @Security("is_granted('ROLE_ADMIN_CONTENT_PRODUCT_VIEW')")
      *
+     * @param Request $request
      * @param ContentProduct $contentProduct
      *
      * @return Response
      */
-    public function contentProductTabsAction(ContentProduct $contentProduct)
+    public function contentProductTabsAction(Request $request, ContentProduct $contentProduct)
     {
         $this->getBreadcrumbs()
             ->addRouteItem('Products', 'admin_product_index')
@@ -698,6 +711,7 @@ class ProductController extends BaseAdminController
     /**
      * @Security("is_granted('ROLE_ADMIN_CONTENT_PRODUCT_EDIT')")
      *
+     * @param Request $request
      * @param ContentProduct $contentProduct
      *
      * @return Response
@@ -710,7 +724,7 @@ class ProductController extends BaseAdminController
      * @throws \Symfony\Component\Routing\Exception\InvalidParameterException
      * @throws \Symfony\Component\Form\Exception\LogicException
      */
-    public function contentProductDeleteTabAction(ContentProduct $contentProduct)
+    public function contentProductDeleteTabAction(Request $request, ContentProduct $contentProduct)
     {
         $form = $this->getFormCreator()
             ->createDeleteForm('admin_product_content_product', $contentProduct->getId());

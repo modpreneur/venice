@@ -7,10 +7,10 @@
  */
 namespace Venice\AdminBundle\Controller;
 
-use Venice\AppBundle\Entity\ProductAccess;
-use Venice\AppBundle\Entity\User;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Venice\AppBundle\Entity\ProductAccess;
 
 /**
  * Class ProductAccessController.
@@ -18,8 +18,27 @@ use Symfony\Component\HttpFoundation\Response;
 class ProductAccessController extends BaseAdminController
 {
     /**
+     * @Security("is_granted('ROLE_ADMIN_PRODUCT_ACCESS_VIEW')")
+     *
+     * @param Request $request
+     * @param ProductAccess $productAccess
+     *
+     * @return Response
+     */
+    public function showAction(Request $request, ProductAccess $productAccess)
+    {
+        return $this->render(
+            'VeniceAdminBundle:ProductAccess:show.html.twig',
+            [
+                'productAccess' => $productAccess,
+            ]
+        );
+    }
+
+    /**
      * Get all accesses of user.
      *
+     * @param Request $request
      * @param int $id
      *
      * @return array
@@ -31,7 +50,7 @@ class ProductAccessController extends BaseAdminController
      * @throws \Trinity\Bundle\SettingsBundle\Exception\PropertyNotExistsException
      * @throws \Trinity\Bundle\GridBundle\Exception\DuplicateColumnException
      */
-    public function indexAction(int $id)
+    public function indexAction(Request $request, int $id)
     {
         $entityManager = $this->getDoctrine()->getManager();
 
@@ -64,28 +83,12 @@ class ProductAccessController extends BaseAdminController
     /**
      * @Security("is_granted('ROLE_ADMIN_PRODUCT_ACCESS_VIEW')")
      *
-     * @param ProductAccess $productAccess
-     *
-     * @return Response
-     */
-    public function showAction(ProductAccess $productAccess)
-    {
-        return $this->render(
-            'VeniceAdminBundle:ProductAccess:show.html.twig',
-            [
-                'productAccess' => $productAccess,
-            ]
-        );
-    }
-
-    /**
-     * @Security("is_granted('ROLE_ADMIN_PRODUCT_ACCESS_VIEW')")
-     *
+     * @param Request $request
      * @param ProductAccess $productAccess
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function tabsAction(ProductAccess $productAccess)
+    public function tabsAction(Request $request, ProductAccess $productAccess)
     {
         $user = $productAccess->getUser();
 
@@ -93,7 +96,7 @@ class ProductAccessController extends BaseAdminController
             ->addRouteItem('Users', 'admin_user_index')
             ->addRouteItem($user->getFullNameOrUsername(), 'admin_user_tabs', ['id' => $user->getId()])
             ->addRouteItem(
-                'Product access '.$productAccess->getId(),
+                'Product access ' . $productAccess->getId(),
                 'admin_product_access_tabs',
                 ['id' => $productAccess->getId()]
             );

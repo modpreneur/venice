@@ -30,6 +30,8 @@ class ContentController extends BaseAdminController
     /**
      * @Security("is_granted('ROLE_ADMIN_CONTENT_VIEW')")
      *
+     * @param Request $request
+     *
      * @return string
      *
      * @throws \Doctrine\ORM\NoResultException
@@ -38,7 +40,7 @@ class ContentController extends BaseAdminController
      * @throws \Trinity\Bundle\SettingsBundle\Exception\PropertyNotExistsException
      * @throws \Trinity\Bundle\GridBundle\Exception\DuplicateColumnException
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
         $this->getBreadcrumbs()
             ->addRouteItem('Contents', 'admin_content_index');
@@ -67,13 +69,14 @@ class ContentController extends BaseAdminController
     }
 
     /**
+     * @param Request $request
      * @param Content $content
      *
      * @return Response
      *
      * @throws \LogicException
      */
-    public function indexForContentAction(Content $content)
+    public function indexForContentAction(Request $request, Content $content)
     {
         $contentProducts = $this
             ->getEntityManager()
@@ -89,11 +92,12 @@ class ContentController extends BaseAdminController
     /**
      * @Security("is_granted('ROLE_ADMIN_CONTENT_VIEW')")
      *
+     * @param Request $request
      * @param Content $content
      *
      * @return Response
      */
-    public function showAction(Content $content)
+    public function showAction(Request $request, Content $content)
     {
         return $this->render(
             'VeniceAdminBundle:Content:show'.ucfirst($content->getType()).'.html.twig',
@@ -104,11 +108,12 @@ class ContentController extends BaseAdminController
     /**
      * @Security("is_granted('ROLE_ADMIN_CONTENT_VIEW')")
      *
+     * @param Request $request
      * @param Content $content
      *
      * @return Response
      */
-    public function tabsAction(Content $content)
+    public function tabsAction(Request $request,Content $content)
     {
         $this->getBreadcrumbs()
             ->addRouteItem('Contents', 'admin_content_index')
@@ -131,7 +136,7 @@ class ContentController extends BaseAdminController
      * @throws \Symfony\Component\OptionsResolver\Exception\InvalidOptionsException
      * @throws \LogicException
      */
-    public function newAction()
+    public function newAction(Request $request)
     {
         $this->getBreadcrumbs()
             ->addRouteItem('Contents', 'admin_content_index')
@@ -162,6 +167,7 @@ class ContentController extends BaseAdminController
     /**
      * @Security("is_granted('ROLE_ADMIN_PRODUCT_EDIT')")
      *
+     * @param Request $request
      * @param $contentType
      *
      * @return Response
@@ -176,7 +182,7 @@ class ContentController extends BaseAdminController
      * @throws \LogicException
      * @throws \Symfony\Component\Form\Exception\AlreadySubmittedException
      */
-    public function newFormAction($contentType)
+    public function newFormAction(Request $request, string $contentType)
     {
         try {
             $contentClass = Content::createContentClassByType($contentType);
@@ -215,7 +221,7 @@ class ContentController extends BaseAdminController
      * @Security("is_granted('ROLE_ADMIN_CONTENT_EDIT')")
      *
      * @param Request $request
-     * @param         $contentType
+     * @param string  $contentType
      *
      * @return JsonResponse
      *
@@ -229,7 +235,7 @@ class ContentController extends BaseAdminController
      * @throws \Symfony\Component\Form\Exception\LogicException
      * @throws \LogicException
      */
-    public function createAction(Request $request, $contentType)
+    public function createAction(Request $request, string $contentType)
     {
         try {
             $contentClass = Content::createContentClassByType($contentType);
@@ -281,6 +287,7 @@ class ContentController extends BaseAdminController
      *
      * @Security("is_granted('ROLE_ADMIN_CONTENT_EDIT')")
      *
+     * @param Request $request
      * @param Content $content
      *
      * @return Response
@@ -294,7 +301,7 @@ class ContentController extends BaseAdminController
      * @throws \Symfony\Component\OptionsResolver\Exception\InvalidOptionsException
      * @throws \LogicException
      */
-    public function editAction(Content $content)
+    public function editAction(Request $request, Content $content)
     {
         $formOptions = [];
 
@@ -465,6 +472,7 @@ class ContentController extends BaseAdminController
     /**
      * @Security("is_granted('ROLE_ADMIN_CONTENT_EDIT')")
      *
+     * @param Request $request
      * @param Content $content
      *
      * @return Response
@@ -477,7 +485,7 @@ class ContentController extends BaseAdminController
      * @throws \Symfony\Component\Routing\Exception\InvalidParameterException
      * @throws \Symfony\Component\Form\Exception\LogicException
      */
-    public function deleteTabAction(Content $content)
+    public function deleteTabAction(Request $request, Content $content)
     {
         $form = $this->getFormCreator()
             ->createDeleteForm('admin_content', $content->getId());
@@ -550,6 +558,7 @@ class ContentController extends BaseAdminController
     }
 
     /**
+     * @param Request $request
      * @param Content $content
      *
      * @return Response
@@ -560,7 +569,7 @@ class ContentController extends BaseAdminController
      * @throws \Trinity\Bundle\SettingsBundle\Exception\PropertyNotExistsException
      * @throws \Trinity\Bundle\GridBundle\Exception\DuplicateColumnException
      */
-    public function contentProductIndexAction(Content $content)
+    public function contentProductIndexAction(Request $request, Content $content)
     {
         $url = $this->generateUrl('grid_default', ['entity' => 'ContentProduct']);
         $count = $this->getEntityManager()->getRepository('VeniceAppBundle:ContentProduct')
@@ -593,6 +602,7 @@ class ContentController extends BaseAdminController
     /**
      * @Security("is_granted('ROLE_ADMIN_CONTENT_PRODUCT_EDIT')")
      *
+     * @param Request $request
      * @param Content $content
      *
      * @return Response
@@ -605,7 +615,7 @@ class ContentController extends BaseAdminController
      * @throws \Symfony\Component\Form\Exception\AlreadySubmittedException
      * @throws \Symfony\Component\OptionsResolver\Exception\InvalidOptionsException
      */
-    public function contentProductNewAction(Content $content)
+    public function contentProductNewAction(Request $request, Content $content)
     {
         $this->getBreadcrumbs()
             ->addRouteItem('Products', 'admin_content_index')
@@ -704,6 +714,7 @@ class ContentController extends BaseAdminController
     /**
      * @Security("is_granted('ROLE_ADMIN_CONTENT_PRODUCT_EDIT')")
      *
+     * @param Request $request
      * @param ContentProduct $contentProduct
      *
      * @return \Symfony\Component\HttpFoundation\Response
@@ -716,7 +727,7 @@ class ContentController extends BaseAdminController
      * @throws \Symfony\Component\Routing\Exception\InvalidParameterException
      * @throws \Symfony\Component\Form\Exception\LogicException
      */
-    public function contentProductEditAction(ContentProduct $contentProduct)
+    public function contentProductEditAction(Request $request, ContentProduct $contentProduct)
     {
         $contentForm = $this->getFormCreator()
             ->createEditForm(
@@ -797,11 +808,12 @@ class ContentController extends BaseAdminController
     /**
      * @Security("is_granted('ROLE_ADMIN_CONTENT_PRODUCT_VIEW')")
      *
+     * @param Request $request
      * @param ContentProduct $contentProduct
      *
      * @return Response
      */
-    public function contentProductTabsAction(ContentProduct $contentProduct)
+    public function contentProductTabsAction(Request $request, ContentProduct $contentProduct)
     {
         $this->getBreadcrumbs()
             ->addRouteItem('Contents', 'admin_content_index')
@@ -825,6 +837,7 @@ class ContentController extends BaseAdminController
     /**
      * @Security("is_granted('ROLE_ADMIN_CONTENT_PRODUCT_EDIT')")
      *
+     * @param Request $request
      * @param ContentProduct $contentProduct
      *
      * @return Response
@@ -837,7 +850,7 @@ class ContentController extends BaseAdminController
      * @throws \Symfony\Component\Routing\Exception\InvalidParameterException
      * @throws \Symfony\Component\Form\Exception\LogicException
      */
-    public function contentProductDeleteTabAction(ContentProduct $contentProduct)
+    public function contentProductDeleteTabAction(Request $request, ContentProduct $contentProduct)
     {
         $form = $this->getFormCreator()
             ->createDeleteForm('admin_content_content_product', $contentProduct->getId());
