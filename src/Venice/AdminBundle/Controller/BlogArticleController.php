@@ -49,6 +49,7 @@ class BlogArticleController extends BaseAdminController
         $gridConfBuilder->addColumn('id', 'Id');
         $gridConfBuilder->addColumn('title', 'Title');
         $gridConfBuilder->addColumn('handle', 'Handle');
+        $gridConfBuilder->addColumn('products', 'Products');
         $gridConfBuilder->addColumn('details', ' ', ['allowOrder' => false]);
 
         return $this->render(
@@ -136,9 +137,8 @@ class BlogArticleController extends BaseAdminController
                 $this->getEntityFormMatcher()->getFormClassForEntity($blogArticle),
                 'admin_blog_article'
             );
-        //todo: use trinity/settings
-//        $dateFormat = $this->get('trinity.settings')->get('date');
-        $dateFormat = 'y-m-d';
+
+        $dateFormat = $this->get('trinity.settings')->get('date_format');
 
         return $this->render(
             'VeniceAdminBundle:BlogArticle:new.html.twig',
@@ -229,8 +229,7 @@ class BlogArticleController extends BaseAdminController
                 'admin_blog_article',
                 ['id']
             );
-        //        $dateFormat = $this->get('trinity.settings')->get('date');
-        $dateFormat = 'y-m-d';
+        $dateFormat = $this->get('trinity.settings')->get('date_format');
 
         return $this->render(
             'VeniceAdminBundle:BlogArticle:edit.html.twig',
