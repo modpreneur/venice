@@ -235,6 +235,7 @@ trinity_settings:
   settings:
      currency: 'USD'
      items_on_page: 20
+     date_format: 'y-m-d'
 
 kms_froala_editor:
     language: "en_gb"

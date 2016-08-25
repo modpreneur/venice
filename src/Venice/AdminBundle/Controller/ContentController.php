@@ -57,6 +57,7 @@ class ContentController extends BaseAdminController
         $gridConfBuilder->addColumn('id', 'Id');
         $gridConfBuilder->addColumn('name', 'Name');
         $gridConfBuilder->addColumn('type', 'Type');
+        $gridConfBuilder->addColumn('contentProducts', 'Products');
         $gridConfBuilder->addColumn('details', ' ', ['allowOrder' => false]);
 
         return $this->render(

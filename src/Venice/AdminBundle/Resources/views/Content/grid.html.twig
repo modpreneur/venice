@@ -17,3 +17,22 @@
 {% block cell_details %}
     <a href="{{ path('admin_content_tabs',{'id':row.getId()}) }}" class="button-small  margin-none-all">Get details</a>
 {% endblock %}
+
+{% block cell_contentProducts%}
+
+    {% for contentProduct in value %}
+        <a href="{{ path('admin_product_tabs',{'id':contentProduct.product.id}) }}" >{{ contentProduct.product.name }}</a>
+        {% if not loop.last %},{% endif %}
+    {% endfor %}
+
+    {#todo: @DavidCzernin try to uncomment code below. The content is wider than the available space for it#}
+    {#{% for product in value %}#}
+    {#<a href="{{ path('admin_product_tabs',{'id':product.id}) }}" >{{ product.name }}</a>#}
+    {#{% if not loop.last %},{% endif %}#}
+    {#{% endfor %}#}
+
+    {#{% for product in value %}#}
+    {#<a href="{{ path('admin_product_tabs',{'id':product.id}) }}" >{{ product.name }}</a>#}
+    {#{% if not loop.last %},{% endif %}#}
+    {#{% endfor %}#}
+{% endblock %}
