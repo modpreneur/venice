@@ -8,6 +8,7 @@
     },
     "require": {
         "php": "~7.0",
+        "ocramius/package-versions": "~1.1",
         "symfony/symfony": "~3",
         "symfony/assetic-bundle": "~2.8",
         "symfony/swiftmailer-bundle": "~2.3",
