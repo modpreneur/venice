@@ -38,9 +38,7 @@
 {% endblock %}
 
 {% block cell_initialPrice %}
-    {{ value }}
-    {# TODO @RichardBures @JakubFajkus ...localizedcurrency does not exist, why? (shouild get from twig extensions Intl)#}
-    {#{{ value|localizedcurrency(get_setting('currency')) }}#}
+    {{ value|localizedcurrency(get_setting('currency')) }}
 {% endblock %}
 
 {% block cell_details %}
