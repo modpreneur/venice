@@ -182,7 +182,6 @@ fos_rest:
     format_listener: true
     body_listener: true
     view:
-        exception_wrapper_handler:  null
         view_response_listener: force
         failed_validation: HTTP_BAD_REQUEST
     routing_loader:
@@ -193,7 +192,7 @@ fos_rest:
         exception_controller: 'FOS\RestBundle\Controller\ExceptionController::showAction'
 
 sensio_framework_extra:
-    view:    { annotations: false }
+    view:    { annotations: true }
 
 knp_menu:
     twig:
