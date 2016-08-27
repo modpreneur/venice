@@ -1,0 +1,66 @@
+{% block cell__id %}
+    {{ row.getId() }}
+{% endblock %}
+
+{% block cell_created %}
+    {% if row.getCreated() %}{{row.getCreated()|date(get_setting('date_time')) }}{% endif %}
+{% endblock %}
+
+{% block cell_url %}
+
+    {% block grid_column_url_cell %}
+        <a target="_blank" title="The exception was thrown on:
+        {{ value }}" href="{{ value }}" >
+            {{ value }}
+        </a>
+    {% endblock %}
+{% endblock %}
+
+
+{% block cell_user %}
+    {% if row.getUser() %}
+        {{ row.getUser().getUserName() }}
+    {% endif %}
+{% endblock %}
+
+{% block cell_ip %}
+    {{ value }}
+    {% if row.getUser() %}
+        <a title="Go to user" href="{{ path('admin_user_tabs', {id: row.getUser()}) }}" >{{ row.getUser().getUsername() }}</a>
+    {% endif %}
+{% endblock %}
+
+
+{% block cell_level %}
+
+    <ul class="tags">
+        <li class="{% if value >=500 %}Danger{% elseif value ==400 %}Warning{% endif %}">
+            {% if value == 400 %}
+                <div title="Runtime errors that do not require immediate action but should typically be logged and monitored.">ERROR</div>
+            {% elseif value == 500 %}
+                <div title="Critical conditions. Example: Application component unavailable, unexpected exception.">CRITICAL</div>
+            {% elseif value == 550 %}
+                <div title="Action must be taken immediately. Example: Entire website down, database unavailable, etc. This should trigger the SMS alerts and wake you up.">ALERT</div>
+            {% elseif value == 600 %}
+                <div title="Emergency: system is unusable.">EMERGENCY</div>
+            {% else %}
+                {{ value }}
+            {% endif %}
+        </li>
+    </ul>
+
+{% endblock %}
+
+
+{% block cell_log %}
+    {{ value }}
+{% endblock %}
+
+{% block cell_details %}
+    <a href="{{ path('admin_logger_exception_show', {'id': row.getId() }) }}" class="button-small relative margin-none-all">Get details</a>
+{% endblock %}
+
+
+
+
+

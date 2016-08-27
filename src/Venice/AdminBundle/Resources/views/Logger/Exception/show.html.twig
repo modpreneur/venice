@@ -1,0 +1,87 @@
+{% extends "VeniceAdminBundle:Logger:base.html.twig" %}
+
+{% block pageTitle %}
+    Exception {{ entity }}
+{% endblock %}
+
+{% block pageIcon %}
+    <i class="trinity trinity-warning"></i>
+{% endblock %}
+
+
+{% block pageBody -%}
+
+    <table class="record_properties grid box">
+        <tbody>
+        <tr>
+            <th style="width:100px;">Id:</th>
+            <td>{{ entity.id }}</td>
+        </tr>
+        <tr>
+            <th>Time:</th>
+            <td>{% if entity.createdAt %}{{ entity.createdAt|date(get_setting('date_time')) }}{% endif %}</td>
+        </tr>
+        {% if entity.ttl > 0 %}
+            <tr>
+                {% set endDate = (date().timestamp + entity.ttl)|date(get_setting('date_time')) %}
+                <th>Log Expire:</th>
+                <td>{{ endDate }} ({{ endDate|time_diff }})</td>
+            </tr>
+        {% endif %}
+        <tr>
+            <th>IP:</th>
+            <td>{{ entity.ip }}</td>
+        </tr>
+
+        {% if entity.user %}
+            <tr>
+                <th>User:</th>
+                <td>{{ entity.user }}</td>
+            </tr>
+        {% endif %}
+
+        <tr>
+            <th>Level:</th>
+            <td>
+                <ul class="tags">
+                    <li class="{% if entity.level >=500 %}Danger{% elseif entity.level == 400 %}Warning{% endif %}">
+                        {% if entity.level == 400 %}
+                            <div title="Runtime errors that do not require immediate action but should typically be logged and monitored.">ERROR</div>
+                        {% elseif entity.level == 500 %}
+                            <div title="Critical conditions. Example: Application component unavailable, unexpected exception.">CRITICAL</div>
+                        {% elseif entity.level == 550 %}
+                            <div title="Action must be taken immediately. Example: Entire website down, database unavailable, etc. This should trigger the SMS alerts and wake you up.">ALERT</div>
+                        {% elseif entity.level == 600 %}
+                            <div title="Emergency: system is unusable.">EMERGENCY</div>
+                        {% else %}
+                            {{ entity.level }}
+                        {% endif %}
+                    </li>
+                </ul>
+            </td>
+        </tr>
+
+        <tr>
+            <th>Url:</th>
+            <td>{% if entity.url %}<a title="Go to url where exception was thrown"
+                                      href="{{ entity.url }}" >{{ entity.url }}</a>{% endif %}</td>
+        </tr>
+
+        <tr>
+            <td colspan="2" style="word-wrap: break-word; max-width:0;">
+                <b>Log:</b><br/>
+                {{ entity.log|nl2br }}
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="2" style="word-wrap: break-word; max-width:0;">
+                <b>Server data:</b><br/>
+                {{ entity.serverData|nl2br }}
+            </td>
+        </tr>
+
+        </tbody>
+    </table>
+
+{% endblock %}

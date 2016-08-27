@@ -27,6 +27,8 @@ security:
 
         ROLE_ADMIN_PRODUCT_ACCESS_VIEW: ROLE_ADMIN
 
+        ROLE_ADMIN_LOGGER_VIEW: ROLE_ADMIN
+
 #       see: http://symfony.com/doc/current/cookbook/security/impersonating_user.html
         ROLE_USER_SWITCHER: [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
 
@@ -38,6 +40,7 @@ security:
             - ROLE_ADMIN_USER_EDIT
             - ROLE_ADMIN_BLOG_EDIT
             - ROLE_ADMIN_PRODUCT_ACCESS_VIEW
+            - ROLE_ADMIN_LOGGER_VIEW
             - ROLE_USER_SWITCHER
 
     providers:

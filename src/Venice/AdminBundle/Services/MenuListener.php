@@ -7,10 +7,23 @@
  */
 namespace Venice\AdminBundle\Services;
 
+use Symfony\Component\Routing\RouterInterface;
 use Trinity\AdminBundle\Event\MenuEvent;
 
 class MenuListener
 {
+    /** @var  RouterInterface */
+    protected $router;
+
+    /**
+     * MenuListener constructor.
+     * @param RouterInterface $router
+     */
+    public function __construct(RouterInterface $router)
+    {
+        $this->router = $router;
+    }
+
     /**
      * @param MenuEvent $event
      *
@@ -49,6 +62,24 @@ class MenuListener
             ->setAttribute('icon', 'tiecons tiecons-user-negative')
             ->setExtra('orderNumber', 50)
             ->setExtra('roles', ['ROLE_ADMIN_USER_VIEW']);
+
+        $loggerMenuItem = $menu->addChild('Loggers', ['uri' => '#'])
+            ->setAttribute('icon', 'trinity trinity-calendar')
+            ->setAttribute('dropdown', true)
+            ->setAttribute('custom-attributes', ['data-ng-scope' => 'logger-menu'])
+            ->setExtra('orderNumber', 60)
+            ->setExtra('roles', ['ROLE_ADMIN_LOGGER_VIEW'])
+        ;
+
+        $lUri = $this->router->generate('admin_logger_index');
+        $loggerMenuItem->addChild('Exception log', ['uri' => $lUri . '#tab1']);
+        $loggerMenuItem->addChild('Ipn log', ['uri' => $lUri . '#tab3']);
+        $loggerMenuItem->addChild('Entity action log', ['uri' => $lUri . '#tab4']);
+        $loggerMenuItem->addChild('Access log', ['uri' => $lUri . "#tab5"]);
+        $loggerMenuItem->addChild('Payment error log', ['uri' => $lUri . '#tab6']);
+        $loggerMenuItem->addChild('Ban log', ['uri' => $lUri . '#tab7']);
+        $loggerMenuItem->addChild('Message log', ['uri' => $lUri . '#tab8']);
+
         //
         //$menu
         //    ->addChild('Newsletters', array('route' => 'newsletter'))

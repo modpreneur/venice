@@ -25,3 +25,7 @@ admin_product-access:
 admin_user:
     resource: "@VeniceAdminBundle/Resources/config/routing/user.yml"
     type:     yaml
+
+admin_logger:
+    resource: "@VeniceAdminBundle/Resources/config/routing/logger.yml"
+    type:     yaml

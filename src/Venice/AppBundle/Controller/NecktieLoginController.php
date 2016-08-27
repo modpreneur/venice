@@ -81,7 +81,9 @@ class NecktieLoginController extends Controller
         $necktieToken = $this->getAccessTokenFromRequest($necktieGateway, $request);
 
         if (!$necktieToken) {
-            return new Response('An error occurred. Please report it to the support.');
+            $this->get('logger')->addEmergency('Could not get token from necktie response while trying to login user');
+            //todo: Display proper error page
+            return new Response('Could not log in. Please report it to the support.');
         }
 
         $user = null;
@@ -191,11 +193,11 @@ class NecktieLoginController extends Controller
         $cookieValue = $request->cookies->get($necktieGateway::STATE_COOKIE_NAME);
 
         if (!is_string($cookieValue)) {
-            throw new AccessDeniedHttpException('Please, enable cookies in your browser.');
+            throw new AccessDeniedHttpException('Could not load value from a cookie');
         }
 
         if ($cookieValue !== $request->get('state')) {
-            throw new AccessDeniedHttpException();
+            throw new AccessDeniedHttpException('Invalid state value');
         }
     }
 

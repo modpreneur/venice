@@ -1,0 +1,30 @@
+{% extends "VeniceAdminBundle:Logger:base.html.twig" %}
+
+{% block pageTitle %}
+    Logs
+{% endblock %}
+
+
+{% block pageIcon %}
+    <i class="tiecons tiecons-clock"></i>
+{% endblock %}
+
+
+{% block pageBody -%}
+
+    <div class="tabs-wrapper">
+
+        {% if (is_granted('ROLE_ADMIN_LOGGER_VIEW')) %}
+            <input type="radio" name="tab" id="tab1" class="tab-head" checked/>
+            <label for="tab1">Exception log</label>
+        {% endif %}
+
+        <div class="tab-body-wrapper">
+            {% if (is_granted('ROLE_ADMIN_LOGGER_VIEW')) %}
+
+                <div id="tab-body-1" class="tab-body" data-source="{{ path("admin_logger_exception_tab") }}"></div>
+            {% endif %}
+        </div>
+    </div>
+
+{% endblock %}

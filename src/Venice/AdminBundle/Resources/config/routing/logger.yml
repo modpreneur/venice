@@ -1,0 +1,11 @@
+admin_logger_index:
+    path: /admin/logger
+    defaults: { _controller: 'VeniceAdminBundle:Logger:index' }
+
+admin_logger_exception_tab:
+    path: /admin/logger/exception_tab
+    defaults: {_controller: 'VeniceAdminBundle:Logger:tabException'}
+
+admin_logger_exception_show:
+    path: /admin/logger/exception/{id}/show
+    defaults: {_controller: 'VeniceAdminBundle:Logger:exceptionShow'}
