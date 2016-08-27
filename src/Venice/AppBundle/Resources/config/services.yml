@@ -102,7 +102,20 @@ services:
         arguments:
             - "%necktie_client_secret%"
 
+    venice.app.monolog_request_processor:
+        class: Venice\AppBundle\Services\RequestProcessor
+        tags:
+            - { name: monolog.processor, method: processRecord }
+
     # EVENT LISTENERS #
+
+    venice.app.backtrace_logger_listener:
+        class: Venice\AppBundle\EventListener\BacktraceLoggerListener
+        tags:
+            - {name: "monolog.logger", channel: "backtrace"}
+            - {name: "kernel.event_listener", event: "kernel.exception", method: "onKernelException"}
+        arguments:
+            - "@logger"
 
     venice.app.event_listener.kernel_excetpion:
         class: Venice\AppBundle\EventListener\KernelExceptionListener

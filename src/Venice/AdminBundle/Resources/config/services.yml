@@ -2,6 +2,8 @@ services:
 
     venice.admin.listener.menu.config:
         class: Venice\AdminBundle\Services\MenuListener
+        arguments:
+            - "@router"
         tags:
             - { name: kernel.event_listener, event: trinity.main_menu.configure, method: onMenuConfigure, priority: 100 }
 
@@ -68,3 +70,8 @@ services:
         class: Venice\AdminBundle\Grid\BlogArticleGrid
         tags:
              - { name: trinity.grid, alias: blogarticle }
+
+    venice.admin.grid.excetpion:
+           class: Venice\AdminBundle\Grid\ExceptionGrid
+           tags:
+               - { name: trinity.grid, alias: exceptionLog }

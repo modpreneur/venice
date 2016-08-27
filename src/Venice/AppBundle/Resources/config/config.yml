@@ -187,9 +187,8 @@ fos_rest:
     routing_loader:
         default_format: json
         include_format: false
-    exception:
-        enabled: true
-        exception_controller: 'FOS\RestBundle\Controller\ExceptionController::showAction'
+
+
 
 sensio_framework_extra:
     view:    { annotations: true }
@@ -206,12 +205,10 @@ white_october_breadcrumbs:
 
 monolog:
     handlers:
-        security:
-            # log all critical and more important messages
-            level:    critical
-            type:     stream
-            path:     '%kernel.logs_dir%/emergency.log'
-            channels:  ~
+        error:
+            type: service
+            id: trinity.logger_database
+            level: ERROR
 
 snc_redis:
     # Data are separated on redis databases:
