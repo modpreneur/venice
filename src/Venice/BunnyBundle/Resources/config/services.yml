@@ -11,6 +11,7 @@ services:
         class: Venice\BunnyBundle\Services\MessageUserProvider
         arguments:
             - "@security.token_storage"
+            - "@venice.app.entity_override_handler"
             - "%client_identification%"
 
     venice.bunny.messages_consumer:

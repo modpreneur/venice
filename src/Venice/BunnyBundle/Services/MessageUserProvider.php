@@ -11,6 +11,7 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 use Trinity\Bundle\MessagesBundle\Interfaces\MessageUserProviderInterface;
 use Trinity\Bundle\MessagesBundle\Message\Message;
 use Venice\AppBundle\Entity\User;
+use Venice\AppBundle\Services\EntityOverrideHandler;
 
 /**
  * Class MessageUserProvider.
@@ -23,16 +24,24 @@ class MessageUserProvider implements MessageUserProviderInterface
     /** @var  string */
     protected $clientIdentification;
 
+    /** @var EntityOverrideHandler */
+    protected $entityOverrideHandler;
+
     /**
      * MessageUserProvider constructor.
      *
      * @param TokenStorageInterface $tokenStorage
+     * @param EntityOverrideHandler $entityOverrideHandler
      * @param string                $clientIdentification
      */
-    public function __construct(TokenStorageInterface $tokenStorage, string $clientIdentification)
-    {
+    public function __construct(
+        TokenStorageInterface $tokenStorage,
+        EntityOverrideHandler $entityOverrideHandler,
+        string $clientIdentification
+    ) {
         $this->tokenStorage = $tokenStorage;
         $this->clientIdentification = $clientIdentification;
+        $this->entityOverrideHandler = $entityOverrideHandler;
     }
 
     /**
@@ -41,12 +50,13 @@ class MessageUserProvider implements MessageUserProviderInterface
      * @param Message $message
      *
      * @return string
+     * @throws \InvalidArgumentException
      */
     public function getUser(Message $message) : string
     {
         $token = $this->tokenStorage->getToken();
 
-        if ($token !== null && $token->getUser() instanceof User) {
+        if ($token !== null && $this->entityOverrideHandler->isInstanceOf($token->getUser(), User::class)) {
             return $token->getUser()->getNecktieId();
         }
 

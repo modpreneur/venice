@@ -52,4 +52,27 @@ class EntityOverrideHandler
             return $reflection->newInstanceArgs($constructorArgs);
         }
     }
+
+    /**
+     * Check if given $entity is instance of $class.
+     *
+     * @param object|string $entity
+     * @param string        $class
+     *
+     * @return bool
+     *
+     * @throws \InvalidArgumentException
+     */
+    public function isInstanceOf($entity, string $class)
+    {
+        if (is_object($entity)) {
+            return get_class($entity) === $this->getEntityClass($class);
+        } elseif (is_string($entity)) {
+            return $entity === $this->getEntityClass($class);
+        } else {
+            throw new \InvalidArgumentException(
+                'The argument "entity" has to be an object or a string, '.gettype($entity).' given'
+            );
+        }
+    }
 }

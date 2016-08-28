@@ -88,12 +88,14 @@ class NotificationListener
 
     /**
      * @param BeforeDeleteEntityEvent $event
+     *
+     * @throws \InvalidArgumentException
      */
     public function onBeforeDeleteEntity(BeforeDeleteEntityEvent $event)
     {
         $entity = $event->getEntity();
 
-        if ($entity instanceof BillingPlan) {
+        if ($this->entityOverrideHandler->isInstanceOf($entity, BillingPlan::class)) {
             /* @var $entity BillingPlan */
             $entity->setProduct(null);
         }
@@ -103,6 +105,7 @@ class NotificationListener
      * @param ReadMessageEvent $event
      *
      * @throws \Trinity\NotificationBundle\Exception\EntityAliasNotFoundException
+     * @throws \InvalidArgumentException
      */
     public function onMessageRead(ReadMessageEvent $event)
     {
@@ -118,13 +121,14 @@ class NotificationListener
      * @param SynchronizationStoppedMessage $message
      *
      * @throws \Trinity\NotificationBundle\Exception\EntityAliasNotFoundException
+     * @throws \InvalidArgumentException
      */
     protected function handleSynchronizationStoppedMessage(SynchronizationStoppedMessage $message)
     {
         $entityClass = $this->entityAliasTranslator->getClassFromAlias($message->getEntityAlias());
         $entityId = $message->getEntityId();
 
-        if ($entityClass === $this->entityOverrideHandler->getEntityClass(StandardProduct::class)) {
+        if ($this->entityOverrideHandler->isInstanceOf($entityClass, StandardProduct::class)) {
             $this->logger->info('Read SynchronizationStoppedMessage about product '.$entityClass.' with id:'.$entityId);
             /** @var StandardProduct $product */
             $product = $this->entityManager->find($entityClass, $entityId);

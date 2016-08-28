@@ -114,7 +114,7 @@ class ContentController extends BaseAdminController
      *
      * @return Response
      */
-    public function tabsAction(Request $request,Content $content)
+    public function tabsAction(Request $request, Content $content)
     {
         $this->getBreadcrumbs()
             ->addRouteItem('Contents', 'admin_content_index')
@@ -226,6 +226,7 @@ class ContentController extends BaseAdminController
      *
      * @return JsonResponse
      *
+     * @throws \InvalidArgumentException
      * @throws \Symfony\Component\Form\Exception\UnexpectedTypeException
      * @throws \Symfony\Component\Routing\Exception\RouteNotFoundException
      * @throws \Symfony\Component\Routing\Exception\MissingMandatoryParametersException
@@ -249,8 +250,11 @@ class ContentController extends BaseAdminController
 
         $formOptions = [];
 
-        if ($content instanceof GroupContent) {
-            $formOptions = ['groupContent' => ($content instanceof GroupContent) ? $content : null];
+        if ($this->getEntityOverrideHandler()->isInstanceOf($content, GroupContent::class)) {
+            $formOptions = [
+                'groupContent' => ($this->getEntityOverrideHandler()->isInstanceOf($content, GroupContent::class)) ?
+                    $content : null,
+            ];
         }
 
         $form = $this->getFormCreator()
@@ -304,11 +308,10 @@ class ContentController extends BaseAdminController
      */
     public function editAction(Request $request, Content $content)
     {
-        $formOptions = [];
-
-        if ($content instanceof GroupContent) {
-            $formOptions = ['groupContent' => ($content instanceof GroupContent) ? $content : null];
-        }
+        $formOptions = [
+            'groupContent' => ($this->getEntityOverrideHandler()->isInstanceOf($content, GroupContent::class)) ?
+                $content : null
+        ];
 
         $form = $this->getFormCreator()
             ->createEditForm(
@@ -349,7 +352,7 @@ class ContentController extends BaseAdminController
      */
     public function updateAction(Request $request, Content $content)
     {
-        if ($content instanceof GroupContent) {
+        if ($this->getEntityOverrideHandler()->isInstanceOf($content, GroupContent::class)) {
             return $this->updateGroupContent($request, $content);
         } else {
             return $this->updateNonGroupContent($request, $content);
@@ -507,6 +510,7 @@ class ContentController extends BaseAdminController
      * @param Content $content
      *
      * @return JsonResponse
+     * @throws \InvalidArgumentException
      *
      * @throws \Symfony\Component\Form\Exception\UnexpectedTypeException
      * @throws \Symfony\Component\Routing\Exception\RouteNotFoundException
@@ -529,7 +533,7 @@ class ContentController extends BaseAdminController
         if ($form->isValid()) {
             try {
                 // First, remove all associations of the group
-                if ($content instanceof GroupContent) {
+                if ($this->getEntityOverrideHandler()->isInstanceOf($content, GroupContent::class)) {
                     /** @var ContentInGroup $item */
                     foreach ($content->getItems() as $item) {
                         $entityManager->remove($item);
@@ -715,7 +719,7 @@ class ContentController extends BaseAdminController
     /**
      * @Security("is_granted('ROLE_ADMIN_CONTENT_PRODUCT_EDIT')")
      *
-     * @param Request $request
+     * @param Request        $request
      * @param ContentProduct $contentProduct
      *
      * @return \Symfony\Component\HttpFoundation\Response
@@ -809,7 +813,7 @@ class ContentController extends BaseAdminController
     /**
      * @Security("is_granted('ROLE_ADMIN_CONTENT_PRODUCT_VIEW')")
      *
-     * @param Request $request
+     * @param Request        $request
      * @param ContentProduct $contentProduct
      *
      * @return Response
@@ -838,7 +842,7 @@ class ContentController extends BaseAdminController
     /**
      * @Security("is_granted('ROLE_ADMIN_CONTENT_PRODUCT_EDIT')")
      *
-     * @param Request $request
+     * @param Request        $request
      * @param ContentProduct $contentProduct
      *
      * @return Response

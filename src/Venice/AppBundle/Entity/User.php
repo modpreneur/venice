@@ -292,7 +292,8 @@ class User extends BaseUser implements NotificationEntityInterface
             return false;
         }
 
-        if ($product instanceof FreeProduct) {
+        // Workaround of instanceof
+        if ($product->getType() === FreeProduct::TYPE) {
             return true;
         }
 
