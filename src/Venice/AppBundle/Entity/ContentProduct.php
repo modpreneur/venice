@@ -8,6 +8,7 @@
 namespace Venice\AppBundle\Entity;
 
 use DateTime;
+use Trinity\Component\Core\Interfaces\EntityInterface;
 use Venice\AppBundle\Entity\Content\Content;
 use Venice\AppBundle\Entity\Product\Product;
 use Venice\AppBundle\Traits\Timestampable;
@@ -15,7 +16,7 @@ use Venice\AppBundle\Traits\Timestampable;
 /**
  * Class ContentProduct.
  */
-class ContentProduct
+class ContentProduct implements EntityInterface
 {
     use Timestampable;
 
@@ -199,5 +200,13 @@ class ContentProduct
         $hours = $this->getDelay();
 
         return $timeOfAccess->add(new \DateInterval("PT{$hours}H"));
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->content->getName().' in '.$this->product->getName();
     }
 }

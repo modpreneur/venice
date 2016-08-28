@@ -8,6 +8,7 @@
 namespace Venice\AppBundle\Entity\Content;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Trinity\Component\Core\Interfaces\EntityInterface;
 use Venice\AppBundle\Entity\ContentProduct;
 use Venice\AppBundle\Entity\User;
 use Venice\AppBundle\Traits\Timestampable;
@@ -15,7 +16,7 @@ use Venice\AppBundle\Traits\Timestampable;
 /**
  * Class AbstractContent.
  */
-abstract class Content
+abstract class Content implements EntityInterface
 {
     use Timestampable;
 
@@ -169,6 +170,14 @@ abstract class Content
         }
 
         return $type;
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->name;
     }
 
     /**

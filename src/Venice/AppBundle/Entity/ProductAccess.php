@@ -3,6 +3,7 @@
 namespace Venice\AppBundle\Entity;
 
 use Trinity\Component\Core\Interfaces\ClientInterface;
+use Trinity\Component\Core\Interfaces\EntityInterface;
 use Trinity\NotificationBundle\Entity\NotificationEntityInterface;
 use Venice\AppBundle\Entity\Product\Product;
 use Venice\AppBundle\Traits\Timestampable;
@@ -15,7 +16,7 @@ use Trinity\NotificationBundle\Annotations as N;
  *
  * @UniqueEntity(fields={"user", "product"}, errorPath="product")
  */
-class ProductAccess implements NotificationEntityInterface
+class ProductAccess implements NotificationEntityInterface, EntityInterface
 {
     use Timestampable;
 
@@ -205,5 +206,13 @@ class ProductAccess implements NotificationEntityInterface
     public function getClients()
     {
         return [];
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->user->getFullNameOrUsername().'\'s product access for'.$this->product->getName();
     }
 }

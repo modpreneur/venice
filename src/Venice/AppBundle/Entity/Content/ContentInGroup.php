@@ -7,13 +7,14 @@
  */
 namespace Venice\AppBundle\Entity\Content;
 
+use Trinity\Component\Core\Interfaces\EntityInterface;
 use Venice\AppBundle\Entity\Product\Product;
 use Venice\AppBundle\Entity\User;
 
 /**
  * Class ContentInGroup.
  */
-class ContentInGroup
+class ContentInGroup implements EntityInterface
 {
     /**
      * @var int
@@ -166,5 +167,13 @@ class ContentInGroup
 
         // Check if the the of the access + delay(in hours) < now
         return $timeOfAccess < $now;
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->content->getName().' in '.$this->group->getName();
     }
 }
