@@ -23,3 +23,5 @@ Venice\AppBundle\Entity\Product\StandardProduct:
             - Range:
                 min: 0
                 max: 10000
+        purchasable:
+            - Type: boolean

@@ -42,6 +42,10 @@ class NecktieBuyController extends Controller
     {
         $priceStringGenerator = $this->get('trinity.services.price_string_generator');
 
+        if (!$product->isPurchasable()) {
+            throw new \LogicException('Can not buy product '.$product->getName().' as it is not purchasable.');
+        }
+
         /** @var User $user */
         $user = $this->getUser();
         $this->get('venice.app.necktie_gateway')->refreshAccessToken($user);
@@ -64,7 +68,10 @@ class NecktieBuyController extends Controller
         }
 
         if ($billingPlanId) {
-            $billingPlan = $entityManager->getRepository('VeniceAppBundle:BillingPlan')->findOneBy(['necktieId' => $billingPlanId]);
+            $billingPlan = $entityManager->getRepository('VeniceAppBundle:BillingPlan')->findOneBy(
+                ['necktieId' => $billingPlanId]
+            );
+
             if (!$billingPlan) {
                 throw new NotFoundHttpException('No billing plan found');
             }

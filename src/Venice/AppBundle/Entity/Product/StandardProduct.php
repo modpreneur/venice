@@ -38,6 +38,22 @@ class StandardProduct extends Product implements NotificationEntityInterface
     protected $defaultBillingPlan;
 
     /**
+     * @var bool Whether the product can be bought or not
+     */
+    protected $purchasable;
+
+    /**
+     * StandardProduct constructor.
+     */
+    public function __construct()
+    {
+        $this->purchasable = true;
+
+        parent::__construct();
+    }
+
+
+    /**
      * @N\AssociationGetter
      *
      * @return BillingPlan
@@ -89,5 +105,21 @@ class StandardProduct extends Product implements NotificationEntityInterface
     public function getClients()
     {
         return [];
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isPurchasable(): bool
+    {
+        return $this->purchasable;
+    }
+
+    /**
+     * @param boolean $purchasable
+     */
+    public function setPurchasable(bool $purchasable)
+    {
+        $this->purchasable = $purchasable;
     }
 }
