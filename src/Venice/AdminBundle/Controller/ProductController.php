@@ -218,7 +218,9 @@ class ProductController extends BaseAdminController
     public function createAction(Request $request, string $productType)
     {
         try {
-            $product = Product::createProductByType($productType);
+            $product = $this->getEntityOverrideHandler()->getEntityInstance(
+                Product::createProductClassByType($productType)
+            );
         } catch (ReflectionException $e) {
             throw new NotFoundHttpException('Product type: '.$productType.' not found.');
         }
@@ -460,7 +462,7 @@ class ProductController extends BaseAdminController
     /**
      * @Security("is_granted('ROLE_ADMIN_PRODUCT_VIEW')")
      *
-     * @param Request $request
+     * @param Request        $request
      * @param ContentProduct $contentProduct
      *
      * @return Response
@@ -524,7 +526,7 @@ class ProductController extends BaseAdminController
     /**
      * @Security("is_granted('ROLE_ADMIN_CONTENT_PRODUCT_EDIT')")
      *
-     * @param Request $request
+     * @param Request        $request
      * @param ContentProduct $contentProduct
      *
      * @return \Symfony\Component\HttpFoundation\Response
@@ -618,7 +620,7 @@ class ProductController extends BaseAdminController
     /**
      * @Security("is_granted('ROLE_ADMIN_CONTENT_PRODUCT_VIEW')")
      *
-     * @param Request $request
+     * @param Request        $request
      * @param ContentProduct $contentProduct
      *
      * @return Response
@@ -711,7 +713,7 @@ class ProductController extends BaseAdminController
     /**
      * @Security("is_granted('ROLE_ADMIN_CONTENT_PRODUCT_EDIT')")
      *
-     * @param Request $request
+     * @param Request        $request
      * @param ContentProduct $contentProduct
      *
      * @return Response
