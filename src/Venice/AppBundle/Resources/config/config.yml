@@ -8,6 +8,10 @@ parameters:
     necktie_show_product_access_url: "%necktie_url%/admin/user/:userId/product-access/:productAccessId"
     necktie_show_billing_plan_url: "%necktie_url%/admin/product/:productId/billing-plan/:billingPlanId"
     trinity.search.detail_url_provider: "trinity.search.detail_url_provider"
+    flash_msg:
+        success_update: 'Successfully Updated'
+        success_create: 'Successfully Created'
+        success_remove: 'Successfully Removed'
 
 trinity_messages:
     sender_identification: "%client_identification%"
