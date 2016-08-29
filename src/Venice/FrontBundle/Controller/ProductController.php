@@ -22,8 +22,7 @@ class ProductController extends Controller
      */
     public function indexAction()
     {
-        $entityClass = $this->get('venice.app.entity_override_handler')->getEntityClass(Product::class);
-        $products = $this->getDoctrine()->getRepository($entityClass)->findAll();
+        $products = $this->getDoctrine()->getRepository(Product::class)->findAll();
         $urlGenerator = $this->get('venice.app.buy_url_generator');
 
         return $this->render(
