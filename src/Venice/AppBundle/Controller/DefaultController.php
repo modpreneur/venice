@@ -18,11 +18,6 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
-        return $this->render(
-            'VeniceAppBundle:default:index.html.twig',
-            [
-                'base_dir' => realpath($this->container->getParameter('kernel.root_dir').'/..'),
-            ]
-        );
+        return $this->render('VeniceAppBundle:default:index.html.twig');
     }
 }

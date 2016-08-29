@@ -6,6 +6,9 @@
 
 {% block pageAction %}
     {% include "VeniceAdminBundle:Common:viewInNecktieAction.html.twig" with {"url": necktieUserShowUrl} %}
+    {% if is_granted('ROLE_USER_SWITCHER') and app.user != user %}
+        {% include "VeniceAdminBundle:Common:logInAsUser.html.twig" with {"user": user} %}
+    {% endif %}
 {% endblock %}
 
 
