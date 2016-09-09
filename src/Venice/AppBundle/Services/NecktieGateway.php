@@ -48,6 +48,11 @@ class NecktieGateway implements NecktieGatewayInterface
     protected $helper;
 
     /**
+     * @var EntityOverrideHandler
+     */
+    protected $entityOverrideHandler;
+
+    /**
      * @var Client
      */
     protected $client;
@@ -87,6 +92,7 @@ class NecktieGateway implements NecktieGatewayInterface
         RouterInterface $router,
         NecktieGatewayHelperInterface $helper,
         NecktieConnector $connector,
+        EntityOverrideHandler $entityOverrideHandler,
         string $necktieUrl = null,
         string $necktieClientId = null,
         string $necktieClientSecret = null,
@@ -96,6 +102,7 @@ class NecktieGateway implements NecktieGatewayInterface
         $this->router = $router;
         $this->helper = $helper;
         $this->connector = $connector;
+        $this->entityOverrideHandler = $entityOverrideHandler;
 
         $this->necktieUrl = $necktieUrl;
         $this->necktieClientId = $necktieClientId;
@@ -175,7 +182,7 @@ class NecktieGateway implements NecktieGatewayInterface
         if (is_array($userInfo) && array_key_exists('username', $userInfo)) {
             $user = $this
                 ->entityManager
-                ->getRepository('VeniceAppBundle:User')
+                ->getRepository($this->entityOverrideHandler->getEntityClass(User::class))
                 ->findOneBy(
                     ['username' => $userInfo['username']]
                 );
@@ -480,7 +487,7 @@ class NecktieGateway implements NecktieGatewayInterface
      */
     protected function createNewUser($userInfo, $persist)
     {
-        $user = new User();
+        $user = $this->entityOverrideHandler->getEntityInstance(User::class);
         $user->setUsername($userInfo['username'])
             ->setEmail($userInfo['email'])
             ->setNecktieId($userInfo['id']);

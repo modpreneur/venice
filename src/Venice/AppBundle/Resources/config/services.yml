@@ -45,6 +45,7 @@ services:
             - "@router"
             - "@venice.app.necktie_gateway_helper"
             - "@venice.app.necktie_connector"
+            - "@venice.app.entity_override_handler"
             - "%necktie_url%"
             - "%necktie_client_id%"
             - "%necktie_client_secret%"
