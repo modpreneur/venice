@@ -9,7 +9,9 @@
     <body>
         {% block exitImpersontaion%}
             {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
-                <a href="{{ path('homepage', {'_switch_user': '_exit'}) }}">Exit impersonation</a>
+                <div id="exit-impersontation" style="width: 100%; background-color: greenyellow; text-align: center;">
+                    <a href="{{ path('homepage', {'_switch_user': '_exit'}) }}">Exit impersonation</a>
+                </div>
             {% endif %}
         {% endblock %}
 
