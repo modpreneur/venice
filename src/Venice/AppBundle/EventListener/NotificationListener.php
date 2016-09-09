@@ -68,14 +68,15 @@ class NotificationListener
      * @throws \Trinity\Bundle\SettingsBundle\Exception\PropertyNotExistsException
      * @throws \Symfony\Component\Intl\Exception\MethodArgumentValueNotImplementedException
      * @throws \Symfony\Component\Intl\Exception\MethodArgumentNotImplementedException
+     * @throws \InvalidArgumentException
      */
     public function onChangesDone(ChangesDoneEvent $event)
     {
         foreach ($event->getEntities() as $entity) {
-            if (get_class($entity) === $this->entityOverrideHandler->getEntityClass(BillingPlan::class)) {
+            if ($this->entityOverrideHandler->isInstanceOf($entity, BillingPlan::class)) {
                 /* @var $entity BillingPlan */
                 $entity->setPrice($this->priceStringGenerator->generateFullPriceStr($entity));
-            } elseif (get_class($entity) === $this->entityOverrideHandler->getEntityClass(StandardProduct::class)) {
+            } elseif ($this->entityOverrideHandler->isInstanceOf($entity, StandardProduct::class)) {
                 /* @var $entity StandardProduct */
                 $entity->setPurchasable(true);
             }
