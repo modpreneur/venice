@@ -23,7 +23,6 @@ abstract class VeniceKernel extends Kernel
             new \Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle(),
             new \Symfony\Bundle\AsseticBundle\AsseticBundle(),
             new \Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
-            new \KMS\FroalaEditorBundle\KMSFroalaEditorBundle(),
             new \Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
             new \Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new \FOS\UserBundle\FOSUserBundle(),
