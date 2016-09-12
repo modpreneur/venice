@@ -237,15 +237,10 @@ trinity_settings:
      items_on_page: 20
      date_format: 'y-m-d'
 
-kms_froala_editor:
-    language: "en_gb"
-    serialNumber: "%froala_editor_key%"
-    charCounterCount: false
-#    pluginsDisabled: does not have an effect
-    imageUploadURL: app_froala_upload_image
-    fileUploadURL: app_froala_upload_file
-    imageManagerDeleteURL: app_froala_delete_image
-    imageManagerLoadURL: app_froala_load_images
+trinity_admin:
+    froala_editor_settings:
+        language: "en_gb"
+        pluginsEnabled: ['url', 'link', 'codeView', 'entities', 'align', 'charCounter']
 
 knp_gaufrette:
     adapters:

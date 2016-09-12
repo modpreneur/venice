@@ -7,7 +7,7 @@
  */
 namespace Venice\AppBundle\Form\Content;
 
-use KMS\FroalaEditorBundle\Form\Type\FroalaEditorType;
+use Trinity\AdminBundle\Form\FroalaType\FroalaType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
@@ -23,6 +23,11 @@ class HtmlContentType extends ContentType
         parent::buildForm($builder, $options);
 
         $builder
-            ->add('html', FroalaEditorType::class, ['required' => false]);
+            ->add('html', FroalaType::class, [
+                'required' => false,
+                'attr' => [
+                'style'=>'display:none'
+                ],
+            ]);
     }
 }

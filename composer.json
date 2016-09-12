@@ -17,7 +17,6 @@
         "doctrine/doctrine-bundle": "~1.6",
         "stof/doctrine-extensions-bundle": "~1.2",
         "friendsofsymfony/user-bundle": "dev-master",
-        "kms/froala-editor-bundle" : "dev-master",
         "sensio/distribution-bundle": "~5.0",
         "sensio/framework-extra-bundle": "~3.0",
         "twig/extensions": "~1.3",

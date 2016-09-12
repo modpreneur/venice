@@ -9,7 +9,7 @@ namespace Venice\AppBundle\Form;
 
 use Venice\AppBundle\Entity\BlogArticle;
 use Venice\AppBundle\Entity\Product\Product;
-use KMS\FroalaEditorBundle\Form\Type\FroalaEditorType;
+use Trinity\AdminBundle\Form\FroalaType\FroalaType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -65,7 +65,7 @@ class BlogArticleType extends BaseType
 
             ->add(
                 'content',
-                FroalaEditorType::class,
+                FroalaType::class,
                 [
                     'required' => false,
                 ]
