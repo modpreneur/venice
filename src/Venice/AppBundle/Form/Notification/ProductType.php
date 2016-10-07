@@ -35,22 +35,7 @@ class ProductType extends BaseType implements NotificationTypeInterface
         $builder
             ->add('name', TextType::class)
             ->add('description', TextareaType::class)
-            ->add(
-                'defaultBillingPlan',
-                TextType::class,
-                [
-                ]
-            )
             ->add('id', IntegerType::class, ['property_path' => 'necktieId']);
-
-        $builder->get('defaultBillingPlan')
-            ->addModelTransformer(
-                new NotificationTransformer(
-                    $this->entityManager,
-                    $options['billingPlanClass'],
-                    'necktieId'
-                )
-            );
     }
 
     /**
@@ -65,8 +50,7 @@ class ProductType extends BaseType implements NotificationTypeInterface
         $resolver->setDefaults(
             [
                 'data_class' => StandardProduct::class,
-                'csrf_protection' => false,
-                'billingPlanClass' => BillingPlan::class,
+                'csrf_protection' => false
             ]
         );
     }
