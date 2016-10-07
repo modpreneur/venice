@@ -108,6 +108,12 @@ services:
         tags:
             - { name: monolog.processor, method: processRecord }
 
+    venice.app.notification_logger:
+        class: Venice\AppBundle\Services\NotificationLogger
+        arguments:
+            - "@trinity.logger.elastic_log_service"
+            - "@trinity.logger.elastic_read_log_service"
+
     # EVENT LISTENERS #
 
     venice.app.backtrace_logger_listener:
@@ -179,8 +185,8 @@ services:
              - { name: twig.extension }
 
     venice.twig.extension.intl:
-      class: Twig_Extensions_Extension_Intl
-      tags:
+        class: Twig_Extensions_Extension_Intl
+        tags:
           - { name: twig.extension }
 
 

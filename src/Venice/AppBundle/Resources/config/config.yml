@@ -44,6 +44,8 @@ trinity_notification:
         billing-plan: Venice\AppBundle\Form\Notification\BillingPlanType
         user: Venice\AppBundle\Form\Notification\UserType
         product-access: Venice\AppBundle\Form\Notification\ProductAccessType
+    disable_time_violations: true
+    notification_logger: "@venice.app.notification_logger"
 
 trinity_logger:
     elastic_logs:
