@@ -10,7 +10,7 @@
     <a title="Go to {{ value }}" href="{{ path('admin_product_tabs',{'id':row.getId()}) }}" class="uppercase">{{ value }}</a>
 {% endblock %}
 
-{% block cell_defaultBillingPlan_initialPrice %}
+{% block cell_defaultBillingPlan %}
     {% if row.type == "standard" %}
         {% if row.defaultBillingPlan %}
             {{ row.defaultBillingPlan.price }}

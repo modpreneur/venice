@@ -53,7 +53,7 @@ class ProductController extends BaseAdminController
         $gridConfBuilder->addColumn('id', 'Id');
         $gridConfBuilder->addColumn('name', 'Name');
         $gridConfBuilder->addColumn(
-            'defaultBillingPlan:initialPrice',
+            'defaultBillingPlan',
             'Price',
             ['type' => 'double', 'allowOrder' => false]
         );
