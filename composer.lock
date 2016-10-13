@@ -63,16 +63,16 @@
         },
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.19.6",
+            "version": "3.19.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "34060bf0db260031697b17dbb37fa1bbec92f1c4"
+                "reference": "19bac3bdd7988cbf7f89d5ce8e2748d774e2cde8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/34060bf0db260031697b17dbb37fa1bbec92f1c4",
-                "reference": "34060bf0db260031697b17dbb37fa1bbec92f1c4",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/19bac3bdd7988cbf7f89d5ce8e2748d774e2cde8",
+                "reference": "19bac3bdd7988cbf7f89d5ce8e2748d774e2cde8",
                 "shasum": ""
             },
             "require": {
@@ -139,7 +139,7 @@
                 "s3",
                 "sdk"
             ],
-            "time": "2016-09-08 20:27:15"
+            "time": "2016-09-27 19:38:36"
         },
         {
             "name": "behat/transliterator",
@@ -183,16 +183,16 @@
         },
         {
             "name": "bunny/bunny",
-            "version": "v0.2.3",
+            "version": "v0.2.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/jakubkulhan/bunny.git",
-                "reference": "7f035cb4877a75c9b1346a300127947b4ca47402"
+                "reference": "f81da29e8a279af2b9af80fa041b84497a26ddf8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jakubkulhan/bunny/zipball/7f035cb4877a75c9b1346a300127947b4ca47402",
-                "reference": "7f035cb4877a75c9b1346a300127947b4ca47402",
+                "url": "https://api.github.com/repos/jakubkulhan/bunny/zipball/f81da29e8a279af2b9af80fa041b84497a26ddf8",
+                "reference": "f81da29e8a279af2b9af80fa041b84497a26ddf8",
                 "shasum": ""
             },
             "require": {
@@ -242,7 +242,7 @@
                 "react-php",
                 "reactphp"
             ],
-            "time": "2016-05-31 14:37:53"
+            "time": "2016-09-13 18:57:54"
         },
         {
             "name": "cocur/slugify",
@@ -1457,12 +1457,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfSymfony/FOSUserBundle.git",
-                "reference": "528f0a93aebb641a0bc6471cc24562fbd01432cb"
+                "reference": "9f86fe2d69df11159fca9ec44b529cb1df5e14aa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSUserBundle/zipball/528f0a93aebb641a0bc6471cc24562fbd01432cb",
-                "reference": "528f0a93aebb641a0bc6471cc24562fbd01432cb",
+                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSUserBundle/zipball/9f86fe2d69df11159fca9ec44b529cb1df5e14aa",
+                "reference": "9f86fe2d69df11159fca9ec44b529cb1df5e14aa",
                 "shasum": ""
             },
             "require": {
@@ -1496,7 +1496,10 @@
             "autoload": {
                 "psr-4": {
                     "FOS\\UserBundle\\": ""
-                }
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -1521,7 +1524,7 @@
             "keywords": [
                 "User management"
             ],
-            "time": "2016-09-09 10:00:40"
+            "time": "2016-09-28 09:10:06"
         },
         {
             "name": "fzaninotto/faker",
@@ -1573,16 +1576,16 @@
         },
         {
             "name": "gedmo/doctrine-extensions",
-            "version": "v2.4.22",
+            "version": "v2.4.23",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Atlantic18/DoctrineExtensions.git",
-                "reference": "b8188801bafc420b86908ee5229a5e92143ce514"
+                "reference": "c2f308fab900090c6c0f5b6f72f34a37b4dd2d84"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Atlantic18/DoctrineExtensions/zipball/b8188801bafc420b86908ee5229a5e92143ce514",
-                "reference": "b8188801bafc420b86908ee5229a5e92143ce514",
+                "url": "https://api.github.com/repos/Atlantic18/DoctrineExtensions/zipball/c2f308fab900090c6c0f5b6f72f34a37b4dd2d84",
+                "reference": "c2f308fab900090c6c0f5b6f72f34a37b4dd2d84",
                 "shasum": ""
             },
             "require": {
@@ -1648,7 +1651,7 @@
                 "tree",
                 "uploadable"
             ],
-            "time": "2016-08-30 18:42:36"
+            "time": "2016-09-22 13:45:22"
         },
         {
             "name": "guzzlehttp/guzzle",
@@ -2446,7 +2449,7 @@
             ],
             "authors": [
                 {
-                    "name": "KnpLabs",
+                    "name": "Knplabs",
                     "homepage": "http://knplabs.com"
                 }
             ],
@@ -2608,16 +2611,16 @@
         },
         {
             "name": "knplabs/knp-menu",
-            "version": "v2.1.1",
+            "version": "2.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/KnpLabs/KnpMenu.git",
-                "reference": "9917b999a3c3d3901386d60c4888b07679291031"
+                "reference": "964b5b3ca7fd23019147991f4f75f361d061eb20"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/KnpLabs/KnpMenu/zipball/9917b999a3c3d3901386d60c4888b07679291031",
-                "reference": "9917b999a3c3d3901386d60c4888b07679291031",
+                "url": "https://api.github.com/repos/KnpLabs/KnpMenu/zipball/964b5b3ca7fd23019147991f4f75f361d061eb20",
+                "reference": "964b5b3ca7fd23019147991f4f75f361d061eb20",
                 "shasum": ""
             },
             "require": {
@@ -2638,7 +2641,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.1-dev"
+                    "dev-master": "2.2-dev"
                 }
             },
             "autoload": {
@@ -2670,7 +2673,7 @@
                 "menu",
                 "tree"
             ],
-            "time": "2016-01-08 15:42:54"
+            "time": "2016-09-22 07:36:19"
         },
         {
             "name": "knplabs/knp-menu-bundle",
@@ -2715,7 +2718,7 @@
                     "email": "stof@notk.org"
                 },
                 {
-                    "name": "KnpLabs",
+                    "name": "Knplabs",
                     "homepage": "http://knplabs.com"
                 },
                 {
@@ -2965,16 +2968,16 @@
         },
         {
             "name": "myclabs/deep-copy",
-            "version": "1.5.2",
+            "version": "1.5.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/myclabs/DeepCopy.git",
-                "reference": "da8529775f14f4fdae33f916eb0cf65f6afbddbc"
+                "reference": "ea74994a3dc7f8d2f65a06009348f2d63c81e61f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/myclabs/DeepCopy/zipball/da8529775f14f4fdae33f916eb0cf65f6afbddbc",
-                "reference": "da8529775f14f4fdae33f916eb0cf65f6afbddbc",
+                "url": "https://api.github.com/repos/myclabs/DeepCopy/zipball/ea74994a3dc7f8d2f65a06009348f2d63c81e61f",
+                "reference": "ea74994a3dc7f8d2f65a06009348f2d63c81e61f",
                 "shasum": ""
             },
             "require": {
@@ -3003,7 +3006,7 @@
                 "object",
                 "object graph"
             ],
-            "time": "2016-09-06 16:07:05"
+            "time": "2016-09-16 13:37:59"
         },
         {
             "name": "nette/utils",
@@ -3775,24 +3778,24 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "5.5.4",
+            "version": "5.5.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "3e6e88e56c912133de6e99b87728cca7ed70c5f5"
+                "reference": "a57126dc681b08289fef6ac96a48e30656f84350"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/3e6e88e56c912133de6e99b87728cca7ed70c5f5",
-                "reference": "3e6e88e56c912133de6e99b87728cca7ed70c5f5",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/a57126dc681b08289fef6ac96a48e30656f84350",
+                "reference": "a57126dc681b08289fef6ac96a48e30656f84350",
                 "shasum": ""
             },
             "require": {
                 "ext-dom": "*",
                 "ext-json": "*",
-                "ext-pcre": "*",
-                "ext-reflection": "*",
-                "ext-spl": "*",
+                "ext-libxml": "*",
+                "ext-mbstring": "*",
+                "ext-xml": "*",
                 "myclabs/deep-copy": "~1.3",
                 "php": "^5.6 || ^7.0",
                 "phpspec/prophecy": "^1.3.1",
@@ -3814,7 +3817,12 @@
             "conflict": {
                 "phpdocumentor/reflection-docblock": "3.0.2"
             },
+            "require-dev": {
+                "ext-pdo": "*"
+            },
             "suggest": {
+                "ext-tidy": "*",
+                "ext-xdebug": "*",
                 "phpunit/php-invoker": "~1.1"
             },
             "bin": [
@@ -3849,7 +3857,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2016-08-26 07:11:44"
+            "time": "2016-09-21 14:40:13"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
@@ -4058,22 +4066,30 @@
         },
         {
             "name": "psr/log",
-            "version": "1.0.0",
+            "version": "1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-fig/log.git",
-                "reference": "fe0936ee26643249e916849d48e3a51d5f5e278b"
+                "reference": "5277094ed527a1c4477177d102fe4c53551953e0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-fig/log/zipball/fe0936ee26643249e916849d48e3a51d5f5e278b",
-                "reference": "fe0936ee26643249e916849d48e3a51d5f5e278b",
+                "url": "https://api.github.com/repos/php-fig/log/zipball/5277094ed527a1c4477177d102fe4c53551953e0",
+                "reference": "5277094ed527a1c4477177d102fe4c53551953e0",
                 "shasum": ""
             },
+            "require": {
+                "php": ">=5.3.0"
+            },
             "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
             "autoload": {
-                "psr-0": {
-                    "Psr\\Log\\": ""
+                "psr-4": {
+                    "Psr\\Log\\": "Psr/Log/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -4087,12 +4103,13 @@
                 }
             ],
             "description": "Common interface for logging libraries",
+            "homepage": "https://github.com/php-fig/log",
             "keywords": [
                 "log",
                 "psr",
                 "psr-3"
             ],
-            "time": "2012-12-21 11:40:51"
+            "time": "2016-09-19 16:02:08"
         },
         {
             "name": "react/event-loop",
@@ -4697,16 +4714,16 @@
         },
         {
             "name": "sensio/distribution-bundle",
-            "version": "v5.0.10",
+            "version": "v5.0.12",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sensiolabs/SensioDistributionBundle.git",
-                "reference": "1fa16138b94c8f6faaccf79ff0aca595fc81d8fd"
+                "reference": "b6dcd04595e4db95ead22ddea58c397864e00c32"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sensiolabs/SensioDistributionBundle/zipball/1fa16138b94c8f6faaccf79ff0aca595fc81d8fd",
-                "reference": "1fa16138b94c8f6faaccf79ff0aca595fc81d8fd",
+                "url": "https://api.github.com/repos/sensiolabs/SensioDistributionBundle/zipball/b6dcd04595e4db95ead22ddea58c397864e00c32",
+                "reference": "b6dcd04595e4db95ead22ddea58c397864e00c32",
                 "shasum": ""
             },
             "require": {
@@ -4745,7 +4762,7 @@
                 "configuration",
                 "distribution"
             ],
-            "time": "2016-09-10 19:25:53"
+            "time": "2016-09-14 20:25:12"
         },
         {
             "name": "sensio/framework-extra-bundle",
@@ -4899,12 +4916,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/snc/SncRedisBundle.git",
-                "reference": "78ae7e08895948c563b75d1bcdb257b49703863b"
+                "reference": "c90589e5b68aa2fb82a6884957656175d8289c16"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/snc/SncRedisBundle/zipball/78ae7e08895948c563b75d1bcdb257b49703863b",
-                "reference": "78ae7e08895948c563b75d1bcdb257b49703863b",
+                "url": "https://api.github.com/repos/snc/SncRedisBundle/zipball/c90589e5b68aa2fb82a6884957656175d8289c16",
+                "reference": "c90589e5b68aa2fb82a6884957656175d8289c16",
                 "shasum": ""
             },
             "require": {
@@ -4956,7 +4973,7 @@
                 "redis",
                 "symfony"
             ],
-            "time": "2016-08-31 09:42:39"
+            "time": "2016-09-16 15:25:46"
         },
         {
             "name": "stof/doctrine-extensions-bundle",
@@ -5689,12 +5706,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/modpreneur/trinity-admin.git",
-                "reference": "1b31c560c13995f5bebfc3698d446b0aaef1b6c5"
+                "reference": "549867a878a958040d006f74d0bfdf29b44a564b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/modpreneur/trinity-admin/zipball/1b31c560c13995f5bebfc3698d446b0aaef1b6c5",
-                "reference": "1b31c560c13995f5bebfc3698d446b0aaef1b6c5",
+                "url": "https://api.github.com/repos/modpreneur/trinity-admin/zipball/549867a878a958040d006f74d0bfdf29b44a564b",
+                "reference": "549867a878a958040d006f74d0bfdf29b44a564b",
                 "shasum": ""
             },
             "require": {
@@ -5739,7 +5756,7 @@
                 }
             ],
             "description": "Trinity Admin bundle",
-            "time": "2016-09-05 13:26:10"
+            "time": "2016-09-19 13:27:09"
         },
         {
             "name": "trinity/bunny-bundle",
@@ -5885,12 +5902,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/modpreneur/trinity.git",
-                "reference": "c4d70cba0371571c8175b53b714cdf0c0f29d667"
+                "reference": "f75c15d9e926b473fc41f47f4c362e069319ecab"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/modpreneur/trinity/zipball/c4d70cba0371571c8175b53b714cdf0c0f29d667",
-                "reference": "c4d70cba0371571c8175b53b714cdf0c0f29d667",
+                "url": "https://api.github.com/repos/modpreneur/trinity/zipball/f75c15d9e926b473fc41f47f4c362e069319ecab",
+                "reference": "f75c15d9e926b473fc41f47f4c362e069319ecab",
                 "shasum": ""
             },
             "require": {
@@ -5941,7 +5958,7 @@
                 }
             ],
             "description": "Trinity Framework",
-            "time": "2016-08-18 11:17:09"
+            "time": "2016-09-26 07:10:31"
         },
         {
             "name": "trinity/grid",
@@ -5949,12 +5966,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/modpreneur/trinity-grid.git",
-                "reference": "5de4d01c26a52ca26ffc0ff2ec43b66a0b28d087"
+                "reference": "0196ff06884de021b4d589d889f8da9555ca02a3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/modpreneur/trinity-grid/zipball/5de4d01c26a52ca26ffc0ff2ec43b66a0b28d087",
-                "reference": "5de4d01c26a52ca26ffc0ff2ec43b66a0b28d087",
+                "url": "https://api.github.com/repos/modpreneur/trinity-grid/zipball/0196ff06884de021b4d589d889f8da9555ca02a3",
+                "reference": "0196ff06884de021b4d589d889f8da9555ca02a3",
                 "shasum": ""
             },
             "require": {
@@ -6006,7 +6023,7 @@
                 }
             ],
             "description": "Trinity Grid bundle",
-            "time": "2016-08-17 09:25:36"
+            "time": "2016-09-26 10:49:43"
         },
         {
             "name": "trinity/logger",
@@ -6014,12 +6031,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/modpreneur/trinity-logger.git",
-                "reference": "4d656e24169e1bdb980abe6b1539cd02f7647466"
+                "reference": "c6ce1eb3258f992b36ed0e9c48fdfed4feeb9fac"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/modpreneur/trinity-logger/zipball/4d656e24169e1bdb980abe6b1539cd02f7647466",
-                "reference": "4d656e24169e1bdb980abe6b1539cd02f7647466",
+                "url": "https://api.github.com/repos/modpreneur/trinity-logger/zipball/c6ce1eb3258f992b36ed0e9c48fdfed4feeb9fac",
+                "reference": "c6ce1eb3258f992b36ed0e9c48fdfed4feeb9fac",
                 "shasum": ""
             },
             "require": {
@@ -6061,7 +6078,7 @@
                 }
             ],
             "description": "Trinity Logger bundle",
-            "time": "2016-08-17 09:38:10"
+            "time": "2016-09-26 06:35:34"
         },
         {
             "name": "trinity/messages",
@@ -6114,12 +6131,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/modpreneur/trinity-notifications.git",
-                "reference": "99bb273510be5bb196fee60bb0c4aac5a84ca00c"
+                "reference": "70e6ba80827a7c36d45edce704b6b381a6bb0dfd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/modpreneur/trinity-notifications/zipball/99bb273510be5bb196fee60bb0c4aac5a84ca00c",
-                "reference": "99bb273510be5bb196fee60bb0c4aac5a84ca00c",
+                "url": "https://api.github.com/repos/modpreneur/trinity-notifications/zipball/70e6ba80827a7c36d45edce704b6b381a6bb0dfd",
+                "reference": "70e6ba80827a7c36d45edce704b6b381a6bb0dfd",
                 "shasum": ""
             },
             "require": {
@@ -6175,7 +6192,7 @@
                 }
             ],
             "description": "Trinity Notification bundle",
-            "time": "2016-08-28 09:27:37"
+            "time": "2016-09-25 18:06:25"
         },
         {
             "name": "trinity/search",
@@ -6317,15 +6334,16 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/modpreneur/trinity-utils.git",
-                "reference": "3ded2115b77328534eec40eb1b5c71e557240c3a"
+                "reference": "588907048091a6dfa52171d7f5e9faa327190d67"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/modpreneur/trinity-utils/zipball/3ded2115b77328534eec40eb1b5c71e557240c3a",
-                "reference": "3ded2115b77328534eec40eb1b5c71e557240c3a",
+                "url": "https://api.github.com/repos/modpreneur/trinity-utils/zipball/588907048091a6dfa52171d7f5e9faa327190d67",
+                "reference": "588907048091a6dfa52171d7f5e9faa327190d67",
                 "shasum": ""
             },
             "require": {
+                "doctrine/orm": "~2.5",
                 "php": ">=7"
             },
             "require-dev": {
@@ -6363,20 +6381,20 @@
                 }
             ],
             "description": "Trinity Utils bundle",
-            "time": "2016-08-04 13:15:22"
+            "time": "2016-09-19 12:48:19"
         },
         {
             "name": "twig/extensions",
-            "version": "v1.3.0",
+            "version": "v1.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig-extensions.git",
-                "reference": "449e3c8a9ffad7c2479c7864557275a32b037499"
+                "reference": "531eaf4b9ab778b1d7cdd10d40fc6aa74729dfee"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig-extensions/zipball/449e3c8a9ffad7c2479c7864557275a32b037499",
-                "reference": "449e3c8a9ffad7c2479c7864557275a32b037499",
+                "url": "https://api.github.com/repos/twigphp/Twig-extensions/zipball/531eaf4b9ab778b1d7cdd10d40fc6aa74729dfee",
+                "reference": "531eaf4b9ab778b1d7cdd10d40fc6aa74729dfee",
                 "shasum": ""
             },
             "require": {
@@ -6391,7 +6409,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.3-dev"
+                    "dev-master": "1.4-dev"
                 }
             },
             "autoload": {
@@ -6415,20 +6433,20 @@
                 "i18n",
                 "text"
             ],
-            "time": "2015-08-22 16:38:35"
+            "time": "2016-09-22 16:50:57"
         },
         {
             "name": "twig/twig",
-            "version": "v1.24.2",
+            "version": "v1.25.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "33093f6e310e6976baeac7b14f3a6ec02f2d79b7"
+                "reference": "f16a634ab08d87e520da5671ec52153d627f10f6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/33093f6e310e6976baeac7b14f3a6ec02f2d79b7",
-                "reference": "33093f6e310e6976baeac7b14f3a6ec02f2d79b7",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/f16a634ab08d87e520da5671ec52153d627f10f6",
+                "reference": "f16a634ab08d87e520da5671ec52153d627f10f6",
                 "shasum": ""
             },
             "require": {
@@ -6441,7 +6459,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.24-dev"
+                    "dev-master": "1.25-dev"
                 }
             },
             "autoload": {
@@ -6476,7 +6494,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2016-09-01 17:50:53"
+            "time": "2016-09-21 23:05:12"
         },
         {
             "name": "webmozart/assert",
@@ -6613,16 +6631,16 @@
         },
         {
             "name": "willdurand/negotiation",
-            "version": "v2.0.3",
+            "version": "v2.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/willdurand/Negotiation.git",
-                "reference": "1ebc51dd6d47f4037b0d2493335304e5aea50ab6"
+                "reference": "bc814293b153f543c99c89d94c8cc07b3259eef9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/willdurand/Negotiation/zipball/1ebc51dd6d47f4037b0d2493335304e5aea50ab6",
-                "reference": "1ebc51dd6d47f4037b0d2493335304e5aea50ab6",
+                "url": "https://api.github.com/repos/willdurand/Negotiation/zipball/bc814293b153f543c99c89d94c8cc07b3259eef9",
+                "reference": "bc814293b153f543c99c89d94c8cc07b3259eef9",
                 "shasum": ""
             },
             "require": {
@@ -6634,7 +6652,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.0-dev"
+                    "dev-master": "2.1-dev"
                 }
             },
             "autoload": {
@@ -6661,7 +6679,7 @@
                 "header",
                 "negotiation"
             ],
-            "time": "2016-08-30 11:08:41"
+            "time": "2016-09-21 11:26:55"
         }
     ],
     "packages-dev": [

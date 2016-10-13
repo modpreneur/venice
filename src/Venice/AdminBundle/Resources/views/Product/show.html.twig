@@ -14,9 +14,16 @@
                 <td>{{ product.handle }}</td>
             </tr>
             <tr>
-                <th>Description</th>
+                <th>Venice description</th>
                 <td>{{ product.description }}</td>
             </tr>
+
+            {% if product.type == 'standard' %}
+                <tr>
+                    <th>Necktie description</th>
+                    <td>{{ product.necktieDescription }}</td>
+                </tr>
+            {% endif %}
 
             {% if product.type == "standard" %}
                 <tr>

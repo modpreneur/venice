@@ -14,7 +14,7 @@ use Trinity\NotificationBundle\Annotations as N;
 use Trinity\NotificationBundle\Entity\NotificationEntityInterface;
 
 /**
- * @N\Source(columns="necktieId, name, description")
+ * @N\Source(columns="necktieId, name")
  * Creating products on client is not allowed because creating billing plans is not allowed
  * @N\Methods(types={"put", "delete"})
  * @N\Url(postfix="product")
@@ -33,6 +33,11 @@ class StandardProduct extends Product implements NotificationEntityInterface
     protected $necktieId;
 
     /**
+     * @var string
+     */
+    protected $necktieDescription;
+
+    /**
      * @var BillingPlan Billing plan of the product
      */
     protected $defaultBillingPlan;
@@ -48,6 +53,8 @@ class StandardProduct extends Product implements NotificationEntityInterface
     public function __construct()
     {
         $this->purchasable = true;
+        $this->description = '';
+        $this->necktieDescription = '';
 
         parent::__construct();
     }
@@ -121,5 +128,31 @@ class StandardProduct extends Product implements NotificationEntityInterface
     public function setPurchasable(bool $purchasable)
     {
         $this->purchasable = $purchasable;
+    }
+
+    /**
+     * @return string
+     */
+    public function getNecktieDescription(): string
+    {
+        return $this->necktieDescription ?? '';
+    }
+
+    /**
+     * @param string $necktieDescription
+     */
+    public function setNecktieDescription(string $necktieDescription)
+    {
+        $this->necktieDescription = $necktieDescription;
+    }
+
+    /**
+     * Get venice description if provided. If not get necktie description.
+     *
+     * @return string
+     */
+    public function getDescriptionForCustomer(): string
+    {
+        return $this->description ?: $this->necktieDescription;
     }
 }
