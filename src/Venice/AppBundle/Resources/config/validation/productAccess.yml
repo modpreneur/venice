@@ -8,7 +8,8 @@ Venice\AppBundle\Entity\ProductAccess:
         - Symfony\Component\Validator\Constraints\Callback:
             callback: "validate"
 
-    properties:
-        toDate:
-            - Type: \DateTime
-            - GreaterThanOrEqual: "now"
+#todo: @JakubFajkus causes validation exceptions... need to revalidate the constraint
+#    properties:
+#        toDate:
+#            - Type: \DateTime
+#            - GreaterThanOrEqual: "now"

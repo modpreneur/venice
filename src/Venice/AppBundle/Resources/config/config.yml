@@ -45,9 +45,10 @@ trinity_notification:
         user: Venice\AppBundle\Form\Notification\UserType
         product-access: Venice\AppBundle\Form\Notification\ProductAccessType
     disable_time_violations: true
-    notification_logger: "@venice.app.notification_logger"
 
 trinity_logger:
+    logger_user_provider: "@venice.app.logger_user_provider"
+    logger_ttl_provider: "@venice.app.logger_ttl_provider"
     elastic_logs:
         elastic_host: '%elasticsearch_host%'
 
@@ -213,7 +214,7 @@ monolog:
     handlers:
         error:
             type: service
-            id: trinity.logger_database
+            id: trinity.logger.database_handler
             level: ERROR
 
 snc_redis:
@@ -238,6 +239,7 @@ trinity_settings:
      currency: 'USD'
      items_on_page: 20
      date_format: 'y-m-d'
+     logger_ttl: 30 #days
 
 trinity_admin:
     froala_editor_settings:
