@@ -133,7 +133,7 @@ class StandardProduct extends Product implements NotificationEntityInterface
     /**
      * @return string
      */
-    public function getNecktieDescription(): string
+    public function getNecktieDescription()
     {
         return $this->necktieDescription ?? '';
     }
@@ -141,7 +141,7 @@ class StandardProduct extends Product implements NotificationEntityInterface
     /**
      * @param string $necktieDescription
      */
-    public function setNecktieDescription(string $necktieDescription)
+    public function setNecktieDescription($necktieDescription)
     {
         $this->necktieDescription = $necktieDescription;
     }
@@ -151,7 +151,7 @@ class StandardProduct extends Product implements NotificationEntityInterface
      *
      * @return string
      */
-    public function getDescriptionForCustomer(): string
+    public function getDescriptionForCustomer()
     {
         return $this->description ?: $this->necktieDescription;
     }
