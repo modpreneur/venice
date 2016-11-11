@@ -11,4 +11,3 @@ Venice\AppBundle\Entity\ProductAccess:
     properties:
         toDate:
             - Type: \DateTime
-            - GreaterThanOrEqual: "now"
