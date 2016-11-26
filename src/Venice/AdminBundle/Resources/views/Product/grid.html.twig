@@ -12,8 +12,8 @@
 
 {% block cell_defaultBillingPlan %}
     {% if row.type == "standard" %}
-        {% if row.defaultBillingPlan %}
-            {{ row.defaultBillingPlan.price }}
+        {% if row.getDefaultBillingPlan() %}
+            {{ row.getDefaultBillingPlan().price }}
         {% else %}
             No billing plan
         {% endif %}

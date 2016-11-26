@@ -26,8 +26,8 @@
                 <tr>
                     <th>Default billing plan</th>
                     <td>
-                        {% if product.defaultBillingPlan %}
-                            {{ product.defaultBillingPlan.price }}
+                        {% if product.getDefaultBillingPlan() %}
+                            {{ product.getDefaultBillingPlan().price }}
                         {% else %}
                             No billing plan
                         {% endif %}

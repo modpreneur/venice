@@ -36,6 +36,8 @@ trinity_notification:
         billing-plan: Venice\AppBundle\Entity\BillingPlan
         user: Venice\AppBundle\Entity\User
         product-access: Venice\AppBundle\Entity\ProductAccess
+        pay-system: Venice\AppBundle\Entity\PaySystem
+        pay-system-vendor: Venice\AppBundle\Entity\PaySystemVendor
     mode: client
     client_id: "%necktie_client_short_id%"
     client_secret_provider: "@venice.app.client_secret_provider"
@@ -44,8 +46,11 @@ trinity_notification:
         billing-plan: Venice\AppBundle\Form\Notification\BillingPlanType
         user: Venice\AppBundle\Form\Notification\UserType
         product-access: Venice\AppBundle\Form\Notification\ProductAccessType
+        pay-system: Venice\AppBundle\Form\Notification\PaySystemType
+        pay-system-vendor: Venice\AppBundle\Form\Notification\PaySystemVendorType
     disable_time_violations: true
     notification_logger: "@venice.app.notification_logger"
+    unknown_entity_strategy: "@venice.app.notification_unknown_entity_name_strategy"
 
 trinity_logger:
     elastic_logs:

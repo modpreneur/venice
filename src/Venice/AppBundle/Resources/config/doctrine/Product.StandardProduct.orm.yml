@@ -16,7 +16,7 @@ Venice\AppBundle\Entity\Product\StandardProduct:
             unique: false
             column: purchasable
     oneToOne:
-        defaultBillingPlan:
+        necktieDefaultBillingPlan:
             targetEntity: Venice\AppBundle\Entity\BillingPlan
             cascade:
                 - remove
@@ -25,7 +25,21 @@ Venice\AppBundle\Entity\Product\StandardProduct:
             mappedBy: null
             inversedBy: null
             joinColumns:
-                default_billing_plan_id:
+                necktie_default_billing_plan_id:
+                    referencedColumnName: id
+                    onDelete: 'SET NULL'
+            orphanRemoval: false
+
+        veniceDefaultBillingPlan:
+            targetEntity: Venice\AppBundle\Entity\BillingPlan
+            cascade:
+                - remove
+                - persist
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                venice_default_billing_plan_id:
                     referencedColumnName: id
                     onDelete: 'SET NULL'
             orphanRemoval: false
