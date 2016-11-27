@@ -57,6 +57,7 @@ class ProductController extends BaseAdminController
             'Price',
             ['type' => 'double', 'allowOrder' => false]
         );
+
         $gridConfBuilder->addColumn('type', 'Type', ['allowOrder' => false]);
 //        $gridConfBuilder->addColumn('updatedAt', 'Updated At', ['type' => 'date']);
         $gridConfBuilder->addColumn('details', ' ', ['allowOrder' => false]);

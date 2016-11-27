@@ -68,9 +68,6 @@ Venice\AppBundle\Entity\ProductAccess:
             fetch: LAZY
             mappedBy: null
             inversedBy: productAccesses
-            joinColumns:
-                user_id:
-                    referencedColumnName: id
             orphanRemoval: false
         product:
             targetEntity: Venice\AppBundle\Entity\Product\Product

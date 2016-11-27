@@ -6,9 +6,28 @@
     {{ value }}
 {% endblock %}
 
-{% block cell_default %}
-    {% if row.getProduct().getDefaultBillingPlan() and row.getId() == row.getProduct().getDefaultBillingPlan().getId %}
+{% block cell_necktieDefault %}
+
+    {#the BP is ncktie default#}
+    {% if row.getProduct().getNecktieDefaultBillingPlan() and row.getId() == row.getProduct().getNecktieDefaultBillingPlan().getId %}
         <div class="is-default" id="is-default-id-{{ row.getId()}}" style="display: block" >
+            <i class="trinity trinity-yes"></i>
+        </div>
+
+    {% else %}
+
+        <div class="is-default" id="is-default-id-{{ row.getId()}}" style="display: block" >
+            <i class="trinity trinity-close"></i>
+        </div>
+
+    {% endif %}
+{% endblock %}
+
+{% block cell_veniceDefault %}
+    {% if row.getProduct().getVeniceDefaultBillingPlan() and row.getId() == row.getProduct().getVeniceDefaultBillingPlan().getId %}
+        <div class="is-default" id="is-default-id-{{ row.getId()}}" style="display: block" >
+            {#todo: @RichardBures click to unset call URL: path('admin_billing_plan_product_set_default', { 'id': row.getId() }) }}#}
+            {#todo: when onHover() on the "trinity trinity-yes" icon, change to "trinity trinity-close" icon#}
         <i class="trinity trinity-yes"></i>
         </div>
 
