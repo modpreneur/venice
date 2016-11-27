@@ -114,6 +114,12 @@ services:
             - "@trinity.logger.elastic_log_service"
             - "@trinity.logger.elastic_read_log_service"
 
+    venice.app.notification_unknown_entity_name_strategy:
+        class: Venice\AppBundle\Services\UnknownNotificationEntityNameStrategy
+        arguments:
+            - "@doctrine.orm.entity_manager"
+            - "@venice.app.entity_override_handler"
+
     # EVENT LISTENERS #
 
     venice.app.backtrace_logger_listener:
@@ -322,6 +328,18 @@ services:
 
     venice.app.notification.form.billing_plan:
         class: Venice\AppBundle\Form\Notification\BillingPlanType
+        parent: "venice.app.form.base"
+        tags:
+            - { name: form.type }
+
+    venice.app.notification.form.pay_system:
+        class: Venice\AppBundle\Form\Notification\PaySystemType
+        parent: "venice.app.form.base"
+        tags:
+            - { name: form.type }
+
+    venice.app.notification.form.pay_system_vendor:
+        class: Venice\AppBundle\Form\Notification\PaySystemVendorType
         parent: "venice.app.form.base"
         tags:
             - { name: form.type }

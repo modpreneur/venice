@@ -4,7 +4,7 @@ mkdir -p /var/app/var/cache
 mkdir -p /var/app/var/logs
 mkdir -p /var/app/web/compiled
 
-composer run-script post-install-cmd --no-interaction
+composer install --no-dev --optimize-autoloader --no-scripts --prefer-dist --no-interaction
 
 bin/console assetic:dump --env=prod --no-debug
 

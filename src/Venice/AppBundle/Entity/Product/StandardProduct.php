@@ -38,9 +38,14 @@ class StandardProduct extends Product implements NotificationEntityInterface
     protected $necktieDescription;
 
     /**
-     * @var BillingPlan Billing plan of the product
+     * @var BillingPlan Default billing plan of the product which is set on Necktie
      */
-    protected $defaultBillingPlan;
+    protected $necktieDefaultBillingPlan;
+
+    /**
+     * @var BillingPlan Billing plan of the product which is set on Venice. It has higher priority than the Necktie one.
+     */
+    protected $veniceDefaultBillingPlan;
 
     /**
      * @var bool Whether the product can be bought or not
@@ -57,27 +62,6 @@ class StandardProduct extends Product implements NotificationEntityInterface
         $this->necktieDescription = '';
 
         parent::__construct();
-    }
-
-
-    /**
-     * @N\AssociationGetter
-     *
-     * @return BillingPlan
-     */
-    public function getDefaultBillingPlan()
-    {
-        return $this->defaultBillingPlan;
-    }
-
-    /**
-     * @N\AssociationSetter(targetEntity="Venice\AppBundle\Entity\BillingPlan")
-     *
-     * @param BillingPlan $defaultBillingPlan
-     */
-    public function setDefaultBillingPlan(BillingPlan $defaultBillingPlan)
-    {
-        $this->defaultBillingPlan = $defaultBillingPlan;
     }
 
     /**
@@ -128,6 +112,47 @@ class StandardProduct extends Product implements NotificationEntityInterface
     public function setPurchasable(bool $purchasable)
     {
         $this->purchasable = $purchasable;
+    }
+
+    /**
+     * @return BillingPlan
+     */
+    public function getNecktieDefaultBillingPlan()
+    {
+        return $this->necktieDefaultBillingPlan;
+    }
+    /**
+     * @param BillingPlan
+     */
+    public function setNecktieDefaultBillingPlan($necktieDefaultBillingPlan)
+    {
+        $this->necktieDefaultBillingPlan = $necktieDefaultBillingPlan;
+    }
+
+    /**
+     * @return BillingPlan
+     */
+    public function getVeniceDefaultBillingPlan()
+    {
+        return $this->veniceDefaultBillingPlan;
+    }
+
+    /**
+     * @param BillingPlan $veniceDefaultBillingPlan
+     */
+    public function setVeniceDefaultBillingPlan($veniceDefaultBillingPlan)
+    {
+        $this->veniceDefaultBillingPlan = $veniceDefaultBillingPlan;
+    }
+
+    /**
+     * Get venice default billing plan if provided. If not get necktie default billing plan.
+     *
+     * @return BillingPlan
+     */
+    public function getDefaultBillingPlan()
+    {
+        return $this->veniceDefaultBillingPlan ?: $this->necktieDefaultBillingPlan;
     }
 
     /**

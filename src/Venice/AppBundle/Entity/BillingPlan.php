@@ -7,6 +7,7 @@
  */
 namespace Venice\AppBundle\Entity;
 
+use JMS\Serializer\Annotation\SerializedName;
 use Trinity\Component\EntityCore\Entity\BaseBillingPlan;
 use Trinity\Component\Core\Interfaces\ClientInterface;
 use Trinity\NotificationBundle\Entity\NotificationEntityInterface;
@@ -20,6 +21,7 @@ class BillingPlan extends BaseBillingPlan implements NotificationEntityInterface
 {
     /**
      * @var int
+     * @SerializedName("id")
      */
     protected $necktieId;
 
