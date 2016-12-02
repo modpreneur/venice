@@ -10,13 +10,13 @@
 
     {#the BP is ncktie default#}
     {% if row.getProduct().getNecktieDefaultBillingPlan() and row.getId() == row.getProduct().getNecktieDefaultBillingPlan().getId %}
-        <div class="is-default" id="is-default-id-{{ row.getId()}}" style="display: block" >
+        <div class="is-default" id="is-default-id-{{ row.getId()}}">
             <i class="trinity trinity-yes"></i>
         </div>
 
     {% else %}
 
-        <div class="is-default" id="is-default-id-{{ row.getId()}}" style="display: block" >
+        <div class="is-default" id="is-default-id-{{ row.getId()}}">
             <i class="trinity trinity-close"></i>
         </div>
 
@@ -25,41 +25,27 @@
 
 {% block cell_veniceDefault %}
     {% if row.getProduct().getVeniceDefaultBillingPlan() and row.getId() == row.getProduct().getVeniceDefaultBillingPlan().getId %}
-        <div onmouseover="window.unsetDefaultStart('{{ row.getId() }}');" class="is-default" id="is-default-id-{{ row.getId()}}" style="display: block" >
-            {#todo: @RichardBures click to unset call URL: path('admin_billing_plan_product_set_default', { 'id': row.getId() }) }}#}
-            {#todo: when onHover() on the "trinity trinity-yes" icon, change to "trinity trinity-close" icon#}
+
+
+        <div class="is-default"
+             id="venice-defaul-setter-{{ row.getId() }}"
+             data-state="is"
+             onmouseenter="window.veniceDefaultBP('venice-defaul-setter-{{ row.getId() }}');"
+             onclick="window.veniceDefaultBP('venice-defaul-setter-{{ row.getId() }}');"
+             onmouseleave="window.veniceDefaultBP('venice-defaul-setter-{{ row.getId() }}');"
+             data-states="{{ '{"set":{"parentClasses":"set-default","childClasses":"trinity trinity-yes"},"is":{"parentClasses":"is-default","childClasses":"trinity trinity-pin"},"unset":{"parentClasses":"unset-default","childClasses":"trinity trinity-close"},"loading":{"parentClasses":"loading-icon-for-default","childClasses":"tiecons tiecons-loading tiecons-rotate"}}' }}"
+        >
             <i class="trinity trinity-yes"></i>
         </div>
 
-        <div onclick="window.setAsDefault('set-default-id-{{ row.getId() }}');" class="set-default" id="set-default-id-{{ row.getId() }}" data-href="{{ path('admin_billing_plan_product_set_default', { 'id': row.getId() }) }}" style="display: none; cursor: pointer;"  title="set as default">
-        <i class="trinity trinity-pin"></i>
-        </div>
-
-        <div onmouseover="window.unsetDefaultClick('{{ row.getId() }}');" class="unset-default" id="unset-default-id-{{ row.getId() }}" data-href="{{ path('admin_billing_plan_product_set_default', { 'id': row.getId(), 'unset': true }) }}" style="display: none; cursor: pointer;"  title="set as default">
-            <i class="trinity trinity-close"></i>
-        </div>
-
-        <div  class="loading-icon-for-default" id="loading-icon-for-default-id-{{ row.getId() }}" style="display: none">
-            <i class="tiecons tiecons-loading tiecons-rotate"></i>
-        </div>
-
     {% else %}
-
-        <div onclick="window.setAsDefault('set-default-id-{{ row.getId() }}');" class="set-default" id="set-default-id-{{ row.getId() }}" data-href="{{ path('admin_billing_plan_product_set_default', { 'id': row.getId() }) }}" style="display: block; cursor: pointer;" title="set as default">
-        <i class="trinity trinity-pin"></i>
+        <div class="is-default"
+             data-state="set"
+             data-states="{{ '{"set":{"parentClasses":"set-default","childClasses":"trinity trinity-yes"},"is":{"parentClasses":"is-default","childClasses":"trinity trinity-pin"},"unset":{"parentClasses":"unset-default","childClasses":"trinity trinity-close"},"loading":{"parentClasses":"loading-icon-for-default","childClasses":"tiecons tiecons-loading tiecons-rotate"}}' }}"
+        >
+            <i class="trinity trinity-pin"></i>
         </div>
 
-        <div onmouseover="window.unsetDefaultStart('{{ row.getId() }}');" onmouseleave="window.unsetDefaultEnd('{{ row.getId() }}');"  class="is-default" id="is-default-id-{{ row.getId() }}" style="display: none">
-        <i class="trinity trinity-yes"></i>
-        </div>
-
-        <div onmouseover="window.unsetDefaultClick('{{ row.getId() }}');" class="unset-default" id="unset-default-id-{{ row.getId() }}" data-href="{{ path('admin_billing_plan_product_set_default', { 'id': row.getId(), 'unset': true }) }}" style="display: none; cursor: pointer;"  title="set as default">
-            <i class="trinity trinity-close"></i>
-        </div>
-
-        <div class="loading-icon-for-default" id="loading-icon-for-default-id-{{ row.getId() }}" style="display: none">
-            <i class="tiecons tiecons-loading"></i>
-        </div>
     {% endif %}
 {% endblock %}
 
