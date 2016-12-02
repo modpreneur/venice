@@ -51,14 +51,8 @@ Venice\AppBundle\Entity\User:
     oneToMany:
         productAccesses:
             targetEntity: Venice\AppBundle\Entity\ProductAccess
-            cascade:
-                - remove
-                - persist
-            fetch: LAZY
             mappedBy: user
-            inversedBy: null
-            orphanRemoval: false
-            orderBy: null
+
         OAuthTokens:
             targetEntity: Venice\AppBundle\Entity\OAuthToken
             cascade:

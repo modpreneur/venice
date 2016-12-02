@@ -7,6 +7,7 @@
  */
 namespace Venice\AppBundle\Entity\Product;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Venice\AppBundle\Entity\BillingPlan;
 use JMS\Serializer\Annotation\SerializedName;
 use Trinity\Component\Core\Interfaces\ClientInterface;
@@ -51,6 +52,11 @@ class StandardProduct extends Product implements NotificationEntityInterface
      * @var bool Whether the product can be bought or not
      */
     protected $purchasable;
+
+    /**
+     * @var ArrayCollection
+     */
+    protected $billingPlans;
 
     /**
      * StandardProduct constructor.
@@ -180,4 +186,40 @@ class StandardProduct extends Product implements NotificationEntityInterface
     {
         return $this->description ?: $this->necktieDescription;
     }
+
+    /**
+     * @return ArrayCollection<BillingPlan>
+     */
+    public function getBillingPlans()
+    {
+        return $this->billingPlans;
+    }
+
+
+    /**
+     * @param BillingPlan $billingPlan
+     * @return $this
+     */
+    public function addBillingPlan(BillingPlan $billingPlan)
+    {
+        if (!$this->billingPlans->contains($billingPlan))
+        {
+            $this->billingPlans->add($billingPlan);
+        }
+
+        return $this;
+    }
+
+
+    /**
+     * @param BillingPlan $billingPlan
+     * @return $this
+     */
+    public function removeBillingPlan(BillingPlan $billingPlan)
+    {
+        $this->billingPlans->remove($billingPlan);
+
+        return $this;
+    }
+
 }

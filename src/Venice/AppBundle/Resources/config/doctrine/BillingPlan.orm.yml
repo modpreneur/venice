@@ -78,8 +78,7 @@ Venice\AppBundle\Entity\BillingPlan:
             targetEntity: Venice\AppBundle\Entity\Product\StandardProduct
             cascade: {}
             fetch: LAZY
-            mappedBy: null
-            inversedBy: null
+            inversedBy: billingPlans
             joinColumns:
                 product_id:
                     referencedColumnName: id

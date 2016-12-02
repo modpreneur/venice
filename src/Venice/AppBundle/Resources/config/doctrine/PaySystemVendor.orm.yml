@@ -51,6 +51,9 @@ Venice\AppBundle\Entity\PaySystemVendor:
             cascade: {  }
             fetch: LAZY
             mappedBy: null
-            inversedBy: vendor
+            inversedBy: vendors
+            joinColumns:
+                default_vendor_id:
+                    referencedColumnName: id
             orphanRemoval: false
             cascade:

@@ -22,6 +22,15 @@ Venice\AppBundle\Entity\Product\StandardProduct:
             unique: false
             nullable: true
             precision: 0
+
+    oneToMany:
+        billingPlans:
+            targetEntity: Venice\AppBundle\Entity\BillingPlan
+            cascade: {}
+            fetch: LAZY
+            mappedBy: product
+            orphanRemoval: false
+
     oneToOne:
         necktieDefaultBillingPlan:
             targetEntity: Venice\AppBundle\Entity\BillingPlan

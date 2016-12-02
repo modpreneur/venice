@@ -44,7 +44,6 @@ Venice\AppBundle\Entity\PaySystem:
                 - persist
             fetch: LAZY
             mappedBy: paySystem
-            inversedBy: null
             orphanRemoval: false
 
     oneToOne:
