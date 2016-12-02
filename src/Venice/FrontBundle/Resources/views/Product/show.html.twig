@@ -14,9 +14,11 @@
         <h2>You do not have an access to this product</h2>
 
         {% if product.type == "standard" and product.getDefaultBillingPlan() is not null%}
-            <p>But you can buy it here!:{% include "VeniceFrontBundle:Common:buyLink.html.twig" with {"url": urlGenerator.generateBuyUrl(product, null, false, 'cb'), "text": "ClickBank" } %}</p>
-            <p>But you can buy it here!:{% include "VeniceFrontBundle:Common:buyLink.html.twig" with {"url": urlGenerator.generateBuyUrl(product, null, true, 'cb'), "text": "ClickBank stored CC" } %}</p>
-            <p>But you can buy it here!:{% include "VeniceFrontBundle:Common:buyLink.html.twig" with {"url": urlGenerator.generateBuyUrl(product, null, false, 'braintree'), "text": "Braintree" } %}</p>
+            <p>But you can buy it here!:{% include "VeniceFrontBundle:Common:buyLink.html.twig" with {"url": urlGenerator.generateBuyUrl(product, null, false), "text": "ClickBank" } %}</p>
+
+            <p>But you can buy it here!:{% include "VeniceFrontBundle:Common:buyLink.html.twig" with {"url": urlGenerator.generateBuyUrl(product, null, true), "text": "ClickBank stored CC" } %}</p>
+
+            <p>But you can buy it here!:{% include "VeniceFrontBundle:Common:buyLink.html.twig" with {"url": urlGenerator.generateBuyUrl(product, null, false), "text": "Braintree" } %}</p>
         {% endif %}
     {% else %}
 
