@@ -15,6 +15,13 @@ Venice\AppBundle\Entity\Product\StandardProduct:
             type: boolean
             unique: false
             column: purchasable
+        necktieDescription:
+            type: string
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
     oneToOne:
         necktieDefaultBillingPlan:
             targetEntity: Venice\AppBundle\Entity\BillingPlan
