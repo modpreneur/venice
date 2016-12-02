@@ -14,6 +14,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Trinity\NotificationBundle\DataTransformer\NotificationTransformer;
 use Trinity\NotificationBundle\Interfaces\NotificationTypeInterface;
 use Venice\AppBundle\Entity\BillingPlan;
+use Venice\AppBundle\Entity\PaySystemVendor;
 use Venice\AppBundle\Entity\Product\StandardProduct;
 use Venice\AppBundle\Form\BaseType;
 
@@ -53,6 +54,11 @@ class BillingPlanType extends BaseType implements NotificationTypeInterface
                 TextType::class,
                 [
                 ]
+            )->add(
+                'paySystemVendor',
+                TextType::class,
+                [
+                ]
             )
             ->add(
                 'id',
@@ -65,6 +71,15 @@ class BillingPlanType extends BaseType implements NotificationTypeInterface
                 new NotificationTransformer(
                     $this->entityManager,
                     $options['standardProductClass'],
+                    'necktieId'
+                )
+            );
+
+        $builder->get('paySystemVendor')
+            ->addModelTransformer(
+                new NotificationTransformer(
+                    $this->entityManager,
+                    $options['paySystemVendorClass'],
                     'necktieId'
                 )
             );
@@ -84,6 +99,7 @@ class BillingPlanType extends BaseType implements NotificationTypeInterface
                 'data_class' => BillingPlan::class,
                 'csrf_protection' => false,
                 'standardProductClass' => StandardProduct::class,
+                'paySystemVendorClass' => PaySystemVendor::class,
             ]
         );
     }

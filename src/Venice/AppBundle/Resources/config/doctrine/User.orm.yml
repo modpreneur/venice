@@ -44,6 +44,10 @@ Venice\AppBundle\Entity\User:
             nullable: false
             precision: 0
             column: date_of_birth
+        locked:
+            type: boolean
+            unique: false
+            column: locked
     oneToMany:
         productAccesses:
             targetEntity: Venice\AppBundle\Entity\ProductAccess

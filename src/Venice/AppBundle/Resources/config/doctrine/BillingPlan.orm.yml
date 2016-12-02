@@ -76,13 +76,24 @@ Venice\AppBundle\Entity\BillingPlan:
     manyToOne:
         product:
             targetEntity: Venice\AppBundle\Entity\Product\StandardProduct
+            cascade: {}
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                product_id:
+                    referencedColumnName: id
+                    onDelete: CASCADE
+            orphanRemoval: false
+        paySystemVendor:
+            targetEntity: Venice\AppBundle\Entity\PaySystemVendor
             cascade:
                 - persist
             fetch: LAZY
             mappedBy: null
             inversedBy: null
             joinColumns:
-                product_id:
+                pay_system_vendor_id:
                     referencedColumnName: id
                     onDelete: CASCADE
             orphanRemoval: false

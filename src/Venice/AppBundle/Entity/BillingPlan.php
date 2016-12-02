@@ -31,6 +31,11 @@ class BillingPlan extends BaseBillingPlan implements NotificationEntityInterface
     protected $product;
 
     /**
+     * @var PaySystemVendor paySystemVendor
+     */
+    protected $paySystemVendor;
+
+    /**
      * String which can be used for displaying the price of this billing plan.
      *
      * @var string
@@ -109,6 +114,26 @@ class BillingPlan extends BaseBillingPlan implements NotificationEntityInterface
         $this->price = $price;
 
         return $this;
+    }
+
+    /**
+     * @N\AssociationGetter()
+     *
+     * @return PaySystemVendor
+     */
+    public function getPaySystemVendor()
+    {
+        return $this->paySystemVendor;
+    }
+
+    /**
+     * @N\AssociationSetter(targetEntity="Venice\AppBundle\Entity\PaySystemVendor")
+     *
+     * @param PaySystemVendor $paySystemVendor
+     */
+    public function setPaySystemVendor($paySystemVendor)
+    {
+        $this->paySystemVendor = $paySystemVendor;
     }
 
     /** @return ClientInterface[] */

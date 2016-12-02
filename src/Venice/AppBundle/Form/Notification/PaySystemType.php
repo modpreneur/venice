@@ -2,6 +2,7 @@
 
 namespace Venice\AppBundle\Form\Notification;
 
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -33,7 +34,7 @@ class PaySystemType extends BaseType implements NotificationTypeInterface
             )
             ->add(
                 'defaultVendor',
-                TextType::class,
+                HiddenType::class,
                 [
                 ]
             )

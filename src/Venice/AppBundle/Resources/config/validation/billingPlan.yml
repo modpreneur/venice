@@ -4,3 +4,5 @@ Venice\AppBundle\Entity\BillingPlan:
     properties:
         product:
             - NotBlank: ~
+        paySystemVendor:
+            - NotBlank: ~

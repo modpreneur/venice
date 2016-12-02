@@ -29,8 +29,6 @@ Venice\AppBundle\Entity\Product\StandardProduct:
                 - remove
                 - persist
             fetch: LAZY
-            mappedBy: null
-            inversedBy: null
             joinColumns:
                 necktie_default_billing_plan_id:
                     referencedColumnName: id
@@ -43,8 +41,6 @@ Venice\AppBundle\Entity\Product\StandardProduct:
                 - remove
                 - persist
             fetch: LAZY
-            mappedBy: null
-            inversedBy: null
             joinColumns:
                 venice_default_billing_plan_id:
                     referencedColumnName: id

@@ -69,6 +69,10 @@ Venice\AppBundle\Entity\ProductAccess:
             mappedBy: null
             inversedBy: productAccesses
             orphanRemoval: false
+            joinColumns:
+                user_id:
+                    referencedColumnName: id
+                    onDelete: CASCADE
         product:
             targetEntity: Venice\AppBundle\Entity\Product\Product
             cascade: {  }
