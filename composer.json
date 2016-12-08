@@ -9,7 +9,7 @@
     "require": {
         "php": "~7.0",
         "ocramius/package-versions": "~1.1",
-        "symfony/symfony": "~3",
+        "symfony/symfony": "~3.0",
         "symfony/assetic-bundle": "~2.8",
         "symfony/swiftmailer-bundle": "~2.3",
         "symfony/monolog-bundle": "~2.8 | ~3.0",
@@ -64,8 +64,7 @@
             "php bin/console venice:elastic:migration",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::prepareDeploymentTarget",
-            "npm run update"
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::prepareDeploymentTarget"
         ]
     },
     "config": {
