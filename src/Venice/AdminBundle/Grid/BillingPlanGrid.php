@@ -7,7 +7,7 @@ use Trinity\Bundle\GridBundle\Grid\BaseGrid;
 /**
  * Class billingPlanGrid.
  */
-class BillingPlanGrid extends BaseGrid
+class BillingPlanGrid extends BaseVeniceGrid
 {
     /**
      * Set up grid (template).

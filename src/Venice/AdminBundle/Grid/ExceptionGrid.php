@@ -7,7 +7,7 @@ use Trinity\Bundle\GridBundle\Grid\BaseGrid;
 /**
  * Class ExceptionGrid.
  */
-class ExceptionGrid extends BaseGrid
+class ExceptionGrid extends BaseVeniceGrid
 {
     /**
      * Set up grid (template).
