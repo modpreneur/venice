@@ -12,7 +12,7 @@ web:
     - .:/var/app
 
 mysql:
-  image: mysql/mysql-server:5.7
+  image: mysql/mysql-server
   ports:
     - 3306:3306
   environment:
@@ -30,8 +30,7 @@ redis:
   restart: always
 
 elasticsearch:
-  image: elasticsearch:latest
-#  build: ./docker/elasticSearch
+  image: elasticsearch:2.4
+
   ports:
-#    - 9300:9300
     - 9201:9200
