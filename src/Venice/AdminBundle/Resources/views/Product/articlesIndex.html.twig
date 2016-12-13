@@ -1,39 +1,38 @@
-<div class="box">
-    {#<ul>#}
-        {#{% for blogArticle in blogArticles %}#}
-            {#<li>#}
-                {#<h4><a href="{{ path('admin_blog_article_tabs', {'id': blogArticle.id}) }}">{{ blogArticle.title }}</a></h4>#}
-            {#</li>#}
-        {#{% endfor %}#}
-    {#</ul>#}
-    {% if count>0 %}
-        <div class="box">
-            <div id="blog-article-grid"  data-config="{{ gridConfiguration }}">
-            </div>
-        </div>
-    {% else %}
-        <div class="row">
-            <div class="span-none-padding-xlarge-24 margin-auto">
-                <div class="span-none-xlarge-10 margin-top-20">
-                    <div class="info-empty-form">
-                        <div class="row"><i class="trinity-info"></i></div>
-                        <div class="row"><h2 class="warning">NO DATA</h2></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    {% endif %}
 
-
-    {% if(is_granted('ROLE_ADMIN_PRODUCT_EDIT') and is_granted('ROLE_ADMIN_BLOG_EDIT') ) %}
+{#<ul>#}
+    {#{% for blogArticle in blogArticles %}#}
+        {#<li>#}
+            {#<h4><a href="{{ path('admin_blog_article_tabs', {'id': blogArticle.id}) }}">{{ blogArticle.title }}</a></h4>#}
+        {#</li>#}
+    {#{% endfor %}#}
+{#</ul>#}
+{% if count>0 %}
+    <div class="box">
+        <div id="blog-article-grid"  data-config="{{ gridConfiguration }}">
+        </div>
+    </div>
+{% else %}
+    <div class="row">
         <div class="span-none-padding-xlarge-24 margin-auto">
-            <div class="row">
+            <div class="span-none-xlarge-10 margin-top-20">
                 <div class="info-empty-form">
-                    <a class="button button-addNew" id="newIcon" href="{{ path('admin_blog_article_new') }}">
-                        Add new blog article
-                    </a>
+                    <div class="row"><i class="trinity-info"></i></div>
+                    <div class="row"><h2 class="warning">NO DATA</h2></div>
                 </div>
             </div>
         </div>
-    {% endif %}
-</div>
+    </div>
+{% endif %}
+
+
+{% if(is_granted('ROLE_ADMIN_PRODUCT_EDIT') and is_granted('ROLE_ADMIN_BLOG_EDIT') ) %}
+    <div class="span-none-padding-xlarge-24 margin-auto">
+        <div class="row">
+            <div class="info-empty-form">
+                <a class="button button-addNew" id="newIcon" href="{{ path('admin_blog_article_new') }}">
+                    Add new blog article
+                </a>
+            </div>
+        </div>
+    </div>
+{% endif %}

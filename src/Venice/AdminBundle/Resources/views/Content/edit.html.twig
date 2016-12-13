@@ -11,7 +11,7 @@
                 {% endfor %}
             </div>
             {{ form_widget(form.html) }}
-            {{ form_row(form.submit, {'attr': {'class': 'button edit'}} ) }}
+            {{ form_row(form.submit, {'attr': {'class': 'button button-success button-save'}} ) }}
             {{ form_end(form) }}
         </div>
     </div>
@@ -27,7 +27,7 @@
                     {{ form_row(form[key]) }}
                 {% endfor %}
 
-                {{ form_row(form.submit, {'attr': {'class': 'button edit'}} ) }}
+                {{ form_row(form.submit, {'attr': {'class': 'button button-success button-save'}} ) }}
                 {{ form_end(form) }}
             </div>
         </div>

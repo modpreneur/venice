@@ -19,11 +19,6 @@
     <div class="box box-new-form" id="blog-article-form" data-slugify="{{ path('api_slugify')}}">
 
         <input type="hidden" id="blog-article-date-format" value="{{ dateFormat }}"/>
-        <h2 class="header-h2 form-title">
-            {%  block formTitle %}
-                New blog article
-            {% endblock %}
-        </h2>
 
         <div class="row">
             <div class="span-none-padding-medium-24">
@@ -34,21 +29,20 @@
         </div>
 
         {{ form_start(form, {'attr': {'class': 'new-form'}} ) }}
-        <div class="row">
             {% block formRow %}
                 {{ form_errors(form) }}
 
                 {{ form_row(form.title) }}
+                {{ form_row(form.BlogArticleChild) }}
                 {{ form_row(form.handle) }}
                 {{ form_row(form.dateToPublish, {'attr': {'class': 'dateSelect'}}) }}
                 {{ form_row(form.products) }}
 
 
             {% endblock %}
-        </div>
         {{ form_widget(form.content) }}
 
-        {{ form_row(form.submit, {'attr': {'class': 'button create'}} ) }}
+        {{ form_row(form.submit, {'attr': {'class': 'button button-success button-save'}} ) }}
         {{ form_end(form) }}
 
     </div>
