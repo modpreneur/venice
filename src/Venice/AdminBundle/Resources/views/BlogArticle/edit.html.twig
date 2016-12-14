@@ -1,15 +1,24 @@
 <div class="box box-edit-form" id="blog-article-form" data-slugify="{{ path('api_slugify')}}">
     <input type="hidden" id="blog-article-date-format" value="{{ dateFormat }}"  data-dateVal="{{ dateVal }}"/>
     {{ form_start(form, {'attr': {'class': 'edit-form'}} ) }}
-    <div class="row">
         {{ form_errors(form) }}
 
         {{ form_row(form.title) }}
         {{ form_row(form.handle) }}
         {{ form_row(form.dateToPublish, {'attr': {'class': 'dateSelect'}}) }}
         {{ form_row(form.products) }}
+        {{ form_row(form.BlogArticleChild) }}
+    <div class="row">
+        {% embed "TrinityAdminBundle:Form:form_layout.html.twig" %}
+            {% block form_row_label_content %}
+                <div style="width: 0;">{{ form_widget(form.content) }}</div>
+            {% endblock %}
+
+            {% block form_row_content %}
+                {{ form_widget(form.content) }}
+            {% endblock %}
+        {% endembed %}
     </div>
-    {{ form_widget(form.content) }}
 
     {{ form_row(form.submit, {'attr': {'class': 'button button-success button-save'}} ) }}
     {{ form_end(form) }}

@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Venice\AppBundle\Entity\BlogArticle;
+use Venice\AppBundle\Entity\Product\Product;
 
 /**
  * Class BlogArticleController.
@@ -46,7 +47,7 @@ class BlogArticleController extends BaseAdminController
         );
 
         // Defining columns
-        $gridConfBuilder->addColumn('id', 'Id');
+        $gridConfBuilder->addColumn('id', '#');
         $gridConfBuilder->addColumn('title', 'Title');
         $gridConfBuilder->addColumn('handle', 'Handle');
         $gridConfBuilder->addColumn('products', 'Products');
@@ -139,12 +140,14 @@ class BlogArticleController extends BaseAdminController
             );
 
         $dateFormat = $this->get('trinity.settings')->get('date_format');
+        $productCount = $this->getDoctrine()->getRepository(Product::class)->count();
 
         return $this->render(
             'VeniceAdminBundle:BlogArticle:new.html.twig',
             [
                 'form' => $form->createView(),
                 'dateFormat' => $dateFormat,
+                'product_count' => $productCount,
             ]
         );
     }

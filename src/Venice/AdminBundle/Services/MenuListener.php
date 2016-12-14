@@ -46,7 +46,7 @@ class MenuListener
             ->setExtra('roles', ['ROLE_ADMIN_PRODUCT_VIEW']);
 
         $menu
-            ->addChild('Contents', ['route' => 'admin_content_index'])
+            ->addChild('Content', ['route' => 'admin_content_index'])
             ->setAttribute('icon', 'tiecons tiecons-video')
             ->setExtra('orderNumber', 30)
             ->setExtra('roles', ['ROLE_ADMIN_CONTENT_VIEW']);

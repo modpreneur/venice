@@ -33,14 +33,44 @@
                 {{ form_errors(form) }}
 
                 {{ form_row(form.title) }}
-                {{ form_row(form.BlogArticleChild) }}
                 {{ form_row(form.handle) }}
+                {{ form_row(form.BlogArticleChild) }}
                 {{ form_row(form.dateToPublish, {'attr': {'class': 'dateSelect'}}) }}
-                {{ form_row(form.products) }}
 
+                {% if product_count>0 %}
+                    {{ form_row(form.products) }}
+                {% else %}
+                    <div style="display: none;">
+                        {{ form_row(form.products) }}
+                    </div>
 
+                    <div class="row">
+                        {% embed "TrinityAdminBundle:Form:form_layout.html.twig" %}
+                            {% block form_row_label_content %}
+                                {{ form_label(form.products) }}
+                            {% endblock %}
+
+                            {% block form_row_input_content %}
+                                <span class="text">
+                                    <a href="{{ path('admin_product_new') }}">No products created, click here to add one</a>
+                                </span>
+                            {% endblock %}
+                        {% endembed %}
+                    </div>
+                {% endif %}
+
+                <div class="row">
+                    {% embed "TrinityAdminBundle:Form:form_layout.html.twig" %}
+                        {% block form_row_label_content %}
+                            <div style="width: 0;">{{ form_widget(form.content) }}</div>
+                        {% endblock %}
+                        
+                        {% block form_row_content %}
+                            {{ form_widget(form.content) }}
+                        {% endblock %}
+                    {% endembed %}
+                </div>
             {% endblock %}
-        {{ form_widget(form.content) }}
 
         {{ form_row(form.submit, {'attr': {'class': 'button button-success button-save'}} ) }}
         {{ form_end(form) }}

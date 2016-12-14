@@ -42,7 +42,7 @@ class BillingPlanController extends BaseAdminController
             $count
         );
         // Defining columns
-        $gridConfBuilder->addColumn('id', 'Id');
+        $gridConfBuilder->addColumn('id', '#');
         $gridConfBuilder->addColumn('necktieDefault', 'Default on Necktie');
         $gridConfBuilder->addColumn('veniceDefault', 'Default on Venice');
         $gridConfBuilder->addColumn('type', 'Type');

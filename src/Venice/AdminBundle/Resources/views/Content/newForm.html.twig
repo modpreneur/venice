@@ -1,15 +1,27 @@
 {% if contentType == "iframe" or contentType == "html" %}
     <div class="box box-new-form">
         {{ form_start(form, {'attr': {'class': 'new-form'}} ) }}
-        <div class="row">
-            {{ form_errors(form) }}
+        {{ form_errors(form) }}
 
-            {# Render all form rows except the submit input and html input #}
-            {% for key, item in form.children if key != "submit" and key != "html"%}
-                {{ form_row(form[key]) }}
-            {% endfor %}
+        {# Render all form rows except the submit input and html input #}
+        {% for key, item in form.children if key != "submit" and key != "html" %}
+            {{ form_row(form[key]) }}
+        {% endfor %}
+
+
+        <div class="row">
+            {% embed "TrinityAdminBundle:Form:form_layout.html.twig" %}
+                {% block form_row_label_content %}
+                    <div style="width: 0;">
+                        {{ form_widget(form.html) }}
+                    </div>
+                {% endblock %}
+
+                {% block form_row_content %}
+                    {{ form_widget(form.html) }}
+                {% endblock %}
+            {% endembed %}
         </div>
-        {{ form_widget(form.html) }}
 
         {{ form_row(form.submit, {'attr': {'class': 'button button-success button-save'}} ) }}
         {{ form_end(form) }}
@@ -21,7 +33,7 @@
             {{ form_errors(form) }}
 
             {# Render all form rows except the submit input #}
-            {% for key, item in form.children if key != "submit"%}
+            {% for key, item in form.children if key != "submit" %}
                 {{ form_row(form[key]) }}
             {% endfor %}
 

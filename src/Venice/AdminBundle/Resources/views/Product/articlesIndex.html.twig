@@ -6,10 +6,9 @@
         {#</li>#}
     {#{% endfor %}#}
 {#</ul>#}
+
 {% if count>0 %}
-    <div class="box">
-        <div id="blog-article-grid"  data-config="{{ gridConfiguration }}">
-        </div>
+    <div id="blog-article-grid"  data-config="{{ gridConfiguration }}">
     </div>
 {% else %}
     <div class="row">

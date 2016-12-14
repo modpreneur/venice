@@ -50,7 +50,7 @@ class ProductController extends BaseAdminController
         );
 
         // Defining columns
-        $gridConfBuilder->addColumn('id', 'Id');
+        $gridConfBuilder->addColumn('id', '#');
         $gridConfBuilder->addColumn('name', 'Name');
         $gridConfBuilder->addColumn(
             'defaultBillingPlan',
@@ -94,7 +94,7 @@ class ProductController extends BaseAdminController
         );
 
         // Defining columns
-        $gridConfBuilder->addColumn('id', 'Id');
+        $gridConfBuilder->addColumn('id', '#');
         $gridConfBuilder->addColumn('title', 'Title');
         $gridConfBuilder->addColumn('handle', 'Handle');
         $gridConfBuilder->addColumn('details', ' ', ['allowOrder' => false]);
@@ -441,12 +441,12 @@ class ProductController extends BaseAdminController
         );
 
         // Defining columns
-        $gridConfBuilder->addColumn('id', 'Id');
+        $gridConfBuilder->addColumn('id', '#');
         $gridConfBuilder->addColumn('content:name', 'Content');
         $gridConfBuilder->addColumn('orderNumber', 'Order number');
         $gridConfBuilder->addColumn('delay', 'Delay[hours]');
         $gridConfBuilder->addColumn('details', ' ', ['allowOrder' => false]);
-        $gridConfBuilder->addColumn('products');
+        $gridConfBuilder->addColumn('products', 'Products');
 
         $gridConfBuilder->setProperty('filter', 'product:id = '.$product->getId());
 
