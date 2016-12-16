@@ -31,7 +31,6 @@ class UnknownNotificationEntityNameStrategy implements UnknownEntityNameStrategy
         $this->entityOverrideHandler = $entityOverrideHandler;
     }
 
-
     /**
      * This method is called when the system receives a notification with entity name which is not known.
      * This handler could for example perform some custom actions or throw an exception.
@@ -39,6 +38,7 @@ class UnknownNotificationEntityNameStrategy implements UnknownEntityNameStrategy
      * @param Notification $notification The notification which has the unknown entity name
      *
      * @return bool True if the solver solved the situation. False otherwise
+     * @throws \InvalidArgumentException
      */
     public function unknownEntityName(Notification $notification)
     {
@@ -51,7 +51,7 @@ class UnknownNotificationEntityNameStrategy implements UnknownEntityNameStrategy
 
         foreach (['id', 'product', 'paySystemVendor', 'defaultBillingPlan'] as $key) {
             if (!array_key_exists($key, $data)) {
-                throw new \InvalidArgumentException('The data array does not contain key: '.$key);
+                throw new \InvalidArgumentException('The data array does not contain key: ' . $key);
             }
         }
 
@@ -60,7 +60,6 @@ class UnknownNotificationEntityNameStrategy implements UnknownEntityNameStrategy
             $this->entityOverrideHandler->getEntityClass(PaySystemVendor::class)
         )->find($data['paySystemVendor']);
 
-        //todo @JakubFakus : business logic? should add always or only at this condition?
         if ($vendor !== null && $vendor->isDefaultForVenice()) {
             // change the default billing plan for the product
             /** @var StandardProduct $product */

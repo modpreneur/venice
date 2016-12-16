@@ -202,8 +202,7 @@ class StandardProduct extends Product implements NotificationEntityInterface
      */
     public function addBillingPlan(BillingPlan $billingPlan)
     {
-        if (!$this->billingPlans->contains($billingPlan))
-        {
+        if (!$this->billingPlans->contains($billingPlan)) {
             $this->billingPlans->add($billingPlan);
         }
 

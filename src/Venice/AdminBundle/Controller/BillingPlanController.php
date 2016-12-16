@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Venice\AppBundle\Entity\BillingPlan;
-use Venice\AppBundle\Entity\Product\StandardProduct;
+//use Venice\AppBundle\Entity\Product\StandardProduct;
 
 /**
  * Class BillingPlanController.
@@ -26,7 +26,7 @@ class BillingPlanController extends BaseAdminController
      * @param int $id
      * @param Request $request
      *
-     * @return array
+     * @return Response
      *
      * @throws \LogicException
      * @throws \Trinity\Bundle\GridBundle\Exception\DuplicateColumnException

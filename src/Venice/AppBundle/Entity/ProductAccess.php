@@ -52,6 +52,9 @@ class ProductAccess implements NotificationEntityInterface, EntityInterface
      */
     private $toDate;
 
+    /**
+     * ProductAccess constructor.
+     */
     public function __construct()
     {
         $this->updateTimestamps();

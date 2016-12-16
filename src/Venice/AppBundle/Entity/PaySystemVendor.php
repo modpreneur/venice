@@ -20,7 +20,9 @@ class PaySystemVendor extends BasePaySystemVendor implements NotificationEntityI
 
     /**
      * @var bool If the vendor is default for this venice instance.
-     * When the venice receives a notification about entity default-billing-plans and the given vendor id is the same as the id of this entity, the default billing plan of given product is changed.
+     * When the venice receives a notification about entity default-billing-plans
+     * and the given vendor id is the same as the id of this entity,
+     * the default billing plan of given product is changed.
      */
     protected $defaultForVenice;
 
@@ -91,6 +93,4 @@ class PaySystemVendor extends BasePaySystemVendor implements NotificationEntityI
     {
         $this->defaultForVenice = $defaultForVenice;
     }
-
-
 }
