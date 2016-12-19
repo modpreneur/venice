@@ -60,7 +60,7 @@ class ProductController extends BaseAdminController
 
         $gridConfBuilder->addColumn('type', 'Type', ['allowOrder' => false]);
 //        $gridConfBuilder->addColumn('updatedAt', 'Updated At', ['type' => 'date']);
-        $gridConfBuilder->addColumn('details', ' ', ['allowOrder' => false]);
+        $gridConfBuilder->addColumn('details', ' ', ['allowOrder' => false, 'className' => 'cell-center']);
 
         return $this->render('VeniceAdminBundle:Product:index.html.twig', [
             'gridConfiguration' => $gridConfBuilder->getJSON(),
@@ -97,7 +97,7 @@ class ProductController extends BaseAdminController
         $gridConfBuilder->addColumn('id', '#');
         $gridConfBuilder->addColumn('title', 'Title');
         $gridConfBuilder->addColumn('handle', 'Handle');
-        $gridConfBuilder->addColumn('details', ' ', ['allowOrder' => false]);
+        $gridConfBuilder->addColumn('details', ' ', ['allowOrder' => false, 'className' => 'cell-center']);
         $gridConfBuilder->addColumn('products');
 
         $gridConfBuilder->setProperty('filter', 'products:id = '.$product->getId());
@@ -445,7 +445,7 @@ class ProductController extends BaseAdminController
         $gridConfBuilder->addColumn('content:name', 'Content');
         $gridConfBuilder->addColumn('orderNumber', 'Order number');
         $gridConfBuilder->addColumn('delay', 'Delay[hours]');
-        $gridConfBuilder->addColumn('details', ' ', ['allowOrder' => false]);
+        $gridConfBuilder->addColumn('details', ' ', ['allowOrder' => false, 'className' => 'cell-center']);
         $gridConfBuilder->addColumn('products', 'Products');
 
         $gridConfBuilder->setProperty('filter', 'product:id = '.$product->getId());

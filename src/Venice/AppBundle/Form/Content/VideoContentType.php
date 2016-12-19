@@ -51,6 +51,7 @@ class VideoContentType extends ContentType
                 TextType::class,
                 [
                     'required' => false,
+                    'label' => 'Video LQ',
                 ]
             )
             ->add(
@@ -58,6 +59,7 @@ class VideoContentType extends ContentType
                 TextType::class,
                 [
                     'required' => false,
+                    'label' => 'Video HQ',
                 ]
             )
             ->add(
@@ -65,6 +67,7 @@ class VideoContentType extends ContentType
                 TextType::class,
                 [
                     'required' => false,
+                    'label' => 'Video HD',
                 ]
             );
     }

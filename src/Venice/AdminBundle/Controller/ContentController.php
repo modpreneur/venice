@@ -58,7 +58,7 @@ class ContentController extends BaseAdminController
         $gridConfBuilder->addColumn('name', 'Name');
         $gridConfBuilder->addColumn('type', 'Type');
         $gridConfBuilder->addColumn('contentProducts', 'Products');
-        $gridConfBuilder->addColumn('details', ' ', ['allowOrder' => false]);
+        $gridConfBuilder->addColumn('details', ' ', ['allowOrder' => false, 'className' => 'cell-center']);
 
         return $this->render(
             'VeniceAdminBundle:Content:index.html.twig',
@@ -590,7 +590,7 @@ class ContentController extends BaseAdminController
         $gridConfBuilder->addColumn('product:name', 'Product');
         $gridConfBuilder->addColumn('orderNumber', 'Order number');
         $gridConfBuilder->addColumn('delay', 'Delay[hours]');
-        $gridConfBuilder->addColumn('details', ' ', ['allowOrder' => false]);
+        $gridConfBuilder->addColumn('details', ' ', ['allowOrder' => false, 'className' => 'cell-center']);
 
         $gridConfBuilder->setProperty('filter', 'content='.$content->getId());
 

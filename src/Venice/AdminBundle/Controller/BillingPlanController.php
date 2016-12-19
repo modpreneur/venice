@@ -49,7 +49,7 @@ class BillingPlanController extends BaseAdminController
         $gridConfBuilder->addColumn('initialPrice', 'Price');
         $gridConfBuilder->addColumn('frequency', 'Frequency');
         $gridConfBuilder->addColumn('trial', 'Trial');
-        $gridConfBuilder->addColumn('details', ' ', ['allowOrder' => false]);
+        $gridConfBuilder->addColumn('details', ' ', ['allowOrder' => false, 'className' => 'cell-center']);
 
         $gridConfBuilder->setProperty('filter', 'product='.$id);
 

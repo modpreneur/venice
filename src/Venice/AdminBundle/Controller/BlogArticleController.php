@@ -51,7 +51,7 @@ class BlogArticleController extends BaseAdminController
         $gridConfBuilder->addColumn('title', 'Title');
         $gridConfBuilder->addColumn('handle', 'Handle');
         $gridConfBuilder->addColumn('products', 'Products');
-        $gridConfBuilder->addColumn('details', ' ', ['allowOrder' => false]);
+        $gridConfBuilder->addColumn('details', ' ', ['allowOrder' => false, 'className' => 'cell-center']);
 
         return $this->render(
             'VeniceAdminBundle:BlogArticle:index.html.twig',

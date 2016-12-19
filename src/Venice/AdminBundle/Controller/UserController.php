@@ -51,7 +51,7 @@ class UserController extends BaseAdminController
         $gridConfBuilder->addColumn('username', 'User Name');
         $gridConfBuilder->addColumn('email', 'Email');
         $gridConfBuilder->addColumn('fullName', 'Full Name');
-        $gridConfBuilder->addColumn('details', ' ', ['allowOrder' => false]);
+        $gridConfBuilder->addColumn('details', ' ', ['allowOrder' => false, 'className' => 'cell-center']);
 
         return $this->render(
             'VeniceAdminBundle:User:index.html.twig',

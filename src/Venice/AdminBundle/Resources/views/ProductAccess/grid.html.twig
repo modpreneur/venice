@@ -33,6 +33,6 @@
     {% if(is_granted('ROLE_ADMIN_PRODUCT_ACCESS_VIEW')) %}
         <a title="Go to the product access"
            href="{{ path('admin_product_access_tabs', { 'userId':row.getUser().getId() ,'id': row.getId() }) }}"
-           class="button-small  margin-none-all">Get details</a>
+           class="button-small pull-right margin-right-10">Get details</a>
     {% endif %}
 {% endblock %}

@@ -59,7 +59,7 @@ class MenuListener
 
         $menu
             ->addChild('Users', ['route' => 'admin_user_index'])
-            ->setAttribute('icon', 'tiecons tiecons-user-negative')
+            ->setAttribute('icon', 'trinity trinity-users')
             ->setExtra('orderNumber', 50)
             ->setExtra('roles', ['ROLE_ADMIN_USER_VIEW']);
 

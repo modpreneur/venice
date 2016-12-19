@@ -68,7 +68,7 @@ class ProductAccessController extends BaseAdminController
         $gridConfBuilder->addColumn('product', 'Product');
         $gridConfBuilder->addColumn('fromDate', 'From Date');
         $gridConfBuilder->addColumn('toDate', 'To Date');
-        $gridConfBuilder->addColumn('details', ' ', ['allowOrder' => false]);
+        $gridConfBuilder->addColumn('details', ' ', ['allowOrder' => false, 'className' => 'cell-center']);
 
         return $this->render(
             'VeniceAdminBundle:ProductAccess:index.html.twig',
