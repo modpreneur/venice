@@ -171,6 +171,18 @@ services:
         tags:
             - { name: doctrine.event_subscriber, connection: default, priority: 100}
 
+
+    venice_app.logger_user_provider:
+        class: Venice\AppBundle\Services\LoggerUserProvider
+        arguments:
+            - "@doctrine.orm.entity_manager"
+            - '@venice.app.entity_override_handler'
+
+    venice.app.logger_ttl_provider:
+        class: Venice\AppBundle\Services\LoggerTtlProvider
+        arguments:
+            - "@trinity.settings"
+
     # TWIG EXTENSIONS #
 
     venice.app.twig.extension.human_bool:
