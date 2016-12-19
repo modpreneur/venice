@@ -13,7 +13,7 @@
                     <div class="row span-none-xlarge-5">
                         {% block controll %}
                             {{ form_start(form) }}
-                            {{ form_row(form.submit, {'attr': {'class': 'button delete'}}) }}
+                            {{ form_row(form.submit, {'attr': {'class': 'button button-danger button-remove'}}) }}
                             {{ form_end(form) }}
                         {% endblock %}
                     </div>

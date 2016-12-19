@@ -62,6 +62,11 @@ class User extends BaseUser implements NotificationEntityInterface
     protected $OAuthTokens;
 
     /**
+     * @var bool
+     */
+    protected $locked;
+
+    /**
      * {@inheritdoc}
      */
     public function __construct()
@@ -74,6 +79,7 @@ class User extends BaseUser implements NotificationEntityInterface
         $this->OAuthTokens = new ArrayCollection();
         $this->preferredUnits = self::DEFAULT_PREFERRED_METRICS;
         $this->birthDate = new DateTime();
+        $this->locked = false;
         $this->updateTimestamps();
     }
 
@@ -319,6 +325,22 @@ class User extends BaseUser implements NotificationEntityInterface
         } else {
             return $timeOfStart < $now && $timeOfEnd > $now;
         }
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isLocked(): bool
+    {
+        return $this->locked;
+    }
+
+    /**
+     * @param boolean $locked
+     */
+    public function setLocked(bool $locked)
+    {
+        $this->locked = $locked;
     }
 
 //    /**

@@ -1,13 +1,12 @@
-Venice\AppBundle\Entity\User:
+Venice\AppBundle\Entity\PaySystem:
     type: entity
-    table: user
+    table: pay_system
     inheritanceType: SINGLE_TABLE
     discriminatorColumn:
         name: discriminator
         type: string
     discriminatorMap:
-        venice_user: Venice\AppBundle\Entity\User
-    repositoryClass: Venice\AppBundle\Entity\Repositories\UserRepository
+        venice_pay_system: Venice\AppBundle\Entity\PaySystem
     id:
         id:
             type: integer
@@ -28,39 +27,32 @@ Venice\AppBundle\Entity\User:
             nullable: true
             precision: 0
             column: necktie_id
-        preferredUnits:
+        name:
             type: string
             scale: 0
-            length: 10
-            unique: false
-            nullable: false
-            precision: 0
-            column: preferred_units
-        birthDate:
-            type: date
-            scale: 0
             length: null
-            unique: false
+            unique: true
             nullable: false
             precision: 0
-            column: date_of_birth
-        locked:
-            type: boolean
-            unique: false
-            column: locked
-    oneToMany:
-        productAccesses:
-            targetEntity: Venice\AppBundle\Entity\ProductAccess
-            mappedBy: user
+    lifecycleCallbacks: {  }
 
-        OAuthTokens:
-            targetEntity: Venice\AppBundle\Entity\OAuthToken
+    oneToMany:
+        vendors:
+            targetEntity: Venice\AppBundle\Entity\PaySystemVendor
             cascade:
                 - remove
                 - persist
             fetch: LAZY
-            mappedBy: user
+            mappedBy: paySystem
+            orphanRemoval: false
+
+    oneToOne:
+        defaultVendor:
+            targetEntity: Venice\AppBundle\Entity\PaySystemVendor
+            cascade:
+                - remove
+                - persist
+            fetch: LAZY
+            mappedBy: null
             inversedBy: null
             orphanRemoval: false
-            orderBy: null
-    lifecycleCallbacks: {  }

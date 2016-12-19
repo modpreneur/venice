@@ -65,7 +65,7 @@ class LoggerController extends BaseAdminController
         $gridConfBuilder->addColumn('ip', 'User');
         $gridConfBuilder->addColumn('user', '_hidden', ['hidden' => true]);
         $gridConfBuilder->addColumn('level', 'Level');
-        $gridConfBuilder->addColumn('url', 'Url');
+        $gridConfBuilder->addColumn('url', 'URL');
         $gridConfBuilder->addColumn('log', 'Log', ['allowOrder' => false]);
         $gridConfBuilder->addColumn('details', ' ', ['allowOrder' => false, 'className' => 'cell-center']);
 

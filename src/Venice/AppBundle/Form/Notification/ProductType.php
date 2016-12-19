@@ -34,7 +34,7 @@ class ProductType extends BaseType implements NotificationTypeInterface
 
         $builder
             ->add('name', TextType::class)
-            ->add('description', TextareaType::class)
+            ->add('description', TextareaType::class, ['property_path' => 'necktieDescription'])
             ->add('id', IntegerType::class, ['property_path' => 'necktieId']);
     }
 

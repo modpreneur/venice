@@ -8,7 +8,7 @@ use Trinity\Bundle\SearchBundle\NQL\NQLQuery;
 /**
  * Class UserGrid.
  */
-class UserGrid extends BaseGrid
+class UserGrid extends BaseVeniceGrid
 {
     /**
      * Set up grid (template).

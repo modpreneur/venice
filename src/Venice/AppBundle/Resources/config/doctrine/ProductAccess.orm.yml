@@ -29,7 +29,7 @@ Venice\AppBundle\Entity\ProductAccess:
             precision: 0
             column: necktie_id
         fromDate:
-            type: datetimetz
+            type: datetime
             scale: 0
             length: null
             unique: false
@@ -37,7 +37,7 @@ Venice\AppBundle\Entity\ProductAccess:
             precision: 0
             column: from_date
         toDate:
-            type: datetimetz
+            type: datetime
             scale: 0
             length: null
             unique: false
@@ -63,15 +63,10 @@ Venice\AppBundle\Entity\ProductAccess:
     manyToOne:
         user:
             targetEntity: Venice\AppBundle\Entity\User
-            cascade:
-                - persist
-            fetch: LAZY
-            mappedBy: null
             inversedBy: productAccesses
-            joinColumns:
-                user_id:
-                    referencedColumnName: id
-            orphanRemoval: false
+            joinColumn:
+                name: user_id
+                referencedColumnName: id
         product:
             targetEntity: Venice\AppBundle\Entity\Product\Product
             cascade: {  }

@@ -15,17 +15,43 @@ Venice\AppBundle\Entity\Product\StandardProduct:
             type: boolean
             unique: false
             column: purchasable
+        necktieDescription:
+            type: string
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
+
+    oneToMany:
+        billingPlans:
+            targetEntity: Venice\AppBundle\Entity\BillingPlan
+            cascade: {}
+            fetch: LAZY
+            mappedBy: product
+            orphanRemoval: false
+
     oneToOne:
-        defaultBillingPlan:
+        necktieDefaultBillingPlan:
             targetEntity: Venice\AppBundle\Entity\BillingPlan
             cascade:
                 - remove
                 - persist
             fetch: LAZY
-            mappedBy: null
-            inversedBy: null
             joinColumns:
-                default_billing_plan_id:
+                necktie_default_billing_plan_id:
+                    referencedColumnName: id
+                    onDelete: 'SET NULL'
+            orphanRemoval: false
+
+        veniceDefaultBillingPlan:
+            targetEntity: Venice\AppBundle\Entity\BillingPlan
+            cascade:
+                - remove
+                - persist
+            fetch: LAZY
+            joinColumns:
+                venice_default_billing_plan_id:
                     referencedColumnName: id
                     onDelete: 'SET NULL'
             orphanRemoval: false

@@ -1,7 +1,7 @@
 {% extends('VeniceAdminBundle::Product/base.html.twig') %}
 
 {% block pageTitle %}
-    {{ product.type|capitalize }} product {{ product.name }}
+    {{ product.type|capitalize }} Product {{ product.name }}
 {% endblock %}
 
 {% block pageAction %}
@@ -12,7 +12,7 @@
 
 {% block pageBody -%}
 
-    <div class="tabs-wrapper margin-top-20">
+    <div class="tabs-wrapper">
         <input type="radio" name="tab" id="tab1" class="tab-head" checked />
         <label for="tab1">Show</label>
 

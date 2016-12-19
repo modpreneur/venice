@@ -1,27 +1,22 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Jakub Fajkus
- * Date: 28.04.16
- * Time: 12:43.
- */
+
 namespace Venice\AppBundle\Form\Notification;
 
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Trinity\NotificationBundle\DataTransformer\NotificationTransformer;
 use Trinity\NotificationBundle\Interfaces\NotificationTypeInterface;
-use Venice\AppBundle\Entity\BillingPlan;
+use Venice\AppBundle\Entity\PaySystem;
 use Venice\AppBundle\Entity\PaySystemVendor;
-use Venice\AppBundle\Entity\Product\StandardProduct;
 use Venice\AppBundle\Form\BaseType;
 
 /**
- * Class BillingPlanType.
+ * Class PaySystemType
  */
-class BillingPlanType extends BaseType implements NotificationTypeInterface
+class PaySystemType extends BaseType implements NotificationTypeInterface
 {
     /**
      * {@inheritdoc}
@@ -34,29 +29,12 @@ class BillingPlanType extends BaseType implements NotificationTypeInterface
 
         $builder
             ->add(
-                'initialPrice',
-                IntegerType::class
+                'name',
+                TextType::class
             )
             ->add(
-                'rebillPrice',
-                IntegerType::class
-            )
-            ->add(
-                'frequency',
-                IntegerType::class
-            )
-            ->add(
-                'rebillTimes',
-                IntegerType::class
-            )
-            ->add(
-                'product',
-                TextType::class,
-                [
-                ]
-            )->add(
-                'paySystemVendor',
-                TextType::class,
+                'defaultVendor',
+                HiddenType::class,
                 [
                 ]
             )
@@ -66,20 +44,11 @@ class BillingPlanType extends BaseType implements NotificationTypeInterface
                 ['property_path' => 'necktieId']
             );
 
-        $builder->get('product')
+        $builder->get('defaultVendor')
             ->addModelTransformer(
                 new NotificationTransformer(
                     $this->entityManager,
-                    $options['standardProductClass'],
-                    'necktieId'
-                )
-            );
-
-        $builder->get('paySystemVendor')
-            ->addModelTransformer(
-                new NotificationTransformer(
-                    $this->entityManager,
-                    $options['paySystemVendorClass'],
+                    PaySystemVendor::class,
                     'necktieId'
                 )
             );
@@ -96,10 +65,8 @@ class BillingPlanType extends BaseType implements NotificationTypeInterface
 
         $resolver->setDefaults(
             [
-                'data_class' => BillingPlan::class,
+                'data_class' => PaySystem::class,
                 'csrf_protection' => false,
-                'standardProductClass' => StandardProduct::class,
-                'paySystemVendorClass' => PaySystemVendor::class,
             ]
         );
     }

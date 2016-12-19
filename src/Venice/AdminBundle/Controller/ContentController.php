@@ -54,7 +54,7 @@ class ContentController extends BaseAdminController
         );
 
         // Defining columns
-        $gridConfBuilder->addColumn('id', 'Id');
+        $gridConfBuilder->addColumn('id', '#');
         $gridConfBuilder->addColumn('name', 'Name');
         $gridConfBuilder->addColumn('type', 'Type');
         $gridConfBuilder->addColumn('contentProducts', 'Products');
@@ -586,7 +586,7 @@ class ContentController extends BaseAdminController
         );
 
         // Defining columns
-        $gridConfBuilder->addColumn('id', 'Id');
+        $gridConfBuilder->addColumn('id', '#');
         $gridConfBuilder->addColumn('product:name', 'Product');
         $gridConfBuilder->addColumn('orderNumber', 'Order number');
         $gridConfBuilder->addColumn('delay', 'Delay[hours]');

@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Venice\AppBundle\Entity\BillingPlan;
-use Venice\AppBundle\Entity\Product\StandardProduct;
+//use Venice\AppBundle\Entity\Product\StandardProduct;
 
 /**
  * Class BillingPlanController.
@@ -26,7 +26,7 @@ class BillingPlanController extends BaseAdminController
      * @param int $id
      * @param Request $request
      *
-     * @return array
+     * @return Response
      *
      * @throws \LogicException
      * @throws \Trinity\Bundle\GridBundle\Exception\DuplicateColumnException
@@ -42,8 +42,9 @@ class BillingPlanController extends BaseAdminController
             $count
         );
         // Defining columns
-        $gridConfBuilder->addColumn('id', 'Id');
-        $gridConfBuilder->addColumn('default', 'Default');
+        $gridConfBuilder->addColumn('id', '#');
+        $gridConfBuilder->addColumn('necktieDefault', 'Default on Necktie');
+        $gridConfBuilder->addColumn('veniceDefault', 'Default on Venice');
         $gridConfBuilder->addColumn('type', 'Type');
         $gridConfBuilder->addColumn('initialPrice', 'Price');
         $gridConfBuilder->addColumn('frequency', 'Frequency');
@@ -126,9 +127,10 @@ class BillingPlanController extends BaseAdminController
      */
     public function setDefaultBillingPlanAction(Request $request, BillingPlan $billingPlan)
     {
+        $unset = $request->request->has('unset');
         $entityManager = $this->getDoctrine()->getManager();
 
-        $billingPlan->getProduct()->setDefaultBillingPlan($billingPlan);
+        $billingPlan->getProduct()->setVeniceDefaultBillingPlan($unset ? null : $billingPlan);
 
         try {
             $entityManager->persist($billingPlan);

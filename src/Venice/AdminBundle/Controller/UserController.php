@@ -47,7 +47,7 @@ class UserController extends BaseAdminController
             $count
         );
 
-        $gridConfBuilder->addColumn('id', 'Id');
+        $gridConfBuilder->addColumn('id', '#');
         $gridConfBuilder->addColumn('username', 'User Name');
         $gridConfBuilder->addColumn('email', 'Email');
         $gridConfBuilder->addColumn('fullName', 'Full Name');

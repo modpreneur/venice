@@ -7,7 +7,7 @@ use Trinity\Bundle\GridBundle\Grid\BaseGrid;
 /**
  * Class productAccessGrid.
  */
-class ProductAccessGrid extends BaseGrid
+class ProductAccessGrid extends BaseVeniceGrid
 {
     /**
      * Set up grid (template).

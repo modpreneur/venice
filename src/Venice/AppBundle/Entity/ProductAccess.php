@@ -2,6 +2,7 @@
 
 namespace Venice\AppBundle\Entity;
 
+use JMS\Serializer\Annotation\SerializedName;
 use Trinity\Component\Core\Interfaces\ClientInterface;
 use Trinity\Component\Core\Interfaces\EntityInterface;
 use Trinity\NotificationBundle\Entity\NotificationEntityInterface;
@@ -27,6 +28,7 @@ class ProductAccess implements NotificationEntityInterface, EntityInterface
 
     /**
      * @var int
+     * @SerializedName("id")
      */
     protected $necktieId;
 
@@ -50,6 +52,9 @@ class ProductAccess implements NotificationEntityInterface, EntityInterface
      */
     private $toDate;
 
+    /**
+     * ProductAccess constructor.
+     */
     public function __construct()
     {
         $this->updateTimestamps();

@@ -2,7 +2,7 @@
     <table class="record_properties grid">
         <tbody>
             <tr>
-                <th>Id</th>
+                <th>#</th>
                 <td>{{ billingPlan.id }}</td>
             </tr>
             <tr>
@@ -12,6 +12,14 @@
             <tr>
                 <th>Price</th>
                 <td>{{ billingPlan.price }}</td>
+            </tr>
+            <tr>
+                <th>Pay system</th>
+                <td>{{ billingPlan.paySystemVendor.paySystem.name }}</td>
+            </tr>
+            <tr>
+                <th>Pay system vendor</th>
+                <td>{{ billingPlan.paySystemVendor.name }}</td>
             </tr>
             <tr>
                 <th>InitialPrice</th>

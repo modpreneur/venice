@@ -14,10 +14,9 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 abstract class AbstractPlayableContent extends Content
 {
-    /**2
+    /**
      * @var int Duration(length) in seconds.
      *
-     * @Assert\Range(min=1)
      */
     protected $duration;
 

@@ -64,7 +64,7 @@ class ProductAccessController extends BaseAdminController
         );
 
         // Defining columns
-        $gridConfBuilder->addColumn('id', 'Id');
+        $gridConfBuilder->addColumn('id', '#');
         $gridConfBuilder->addColumn('product', 'Product');
         $gridConfBuilder->addColumn('fromDate', 'From Date');
         $gridConfBuilder->addColumn('toDate', 'To Date');

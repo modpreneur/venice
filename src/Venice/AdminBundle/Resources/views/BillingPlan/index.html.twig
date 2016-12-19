@@ -1,101 +1,103 @@
 {% extends('VeniceAppBundle::base.html.twig') %}
 
 {% block body %}
-    {% if count > 0 %}
-        {#<table class="grid">#}
-            {#<thead>#}
-            {#<tr>#}
-                {#<th>Id</th>#}
-                {#<th>Necktie id</th>#}
-                {#<th>Default</th>#}
-                {#<th>Price</th>#}
-            {#</tr>#}
-            {#</thead>#}
-            {#<tbody>#}
-            {#{% for billingPlan in billingPlans %}#}
+    <div class="box">
+        {% if count > 0 %}
+            {#<table class="grid">#}
+                {#<thead>#}
                 {#<tr>#}
-                    {#<td>#}
-                        {#<div class="action-cell">#}
-                            {#<span class="content">#}
-                                {#<a href="{{ path('admin_billing_plan_tabs', {'id': billingPlan.id}) }}">{{ billingPlan.id }}</a>#}
-                            {#</span>#}
-                            {#<span class="actions">#}
-                                {#<a href="{{ path('admin_billing_plan_tabs', {'id': billingPlan.id}) }}">Go to</a>#}
-                            {#</span>#}
-                        {#</div>#}
-
-                    {#</td>#}
-                    {#Necktie id#}
-                    {#<td>#}
-                        {#{% include "VeniceAdminBundle:Common:viewInNecktieAction.html.twig"#}
-                            {#with {"url":necktieUrl|replace({":productId":billingPlan.product.necktieId, ":billingPlanId":billingPlan.necktieId})} %}#}
-                        {#{{ billingPlan.necktieId }}#}
-                    {#</td>#}
-
-
-                    {#Default#}
-                    {#<td>#}
-                        {#{% if billingPlan == product.defaultBillingPlan %}#}
-
-                            {#<div class="is-default" id="is-default-id-{{ billingPlan.id }}" style="display: block" >#}
-                                {#<i class="trinity trinity-yes"></i>#}
-                            {#</div>#}
-
-                            {#<div onclick="window.setAsDefault('set-default-id-{{ billingPlan.id }}');" class="set-default" id="set-default-id-{{ billingPlan.id }}" data-href="{{ path('admin_billing_plan_product_set_default', { 'id': billingPlan.id }) }}" style="display: none; cursor: pointer;"  title="set as default">#}
-                                {#<i class="trinity trinity-pin"></i>#}
-                            {#</div>#}
-
-                        {#{% else %}#}
-
-                            {#<div onclick="window.setAsDefault('set-default-id-{{ billingPlan.id }}');" class="set-default" id="set-default-id-{{ billingPlan.id }}" data-href="{{ path('admin_billing_plan_product_set_default', { 'id': billingPlan.id }) }}" style="display: block; cursor: pointer;" title="set as default">#}
-                                {#<i class="trinity trinity-pin"></i>#}
-                            {#</div>#}
-
-                            {#<div class="is-default" id="is-default-id-{{ billingPlan.id }}" style="display: none">#}
-                                {#<i class="trinity trinity-yes"></i>#}
-                            {#</div>#}
-
-                        {#{% endif %}#}
-
-                        {#<div class="loading-icon-for-default" id="loading-icon-for-default-id-{{ billingPlan.id }}" style="display: none">#}
-                            {#<i class="tiecons tiecons-loading"></i>#}
-                        {#</div>#}
-
-                    {#</td>#}
-
-                    {#price#}
-                    {#<td>#}
-                        {#{{ billingPlan.price }}#}
-                    {#</td>#}
+                    {#<th>#</th>#}
+                    {#<th>Necktie id</th>#}
+                    {#<th>Default</th>#}
+                    {#<th>Price</th>#}
                 {#</tr>#}
-            {#{% endfor %}#}
-            {#</tbody>#}
-        {#</table>#}
-        <div id="billing-plan-grid" data-config="{{ gridConfiguration }}">
-        </div>
-    {% else %}
-        <div class="row">
-            <div class="span-none-padding-xlarge-24 margin-auto">
-                <div class="span-none-xlarge-10 margin-top-20">
-                    <div class="info-empty-form">
-                        <div class="row"><i class="trinity-info"></i></div>
-                        <div class="row"><h2 class="warning">NO DATA</h2></div>
+                {#</thead>#}
+                {#<tbody>#}
+                {#{% for billingPlan in billingPlans %}#}
+                    {#<tr>#}
+                        {#<td>#}
+                            {#<div class="action-cell">#}
+                                {#<span class="content">#}
+                                    {#<a href="{{ path('admin_billing_plan_tabs', {'id': billingPlan.id}) }}">{{ billingPlan.id }}</a>#}
+                                {#</span>#}
+                                {#<span class="actions">#}
+                                    {#<a href="{{ path('admin_billing_plan_tabs', {'id': billingPlan.id}) }}">Go to</a>#}
+                                {#</span>#}
+                            {#</div>#}
+
+                        {#</td>#}
+                        {#Necktie id#}
+                        {#<td>#}
+                            {#{% include "VeniceAdminBundle:Common:viewInNecktieAction.html.twig"#}
+                                {#with {"url":necktieUrl|replace({":productId":billingPlan.product.necktieId, ":billingPlanId":billingPlan.necktieId})} %}#}
+                            {#{{ billingPlan.necktieId }}#}
+                        {#</td>#}
+
+
+                        {#Default#}
+                        {#<td>#}
+                            {#{% if billingPlan == product.defaultBillingPlan %}#}
+
+                                {#<div class="is-default" id="is-default-id-{{ billingPlan.id }}" style="display: block" >#}
+                                    {#<i class="trinity trinity-yes"></i>#}
+                                {#</div>#}
+
+                                {#<div onclick="window.setAsDefault('set-default-id-{{ billingPlan.id }}');" class="set-default" id="set-default-id-{{ billingPlan.id }}" data-href="{{ path('admin_billing_plan_product_set_default', { 'id': billingPlan.id }) }}" style="display: none; cursor: pointer;"  title="set as default">#}
+                                    {#<i class="trinity trinity-pin"></i>#}
+                                {#</div>#}
+
+                            {#{% else %}#}
+
+                                {#<div onclick="window.setAsDefault('set-default-id-{{ billingPlan.id }}');" class="set-default" id="set-default-id-{{ billingPlan.id }}" data-href="{{ path('admin_billing_plan_product_set_default', { 'id': billingPlan.id }) }}" style="display: block; cursor: pointer;" title="set as default">#}
+                                    {#<i class="trinity trinity-pin"></i>#}
+                                {#</div>#}
+
+                                {#<div class="is-default" id="is-default-id-{{ billingPlan.id }}" style="display: none">#}
+                                    {#<i class="trinity trinity-yes"></i>#}
+                                {#</div>#}
+
+                            {#{% endif %}#}
+
+                            {#<div class="loading-icon-for-default" id="loading-icon-for-default-id-{{ billingPlan.id }}" style="display: none">#}
+                                {#<i class="tiecons tiecons-loading"></i>#}
+                            {#</div>#}
+
+                        {#</td>#}
+
+                        {#price#}
+                        {#<td>#}
+                            {#{{ billingPlan.price }}#}
+                        {#</td>#}
+                    {#</tr>#}
+                {#{% endfor %}#}
+                {#</tbody>#}
+            {#</table>#}
+            <div id="billing-plan-grid" data-config="{{ gridConfiguration }}">
+            </div>
+        {% else %}
+            <div class="row">
+                <div class="span-none-padding-xlarge-24 margin-auto">
+                    <div class="span-none-xlarge-10 margin-top-20">
+                        <div class="info-empty-form">
+                            <div class="row"><i class="trinity-info"></i></div>
+                            <div class="row"><h2 class="warning">NO DATA</h2></div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    {% endif %}
+        {% endif %}
 
 
-    {% if(is_granted('ROLE_ADMIN_PRODUCT_EDIT') and is_granted('ROLE_ADMIN_BILLING_PLAN_EDIT') and appLogic.allowAddingNewBillingPlans ) %}
-        <div class="span-none-padding-xlarge-24 margin-auto">
-            <div class="row">
-                <div class="info-empty-form">
-                    <a class="button button-addNew" id="newIcon" href="{{ path('admin_billing_plan_new', { 'id':product.id }) }}">
-                        Add new billing plan
-                    </a>
+        {% if(is_granted('ROLE_ADMIN_PRODUCT_EDIT') and is_granted('ROLE_ADMIN_BILLING_PLAN_EDIT') and appLogic.allowAddingNewBillingPlans ) %}
+            <div class="span-none-padding-xlarge-24 margin-auto">
+                <div class="row">
+                    <div class="info-empty-form">
+                        <a class="button button-addNew" id="newIcon" href="{{ path('admin_billing_plan_new', { 'id':product.id }) }}">
+                            Add new billing plan
+                        </a>
+                    </div>
                 </div>
             </div>
-        </div>
-    {% endif %}
+        {% endif %}
+    </div>
 {% endblock %}

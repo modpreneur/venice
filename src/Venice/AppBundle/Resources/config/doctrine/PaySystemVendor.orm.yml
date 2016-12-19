@@ -1,0 +1,59 @@
+Venice\AppBundle\Entity\PaySystemVendor:
+    type: entity
+    table: pay_system_vendor
+    inheritanceType: SINGLE_TABLE
+    discriminatorColumn:
+        name: discriminator
+        type: string
+    discriminatorMap:
+        venice_pay_system: Venice\AppBundle\Entity\PaySystemVendor
+    id:
+        id:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        necktieId:
+            type: integer
+            scale: 0
+            length: null
+            unique: true
+            nullable: true
+            precision: 0
+            column: necktie_id
+
+        defaultForVenice:
+            type: boolean
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+
+        name:
+            type: string
+            scale: 0
+            length: null
+            unique: true
+            nullable: false
+            precision: 0
+    lifecycleCallbacks: {  }
+
+    manyToOne:
+        paySystem:
+            targetEntity: Venice\AppBundle\Entity\PaySystem
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: vendors
+            joinColumns:
+                default_vendor_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+            cascade:

@@ -7,6 +7,7 @@
  */
 namespace Venice\AppBundle\Entity;
 
+use JMS\Serializer\Annotation\SerializedName;
 use Trinity\Component\EntityCore\Entity\BaseBillingPlan;
 use Trinity\Component\Core\Interfaces\ClientInterface;
 use Trinity\NotificationBundle\Entity\NotificationEntityInterface;
@@ -20,6 +21,7 @@ class BillingPlan extends BaseBillingPlan implements NotificationEntityInterface
 {
     /**
      * @var int
+     * @SerializedName("id")
      */
     protected $necktieId;
 
@@ -27,6 +29,11 @@ class BillingPlan extends BaseBillingPlan implements NotificationEntityInterface
      * @var StandardProduct
      */
     protected $product;
+
+    /**
+     * @var PaySystemVendor paySystemVendor
+     */
+    protected $paySystemVendor;
 
     /**
      * String which can be used for displaying the price of this billing plan.
@@ -107,6 +114,26 @@ class BillingPlan extends BaseBillingPlan implements NotificationEntityInterface
         $this->price = $price;
 
         return $this;
+    }
+
+    /**
+     * @N\AssociationGetter()
+     *
+     * @return PaySystemVendor
+     */
+    public function getPaySystemVendor()
+    {
+        return $this->paySystemVendor;
+    }
+
+    /**
+     * @N\AssociationSetter(targetEntity="Venice\AppBundle\Entity\PaySystemVendor")
+     *
+     * @param PaySystemVendor $paySystemVendor
+     */
+    public function setPaySystemVendor($paySystemVendor)
+    {
+        $this->paySystemVendor = $paySystemVendor;
     }
 
     /** @return ClientInterface[] */

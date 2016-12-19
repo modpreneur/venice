@@ -12,7 +12,7 @@ use Trinity\Bundle\GridBundle\Grid\BaseGrid;
 /**
  * Class ContentProductGrid.
  */
-class ContentProductGrid extends BaseGrid
+class ContentProductGrid extends BaseVeniceGrid
 {
     /**
      * Set up grid (template).

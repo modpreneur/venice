@@ -74,12 +74,15 @@ class EntityListener
         if ($violations->count() !== 0) {
             /** @var ConstraintViolationInterface $violation */
             foreach ($violations as $violation) {
+                $invalidValue = $violation->getInvalidValue();
+                if ($invalidValue instanceof \DateTime) {
+                    $invalidValue = $invalidValue->format(\DateTime::W3C);
+                }
                 $message .= 'Validation failed for entity: '.get_class($entity).
                     ' at property: '.$violation->getPropertyPath().': '.
-                    $violation->getMessage().'The value is:'.$violation->getInvalidValue()
+                    $violation->getMessage().'The value is:'.$invalidValue
                 ;
             }
-
             throw new ValidatorException($message);
         }
     }

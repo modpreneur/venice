@@ -6,7 +6,6 @@
 
 {% block stylesheets  %}
     {% include("VeniceAdminBundle:Common:froalaEditorStylesheets.html.twig") %}
-
 {% endblock %}
 
 {% block pageAction %}
@@ -15,16 +14,28 @@
 {% endblock %}
 
 {% block pageBody %}
-
-    <div class="select-style form-control choice edit-form" >
-        <select name="entity_type_select" id="entity_type_select">
-            <option value="group">Group</option>
-            <option value="html">Html</option>
-            <option value="iframe">IFrame</option>
-            <option value="mp3">MP3</option>
-            <option value="pdf">PDF</option>
-            <option value="video" selected>Video</option>
-        </select>
+    <div class="edit-form box box-new-form">
+        <div class="row row-extra">
+            {% embed "TrinityAdminBundle:Form:form_layout.html.twig" %}
+                {% block form_row_label_content %}
+                    <label>Type</label>
+                {% endblock form_row_label_content %}
+                {% block form_row_input_content %}
+                    <form class="edit-form">
+                        <div class="select-style form-control choice edit-form" >
+                            <select name="entity_type_select" id="entity_type_select">
+                                <option value="group">Group</option>
+                                <option value="html">Html</option>
+                                <option value="iframe">IFrame</option>
+                                <option value="mp3">MP3</option>
+                                <option value="pdf">PDF</option>
+                                <option value="video" selected>Video</option>
+                            </select>
+                        </div>
+                    </form>
+                {% endblock form_row_input_content %}
+            {% endembed %}
+        </div>
     </div>
 
     <div id="javascript-inserted-form" data-slugify="{{ path('api_slugify')}}" data-changer = {{ path('admin_content_new_form',{'contentType':'contentType'}) }}>

@@ -34,7 +34,7 @@
 {% block cell_level %}
 
     <ul class="tags">
-        <li class="{% if value >=500 %}Danger{% elseif value ==400 %}Warning{% endif %}">
+        <li class="{% if value >=500 %}danger{% elseif value ==400 %}warning{% endif %}">
             {% if value == 400 %}
                 <div title="Runtime errors that do not require immediate action but should typically be logged and monitored.">ERROR</div>
             {% elseif value == 500 %}
