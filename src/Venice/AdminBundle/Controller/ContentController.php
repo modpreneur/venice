@@ -297,6 +297,7 @@ class ContentController extends BaseAdminController
      *
      * @return Response
      *
+     * @throws \InvalidArgumentException
      * @throws \Symfony\Component\Form\Exception\UnexpectedTypeException
      * @throws \Symfony\Component\Routing\Exception\RouteNotFoundException
      * @throws \Symfony\Component\Routing\Exception\MissingMandatoryParametersException
@@ -308,10 +309,11 @@ class ContentController extends BaseAdminController
      */
     public function editAction(Request $request, Content $content)
     {
-        $formOptions = [
-            'groupContent' => ($this->getEntityOverrideHandler()->isInstanceOf($content, GroupContent::class)) ?
-                $content : null
-        ];
+        $formOptions = [];
+        if ($this->getEntityOverrideHandler()->isInstanceOf($content, GroupContent::class)) {
+            $formOptions[] = ['groupContent' => $content];
+        }
+
 
         $form = $this->getFormCreator()
             ->createEditForm(
