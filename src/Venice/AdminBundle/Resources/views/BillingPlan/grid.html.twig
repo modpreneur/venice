@@ -24,23 +24,11 @@
 {% endblock %}
 
 {% block cell_veniceDefault %}
+    {#it is done in react BillingPlanGrid.jsx #}
     {% if row.getProduct().getVeniceDefaultBillingPlan() and row.getId() == row.getProduct().getVeniceDefaultBillingPlan().getId %}
-
-
-        <div class="is-default"
-             id="venice-defaul-setter-{{ row.getId() }}"
-             data-state="is"
-        >
-            <i class="trinity trinity-yes"></i>
-        </div>
-
+        <input type="hidden" data-state="id"/>
     {% else %}
-        <div class="is-default"
-             data-state="set"
-        >
-            <i class="trinity trinity-pin"></i>
-        </div>
-
+        <input type="hidden" data-state="set"/>
     {% endif %}
 {% endblock %}
 
