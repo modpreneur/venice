@@ -26,7 +26,7 @@
 {% block cell_veniceDefault %}
     {#it is done in react BillingPlanGrid.jsx #}
     {% if row.getProduct().getVeniceDefaultBillingPlan() and row.getId() == row.getProduct().getVeniceDefaultBillingPlan().getId %}
-        <input type="hidden" data-state="id" data-href="{{ path('admin_billing_plan_product_set_default', { 'id': row.getId()}) }}" />  {# parameter unset is added via JS #}
+        <input type="hidden" data-state="is" data-href="{{ path('admin_billing_plan_product_set_default', { 'id': row.getId()}) }}" />  {# parameter unset is added via JS #}
      {% else %}
         <input type="hidden" data-state="set" data-href="{{ path('admin_billing_plan_product_set_default', { 'id': row.getId()}) }}" />  {# parameter unset is added via JS #}
     {% endif %}
