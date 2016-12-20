@@ -221,7 +221,7 @@ monolog:
     handlers:
         error:
             type: service
-            id: trinity.logger_database
+            id: trinity.logger.database_handler
             level: ERROR
 
 snc_redis:

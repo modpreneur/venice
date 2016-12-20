@@ -181,7 +181,7 @@ services:
     venice_app.logger_user_provider:
         class: Venice\AppBundle\Services\LoggerUserProvider
         arguments:
-            - "@doctrine.orm.entity_manager"
+            - "@doctrine"
             - '@venice.app.entity_override_handler'
 
     venice.app.logger_ttl_provider:

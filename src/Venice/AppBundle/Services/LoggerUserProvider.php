@@ -2,6 +2,7 @@
 
 namespace Venice\AppBundle\Services;
 
+use Doctrine\Bundle\DoctrineBundle\Registry;
 use Doctrine\ORM\EntityManagerInterface;
 use Trinity\Bundle\LoggerBundle\Interfaces\UserProviderInterface;
 use Venice\AppBundle\Entity\User;
@@ -12,7 +13,7 @@ use Venice\AppBundle\Entity\User;
 class LoggerUserProvider implements UserProviderInterface
 {
     /**
-     * @var EntityManagerInterface
+     * @var Registry
      */
     protected $entityManager;
 
@@ -26,9 +27,9 @@ class LoggerUserProvider implements UserProviderInterface
      * @param EntityManagerInterface $entityManager
      * @param EntityOverrideHandler $overrideHandler
      */
-    public function __construct(EntityManagerInterface $entityManager, EntityOverrideHandler $overrideHandler)
+    public function __construct(Registry $doctrine, EntityOverrideHandler $overrideHandler)
     {
-        $this->entityManager = $entityManager;
+        $this->doctrine = $doctrine;
         $this->overrideHandler = $overrideHandler;
     }
 
@@ -44,6 +45,6 @@ class LoggerUserProvider implements UserProviderInterface
     {
         $class = $this->overrideHandler->getEntityClass(User::class);
 
-        return $this->entityManager->getRepository($class)->find($userId);
+        return $this->doctrine->getManager()->getRepository($class)->find($userId);
     }
 }
