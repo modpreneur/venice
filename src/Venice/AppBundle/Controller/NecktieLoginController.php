@@ -143,10 +143,19 @@ class NecktieLoginController extends Controller
      * @throws \Exception
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \Venice\AppBundle\Exceptions\ExpiredRefreshTokenException
+     * @throws \LogicException
+     * @throws \InvalidArgumentException
      */
     protected function performNecktieCalls(NecktieGateway $necktieGateway, $user)
     {
-        $necktieGateway->updateProductAccesses($user);
+        $givenAccesses = $necktieGateway->updateProductAccesses($user);
+        $entityManager = $this->getDoctrine()->getManager();
+
+        foreach ($givenAccesses as $givenAccess) {
+            $entityManager->persist($givenAccess);
+        }
+
+        $entityManager->flush();
     }
 
     /**
