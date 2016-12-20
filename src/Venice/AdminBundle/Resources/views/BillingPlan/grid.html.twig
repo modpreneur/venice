@@ -30,10 +30,6 @@
         <div class="is-default"
              id="venice-defaul-setter-{{ row.getId() }}"
              data-state="is"
-             onmouseenter="window.veniceDefaultBP('venice-defaul-setter-{{ row.getId() }}');"
-             onclick="window.veniceDefaultBP('venice-defaul-setter-{{ row.getId() }}');"
-             onmouseleave="window.veniceDefaultBP('venice-defaul-setter-{{ row.getId() }}');"
-             data-states="{{ '{"set":{"parentClasses":"set-default","childClasses":"trinity trinity-yes"},"is":{"parentClasses":"is-default","childClasses":"trinity trinity-pin"},"unset":{"parentClasses":"unset-default","childClasses":"trinity trinity-close"},"loading":{"parentClasses":"loading-icon-for-default","childClasses":"tiecons tiecons-loading tiecons-rotate"}}' }}"
         >
             <i class="trinity trinity-yes"></i>
         </div>
@@ -41,7 +37,6 @@
     {% else %}
         <div class="is-default"
              data-state="set"
-             data-states="{{ '{"set":{"parentClasses":"set-default","childClasses":"trinity trinity-yes"},"is":{"parentClasses":"is-default","childClasses":"trinity trinity-pin"},"unset":{"parentClasses":"unset-default","childClasses":"trinity trinity-close"},"loading":{"parentClasses":"loading-icon-for-default","childClasses":"tiecons tiecons-loading tiecons-rotate"}}' }}"
         >
             <i class="trinity trinity-pin"></i>
         </div>
