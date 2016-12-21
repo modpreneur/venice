@@ -26,7 +26,10 @@ class ProductType extends BaseType
             ->add('handle', TextType::class)
             ->add('description', TextareaType::class, ['required' => false, 'label' => 'Venice description'])
             ->add('image', TextType::class)
-            ->add('enabled', CheckboxType::class, ['required' => false])
+            ->add('enabled', CheckboxType::class, [
+                'required' => false,
+                'attr' => ['disable_widget_label' => true]
+            ])
             ->add('orderNumber', IntegerType::class)
         ;
     }
