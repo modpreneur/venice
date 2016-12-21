@@ -8,7 +8,6 @@ parameters:
     necktie_show_product_access_url: "%necktie_url%/admin/user/:userId/product-access/:productAccessId"
     necktie_show_billing_plan_url: "%necktie_url%/admin/product/:productId/billing-plan/:billingPlanId"
     trinity.search.detail_url_provider: "trinity.search.detail_url_provider"
-    logger_ttl: 90 #days
     flash_msg:
         success_update: 'Successfully Updated'
         success_create: 'Successfully Created'
@@ -246,6 +245,7 @@ trinity_settings:
      currency: 'USD'
      items_on_page: 20
      date_format: 'y-m-d'
+     logger_ttl: 90 #days
 
 trinity_admin:
     froala_editor_settings:

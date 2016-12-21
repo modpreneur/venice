@@ -21,57 +21,76 @@ services:
         tags:
             - { name: knp_menu.menu, alias: sidebar }
 
+    venice.admin.grid.base:
+        class: Venice\AdminBundle\Grid\BaseVeniceGrid
+        abstract: true
+        arguments:
+            - "@trinity.grid.grid_configuration_service"
+            - "@trinity.settings"
+            - "@router.default"
+
     venice.admin.grid.standardproduct:
         class: Venice\AdminBundle\Grid\ProductGrid
+        parent: venice.admin.grid.base
         tags:
             - { name: trinity.grid, alias: standardproduct }
 
     venice.admin.grid.freeproduct:
         class: Venice\AdminBundle\Grid\ProductGrid
+        parent: venice.admin.grid.base
         tags:
             - { name: trinity.grid, alias: freeproduct }
 
     venice.admin.grid.product:
         class: Venice\AdminBundle\Grid\ProductGrid
+        parent: venice.admin.grid.base
         tags:
             - { name: trinity.grid, alias: product }
 
     venice.admin.grid.content_product:
         class: Venice\AdminBundle\Grid\ContentProductGrid
+        parent: venice.admin.grid.base
         tags:
             - { name: trinity.grid, alias: contentproduct }
 
     venice.admin.grid.user:
         class: Venice\AdminBundle\Grid\UserGrid
+        parent: venice.admin.grid.base
         tags:
              - { name: trinity.grid, alias: user }
 
     venice.admin.grid.product_access:
         class: Venice\AdminBundle\Grid\ProductAccessGrid
+        parent: venice.admin.grid.base
         tags:
              - { name: trinity.grid, alias: productaccess }
 
     venice.admin.grid.billing_plan:
         class: Venice\AdminBundle\Grid\BillingPlanGrid
+        parent: venice.admin.grid.base
         tags:
              - { name: trinity.grid, alias: billingplan }
 
     venice.admin.grid.content:
         class: Venice\AdminBundle\Grid\ContentGrid
+        parent: venice.admin.grid.base
         tags:
              - { name: trinity.grid, alias: content }
 
     venice.admin.grid.group_content:
         class: Venice\AdminBundle\Grid\ContentGrid
+        parent: venice.admin.grid.base
         tags:
              - { name: trinity.grid, alias: groupcontent }
 
     venice.admin.grid.blog_article:
         class: Venice\AdminBundle\Grid\BlogArticleGrid
+        parent: venice.admin.grid.base
         tags:
              - { name: trinity.grid, alias: blogarticle }
 
     venice.admin.grid.excetpion:
            class: Venice\AdminBundle\Grid\ExceptionGrid
+           parent: venice.admin.grid.base
            tags:
                - { name: trinity.grid, alias: exceptionLog }

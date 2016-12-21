@@ -236,7 +236,7 @@ class NecktieGateway implements NecktieGatewayInterface
      *
      * @throws UnsuccessfulNecktieResponseException
      *
-     * @return \Venice\AppBundle\Entity\ProductAccess[]|void
+     * @return \Venice\AppBundle\Entity\ProductAccess[]
      *
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \RuntimeException
