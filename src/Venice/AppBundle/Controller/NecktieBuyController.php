@@ -40,6 +40,34 @@ class NecktieBuyController extends Controller
      */
     public function redirectToNecktieBuy(Request $request, StandardProduct $product, string $paySystem)
     {
+        try {
+            return $this->createRedirectBuyResponse($request, $product, $paySystem);
+        } catch (\Throwable $error) {
+            $this->logError($product, $paySystem);
+
+            throw $error;
+        }
+    }
+
+    /**
+     * @param StandardProduct $product
+     * @param string $paySystem
+     */
+    protected function logError(StandardProduct $product, string $paySystem)
+    {
+        $this->get('logger')->emergency(
+            "Could no buy a product with necktieId: {$product->getNecktieId()} with pay system {$paySystem}"
+        );
+    }
+
+    /**
+     * @param Request $request
+     * @param StandardProduct $product
+     * @param string $paySystem
+     * @return RedirectResponse
+     */
+    protected function createRedirectBuyResponse(Request $request, StandardProduct $product, string $paySystem)
+    {
         $priceStringGenerator = $this->get('trinity.services.price_string_generator');
 
         if (!$product->isPurchasable()) {
@@ -59,11 +87,13 @@ class NecktieBuyController extends Controller
         $billingPlanId = $request->query->get('billingPlanId');
         $productId = $product->getNecktieId();
 
-        if ($paySystem === 'cb') {
+        if ($paySystem === 'Clickbank') {
             $paySystemUrlPart = 'cb/ocb';
-        } elseif ($paySystem === 'braintree') {
+        } elseif ($paySystem === 'Braintree') {
             $paySystemUrlPart = 'braintree/buy';
         } else {
+            $this->logError($product, $paySystem);
+
             throw new NotFoundHttpException('Unsupported pay system: '.$paySystem);
         }
 
@@ -73,6 +103,8 @@ class NecktieBuyController extends Controller
             );
 
             if (!$billingPlan) {
+                $this->logError($product, $paySystem);
+
                 throw new NotFoundHttpException('No billing plan found');
             }
 
