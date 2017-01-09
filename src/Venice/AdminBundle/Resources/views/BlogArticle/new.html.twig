@@ -62,11 +62,11 @@
                 <div class="row">
                     {% embed "TrinityAdminBundle:Form:form_layout.html.twig" %}
                         {% block form_row_label_content %}
-                            <div style="width: 0;">{{ form_widget(form.content) }}</div>
+                            <div style="display: none;">{{ form_label(form.content) }}</div>
                         {% endblock %}
                         
                         {% block form_row_content %}
-                            {{ form_widget(form.content) }}
+                            <div class="froala-tall">{{ form_widget(form.content) }}</div>
                         {% endblock %}
                     {% endembed %}
                 </div>

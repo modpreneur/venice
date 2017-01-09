@@ -97,8 +97,8 @@ class ProductController extends BaseAdminController
         $gridConfBuilder->addColumn('id', '#');
         $gridConfBuilder->addColumn('title', 'Title');
         $gridConfBuilder->addColumn('handle', 'Handle');
+        $gridConfBuilder->addColumn('products', 'Products');
         $gridConfBuilder->addColumn('details', ' ', ['allowOrder' => false, 'className' => 'cell-center']);
-        $gridConfBuilder->addColumn('products');
 
         $gridConfBuilder->setProperty('filter', 'products:id = '.$product->getId());
 
@@ -445,8 +445,8 @@ class ProductController extends BaseAdminController
         $gridConfBuilder->addColumn('content:name', 'Content');
         $gridConfBuilder->addColumn('orderNumber', 'Order number');
         $gridConfBuilder->addColumn('delay', 'Delay[hours]');
-        $gridConfBuilder->addColumn('details', ' ', ['allowOrder' => false, 'className' => 'cell-center']);
         $gridConfBuilder->addColumn('products', 'Products');
+        $gridConfBuilder->addColumn('details', ' ', ['allowOrder' => false, 'className' => 'cell-center']);
 
         $gridConfBuilder->setProperty('filter', 'product:id = '.$product->getId());
 

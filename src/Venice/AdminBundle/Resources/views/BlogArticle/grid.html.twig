@@ -14,10 +14,6 @@
     {{ value }}
 {% endblock %}
 
-{% block cell_details %}
-    <a href="{{ path('admin_blog_article_tabs',{'id':row.getId()}) }}" class="button-small pull-right margin-right-10">Get details</a>
-{% endblock %}
-
 {% block cell_products %}
 
     {% for product in value %}
@@ -35,4 +31,8 @@
         {#<a href="{{ path('admin_product_tabs',{'id':product.id}) }}" >{{ product.name }}</a>#}
         {#{% if not loop.last %},{% endif %}#}
     {#{% endfor %}#}
+{% endblock %}
+
+{% block cell_details %}
+    <a href="{{ path('admin_blog_article_tabs',{'id':row.getId()}) }}" class="button-small pull-right margin-right-10">Get details</a>
 {% endblock %}
