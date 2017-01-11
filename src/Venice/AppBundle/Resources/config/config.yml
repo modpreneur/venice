@@ -103,8 +103,6 @@ twig:
         admin_manager: "@trinity.admin.service.admin_manager"
         appLogic: "@venice.app.app_logic"
 
-twig_cache:
-    service: trinity.cache
 
 # Assetic Configuration
 assetic:
