@@ -8,6 +8,7 @@
 namespace Venice\FrontBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 use Venice\AppBundle\Entity\Content\GroupContent;
 
 /**
@@ -16,11 +17,11 @@ use Venice\AppBundle\Entity\Content\GroupContent;
 class FrontController extends Controller
 {
     /**
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @param Request $request
      *
-     * @throws \LogicException
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
         $entityClass = $this->get('venice.app.entity_override_handler')->getEntityClass(GroupContent::class);
         $groups = $this->getDoctrine()->getRepository($entityClass)->findAll();
