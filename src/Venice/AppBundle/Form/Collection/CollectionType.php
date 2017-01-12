@@ -78,23 +78,16 @@ class CollectionType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $optionsNormalizer = function ($value) {
-            $value['block_name'] = 'entry';
-
-            return $value;
-        };
-
         $resolver->setDefaults([
             'allow_add' => false,
             'allow_delete' => false,
             'prototype' => true,
             'prototype_name' => null,
             'type' => 'text',
+            'block_name' => 'entry',
             'options' => [],
             'dataOptions' => [],
             'delete_empty' => false,
         ]);
-
-        $resolver->setNormalizer('options', $optionsNormalizer);
     }
 }

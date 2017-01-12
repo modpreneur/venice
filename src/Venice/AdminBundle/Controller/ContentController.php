@@ -320,7 +320,6 @@ class ContentController extends BaseAdminController
                 $content,
                 $this->getEntityFormMatcher()->getFormClassForEntity($content),
                 'admin_content',
-                ['groupContent' => $content],
                 $formOptions
             );
 
