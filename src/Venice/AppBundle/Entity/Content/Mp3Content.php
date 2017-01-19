@@ -7,10 +7,12 @@
  */
 namespace Venice\AppBundle\Entity\Content;
 
+use Venice\AppBundle\Entity\Interfaces\Mp3ContentInterface;
+
 /**
  * Class Mp3Content.
  */
-class Mp3Content extends AbstractPlayableContent
+class Mp3Content extends AbstractPlayableContent implements Mp3ContentInterface
 {
     /**
      * @var string Url address to the file.
@@ -18,23 +20,7 @@ class Mp3Content extends AbstractPlayableContent
     protected $link;
 
     /**
-     * {@inheritdoc}
-     */
-    public function getLink()
-    {
-        return $this->link;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setLink($link)
-    {
-        $this->link = $link;
-    }
-
-    /**
-     * {@inheritdoc}
+     * @return int Duration(length) in seconds.
      */
     public function getDuration()
     {
@@ -42,7 +28,9 @@ class Mp3Content extends AbstractPlayableContent
     }
 
     /**
-     * {@inheritdoc}
+     * @param int $seconds Duration in seconds.
+     *
+     * @return $this
      */
     public function setDuration($seconds)
     {
@@ -52,7 +40,9 @@ class Mp3Content extends AbstractPlayableContent
     }
 
     /**
-     * {@inheritdoc}
+     * Return Content's content no matter what concrete implementation is.
+     *
+     * @return string
      */
     public function getContent()
     {
@@ -60,10 +50,30 @@ class Mp3Content extends AbstractPlayableContent
     }
 
     /**
-     * {@inheritdoc}
+     * Get the content type string.
+     *
+     * @return string
      */
     public function getType()
     {
         return 'mp3';
+    }
+
+    /**
+     * @return string
+     */
+    public function getLink()
+    {
+        return $this->link;
+    }
+
+    /**
+     * @param string $link
+     *
+     * @return void
+     */
+    public function setLink(string $link)
+    {
+        $this->link = $link;
     }
 }

@@ -8,8 +8,9 @@
 namespace Venice\AppBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Venice\AppBundle\Entity\Interfaces\InvoiceInterface;
 
-class Invoice
+class Invoice implements InvoiceInterface
 {
     protected $id;
 
@@ -37,7 +38,7 @@ class Invoice
     /**
      * @param int $id
      *
-     * @return Invoice
+     * @return InvoiceInterface
      */
     public function setId($id)
     {
@@ -57,7 +58,7 @@ class Invoice
     /**
      * @param float $totalPrice
      *
-     * @return Invoice
+     * @return InvoiceInterface
      */
     public function setTotalPrice($totalPrice)
     {
@@ -77,7 +78,7 @@ class Invoice
     /**
      * @param \DateTime $transactionTime
      *
-     * @return Invoice
+     * @return InvoiceInterface
      */
     public function setTransactionTime(\DateTime $transactionTime)
     {
@@ -97,7 +98,7 @@ class Invoice
     /**
      * @param string $transactionType
      *
-     * @return Invoice
+     * @return InvoiceInterface
      */
     public function setTransactionType($transactionType)
     {

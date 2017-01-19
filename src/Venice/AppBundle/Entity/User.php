@@ -15,8 +15,11 @@ use Trinity\Component\Core\Interfaces\ClientInterface;
 use Trinity\Component\EntityCore\Entity\BaseUser;
 use Trinity\NotificationBundle\Annotations as N;
 use Trinity\NotificationBundle\Entity\NotificationEntityInterface;
+use Venice\AppBundle\Entity\Interfaces\OAuthTokenInterface;
+use Venice\AppBundle\Entity\Interfaces\ProductAccessInterface;
+use Venice\AppBundle\Entity\Interfaces\ProductInterface;
+use Venice\AppBundle\Entity\Interfaces\UserInterface;
 use Venice\AppBundle\Entity\Product\FreeProduct;
-use Venice\AppBundle\Entity\Product\Product;
 use Venice\AppBundle\Traits\Timestampable;
 
 /**
@@ -26,7 +29,7 @@ use Venice\AppBundle\Traits\Timestampable;
  * Users cannot be created on client so there is no need to use POST
  * @N\Methods(types={"put", "delete"})
  */
-class User extends BaseUser implements NotificationEntityInterface
+class User extends BaseUser implements NotificationEntityInterface, UserInterface
 {
     use Timestampable;
 
@@ -102,7 +105,7 @@ class User extends BaseUser implements NotificationEntityInterface
     /**
      * @param string $preferredUnits
      *
-     * @return User
+     * @return UserInterface
      *
      * @throws \InvalidArgumentException
      */
@@ -132,11 +135,11 @@ class User extends BaseUser implements NotificationEntityInterface
     }
 
     /**
-     * @param ProductAccess $productAccess
+     * @param ProductAccessInterface $productAccess
      *
      * @return $this
      */
-    public function addProductAccess(ProductAccess $productAccess)
+    public function addProductAccess(ProductAccessInterface $productAccess)
     {
         if (!$this->productAccesses->contains($productAccess)) {
             $this->productAccesses->add($productAccess);
@@ -146,11 +149,11 @@ class User extends BaseUser implements NotificationEntityInterface
     }
 
     /**
-     * @param ProductAccess $productAccess
+     * @param ProductAccessInterface $productAccess
      *
      * @return $this
      */
-    public function removeProductAccess(ProductAccess $productAccess)
+    public function removeProductAccess(ProductAccessInterface $productAccess)
     {
         $this->productAccesses->remove($productAccess);
 
@@ -168,7 +171,7 @@ class User extends BaseUser implements NotificationEntityInterface
     /**
      * @param DateTime $birthDate
      *
-     * @return User
+     * @return UserInterface
      */
     public function setBirthDate(DateTime $birthDate)
     {
@@ -180,7 +183,7 @@ class User extends BaseUser implements NotificationEntityInterface
     /**
      * @param int $necktieId
      *
-     * @return User
+     * @return UserInterface
      */
     public function setNecktieId($necktieId)
     {
@@ -230,7 +233,7 @@ class User extends BaseUser implements NotificationEntityInterface
     /**
      * Get the last OAuthToken object.
      *
-     * @return OAuthToken|null
+     * @return OAuthTokenInterface|null
      */
     public function getLastToken()
     {
@@ -248,11 +251,11 @@ class User extends BaseUser implements NotificationEntityInterface
     }
 
     /**
-     * @param OAuthToken $OAuthToken
+     * @param OAuthTokenInterface $OAuthToken
      *
      * @return $this
      */
-    public function addOAuthToken(OAuthToken $OAuthToken)
+    public function addOAuthToken(OAuthTokenInterface $OAuthToken)
     {
         if (!$this->OAuthTokens->contains($OAuthToken)) {
             $this->OAuthTokens->add($OAuthToken);
@@ -262,11 +265,11 @@ class User extends BaseUser implements NotificationEntityInterface
     }
 
     /**
-     * @param OAuthToken $OAuthToken
+     * @param OAuthTokenInterface $OAuthToken
      *
      * @return $this
      */
-    public function removeOAuthToken(OAuthToken $OAuthToken)
+    public function removeOAuthToken(OAuthTokenInterface $OAuthToken)
     {
         $this->OAuthTokens->remove($OAuthToken);
 
@@ -288,11 +291,11 @@ class User extends BaseUser implements NotificationEntityInterface
     }
 
     /**
-     * @param Product $product
+     * @param ProductInterface $product
      *
      * @return bool
      */
-    public function hasAccessToProduct(Product $product)
+    public function hasAccessToProduct(ProductInterface $product)
     {
         if (!$product->isEnabled()) {
             return false;
@@ -305,7 +308,7 @@ class User extends BaseUser implements NotificationEntityInterface
 
         $access = null;
 
-        /** @var ProductAccess $productAccess */
+        /** @var ProductAccessInterface $productAccess */
         foreach ($this->getProductAccesses() as $productAccess) {
             if ($productAccess->getProduct()->getId() === $product->getId()) {
                 $access = $productAccess;
@@ -396,15 +399,15 @@ class User extends BaseUser implements NotificationEntityInterface
 //    }
 
     /**
-     * @param Product       $product
-     * @param DateTime      $fromDate
+     * @param ProductInterface $product
+     * @param DateTime $fromDate
      * @param DateTime|null $toDate
-     * @param int|null      $necktieId
+     * @param int|null $necktieId
      *
-     * @return ProductAccess|null
+     * @return ProductAccessInterface|null
      */
     public function giveAccessToProduct(
-        Product $product,
+        ProductInterface $product,
         \DateTime $fromDate,
         \DateTime $toDate = null,
         $necktieId = null
@@ -450,13 +453,13 @@ class User extends BaseUser implements NotificationEntityInterface
     /**
      * Get productAccess entity for this user and given product.
      *
-     * @param Product $product
+     * @param ProductInterface $product
      *
-     * @return ProductAccess|null
+     * @return ProductAccessInterface|null
      */
-    public function getProductAccess(Product $product)
+    public function getProductAccess(ProductInterface $product)
     {
-        /** @var ProductAccess $productAccess */
+        /** @var ProductAccessInterface $productAccess */
         foreach ($this->productAccesses as $productAccess) {
             if ($productAccess->getProduct() == $product) {
                 return $productAccess;

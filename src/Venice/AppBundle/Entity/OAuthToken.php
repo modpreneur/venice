@@ -7,12 +7,13 @@
  */
 namespace Venice\AppBundle\Entity;
 
+use Venice\AppBundle\Entity\Interfaces\OAuthTokenInterface;
 use Venice\AppBundle\Traits\Timestampable;
 
 /**
  * Class OAuthToken.
  */
-class OAuthToken
+class OAuthToken implements OAuthTokenInterface
 {
     use Timestampable;
 
@@ -72,7 +73,7 @@ class OAuthToken
     /**
      * @param string $accessToken
      *
-     * @return OAuthToken
+     * @return OAuthTokenInterface
      */
     public function setAccessToken($accessToken)
     {
@@ -92,7 +93,7 @@ class OAuthToken
     /**
      * @param string $refreshToken
      *
-     * @return OAuthToken
+     * @return OAuthTokenInterface
      */
     public function setRefreshToken($refreshToken)
     {
@@ -120,7 +121,7 @@ class OAuthToken
     /**
      * @param \DateTime $validTo
      *
-     * @return OAuthToken
+     * @return OAuthTokenInterface
      */
     public function setValidTo(\DateTime $validTo)
     {
@@ -134,7 +135,7 @@ class OAuthToken
      *
      * @param $lifetime
      *
-     * @return OAuthToken
+     * @return OAuthTokenInterface
      */
     public function setValidToByLifetime($lifetime)
     {
@@ -157,7 +158,7 @@ class OAuthToken
     /**
      * @param string $scope
      *
-     * @return OAuthToken
+     * @return OAuthTokenInterface
      */
     public function setScope($scope)
     {
@@ -177,7 +178,7 @@ class OAuthToken
     /**
      * @param mixed $user
      *
-     * @return OAuthToken
+     * @return OAuthTokenInterface
      */
     public function setUser($user)
     {

@@ -9,14 +9,16 @@ namespace Venice\AppBundle\Entity;
 
 use DateTime;
 use Trinity\Component\Core\Interfaces\EntityInterface;
-use Venice\AppBundle\Entity\Content\Content;
-use Venice\AppBundle\Entity\Product\Product;
+use Venice\AppBundle\Entity\Interfaces\ContentInterface;
+use Venice\AppBundle\Entity\Interfaces\ContentProductInterface;
+use Venice\AppBundle\Entity\Interfaces\ProductInterface;
+use Venice\AppBundle\Entity\Interfaces\UserInterface;
 use Venice\AppBundle\Traits\Timestampable;
 
 /**
  * Class ContentProduct.
  */
-class ContentProduct implements EntityInterface
+class ContentProduct implements EntityInterface, ContentProductInterface
 {
     use Timestampable;
 
@@ -26,12 +28,12 @@ class ContentProduct implements EntityInterface
     protected $id;
 
     /**
-     * @var Content
+     * @var ContentInterface
      */
     protected $content;
 
     /**
-     * @var Product
+     * @var ProductInterface
      */
     protected $product;
 
@@ -63,7 +65,7 @@ class ContentProduct implements EntityInterface
     }
 
     /**
-     * @return Content
+     * @return ContentInterface
      */
     public function getContent()
     {
@@ -71,9 +73,9 @@ class ContentProduct implements EntityInterface
     }
 
     /**
-     * @param Content $content
+     * @param ContentInterface $content
      *
-     * @return ContentProduct
+     * @return ContentProductInterface
      */
     public function setContent($content)
     {
@@ -83,7 +85,7 @@ class ContentProduct implements EntityInterface
     }
 
     /**
-     * @return Product
+     * @return ProductInterface
      */
     public function getProduct()
     {
@@ -91,9 +93,9 @@ class ContentProduct implements EntityInterface
     }
 
     /**
-     * @param Product $product
+     * @param ProductInterface $product
      *
-     * @return ContentProduct
+     * @return ContentProductInterface
      */
     public function setProduct($product)
     {
@@ -113,7 +115,7 @@ class ContentProduct implements EntityInterface
     /**
      * @param int $delay delay in hours
      *
-     * @return ContentProduct
+     * @return ContentProductInterface
      */
     public function setDelay($delay)
     {
@@ -133,7 +135,7 @@ class ContentProduct implements EntityInterface
     /**
      * @param int $orderNumber
      *
-     * @return ContentProduct
+     * @return ContentProductInterface
      */
     public function setOrderNumber($orderNumber)
     {
@@ -145,12 +147,12 @@ class ContentProduct implements EntityInterface
     /**
      * Check if the given user has access to this contentProduct.
      *
-     * @param User $user
+     * @param UserInterface $user
      * @param bool $checkAccessToProduct Check access to product
      *
      * @return bool true - the user has access to the parent product and the delay of this contentProduct + delay < now
      */
-    public function isAvailableFor(User $user, $checkAccessToProduct = true)
+    public function isAvailableFor(UserInterface $user, $checkAccessToProduct = true)
     {
         $product = $this->getProduct();
         $now = new \DateTime();
@@ -176,11 +178,11 @@ class ContentProduct implements EntityInterface
     }
 
     /**
-     * @param User $user
+     * @param UserInterface $user
      *
      * @return DateTime|null
      */
-    public function willBeAvailableOn(User $user)
+    public function willBeAvailableOn(UserInterface $user)
     {
         if ($this->isAvailableFor($user)) {
             // 0 hours to access

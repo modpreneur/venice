@@ -10,11 +10,12 @@ namespace Venice\AppBundle\Entity\Content;
 use Cocur\Slugify\Slugify;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
+use Venice\AppBundle\Entity\Interfaces\GroupContentInterface;
 
 /**
  * Class GroupContent.
  */
-class GroupContent extends Content
+class GroupContent extends Content implements GroupContentInterface
 {
     /**
      * @var ArrayCollection<ContentInGroup>

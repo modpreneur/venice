@@ -3,21 +3,24 @@
 namespace Venice\AppBundle\Entity;
 
 use JMS\Serializer\Annotation\SerializedName;
-use Trinity\Component\Core\Interfaces\ClientInterface;
-use Trinity\Component\Core\Interfaces\EntityInterface;
-use Trinity\NotificationBundle\Entity\NotificationEntityInterface;
-use Venice\AppBundle\Entity\Product\Product;
-use Venice\AppBundle\Traits\Timestampable;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
+use Trinity\Component\Core\Interfaces\ClientInterface;
+use Trinity\Component\Core\Interfaces\EntityInterface;
 use Trinity\NotificationBundle\Annotations as N;
+use Trinity\NotificationBundle\Entity\NotificationEntityInterface;
+use Venice\AppBundle\Entity\Interfaces\ProductAccessInterface;
+use Venice\AppBundle\Entity\Interfaces\ProductInterface;
+use Venice\AppBundle\Entity\Interfaces\UserInterface;
+use Venice\AppBundle\Entity\Product\Product;
+use Venice\AppBundle\Traits\Timestampable;
 
 /**
  * ProductAccess.
  *
  * @UniqueEntity(fields={"user", "product"}, errorPath="product")
  */
-class ProductAccess implements NotificationEntityInterface, EntityInterface
+class ProductAccess implements NotificationEntityInterface, EntityInterface, ProductAccessInterface
 {
     use Timestampable;
 
@@ -33,12 +36,12 @@ class ProductAccess implements NotificationEntityInterface, EntityInterface
     protected $necktieId;
 
     /**
-     * @var User
+     * @var UserInterface
      */
     private $user;
 
     /**
-     * @var Product
+     * @var ProductInterface
      */
     private $product;
 
@@ -88,11 +91,11 @@ class ProductAccess implements NotificationEntityInterface, EntityInterface
      *
      * @N\AssociationSetter(targetEntity="Venice\AppBundle\Entity\User")
      *
-     * @param User $user
+     * @param UserInterface $user
      *
-     * @return ProductAccess
+     * @return ProductAccessInterface
      */
-    public function setUser(User $user)
+    public function setUser(UserInterface $user)
     {
         $this->user = $user;
 
@@ -104,7 +107,7 @@ class ProductAccess implements NotificationEntityInterface, EntityInterface
      *
      * @N\AssociationGetter
      *
-     * @return User
+     * @return UserInterface
      */
     public function getUser()
     {
@@ -116,11 +119,11 @@ class ProductAccess implements NotificationEntityInterface, EntityInterface
      *
      * @N\AssociationSetter(targetEntity="Venice\AppBundle\Entity\Product\Product")
      *
-     * @param Product $product
+     * @param ProductInterface $product
      *
-     * @return ProductAccess
+     * @return ProductAccessInterface
      */
-    public function setProduct(Product $product)
+    public function setProduct(ProductInterface $product)
     {
         $this->product = $product;
 
@@ -132,7 +135,7 @@ class ProductAccess implements NotificationEntityInterface, EntityInterface
      *
      * @N\AssociationGetter
      *
-     * @return Product
+     * @return ProductInterface
      */
     public function getProduct()
     {
@@ -144,7 +147,7 @@ class ProductAccess implements NotificationEntityInterface, EntityInterface
      *
      * @param \DateTime $fromDate
      *
-     * @return ProductAccess
+     * @return ProductAccessInterface
      */
     public function setFromDate(\DateTime $fromDate)
     {
@@ -168,7 +171,7 @@ class ProductAccess implements NotificationEntityInterface, EntityInterface
      *
      * @param \DateTime $toDate
      *
-     * @return ProductAccess
+     * @return ProductAccessInterface
      */
     public function setToDate(\DateTime $toDate = null)
     {
@@ -198,7 +201,7 @@ class ProductAccess implements NotificationEntityInterface, EntityInterface
     /**
      * @param int $necktieId
      *
-     * @return ProductAccess
+     * @return ProductAccessInterface
      */
     public function setNecktieId($necktieId)
     {

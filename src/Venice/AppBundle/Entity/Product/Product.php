@@ -10,16 +10,17 @@ namespace Venice\AppBundle\Entity\Product;
 use Cocur\Slugify\Slugify;
 use Doctrine\Common\Collections\ArrayCollection;
 use Trinity\Component\EntityCore\Entity\BaseProduct;
-use Venice\AppBundle\Entity\BlogArticle;
-use Venice\AppBundle\Entity\Content\Content;
-use Venice\AppBundle\Entity\ContentProduct;
-use Venice\AppBundle\Entity\ProductAccess;
-use Venice\AppBundle\Entity\User;
+use Venice\AppBundle\Entity\Interfaces\BlogArticleInterface;
+use Venice\AppBundle\Entity\Interfaces\ContentInterface;
+use Venice\AppBundle\Entity\Interfaces\ContentProductInterface;
+use Venice\AppBundle\Entity\Interfaces\ProductAccessInterface;
+use Venice\AppBundle\Entity\Interfaces\ProductInterface;
+use Venice\AppBundle\Entity\Interfaces\UserInterface;
 
 /**
  * Class BaseProduct.
  */
-abstract class Product extends BaseProduct
+abstract class Product extends BaseProduct implements ProductInterface
 {
     /**
      * @var string
@@ -146,7 +147,7 @@ abstract class Product extends BaseProduct
     /**
      * @param bool $enabled
      *
-     * @return Product
+     * @return ProductInterface
      */
     public function setEnabled($enabled)
     {
@@ -166,7 +167,7 @@ abstract class Product extends BaseProduct
     /**
      * @param int $orderNumber
      *
-     * @return Product
+     * @return ProductInterface
      */
     public function setOrderNumber($orderNumber)
     {
@@ -184,11 +185,11 @@ abstract class Product extends BaseProduct
     }
 
     /**
-     * @param ProductAccess $productAccess
+     * @param ProductAccessInterface $productAccess
      *
      * @return $this
      */
-    public function addProductAccess(ProductAccess $productAccess)
+    public function addProductAccess(ProductAccessInterface $productAccess)
     {
         if (!$this->productAccesses->contains($productAccess)) {
             $this->productAccesses->add($productAccess);
@@ -198,11 +199,11 @@ abstract class Product extends BaseProduct
     }
 
     /**
-     * @param ProductAccess $productAccess
+     * @param ProductAccessInterface $productAccess
      *
      * @return $this
      */
-    public function removeProductAccess(ProductAccess $productAccess)
+    public function removeProductAccess(ProductAccessInterface $productAccess)
     {
         $this->productAccesses->remove($productAccess);
 
@@ -218,11 +219,11 @@ abstract class Product extends BaseProduct
     }
 
     /**
-     * @param ContentProduct $contentProduct
+     * @param ContentProductInterface $contentProduct
      *
      * @return $this
      */
-    public function addContentProduct(ContentProduct $contentProduct)
+    public function addContentProduct(ContentProductInterface $contentProduct)
     {
         if (!$this->contentProducts->contains($contentProduct)) {
             $this->contentProducts->add($contentProduct);
@@ -232,11 +233,11 @@ abstract class Product extends BaseProduct
     }
 
     /**
-     * @param ContentProduct $contentProduct
+     * @param ContentProductInterface $contentProduct
      *
      * @return $this
      */
-    public function removeContentProduct(ContentProduct $contentProduct)
+    public function removeContentProduct(ContentProductInterface $contentProduct)
     {
         $this->contentProducts->remove($contentProduct);
 
@@ -248,9 +249,9 @@ abstract class Product extends BaseProduct
      *
      * @param string $type Could be formatted like StandardProduct, FreeProduct,
      *                     Venice\AppBundle\\Entity\\Product\\StandardProduct, ...
-     * @param array  $args
+     * @param array $args
      *
-     * @return Product
+     * @return ProductInterface
      */
     public static function createProductByType($type, array $args = [])
     {
@@ -264,7 +265,7 @@ abstract class Product extends BaseProduct
      *
      * @param string $type Could be formatted like HtmlContent, Mp3Content, Venice\AppBundle\\Entity\Content\PdfContent
      *
-     * @return Content
+     * @return ContentInterface
      */
     public static function createProductClassByType($type)
     {
@@ -286,13 +287,13 @@ abstract class Product extends BaseProduct
      *
      * @internal potentially dangerous - does not check the delay and product access!
      *
-     * @return Content[]
+     * @return ContentInterface[]
      */
     public function getAllContent()
     {
         $content = [];
 
-        /** @var ContentProduct $contentProduct */
+        /** @var ContentProductInterface $contentProduct */
         foreach ($this->getContentProducts() as $contentProduct) {
             $content[] = $contentProduct->getContent();
         }
@@ -313,7 +314,7 @@ abstract class Product extends BaseProduct
     {
         $content = [];
 
-        /** @var ContentProduct $contentProduct */
+        /** @var ContentProductInterface $contentProduct */
         foreach ($this->contentProducts as $contentProduct) {
             if ($contentProduct->getContent()->getType() === $type) {
                 $content[] = $content;
@@ -326,11 +327,11 @@ abstract class Product extends BaseProduct
     /**
      * Get all available content without information about delay and order.
      *
-     * @param User $user
+     * @param UserInterface $user
      *
-     * @return Content[]
+     * @return ContentInterface[]
      */
-    public function getAllAvailableContent(User $user)
+    public function getAllAvailableContent(UserInterface $user)
     {
         $content = [];
 
@@ -344,12 +345,12 @@ abstract class Product extends BaseProduct
     /**
      * Get all available content by type without information about delay and order.
      *
-     * @param User   $user
+     * @param UserInterface $user
      * @param string $type Type of the content (html, text, video, mp3, ...)
      *
-     * @return Content[]
+     * @return ContentInterface[]
      */
-    public function getAvailableContentByType(User $user, $type)
+    public function getAvailableContentByType(UserInterface $user, $type)
     {
         $content = [];
 
@@ -365,11 +366,11 @@ abstract class Product extends BaseProduct
     /**
      * Get all available ContentProducts. Check if the user has access to the content.
      *
-     * @param User $user
+     * @param UserInterface $user
      *
-     * @return ContentProduct[]
+     * @return ContentProductInterface[]
      */
-    public function getAvailableContentProducts(User $user)
+    public function getAvailableContentProducts(UserInterface $user)
     {
         $contentProducts = [];
 
@@ -377,7 +378,7 @@ abstract class Product extends BaseProduct
             return [];
         }
 
-        /** @var ContentProduct $contentProduct */
+        /** @var ContentProductInterface $contentProduct */
         foreach ($this->contentProducts as $contentProduct) {
             if ($contentProduct->isAvailableFor($user, true)) {
                 $contentProducts[] = $contentProduct;
@@ -421,7 +422,7 @@ abstract class Product extends BaseProduct
         $lastDelay = $this->contentProducts[0];
 
         //Group the content products
-        /** @var ContentProduct $contentProduct */
+        /** @var ContentProductInterface $contentProduct */
         foreach ($this->contentProducts as $contentProduct) {
             if ($lastDelay === $contentProduct->getDelay()) {
                 $content[$index][] = $contentProduct;
@@ -445,11 +446,11 @@ abstract class Product extends BaseProduct
     }
 
     /**
-     * @param BlogArticle $blogArticle
+     * @param BlogArticleInterface $blogArticle
      *
      * @return $this
      */
-    public function addBlogArticle(BlogArticle $blogArticle)
+    public function addBlogArticle(BlogArticleInterface $blogArticle)
     {
         if (!$this->articles->contains($blogArticle)) {
             $blogArticle->addProduct($this);
@@ -460,11 +461,11 @@ abstract class Product extends BaseProduct
     }
 
     /**
-     * @param BlogArticle $blogArticle
+     * @param BlogArticleInterface $blogArticle
      *
      * @return $this
      */
-    public function removeBlogArticle(BlogArticle $blogArticle)
+    public function removeBlogArticle(BlogArticleInterface $blogArticle)
     {
         $this->articles->remove($blogArticle);
         $blogArticle->removeProduct($this);

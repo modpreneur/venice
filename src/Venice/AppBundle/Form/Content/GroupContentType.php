@@ -7,18 +7,19 @@
  */
 namespace Venice\AppBundle\Form\Content;
 
-use Venice\AppBundle\Entity\Content\GroupContent;
-use Venice\AppBundle\Form\Collection\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Venice\AppBundle\Entity\Content\GroupContent;
+use Venice\AppBundle\Entity\Interfaces\GroupContentInterface;
+use Venice\AppBundle\Form\Collection\CollectionType;
 
 /**
  * {@inheritdoc}
  */
 class GroupContentType extends ContentType
 {
-    /** @var  GroupContent */
+    /** @var  GroupContentInterface */
     protected $groupContent;
 
     /**

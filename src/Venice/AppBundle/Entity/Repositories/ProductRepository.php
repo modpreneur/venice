@@ -3,6 +3,8 @@
 namespace Venice\AppBundle\Entity\Repositories;
 
 use Doctrine\ORM\EntityRepository;
+use Venice\AppBundle\Entity\Interfaces\ContentInterface;
+use Venice\AppBundle\Entity\Interfaces\ProductInterface;
 
 /**
  * ProductRepository.
@@ -14,7 +16,7 @@ class ProductRepository extends EntityRepository
      *
      * @param string[] $criteria format: array('user' => <user_id>, 'name' => <name>)
      *
-     * @return array|\Venice\AppBundle\Entity\Content\Content[]|\Venice\AppBundle\Entity\Product\Product[]
+     * @return array|ContentInterface[]|ProductInterface[]
      */
     public function findByUniqueCriteria(array $criteria)
     {

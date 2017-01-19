@@ -11,13 +11,15 @@ use Cocur\Slugify\Slugify;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Trinity\Component\Core\Interfaces\EntityInterface;
-use Venice\AppBundle\Entity\Product\Product;
+use Venice\AppBundle\Entity\Interfaces\BlogArticleInterface;
+use Venice\AppBundle\Entity\Interfaces\ProductInterface;
+use Venice\AppBundle\Entity\Interfaces\UserInterface;
 use Venice\AppBundle\Traits\Timestampable;
 
 /**
  * Class BlogArticle.
  */
-class BlogArticle implements EntityInterface
+class BlogArticle implements EntityInterface, BlogArticleInterface
 {
     use Timestampable;
 
@@ -42,7 +44,7 @@ class BlogArticle implements EntityInterface
     protected $handle;
 
     /**
-     * @var User
+     * @var UserInterface
      */
     protected $publisher;
 
@@ -113,7 +115,7 @@ class BlogArticle implements EntityInterface
     /**
      * Get publisher.
      *
-     * @return User
+     * @return UserInterface
      */
     public function getPublisher()
     {
@@ -123,11 +125,11 @@ class BlogArticle implements EntityInterface
     /**
      * Set publisher.
      *
-     * @param User $publisher
+     * @param UserInterface $publisher
      *
-     * @return BlogArticle
+     * @return BlogArticleInterface
      */
-    public function setPublisher(User $publisher)
+    public function setPublisher(UserInterface $publisher)
     {
         $this->publisher = $publisher;
 
@@ -149,7 +151,7 @@ class BlogArticle implements EntityInterface
      *
      * @param DateTime $dateToPublish
      *
-     * @return BlogArticle
+     * @return BlogArticleInterface
      */
     public function setDateToPublish(DateTime $dateToPublish)
     {
@@ -173,7 +175,7 @@ class BlogArticle implements EntityInterface
      *
      * @param string $title
      *
-     * @return BlogArticle
+     * @return BlogArticleInterface
      */
     public function setTitle($title)
     {
@@ -199,7 +201,7 @@ class BlogArticle implements EntityInterface
      *
      * @param string $content
      *
-     * @return BlogArticle
+     * @return BlogArticleInterface
      */
     public function setContent($content)
     {
@@ -270,11 +272,11 @@ class BlogArticle implements EntityInterface
     }
 
     /**
-     * @param Product $product
+     * @param ProductInterface $product
      *
      * @return $this
      */
-    public function addProduct(Product $product)
+    public function addProduct(ProductInterface $product)
     {
         if (!$this->products->contains($product)) {
             $product->addBlogArticle($this);
@@ -285,11 +287,11 @@ class BlogArticle implements EntityInterface
     }
 
     /**
-     * @param Product $product
+     * @param ProductInterface $product
      *
      * @return $this
      */
-    public function removeProduct(Product $product)
+    public function removeProduct(ProductInterface $product)
     {
         $this->products->remove($product);
         $product->removeBlogArticle($this);

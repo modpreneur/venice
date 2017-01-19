@@ -8,11 +8,12 @@
 namespace Venice\AppBundle\Entity\Product;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Venice\AppBundle\Entity\BillingPlan;
 use JMS\Serializer\Annotation\SerializedName;
 use Trinity\Component\Core\Interfaces\ClientInterface;
 use Trinity\NotificationBundle\Annotations as N;
 use Trinity\NotificationBundle\Entity\NotificationEntityInterface;
+use Venice\AppBundle\Entity\BillingPlan;
+use Venice\AppBundle\Entity\Interfaces\StandardProductInterface;
 
 /**
  * @N\Source(columns="necktieId, name")
@@ -22,7 +23,7 @@ use Trinity\NotificationBundle\Entity\NotificationEntityInterface;
  *
  * Class StandardProduct
  */
-class StandardProduct extends Product implements NotificationEntityInterface
+class StandardProduct extends Product implements NotificationEntityInterface, StandardProductInterface
 {
     const TYPE = 'standard';
 
@@ -89,7 +90,7 @@ class StandardProduct extends Product implements NotificationEntityInterface
     /**
      * @param int $necktieId
      *
-     * @return StandardProduct
+     * @return StandardProductInterface
      */
     public function setNecktieId($necktieId)
     {

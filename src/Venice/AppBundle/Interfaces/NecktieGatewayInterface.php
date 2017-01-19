@@ -7,10 +7,10 @@
  */
 namespace Venice\AppBundle\Interfaces;
 
-use Venice\AppBundle\Entity\User;
+use Symfony\Component\HttpFoundation\Cookie;
+use Venice\AppBundle\Entity\Interfaces\UserInterface;
 use Venice\AppBundle\Exceptions\ExpiredRefreshTokenException;
 use Venice\AppBundle\Exceptions\UnsuccessfulNecktieResponseException;
-use Symfony\Component\HttpFoundation\Cookie;
 
 interface NecktieGatewayInterface extends GatewayInterface
 {
@@ -20,10 +20,10 @@ interface NecktieGatewayInterface extends GatewayInterface
      *
      *
      * @param string $accessToken
-     * @param bool   $createNewUser
-     * @param bool   $persistNewUser
+     * @param bool $createNewUser
+     * @param bool $persistNewUser
      *
-     * @return User|null
+     * @return UserInterface|null
      *
      * @throws UnsuccessfulNecktieResponseException
      */
@@ -35,16 +35,16 @@ interface NecktieGatewayInterface extends GatewayInterface
     public function getStateCookie();
 
     /**
-     * @param User $user
+     * @param UserInterface $user
      *
      * @throws ExpiredRefreshTokenException
      */
-    public function refreshAccessToken(User $user);
+    public function refreshAccessToken(UserInterface $user);
 
     /**
-     * @param User $user
+     * @param UserInterface $user
      *
      * @throws ExpiredRefreshTokenException
      */
-    public function refreshAccessTokenIfNeeded(User $user);
+    public function refreshAccessTokenIfNeeded(UserInterface $user);
 }

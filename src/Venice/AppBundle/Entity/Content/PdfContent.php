@@ -7,10 +7,12 @@
  */
 namespace Venice\AppBundle\Entity\Content;
 
+use Venice\AppBundle\Entity\Interfaces\PdfContentInterface;
+
 /**
  * Class PdfContent.
  */
-class PdfContent extends Content
+class PdfContent extends Content implements PdfContentInterface
 {
     /**
      * @var string Url address to the file.
@@ -18,23 +20,9 @@ class PdfContent extends Content
     protected $link;
 
     /**
-     * {@inheritdoc}
-     */
-    public function getLink()
-    {
-        return $this->link;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setLink($link)
-    {
-        $this->link = $link;
-    }
-
-    /**
-     * {@inheritdoc}
+     * Return Content's content no matter what concrete implementation is.
+     *
+     * @return string
      */
     public function getContent()
     {
@@ -42,10 +30,30 @@ class PdfContent extends Content
     }
 
     /**
-     * {@inheritdoc}
+     * Get the content type string.
+     *
+     * @return string
      */
     public function getType()
     {
         return 'pdf';
+    }
+
+    /**
+     * @return string
+     */
+    public function getLink()
+    {
+        return $this->link;
+    }
+
+    /**
+     * @param string $link
+     *
+     * @return void
+     */
+    public function setLink(string $link)
+    {
+        $this->link = $link;
     }
 }

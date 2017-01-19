@@ -8,16 +8,19 @@
 namespace Venice\AppBundle\Entity;
 
 use JMS\Serializer\Annotation\SerializedName;
-use Trinity\Component\EntityCore\Entity\BaseBillingPlan;
 use Trinity\Component\Core\Interfaces\ClientInterface;
-use Trinity\NotificationBundle\Entity\NotificationEntityInterface;
-use Venice\AppBundle\Entity\Product\StandardProduct;
+use Trinity\Component\EntityCore\Entity\BaseBillingPlan;
 use Trinity\NotificationBundle\Annotations as N;
+use Trinity\NotificationBundle\Entity\NotificationEntityInterface;
+use Venice\AppBundle\Entity\Interfaces\BillingPlanInterface;
+use Venice\AppBundle\Entity\Interfaces\PaySystemVendorInterface;
+use Venice\AppBundle\Entity\Interfaces\StandardProductInterface;
+use Venice\AppBundle\Entity\Product\StandardProduct;
 
 /**
  * Class BillingPlan.
  */
-class BillingPlan extends BaseBillingPlan implements NotificationEntityInterface
+class BillingPlan extends BaseBillingPlan implements NotificationEntityInterface, BillingPlanInterface
 {
     /**
      * @var int
@@ -26,12 +29,12 @@ class BillingPlan extends BaseBillingPlan implements NotificationEntityInterface
     protected $necktieId;
 
     /**
-     * @var StandardProduct
+     * @var StandardProductInterface
      */
     protected $product;
 
     /**
-     * @var PaySystemVendor paySystemVendor
+     * @var PaySystemVendorInterface paySystemVendor
      */
     protected $paySystemVendor;
 
@@ -75,7 +78,7 @@ class BillingPlan extends BaseBillingPlan implements NotificationEntityInterface
     /**
      * @N\AssociationGetter()
      *
-     * @return StandardProduct
+     * @return StandardProductInterface
      */
     public function getProduct()
     {
@@ -85,7 +88,7 @@ class BillingPlan extends BaseBillingPlan implements NotificationEntityInterface
     /**
      * @N\AssociationSetter(targetEntity="Venice\AppBundle\Entity\Product\StandardProduct")
      *
-     * @param StandardProduct $product
+     * @param StandardProductInterface $product
      *
      * @return BillingPlan
      */
@@ -119,7 +122,7 @@ class BillingPlan extends BaseBillingPlan implements NotificationEntityInterface
     /**
      * @N\AssociationGetter()
      *
-     * @return PaySystemVendor
+     * @return PaySystemVendorInterface
      */
     public function getPaySystemVendor()
     {
@@ -129,7 +132,7 @@ class BillingPlan extends BaseBillingPlan implements NotificationEntityInterface
     /**
      * @N\AssociationSetter(targetEntity="Venice\AppBundle\Entity\PaySystemVendor")
      *
-     * @param PaySystemVendor $paySystemVendor
+     * @param PaySystemVendorInterface $paySystemVendor
      */
     public function setPaySystemVendor($paySystemVendor)
     {

@@ -3,6 +3,7 @@
 namespace Venice\AppBundle\Entity\Repositories;
 
 use Doctrine\ORM\EntityRepository;
+use Venice\AppBundle\Entity\Interfaces\ContentInterface;
 
 /**
  * ContentRepository.
@@ -14,7 +15,7 @@ class ContentRepository extends EntityRepository
      *
      * @param string[] $criteria format: array('user' => <user_id>, 'name' => <name>)
      *
-     * @return array|\Venice\AppBundle\Entity\Content\Content[]
+     * @return array|ContentInterface[]
      */
     public function findByUniqueCriteria(array $criteria)
     {

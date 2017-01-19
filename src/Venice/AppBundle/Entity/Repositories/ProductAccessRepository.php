@@ -5,7 +5,7 @@ namespace Venice\AppBundle\Entity\Repositories;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\NonUniqueResultException;
 use Trinity\NotificationBundle\Interfaces\NotificationEntityRepositoryInterface;
-use Venice\AppBundle\Entity\ProductAccess;
+use Venice\AppBundle\Entity\Interfaces\ProductAccessInterface;
 
 /**
  * ProductAccessRepository.
@@ -17,7 +17,7 @@ class ProductAccessRepository extends EntityRepository implements NotificationEn
      *
      * @param $id
      *
-     * @return ProductAccess|null
+     * @return ProductAccessInterface|null
      *
      * @throws NonUniqueResultException
      */

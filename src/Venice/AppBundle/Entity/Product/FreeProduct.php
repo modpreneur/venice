@@ -7,10 +7,12 @@
  */
 namespace Venice\AppBundle\Entity\Product;
 
+use Venice\AppBundle\Entity\Interfaces\FreeProductInterface;
+
 /**
  * Class FreeProduct.
  */
-class FreeProduct extends Product
+class FreeProduct extends Product implements FreeProductInterface
 {
     const TYPE = 'free';
 

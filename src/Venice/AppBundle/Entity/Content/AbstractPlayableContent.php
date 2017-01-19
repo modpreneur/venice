@@ -8,11 +8,12 @@
 namespace Venice\AppBundle\Entity\Content;
 
 use Symfony\Component\Validator\Constraints as Assert;
+use Venice\AppBundle\Entity\Interfaces\AbstractPlayableContentInterface;
 
 /**
  * Class AbstractPlayable.
  */
-abstract class AbstractPlayableContent extends Content
+abstract class AbstractPlayableContent extends Content implements AbstractPlayableContentInterface
 {
     /**
      * @var int Duration(length) in seconds.

@@ -9,14 +9,15 @@ namespace Venice\AppBundle\Entity\Content;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Trinity\Component\Core\Interfaces\EntityInterface;
-use Venice\AppBundle\Entity\ContentProduct;
-use Venice\AppBundle\Entity\User;
+use Venice\AppBundle\Entity\Interfaces\ContentInterface;
+use Venice\AppBundle\Entity\Interfaces\ContentProductInterface;
+use Venice\AppBundle\Entity\Interfaces\UserInterface;
 use Venice\AppBundle\Traits\Timestampable;
 
 /**
  * Class AbstractContent.
  */
-abstract class Content implements EntityInterface
+abstract class Content implements EntityInterface, ContentInterface
 {
     use Timestampable;
 
@@ -36,7 +37,7 @@ abstract class Content implements EntityInterface
     protected $contentProducts;
 
     /**
-     * @var User
+     * @var UserInterface
      */
     protected $author;
 
@@ -82,7 +83,7 @@ abstract class Content implements EntityInterface
     }
 
     /**
-     * @return User
+     * @return UserInterface
      */
     public function getAuthor()
     {
@@ -90,9 +91,9 @@ abstract class Content implements EntityInterface
     }
 
     /**
-     * @param User $author
+     * @param UserInterface $author
      *
-     * @return Content
+     * @return ContentInterface
      */
     public function setAuthor($author)
     {
@@ -110,11 +111,11 @@ abstract class Content implements EntityInterface
     }
 
     /**
-     * @param ContentProduct $contentProduct
+     * @param ContentProductInterface $contentProduct
      *
      * @return $this
      */
-    public function addContentProduct(ContentProduct $contentProduct)
+    public function addContentProduct(ContentProductInterface $contentProduct)
     {
         if (!$this->contentProducts->contains($contentProduct)) {
             $this->contentProducts->add($contentProduct);
@@ -124,11 +125,11 @@ abstract class Content implements EntityInterface
     }
 
     /**
-     * @param ContentProduct $contentProduct
+     * @param ContentProductInterface $contentProduct
      *
      * @return $this
      */
-    public function removeContentProduct(ContentProduct $contentProduct)
+    public function removeContentProduct(ContentProductInterface $contentProduct)
     {
         $this->contentProducts->remove($contentProduct);
 
@@ -139,9 +140,9 @@ abstract class Content implements EntityInterface
      * Creates new instance of content from type (first part of entity name ends with Content).
      *
      * @param string $type Could be formatted like HtmlContent, Mp3Content, Venice\AppBundle\Entity\Content\PdfContent
-     * @param array  $args
+     * @param array $args
      *
-     * @return Content
+     * @return ContentInterface
      */
     public static function createContentByType($type, array $args = [])
     {
@@ -155,7 +156,7 @@ abstract class Content implements EntityInterface
      *
      * @param string $type Could be formatted like HtmlContent, Mp3Content, Venice\AppBundle\Entity\Content\PdfContent
      *
-     * @return Content
+     * @return ContentInterface
      */
     public static function createContentClassByType($type)
     {

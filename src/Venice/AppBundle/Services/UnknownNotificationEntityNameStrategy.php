@@ -6,6 +6,8 @@ use Doctrine\ORM\EntityManagerInterface;
 use Trinity\NotificationBundle\Entity\Notification;
 use Trinity\NotificationBundle\Interfaces\UnknownEntityNameStrategyInterface;
 use Venice\AppBundle\Entity\BillingPlan;
+use Venice\AppBundle\Entity\Interfaces\PaySystemVendorInterface;
+use Venice\AppBundle\Entity\Interfaces\StandardProductInterface;
 use Venice\AppBundle\Entity\PaySystemVendor;
 use Venice\AppBundle\Entity\Product\StandardProduct;
 
@@ -55,14 +57,14 @@ class UnknownNotificationEntityNameStrategy implements UnknownEntityNameStrategy
             }
         }
 
-        /** @var PaySystemVendor $vendor */
+        /** @var PaySystemVendorInterface $vendor */
         $vendor = $this->entityManager->getRepository(
             $this->entityOverrideHandler->getEntityClass(PaySystemVendor::class)
         )->find($data['paySystemVendor']);
 
         if ($vendor !== null && $vendor->isDefaultForVenice()) {
             // change the default billing plan for the product
-            /** @var StandardProduct $product */
+            /** @var StandardProductInterface $product */
             $product = $this->entityManager->getRepository(
                 $this->entityOverrideHandler->getEntityClass(StandardProduct::class)
             )->find($data['product']);

@@ -16,6 +16,7 @@ use Trinity\NotificationBundle\Event\BeforeDeleteEntityEvent;
 use Trinity\NotificationBundle\Event\ChangesDoneEvent;
 use Trinity\NotificationBundle\Services\EntityAliasTranslator;
 use Venice\AppBundle\Entity\BillingPlan;
+use Venice\AppBundle\Entity\Interfaces\StandardProductInterface;
 use Venice\AppBundle\Entity\Product\StandardProduct;
 use Venice\AppBundle\Services\EntityOverrideHandler;
 
@@ -77,7 +78,7 @@ class NotificationListener
                 /* @var $entity BillingPlan */
                 $entity->setPrice($this->priceStringGenerator->generateFullPriceStr($entity));
             } elseif ($this->entityOverrideHandler->isInstanceOf($entity, StandardProduct::class)) {
-                /* @var $entity StandardProduct */
+                /* @var $entity StandardProductInterface */
                 $entity->setPurchasable(true);
             }
 
@@ -131,7 +132,7 @@ class NotificationListener
 
         if ($this->entityOverrideHandler->isInstanceOf($entityClass, StandardProduct::class)) {
             $this->logger->info('Read SynchronizationStoppedMessage about product '.$entityClass.' with id:'.$entityId);
-            /** @var StandardProduct $product */
+            /** @var StandardProductInterface $product */
             $product = $this->entityManager->find($entityClass, $entityId);
             $product->setPurchasable(false);
             $this->persistEntity($product);

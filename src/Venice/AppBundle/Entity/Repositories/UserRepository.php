@@ -5,7 +5,7 @@ namespace Venice\AppBundle\Entity\Repositories;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\NonUniqueResultException;
 use Trinity\NotificationBundle\Interfaces\NotificationEntityRepositoryInterface;
-use Venice\AppBundle\Entity\User;
+use Venice\AppBundle\Entity\Interfaces\UserInterface;
 
 /**
  * UserRepository.
@@ -17,7 +17,7 @@ class UserRepository extends EntityRepository implements NotificationEntityRepos
      *
      * @param $id
      *
-     * @return User|null
+     * @return UserInterface|null
      *
      * @throws NonUniqueResultException
      */

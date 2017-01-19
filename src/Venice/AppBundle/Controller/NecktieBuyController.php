@@ -11,8 +11,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Venice\AppBundle\Entity\Product\StandardProduct;
-use Venice\AppBundle\Entity\User;
+use Venice\AppBundle\Entity\Interfaces\StandardProductInterface;
+use Venice\AppBundle\Entity\Interfaces\UserInterface;
 
 /**
  * Class NecktieBuyController.
@@ -20,9 +20,9 @@ use Venice\AppBundle\Entity\User;
 class NecktieBuyController extends Controller
 {
     /**
-     * @param Request         $request
-     * @param StandardProduct $product
-     * @param string          $paySystem
+     * @param Request $request
+     * @param StandardProductInterface $product
+     * @param string $paySystem
      *
      * @return RedirectResponse
      *
@@ -38,7 +38,7 @@ class NecktieBuyController extends Controller
      * @throws \InvalidArgumentException
      * @throws \Exception
      */
-    public function redirectToNecktieBuy(Request $request, StandardProduct $product, string $paySystem)
+    public function redirectToNecktieBuy(Request $request, StandardProductInterface $product, string $paySystem)
     {
         try {
             return $this->createRedirectBuyResponse($request, $product, $paySystem);
@@ -50,10 +50,10 @@ class NecktieBuyController extends Controller
     }
 
     /**
-     * @param StandardProduct $product
+     * @param StandardProductInterface $product
      * @param string $paySystem
      */
-    protected function logError(StandardProduct $product, string $paySystem)
+    protected function logError(StandardProductInterface $product, string $paySystem)
     {
         $this->get('logger')->emergency(
             "Could no buy a product with necktieId: {$product->getNecktieId()} with pay system {$paySystem}"
@@ -62,11 +62,11 @@ class NecktieBuyController extends Controller
 
     /**
      * @param Request $request
-     * @param StandardProduct $product
+     * @param StandardProductInterface $product
      * @param string $paySystem
      * @return RedirectResponse
      */
-    protected function createRedirectBuyResponse(Request $request, StandardProduct $product, string $paySystem)
+    protected function createRedirectBuyResponse(Request $request, StandardProductInterface $product, string $paySystem)
     {
         $priceStringGenerator = $this->get('trinity.services.price_string_generator');
 
@@ -74,7 +74,7 @@ class NecktieBuyController extends Controller
             throw new \LogicException('Can not buy product '.$product->getName().' as it is not purchasable.');
         }
 
-        /** @var User $user */
+        /** @var UserInterface $user */
         $user = $this->getUser();
         $this->get('venice.app.necktie_gateway')->refreshAccessToken($user);
 

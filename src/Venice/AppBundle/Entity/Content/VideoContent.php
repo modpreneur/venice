@@ -7,10 +7,12 @@
  */
 namespace Venice\AppBundle\Entity\Content;
 
+use Venice\AppBundle\Entity\Interfaces\VideoContentInterface;
+
 /**
  * Class VideoContent.
  */
-class VideoContent extends AbstractPlayableContent
+class VideoContent extends AbstractPlayableContent implements VideoContentInterface
 {
     /**
      * @var string Url to the preview image

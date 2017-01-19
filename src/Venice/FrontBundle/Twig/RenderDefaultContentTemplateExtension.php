@@ -7,7 +7,7 @@
  */
 namespace Venice\FrontBundle\Twig;
 
-use Venice\AppBundle\Entity\Content\Content;
+use Venice\AppBundle\Entity\Interfaces\ContentInterface;
 
 /**
  * Class RenderDefaultContentTemplateExtension.
@@ -34,7 +34,7 @@ class RenderDefaultContentTemplateExtension extends \Twig_Extension
         ];
     }
 
-    public function renderDefault(\Twig_Environment $twig, Content $content)
+    public function renderDefault(\Twig_Environment $twig, ContentInterface $content)
     {
         return $twig->render(
             'VeniceFrontBundle:Content:'.$content->getType().'Default.html.twig',
