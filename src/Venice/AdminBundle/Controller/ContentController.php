@@ -588,7 +588,7 @@ class ContentController extends BaseAdminController
 
         // Defining columns
         $gridConfBuilder->addColumn('id', '#');
-        $gridConfBuilder->addColumn('product:name', 'Product');
+        $gridConfBuilder->addColumn('product', 'Product');
         $gridConfBuilder->addColumn('orderNumber', 'Order number');
         $gridConfBuilder->addColumn('delay', 'Delay[hours]');
         $gridConfBuilder->addColumn('details', ' ', ['allowOrder' => false, 'className' => 'cell-center']);
