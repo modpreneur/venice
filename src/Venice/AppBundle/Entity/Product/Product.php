@@ -22,6 +22,13 @@ use Venice\AppBundle\Entity\Interfaces\UserInterface;
  */
 abstract class Product extends BaseProduct implements ProductInterface
 {
+    public const ASC = 'adc';
+
+    public const SORT = 'sort';
+
+    public const NONE = 'none';
+
+
     /**
      * @var string
      */
@@ -282,24 +289,46 @@ abstract class Product extends BaseProduct implements ProductInterface
         return $type;
     }
 
+
     /**
      * Get all Content of the product.
      *
      * @internal potentially dangerous - does not check the delay and product access!
      *
+     * @param string $sort
+     *
      * @return ContentInterface[]
      */
-    public function getAllContent()
+    public function getAllContent($sort = self::NONE)
     {
         $content = [];
 
+        $contentProducts = $this->getContentProducts()->toArray();
+
+        if ($sort === self::SORT) {
+            usort($contentProducts, [$this, 'compare']);
+        }
+
         /** @var ContentProductInterface $contentProduct */
-        foreach ($this->getContentProducts() as $contentProduct) {
+        foreach ($contentProducts as $contentProduct) {
             $content[] = $contentProduct->getContent();
         }
 
         return $content;
     }
+
+
+    /**
+     * @param ContentProductInterface $cp1
+     * @param ContentProductInterface $cp2
+     *
+     * @return bool
+     */
+    public function compare(ContentProductInterface $cp1, ContentProductInterface $cp2)
+    {
+        return $cp1->getOrderNumber() > $cp2->getOrderNumber();
+    }
+
 
     /**
      * Get all content by type.
