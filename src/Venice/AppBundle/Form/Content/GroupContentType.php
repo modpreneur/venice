@@ -43,7 +43,7 @@ class GroupContentType extends ContentType
                 CollectionType::class,
                 [
                     'type' => ContentInGroupType::class,
-                    'options' => ['groupContent' => $options['groupContent']],
+                    'options' => ['groupContent' => $options['data']],
                     'required' => false,
                     'label' => 'Contents',
                     'allow_add' => true,
