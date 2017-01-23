@@ -61,8 +61,7 @@ class GroupContentType extends ContentType
     {
         $resolver->setDefaults(
             [
-                'data_class' => GroupContent::class,
-                'groupContent' => null,
+                'data_class' => GroupContent::class
             ]
         );
     }
