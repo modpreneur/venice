@@ -442,7 +442,7 @@ class ProductController extends BaseAdminController
 
         // Defining columns
         $gridConfBuilder->addColumn('id', '#');
-        $gridConfBuilder->addColumn('content:name', 'Content');
+        $gridConfBuilder->addColumn('content', 'Content');
         $gridConfBuilder->addColumn('orderNumber', 'Order number');
         $gridConfBuilder->addColumn('delay', 'Delay[hours]');
         $gridConfBuilder->addColumn('products', 'Products');
