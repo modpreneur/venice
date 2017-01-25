@@ -8,7 +8,6 @@
 namespace Venice\FrontBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Venice\AppBundle\Entity\Interfaces\ProductInterface;
 use Venice\AppBundle\Entity\Product\Product;
 
 /**
@@ -36,11 +35,11 @@ class ProductController extends Controller
     }
 
     /**
-     * @param ProductInterface $product
+     * @param Product $product
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function showAction(ProductInterface $product)
+    public function showAction(Product $product)
     {
         return $this->render(
             'VeniceFrontBundle:Product:show.html.twig',
@@ -49,11 +48,11 @@ class ProductController extends Controller
     }
 
     /**
-     * @param ProductInterface $product
+     * @param Product $product
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function demoAction(ProductInterface $product)
+    public function demoAction(Product $product)
     {
         return $this->render('VeniceFrontBundle:Product:demo.html.twig', ['product' => $product]);
     }
@@ -67,11 +66,11 @@ class ProductController extends Controller
     }
 
     /**
-     * @param ProductInterface $product
+     * @param Product $product
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function immersionAction(ProductInterface $product)
+    public function immersionAction(Product $product)
     {
         $immersion = $product->getAllContentProductsForImmersion();
 
@@ -79,11 +78,11 @@ class ProductController extends Controller
     }
 
     /**
-     * @param ProductInterface $product
+     * @param Product $product
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function immersion2Action(ProductInterface $product)
+    public function immersion2Action(Product $product)
     {
         $immersion = $product->getAllContentProductsForImmersion();
 

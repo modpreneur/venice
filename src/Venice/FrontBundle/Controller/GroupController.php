@@ -8,7 +8,6 @@
 namespace Venice\FrontBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Venice\AppBundle\Entity\Interfaces\GroupContentInterface;
 
 /**
  * Class GroupController.
@@ -16,11 +15,11 @@ use Venice\AppBundle\Entity\Interfaces\GroupContentInterface;
 class GroupController extends Controller
 {
     /**
-     * @param GroupContentInterface $group
+     * @param GroupContent $group
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function showGroupAction(GroupContentInterface $group)
+    public function showGroupAction(GroupContent $group)
     {
         return $this->render(
             'VeniceFrontBundle:Content:uglyGroup.html.twig',
