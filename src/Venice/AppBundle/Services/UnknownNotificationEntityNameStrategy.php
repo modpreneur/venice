@@ -60,19 +60,19 @@ class UnknownNotificationEntityNameStrategy implements UnknownEntityNameStrategy
         /** @var PaySystemVendorInterface $vendor */
         $vendor = $this->entityManager->getRepository(
             $this->entityOverrideHandler->getEntityClass(PaySystemVendor::class)
-        )->find($data['paySystemVendor']);
+        )->findOneBy(['necktieId' => $data['paySystemVendor']]);
 
         if ($vendor !== null && $vendor->isDefaultForVenice()) {
             // change the default billing plan for the product
             /** @var StandardProductInterface $product */
             $product = $this->entityManager->getRepository(
                 $this->entityOverrideHandler->getEntityClass(StandardProduct::class)
-            )->find($data['product']);
+            )->findOneBy(['necktieId' => $data['product']]);
 
             /** @var BillingPlan $billingPlan */
             $billingPlan = $this->entityManager->getRepository(
                 $this->entityOverrideHandler->getEntityClass(BillingPlan::class)
-            )->find($data['defaultBillingPlan']);
+            )->findOneBy(['necktieId' => $data['defaultBillingPlan']]);
 
             if ($product !== null && $billingPlan !== null) {
                 $product->setNecktieDefaultBillingPlan($billingPlan);
