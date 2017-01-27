@@ -3,20 +3,15 @@ namespace Venice\AppBundle\Entity\Interfaces;
 
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
+use Trinity\Component\Core\Interfaces\EntityInterface;
+use Venice\AppBundle\Entity\Category;
 
 
 /**
  * Class BlogArticle.
  */
-interface BlogArticleInterface
+interface BlogArticleInterface extends EntityInterface
 {
-    /**
-     * Get id.
-     *
-     * @return int
-     */
-    public function getId();
-
     /**
      * @return string
      */
@@ -134,11 +129,6 @@ interface BlogArticleInterface
     public function removeProduct(ProductInterface $product);
 
     /**
-     * @return string
-     */
-    public function __toString();
-
-    /**
      * Returns createdAt value.
      *
      * @return \DateTime
@@ -168,4 +158,23 @@ interface BlogArticleInterface
      * Updates createdAt and updatedAt timestamps.
      */
     public function updateTimestamps();
+
+    /**
+     * @return ArrayCollection<Category>
+     */
+    public function getCategories();
+
+    /**
+     * @param CategoryInterface $category
+     *
+     * @return BlogArticleInterface
+     */
+    public function addCategory(CategoryInterface $category);
+
+    /**
+     * @param CategoryInterface $category
+     *
+     * @return BlogArticleInterface
+     */
+    public function removeCategory(CategoryInterface $category);
 }
