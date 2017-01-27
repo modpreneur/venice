@@ -7,19 +7,22 @@
         {{ form_row(form.handle) }}
         {{ form_row(form.dateToPublish, {'attr': {'class': 'dateSelect'}}) }}
         {{ form_row(form.products) }}
-        {{ form_row(form.BlogArticleChild) }}
-    <div class="row">
-        {% embed "TrinityAdminBundle:Form:form_layout.html.twig" %}
-            {% block form_row_label_content %}
-                <div style="display: none;">{{ form_label(form.content) }}</div>
-            {% endblock %}
 
-            {% block form_row_content %}
-                <div class="froala-tall">{{ form_widget(form.content) }}</div>
-            {% endblock %}
-        {% endembed %}
-    </div>
+        {% block additional_fields %}
+        {% endblock %}
 
-    {{ form_row(form.submit, {'attr': {'class': 'button button-success button-save'}} ) }}
+        <div class="row">
+            {% embed "TrinityAdminBundle:Form:form_layout.html.twig" %}
+                {% block form_row_label_content %}
+                    <div style="display: none;">{{ form_label(form.content) }}</div>
+                {% endblock %}
+
+                {% block form_row_content %}
+                    <div class="froala-tall">{{ form_widget(form.content) }}</div>
+                {% endblock %}
+            {% endembed %}
+        </div>
+
+        {{ form_row(form.submit, {'attr': {'class': 'button button-success button-save'}} ) }}
     {{ form_end(form) }}
 </div>

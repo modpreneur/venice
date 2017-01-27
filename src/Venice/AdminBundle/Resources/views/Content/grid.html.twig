@@ -7,7 +7,9 @@
 {% endblock %}
 
 {% block cell_name %}
-    {{ value }}
+    <a title="Go to {{ row.getName() }}" href="{{ path('admin_content_tabs', {'id':row.getId()}) }}">
+        {{ value }}
+    </a>
 {% endblock %}
 
 {% block cell_type %}

@@ -186,6 +186,8 @@ class BlogArticleController extends BaseAdminController
         $form->handleRequest($request);
 
         if ($form->isValid()) {
+            $blogArticle->setPublisher($this->getUser());
+
             $entityManager->persist($blogArticle);
             $entityManager->flush();
 
@@ -223,7 +225,7 @@ class BlogArticleController extends BaseAdminController
      * @throws \Symfony\Component\Form\Exception\LogicException
      * @throws \LogicException
      */
-    public function editAction(Request $request, BlogArticle $blogArticle)
+    public function editAction(BlogArticle $blogArticle)
     {
         $form = $this->getFormCreator()
             ->createEditForm(

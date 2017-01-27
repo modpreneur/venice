@@ -32,6 +32,11 @@ abstract class Product extends BaseProduct implements ProductInterface
     /**
      * @var string
      */
+    protected $name;
+
+    /**
+     * @var string
+     */
     protected $handle;
 
     /**
@@ -127,7 +132,15 @@ abstract class Product extends BaseProduct implements ProductInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param $name
      */
     public function setName($name)
     {

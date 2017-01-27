@@ -7,7 +7,7 @@
 {% endblock %}
 
 {% block cell_username %}
-    <a title="Go to {{ value }}" href="{{ path('admin_user_tabs',{'id':row.getId()}) }}" class="uppercase">{{ value }}</a>
+    <a title="Go to {{ value }}" href="{{ path('admin_user_tabs',{'id':row.getId()}) }}">{{ value }}</a>
 {% endblock %}
 
 {% block cell_details %}

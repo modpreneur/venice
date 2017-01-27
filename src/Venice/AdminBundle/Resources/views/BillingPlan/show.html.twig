@@ -1,43 +1,45 @@
-<div class="blog-show">
-    <table class="record_properties grid">
-        <tbody>
-            <tr>
-                <th>#</th>
-                <td>{{ billingPlan.id }}</td>
-            </tr>
-            <tr>
-                <th>Necktie id</th>
-                <td>{{ billingPlan.necktieId }}</td>
-            </tr>
-            <tr>
-                <th>Price</th>
-                <td>{{ billingPlan.price }}</td>
-            </tr>
-            <tr>
-                <th>Pay system</th>
-                <td>{{ billingPlan.paySystemVendor.paySystem.name }}</td>
-            </tr>
-            <tr>
-                <th>Pay system vendor</th>
-                <td>{{ billingPlan.paySystemVendor.name }}</td>
-            </tr>
-            <tr>
-                <th>InitialPrice</th>
-                <td>{{ billingPlan.initialPrice }}</td>
-            </tr>
-            <tr>
-                <th>RebillPrice</th>
-                <td>{{ billingPlan.rebillPrice }}</td>
-            </tr>
-            <tr>
-                <th>Frequency</th>
-                <td>{{ billingPlan.frequency }}</td>
-            </tr>
-            <tr>
-                <th>RebillTimes</th>
-                <td>{{ billingPlan.rebillTimes }}</td>
-            </tr>
+<div class="wrapper-grid">
+    <div class="blog-show">
+        <table class="record_properties grid">
+            <tbody>
+                <tr>
+                    <th>#</th>
+                    <td>{{ billingPlan.id }}</td>
+                </tr>
+                <tr>
+                    <th>Necktie id</th>
+                    <td>{{ billingPlan.necktieId }}</td>
+                </tr>
+                <tr>
+                    <th>Price</th>
+                    <td>{{ billingPlan.price }}</td>
+                </tr>
+                <tr>
+                    <th>Pay system</th>
+                    <td>{{ billingPlan.paySystemVendor.paySystem.name }}</td>
+                </tr>
+                <tr>
+                    <th>Pay system vendor</th>
+                    <td>{{ billingPlan.paySystemVendor.name }}</td>
+                </tr>
+                <tr>
+                    <th>InitialPrice</th>
+                    <td>{{ billingPlan.initialPrice }}</td>
+                </tr>
+                <tr>
+                    <th>RebillPrice</th>
+                    <td>{{ billingPlan.rebillPrice }}</td>
+                </tr>
+                <tr>
+                    <th>Frequency</th>
+                    <td>{{ billingPlan.frequency }}</td>
+                </tr>
+                <tr>
+                    <th>RebillTimes</th>
+                    <td>{{ billingPlan.rebillTimes }}</td>
+                </tr>
 
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+    </div>
 </div>

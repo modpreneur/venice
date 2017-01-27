@@ -1,26 +1,28 @@
-<div class="contentProduct-show">
-    <table class="record_properties grid">
-        <tbody>
-            <tr>
-                <th>Product</th>
-                <td>
-                    <a href="{{ path("admin_product_tabs", {"id": contentProduct.product.id }) }}">{{ contentProduct.product.name }}</a>
-                </td>
-            </tr>
-            <tr>
-                <th>Content</th>
-                <td>
-                    <a href="{{ path("admin_content_tabs", {"id": contentProduct.content.id }) }}">{{ contentProduct.content.name }}</a>
-                </td>
-            </tr>
-            <tr>
-                <th>Delay</th>
-                <td>{{ contentProduct.delay }}</td>
-            </tr>
-            <tr>
-                <th>Order number</th>
-                <td>{{ contentProduct.orderNumber }}</td>
-            </tr>
-        </tbody>
-    </table>
+<div class="wrapper-grid">
+    <div class="contentProduct-show">
+        <table class="record_properties grid">
+            <tbody>
+                <tr>
+                    <th>Product</th>
+                    <td>
+                        <a href="{{ path("admin_product_tabs", {"id": contentProduct.product.id }) }}">{{ contentProduct.product.name }}</a>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Content</th>
+                    <td>
+                        <a href="{{ path("admin_content_tabs", {"id": contentProduct.content.id }) }}">{{ contentProduct.content.name }}</a>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Delay</th>
+                    <td>{{ contentProduct.delay }}</td>
+                </tr>
+                <tr>
+                    <th>Order number</th>
+                    <td>{{ contentProduct.orderNumber }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </div>

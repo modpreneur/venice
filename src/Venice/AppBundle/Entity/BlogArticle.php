@@ -19,7 +19,7 @@ use Venice\AppBundle\Traits\Timestampable;
 /**
  * Class BlogArticle.
  */
-class BlogArticle implements EntityInterface, BlogArticleInterface
+class BlogArticle implements EntityInterface
 {
     use Timestampable;
 
@@ -67,6 +67,8 @@ class BlogArticle implements EntityInterface, BlogArticleInterface
      * @var ArrayCollection<Product>
      */
     protected $products;
+
+    protected $category;
 
     public function __construct()
     {
@@ -305,5 +307,21 @@ class BlogArticle implements EntityInterface, BlogArticleInterface
     public function __toString()
     {
         return $this->title;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCategory()
+    {
+        return $this->category;
+    }
+
+    /**
+     * @param mixed $category
+     */
+    public function setCategory($category)
+    {
+        $this->category = $category;
     }
 }

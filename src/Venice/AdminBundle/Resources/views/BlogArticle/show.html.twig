@@ -1,44 +1,46 @@
 {#todo: @DavidCzernin display content as it will be displayed in the user's section with proper css#}
 
-<div class="blog-show">
-    <table class="record_properties grid">
-        <tbody>
-            <tr>
-                <th>#</th>
-                <td>{{ article.id }}</td>
-            </tr>
-            <tr>
-                <th>Title</th>
-                <td>{{ article.title }}</td>
-            </tr>
-            <tr>
-                <th>Handle</th>
-                <td>{{ article.handle }}</td>
-            </tr>
-            <tr>
-                <th>Date written</th>
-                <td>{{ article.createdAt|date("Y-m-d") }}</td>
-            </tr>
-            <tr>
-                <th>In products</th>
-                <td>
-                    <ul>
-                    {% for index, product in article.products %}
-                        <li>
-                            <a href="{{ path("admin_product_tabs", {"id": product.id}) }}">{{ product.name }}</a>
-                        </li>
-                    {% endfor %}
-                    </ul>
-                </td>
-            </tr>
-            <tr>
-                <th>Date to publish</th>
-                <td>{{ article.dateToPublish|date("Y-m-d")}}</td>
-            </tr>
-        </tbody>
-    </table>
+<div class="wrapper-grid">
+    <div class="blog-show">
+        <table class="record_properties grid">
+            <tbody>
+                <tr>
+                    <th>#</th>
+                    <td>{{ article.id }}</td>
+                </tr>
+                <tr>
+                    <th>Title</th>
+                    <td>{{ article.title }}</td>
+                </tr>
+                <tr>
+                    <th>Handle</th>
+                    <td>{{ article.handle }}</td>
+                </tr>
+                <tr>
+                    <th>Date written</th>
+                    <td>{{ article.createdAt|date("Y-m-d") }}</td>
+                </tr>
+                <tr>
+                    <th>In products</th>
+                    <td>
+                        <ul>
+                        {% for index, product in article.products %}
+                            <li>
+                                <a href="{{ path("admin_product_tabs", {"id": product.id}) }}">{{ product.name }}</a>
+                            </li>
+                        {% endfor %}
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Date to publish</th>
+                    <td>{{ article.dateToPublish|date("Y-m-d")}}</td>
+                </tr>
+            </tbody>
+        </table>
 
-    <div class="article-content">
-        {{ article.content|raw }}
+        <div class="article-content">
+            {{ article.content|raw }}
+        </div>
     </div>
 </div>

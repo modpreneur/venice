@@ -66,6 +66,16 @@ Venice\AppBundle\Entity\BlogArticle:
             precision: 0
             column: updated_at
     manyToOne:
+        category:
+            targetEntity: Venice\AppBundle\Entity\Category
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: BlogArticle
+            inversedBy: null
+            joinColumns:
+                category_id:
+                    referencedColumnName: id
+            orphanRemoval: false
         publisher:
             targetEntity: Venice\AppBundle\Entity\User
             cascade: {  }
