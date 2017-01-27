@@ -65,17 +65,6 @@ Venice\AppBundle\Entity\BlogArticle:
             nullable: false
             precision: 0
             column: updated_at
-    manyToOne:
-        category:
-            targetEntity: Venice\AppBundle\Entity\Category
-            cascade: {  }
-            fetch: LAZY
-            mappedBy: BlogArticle
-            inversedBy: null
-            joinColumns:
-                category_id:
-                    referencedColumnName: id
-            orphanRemoval: false
         publisher:
             targetEntity: Venice\AppBundle\Entity\User
             cascade: {  }
@@ -87,24 +76,44 @@ Venice\AppBundle\Entity\BlogArticle:
                     referencedColumnName: id
             orphanRemoval: false
     manyToMany:
-        products:
-            targetEntity: Venice\AppBundle\Entity\Product\Product
-            cascade:
-                - persist
-            fetch: LAZY
-            mappedBy: null
-            inversedBy: articles
-            joinTable:
-                name: blog_article_product
-                joinColumns:
-                    -
-                        name: blog_article_id
-                        referencedColumnName: id
-                        onDelete: CASCADE
-                inverseJoinColumns:
-                    -
-                        name: product_id
-                        referencedColumnName: id
-                        onDelete: CASCADE
-            orderBy: null
+            categories:
+                targetEntity: Venice\AppBundle\Entity\Category
+                cascade:
+                    - persist
+                fetch: LAZY
+                inversedBy: blogArticles
+                joinTable:
+                    name: blog_article_category
+                    joinColumns:
+                        -
+                            name: blog_article_id
+                            referencedColumnName: id
+                            onDelete: CASCADE
+                    inverseJoinColumns:
+                        -
+                            name: category_id
+                            referencedColumnName: id
+                            onDelete: CASCADE
+                orderBy: null
+
+            products:
+                  targetEntity: Venice\AppBundle\Entity\Product\Product
+                  cascade:
+                      - persist
+                  fetch: LAZY
+                  mappedBy: null
+                  inversedBy: articles
+                  joinTable:
+                      name: blog_article_product
+                      joinColumns:
+                          -
+                              name: blog_article_id
+                              referencedColumnName: id
+                              onDelete: CASCADE
+                      inverseJoinColumns:
+                          -
+                              name: product_id
+                              referencedColumnName: id
+                              onDelete: CASCADE
+                  orderBy: null
     lifecycleCallbacks: {  }

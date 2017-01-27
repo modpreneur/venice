@@ -7,7 +7,7 @@ Venice\AppBundle\Entity\Category:
     discriminatorMap:
         venice_category: Venice\AppBundle\Entity\Category
     table: category
-#    repositoryClass: Venice\AppBundle\Entity\Repositories\BlogArticleRepository
+    repositoryClass: Venice\AppBundle\Entity\Repositories\CategoryRepository
 
     id:
         id:
@@ -29,11 +29,7 @@ Venice\AppBundle\Entity\Category:
             nullable: false
             precision: 0
 
-    OneToMany:
-        blog_article:
-            targetEntity: Venice\AppBundle\Entity\BlogArticle
-            cascade: {  }
-            fetch: LAZY
-            targetEntity: BlogArticle
-            mappedBy: Category
-            orphanRemoval: false
+    manyToMany:
+          blogArticles:
+              targetEntity: Venice\AppBundle\Entity\BlogArticle
+              mappedBy: categories

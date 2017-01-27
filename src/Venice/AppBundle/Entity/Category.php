@@ -3,17 +3,18 @@
  * Created by PhpStorm.
  * User: marek
  * Date: 24/01/17
- * Time: 17:55
+ * Time: 17:55.
  */
+
 namespace Venice\AppBundle\Entity;
 
-use Trinity\Component\Core\Interfaces\EntityInterface;
+use Doctrine\Common\Collections\ArrayCollection;
+use Venice\AppBundle\Entity\Interfaces\CategoryInterface;
 
 /**
- * Class Category
- * @package Venice\AppBundle\Entity
+ * Class Category.
  */
-class Category implements EntityInterface
+class Category implements CategoryInterface
 {
     /**
      * @var int
@@ -26,6 +27,32 @@ class Category implements EntityInterface
     protected $name;
 
     /**
+     * @var string
+     */
+    protected $handle;
+
+    /**
+     * @var ArrayCollection<BlogArticle>
+     */
+    protected $blogArticles;
+
+    /**
+     * Category constructor.
+     */
+    public function __construct()
+    {
+        $this->blogArticles = new ArrayCollection();
+    }
+
+    /**
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
      * @return string
      */
     public function getName()
@@ -35,18 +62,68 @@ class Category implements EntityInterface
 
     /**
      * @param string $name
+     *
+     * @return CategoryInterface
      */
-    public function setName($name)
+    public function setName(string $name)
     {
         $this->name = $name;
+
+        return $this;
     }
 
     /**
-     * @return int
+     * @return string
      */
-    public function getId()
+    public function getHandle()
     {
-        return $this->id;
+        return $this->handle;
+    }
+
+    /**
+     * @param string $handle
+     *
+     * @return CategoryInterface
+     */
+    public function setHandle(string $handle)
+    {
+        $this->handle = $handle;
+
+        return $this;
+    }
+
+    /**
+     * @return ArrayCollection<BlogArticle>
+     */
+    public function getBlogArticles()
+    {
+        return $this->blogArticles;
+    }
+
+    /**
+     * @param BlogArticle $blogArticle
+     *
+     * @return $this
+     */
+    public function addBlogArticle(BlogArticle $blogArticle)
+    {
+        if (!$this->blogArticles->contains($blogArticle)) {
+            $this->blogArticles->add($blogArticle);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param BlogArticle $blogArticle
+     *
+     * @return $this
+     */
+    public function removeBlogArticle(BlogArticle $blogArticle)
+    {
+        $this->blogArticles->remove($blogArticle);
+
+        return $this;
     }
 
     /**

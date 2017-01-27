@@ -5,13 +5,14 @@
  * Date: 02.10.15
  * Time: 17:47.
  */
+
 namespace Venice\AppBundle\Entity;
 
 use Cocur\Slugify\Slugify;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
-use Trinity\Component\Core\Interfaces\EntityInterface;
 use Venice\AppBundle\Entity\Interfaces\BlogArticleInterface;
+use Venice\AppBundle\Entity\Interfaces\CategoryInterface;
 use Venice\AppBundle\Entity\Interfaces\ProductInterface;
 use Venice\AppBundle\Entity\Interfaces\UserInterface;
 use Venice\AppBundle\Traits\Timestampable;
@@ -19,7 +20,7 @@ use Venice\AppBundle\Traits\Timestampable;
 /**
  * Class BlogArticle.
  */
-class BlogArticle implements EntityInterface
+class BlogArticle implements BlogArticleInterface
 {
     use Timestampable;
 
@@ -68,12 +69,16 @@ class BlogArticle implements EntityInterface
      */
     protected $products;
 
-    protected $category;
+    /**
+     * @var ArrayCollection<Category>
+     */
+    protected $categories;
 
     public function __construct()
     {
         $this->updateTimestamps();
         $this->products = new ArrayCollection();
+        $this->categories = new ArrayCollection();
     }
 
     /**
@@ -107,7 +112,7 @@ class BlogArticle implements EntityInterface
     /**
      * Create a new handle from given source and set it to the entity.
      *
-     * @param $source String which will be source of a new handle.
+     * @param $source String which will be source of a new handle
      */
     public function createHandle($source)
     {
@@ -215,7 +220,7 @@ class BlogArticle implements EntityInterface
     /**
      * Check if the article will be available in given DateTime.
      *
-     * @param DateTime|null $dateTime If null check if the article is available now.
+     * @param DateTime|null $dateTime If null check if the article is available now
      *
      * @return bool
      */
@@ -276,7 +281,7 @@ class BlogArticle implements EntityInterface
     /**
      * @param ProductInterface $product
      *
-     * @return $this
+     * @return BlogArticleInterface
      */
     public function addProduct(ProductInterface $product)
     {
@@ -291,7 +296,7 @@ class BlogArticle implements EntityInterface
     /**
      * @param ProductInterface $product
      *
-     * @return $this
+     * @return BlogArticleInterface
      */
     public function removeProduct(ProductInterface $product)
     {
@@ -302,26 +307,44 @@ class BlogArticle implements EntityInterface
     }
 
     /**
+     * @return ArrayCollection<Category>
+     */
+    public function getCategories()
+    {
+        return $this->categories;
+    }
+
+    /**
+     * @param CategoryInterface $category
+     *
+     * @return BlogArticleInterface
+     */
+    public function addCategory(CategoryInterface $category)
+    {
+        if (!$this->categories->contains($category)) {
+            $this->categories->add($category);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param CategoryInterface $category
+     *
+     * @return BlogArticleInterface
+     */
+    public function removeCategory(CategoryInterface $category)
+    {
+        $this->categories->remove($category);
+
+        return $this;
+    }
+
+    /**
      * @return string
      */
     public function __toString()
     {
         return $this->title;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getCategory()
-    {
-        return $this->category;
-    }
-
-    /**
-     * @param mixed $category
-     */
-    public function setCategory($category)
-    {
-        $this->category = $category;
     }
 }
