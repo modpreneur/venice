@@ -33,7 +33,7 @@ interface CategoryInterface extends EntityInterface
      *
      * @return CategoryInterface
      */
-    public function setHandle(string $handle);
+    public function setHandle($handle);
 
     /**
      * @return ArrayCollection<BlogArticle>

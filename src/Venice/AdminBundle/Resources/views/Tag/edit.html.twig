@@ -1,0 +1,13 @@
+<div class="box box-edit-form" id="tag-form" data-slugify="{{ path('api_slugify')}}">
+    {{ form_start(form, {'attr': {'class': 'edit-form'}} ) }}
+        {{ form_errors(form) }}
+
+        {{ form_row(form.name) }}
+        {{ form_row(form.handle) }}
+
+        {% block additional_fields %}
+        {% endblock %}
+
+        {{ form_row(form.submit, {'attr': {'class': 'button button-success button-save'}} ) }}
+    {{ form_end(form) }}
+</div>

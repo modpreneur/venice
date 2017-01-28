@@ -13,7 +13,9 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Venice\AppBundle\Entity\BlogArticle;
+use Venice\AppBundle\Entity\Category;
 use Venice\AppBundle\Entity\Product\Product;
+use Venice\AppBundle\Entity\Tag;
 
 /**
  * Class BlogArticleController.
@@ -36,7 +38,7 @@ class BlogArticleController extends BaseAdminController
     public function indexAction(Request $request)
     {
         $this->getBreadcrumbs()
-            ->addRouteItem('Blog articles', 'admin_blog_article_index');
+            ->addRouteItem('Blog', 'admin_blog_tabs');
 
         $max = $this->getEntityManager()->getRepository('VeniceAppBundle:BlogArticle')->count();
         $url = $this->generateUrl('grid_default', ['entity' => 'BlogArticle']);
@@ -51,6 +53,8 @@ class BlogArticleController extends BaseAdminController
         $gridConfBuilder->addColumn('title', 'Title');
         $gridConfBuilder->addColumn('handle', 'Handle');
         $gridConfBuilder->addColumn('products', 'Products');
+        $gridConfBuilder->addColumn('categories', 'Categories');
+        $gridConfBuilder->addColumn('tags', 'Tags');
         $gridConfBuilder->addColumn('details', ' ', ['allowOrder' => false, 'className' => 'cell-center']);
 
         return $this->render(
@@ -77,7 +81,7 @@ class BlogArticleController extends BaseAdminController
     public function tabsAction(Request $request, BlogArticle $article)
     {
         $this->getBreadcrumbs()
-            ->addRouteItem('Blog articles', 'admin_blog_article_index')
+            ->addRouteItem('Blog', 'admin_blog_tabs')
             ->addRouteItem($article->getTitle(), 'admin_blog_article_tabs', ['id' => $article->getId()]);
 
         if (!$article) {
@@ -127,7 +131,7 @@ class BlogArticleController extends BaseAdminController
     public function newAction(Request $request)
     {
         $this->getBreadcrumbs()
-            ->addRouteItem('Blog articles', 'admin_blog_article_index')
+            ->addRouteItem('Blog', 'admin_blog_tabs')
             ->addRouteItem('New blog article', 'admin_blog_article_new');
 
         $blogArticle = $this->getEntityOverrideHandler()->getEntityInstance(BlogArticle::class);
@@ -141,13 +145,17 @@ class BlogArticleController extends BaseAdminController
 
         $dateFormat = $this->get('trinity.settings')->get('date_format');
         $productCount = $this->getDoctrine()->getRepository(Product::class)->count();
+        $categoryCount = $this->getDoctrine()->getRepository(Category::class)->count();
+        $tagCount = $this->getDoctrine()->getRepository(Tag::class)->count();
 
         return $this->render(
             'VeniceAdminBundle:BlogArticle:new.html.twig',
             [
                 'form' => $form->createView(),
                 'dateFormat' => $dateFormat,
-                'product_count' => $productCount,
+                'productCount' => $productCount,
+                'categoryCount' => $categoryCount,
+                'tagCount' => $tagCount,
             ]
         );
     }
@@ -375,7 +383,7 @@ class BlogArticleController extends BaseAdminController
         return new JsonResponse(
             [
                 'message' => 'Blog article successfully deleted.',
-                'location' => $this->generateUrl('admin_blog_article_index'),
+                'location' => $this->generateUrl('admin_blog_tabs'),
             ],
             302
         );

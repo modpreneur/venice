@@ -8,6 +8,7 @@
 
 namespace Venice\AppBundle\Entity;
 
+use Cocur\Slugify\Slugify;
 use Doctrine\Common\Collections\ArrayCollection;
 use Venice\AppBundle\Entity\Interfaces\CategoryInterface;
 
@@ -69,6 +70,8 @@ class Category implements CategoryInterface
     {
         $this->name = $name;
 
+        $this->createHandle($name);
+
         return $this;
     }
 
@@ -78,18 +81,6 @@ class Category implements CategoryInterface
     public function getHandle()
     {
         return $this->handle;
-    }
-
-    /**
-     * @param string $handle
-     *
-     * @return CategoryInterface
-     */
-    public function setHandle(string $handle)
-    {
-        $this->handle = $handle;
-
-        return $this;
     }
 
     /**
@@ -124,6 +115,30 @@ class Category implements CategoryInterface
         $this->blogArticles->remove($blogArticle);
 
         return $this;
+    }
+
+    /**
+     * @param string $handle
+     *
+     * @return CategoryInterface
+     */
+    public function setHandle($handle)
+    {
+        if ($handle !== null) {
+            $this->handle = $handle;
+        }
+
+        return $this;
+    }
+
+    /**
+     * Create a new handle from given source and set it to the entity.
+     *
+     * @param $source String which will be source of a new handle
+     */
+    public function createHandle($source)
+    {
+        $this->handle = (new Slugify())->slugify($source);
     }
 
     /**

@@ -1,0 +1,173 @@
+admin_blog_tabs:
+    path: /admin/blog
+    defaults: { _controller: 'VeniceAdminBundle:Blog:tabs' }
+    options: { compiler_class: Symfony\Component\Routing\RouteCompiler }
+
+admin_category_index:
+    path: /admin/blog/category
+    defaults: { _controller: 'VeniceAdminBundle:Category:index' }
+    options: { compiler_class: Symfony\Component\Routing\RouteCompiler }
+
+admin_category_tabs:
+    path: '/admin/blog/category/tabs/{id}'
+    defaults: { _controller: 'VeniceAdminBundle:Category:tabs' }
+    options: { compiler_class: Symfony\Component\Routing\RouteCompiler }
+    methods: [GET]
+
+admin_category_show:
+    path: '/admin/blog/category/show/{id}'
+    defaults: { _controller: 'VeniceAdminBundle:Category:show' }
+    options: { compiler_class: Symfony\Component\Routing\RouteCompiler }
+    methods: [GET]
+
+admin_category_new:
+    path: /admin/blog/category/new
+    defaults: { _controller: 'VeniceAdminBundle:Category:new' }
+    options: { compiler_class: Symfony\Component\Routing\RouteCompiler }
+    methods: [GET]
+
+admin_category_create:
+    path: /admin/blog/category/create
+    defaults: { _controller: 'VeniceAdminBundle:Category:create' }
+    options: { compiler_class: Symfony\Component\Routing\RouteCompiler }
+    methods: [POST]
+
+admin_category_edit:
+    path: '/admin/blog/category/edit/{id}'
+    defaults: { _controller: 'VeniceAdminBundle:Category:edit' }
+    requirements: { id: \d+ }
+    options: { compiler_class: Symfony\Component\Routing\RouteCompiler }
+    methods: [GET]
+
+admin_category_update:
+    path: '/admin/blog/category/{id}/update'
+    defaults: { _controller: 'VeniceAdminBundle:Category:update' }
+    requirements: { id: \d+ }
+    options: { compiler_class: Symfony\Component\Routing\RouteCompiler }
+    methods: [PUT]
+
+admin_category_delete_tab:
+    path: '/admin/blog/category/tab/{id}/delete'
+    defaults: { _controller: 'VeniceAdminBundle:Category:deleteTab' }
+    options: { compiler_class: Symfony\Component\Routing\RouteCompiler }
+    methods: [GET]
+
+admin_category_delete:
+    path: '/admin/blog/category/{id}/delete'
+    defaults: { _controller: 'VeniceAdminBundle:Category:delete' }
+    options: { compiler_class: Symfony\Component\Routing\RouteCompiler }
+    methods: [DELETE]
+
+
+
+
+
+admin_tag_index:
+    path: /admin/blog/tag
+    defaults: { _controller: 'VeniceAdminBundle:Tag:index' }
+    options: { compiler_class: Symfony\Component\Routing\RouteCompiler }
+
+admin_tag_tabs:
+    path: '/admin/blog/tag/tabs/{id}'
+    defaults: { _controller: 'VeniceAdminBundle:Tag:tabs' }
+    options: { compiler_class: Symfony\Component\Routing\RouteCompiler }
+    methods: [GET]
+
+admin_tag_show:
+    path: '/admin/blog/tag/show/{id}'
+    defaults: { _controller: 'VeniceAdminBundle:Tag:show' }
+    options: { compiler_class: Symfony\Component\Routing\RouteCompiler }
+    methods: [GET]
+
+admin_tag_new:
+    path: /admin/blog/tag/new
+    defaults: { _controller: 'VeniceAdminBundle:Tag:new' }
+    options: { compiler_class: Symfony\Component\Routing\RouteCompiler }
+    methods: [GET]
+
+admin_tag_create:
+    path: /admin/blog/tag/create
+    defaults: { _controller: 'VeniceAdminBundle:Tag:create' }
+    options: { compiler_class: Symfony\Component\Routing\RouteCompiler }
+    methods: [POST]
+
+admin_tag_edit:
+    path: '/admin/blog/tag/edit/{id}'
+    defaults: { _controller: 'VeniceAdminBundle:Tag:edit' }
+    requirements: { id: \d+ }
+    options: { compiler_class: Symfony\Component\Routing\RouteCompiler }
+    methods: [GET]
+
+admin_tag_update:
+    path: '/admin/blog/tag/{id}/update'
+    defaults: { _controller: 'VeniceAdminBundle:Tag:update' }
+    requirements: { id: \d+ }
+    options: { compiler_class: Symfony\Component\Routing\RouteCompiler }
+    methods: [PUT]
+
+admin_tag_delete_tab:
+    path: '/admin/blog/tag/tab/{id}/delete'
+    defaults: { _controller: 'VeniceAdminBundle:Tag:deleteTab' }
+    options: { compiler_class: Symfony\Component\Routing\RouteCompiler }
+    methods: [GET]
+
+admin_tag_delete:
+    path: '/admin/blog/tag/{id}/delete'
+    defaults: { _controller: 'VeniceAdminBundle:Tag:delete' }
+    options: { compiler_class: Symfony\Component\Routing\RouteCompiler }
+    methods: [DELETE]
+
+admin_blog_article_index:
+    path: /admin/blog/article
+    defaults: { _controller: 'VeniceAdminBundle:BlogArticle:index' }
+    options: { compiler_class: Symfony\Component\Routing\RouteCompiler }
+
+admin_blog_article_tabs:
+    path: '/admin/blog/article/tabs/{id}'
+    defaults: { _controller: 'VeniceAdminBundle:BlogArticle:tabs' }
+    options: { compiler_class: Symfony\Component\Routing\RouteCompiler }
+    methods: [GET]
+
+admin_blog_article_show:
+    path: '/admin/blog/article/show/{id}'
+    defaults: { _controller: 'VeniceAdminBundle:BlogArticle:show' }
+    options: { compiler_class: Symfony\Component\Routing\RouteCompiler }
+    methods: [GET]
+
+admin_blog_article_new:
+    path: /admin/blog/article/new
+    defaults: { _controller: 'VeniceAdminBundle:BlogArticle:new' }
+    options: { compiler_class: Symfony\Component\Routing\RouteCompiler }
+    methods: [GET]
+
+admin_blog_article_create:
+    path: /admin/blog/article/create
+    defaults: { _controller: 'VeniceAdminBundle:BlogArticle:create' }
+    options: { compiler_class: Symfony\Component\Routing\RouteCompiler }
+    methods: [POST]
+
+admin_blog_article_edit:
+    path: '/admin/blog/article/edit/{id}'
+    defaults: { _controller: 'VeniceAdminBundle:BlogArticle:edit' }
+    requirements: { id: \d+ }
+    options: { compiler_class: Symfony\Component\Routing\RouteCompiler }
+    methods: [GET]
+
+admin_blog_article_update:
+    path: '/admin/blog/article/{id}/update'
+    defaults: { _controller: 'VeniceAdminBundle:BlogArticle:update' }
+    requirements: { id: \d+ }
+    options: { compiler_class: Symfony\Component\Routing\RouteCompiler }
+    methods: [PUT]
+
+admin_blog_article_delete_tab:
+    path: '/admin/blog/article/tab/{id}/delete'
+    defaults: { _controller: 'VeniceAdminBundle:BlogArticle:deleteTab' }
+    options: { compiler_class: Symfony\Component\Routing\RouteCompiler }
+    methods: [GET]
+
+admin_blog_article_delete:
+    path: '/admin/blog/article/{id}/delete'
+    defaults: { _controller: 'VeniceAdminBundle:BlogArticle:delete' }
+    options: { compiler_class: Symfony\Component\Routing\RouteCompiler }
+    methods: [DELETE]

@@ -1,0 +1,25 @@
+<div class="box">
+    {% if count>0 %}
+        <div id="category-grid"  data-config="{{ gridConfiguration }}">
+        </div>
+    {% else %}
+        <div class="row">
+            <div class="span-none-padding-xlarge-24 margin-auto">
+                <div class="span-none-xlarge-10 margin-top-20">
+                    <div class="info-empty-form">
+                        <div class="row"><i class="trinity-info"></i></div>
+                        <div class="row"><h2 class="warning">NO DATA</h2></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+    {% if (is_granted('ROLE_ADMIN_BLOG_EDIT')) %}
+        <div class="info-empty-form">
+            <a class="button button-addNew" id="newIcon" href="{{ path('admin_category_new') }}">
+                Add new category
+            </a>
+        </div>
+    {% endif %}
+</div>

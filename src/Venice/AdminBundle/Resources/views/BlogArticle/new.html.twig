@@ -10,11 +10,6 @@
     New blog article
 {% endblock %}
 
-{% block pageAction %}
-    {{ parent() }}
-    {% include "VeniceAdminBundle:Common:goUpAction.html.twig" with {"url": path("admin_blog_article_index"), "tooltip": "Go back to blog articles"} %}
-{% endblock %}
-
 {% block pageBody %}
     <div class="box box-new-form" id="blog-article-form" data-slugify="{{ path('api_slugify')}}">
 
@@ -34,10 +29,9 @@
 
                 {{ form_row(form.title) }}
                 {{ form_row(form.handle) }}
-                {{ form_row(form.BlogArticleChild) }}
                 {{ form_row(form.dateToPublish, {'attr': {'class': 'dateSelect'}}) }}
 
-                {% if product_count>0 %}
+                {% if productCount > 0 %}
                     {{ form_row(form.products) }}
                 {% else %}
                     <div style="display: none;">
@@ -53,6 +47,50 @@
                             {% block form_row_input_content %}
                                 <span class="text">
                                     <a href="{{ path('admin_product_new') }}">No products created, click here to add one</a>
+                                </span>
+                            {% endblock %}
+                        {% endembed %}
+                    </div>
+                {% endif %}
+
+                {% if categoryCount > 0 %}
+                    {{ form_row(form.categories) }}
+                {% else %}
+                    <div style="display: none;">
+                        {{ form_row(form.categories) }}
+                    </div>
+
+                    <div class="row">
+                        {% embed "TrinityAdminBundle:Form:form_layout.html.twig" %}
+                            {% block form_row_label_content %}
+                                {{ form_label(form.categories) }}
+                            {% endblock %}
+
+                            {% block form_row_input_content %}
+                                <span class="text">
+                                    <a href="{{ path('admin_category_new') }}">No categories created, click here to add one</a>
+                                </span>
+                            {% endblock %}
+                        {% endembed %}
+                    </div>
+                {% endif %}
+
+                {% if tagCount > 0 %}
+                    {{ form_row(form.tags) }}
+                {% else %}
+                    <div style="display: none;">
+                        {{ form_row(form.tags) }}
+                    </div>
+
+                    <div class="row">
+                        {% embed "TrinityAdminBundle:Form:form_layout.html.twig" %}
+                            {% block form_row_label_content %}
+                                {{ form_label(form.tags) }}
+                            {% endblock %}
+
+                            {% block form_row_input_content %}
+                                <span class="text">
+                                    <a href="{{ path('admin_category_new') }}">No tags created, click here to add one</a>
                                 </span>
                             {% endblock %}
                         {% endembed %}

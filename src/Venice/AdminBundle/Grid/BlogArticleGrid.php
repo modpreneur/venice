@@ -7,10 +7,8 @@
  */
 namespace Venice\AdminBundle\Grid;
 
-use Trinity\Bundle\GridBundle\Grid\BaseGrid;
-
 /**
- * Class ProductGrid.
+ * Class TagGrid.
  */
 class BlogArticleGrid extends BaseVeniceGrid
 {

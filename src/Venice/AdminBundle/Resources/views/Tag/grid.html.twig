@@ -1,0 +1,28 @@
+{% block cell__id %}
+    {{ row.getId() }}
+{% endblock %}
+
+{% block cell_id %}
+    {{ value }}
+{% endblock %}
+
+{% block cell_name %}
+    <a title="Go to {{ row.getName() }}" href="{{ path('admin_tag_tabs', {'id':row.getId()}) }}">
+        {{ value }}
+    </a>
+{% endblock %}
+
+{% block cell_handle %}
+    {{ value }}
+{% endblock %}
+
+{% block cell_blogArticles %}
+    {% for article in value %}
+        <a href="{{ path('admin_blog_article_tabs',{'id':article.id}) }}" >{{ article.title }}</a>
+        {% if not loop.last %},{% endif %}
+    {% endfor %}
+{% endblock %}
+
+{% block cell_details %}
+    <a href="{{ path('admin_tag_tabs',{'id':row.getId()}) }}" class="button-small pull-right margin-right-10">Get details</a>
+{% endblock %}

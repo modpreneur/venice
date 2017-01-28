@@ -1,35 +1,25 @@
-{% extends('VeniceAdminBundle::BlogArticle/base.html.twig') %}
-
-{% block pageTitle %}
-    Blog articles
-{% endblock %}
-
-
-{% block pageBody %}
-    <div class="box">
-        {% if count>0 %}
-            <div id="blog-article-grid"  data-config="{{ gridConfiguration }}">
-            </div>
-        {% else %}
-
-
-            <div class="row">
-                <div class="span-none-padding-xlarge-24 margin-auto">
-                    <div class="span-none-xlarge-10 margin-top-20">
-                        <div class="info-empty-form">
-                            <div class="row"><i class="trinity-info"></i></div>
-                            <div class="row"><h2 class="warning">NO DATA</h2></div>
-                        </div>
+<div class="box">
+    {% if count>0 %}
+        <div id="blog-article-grid"  data-config="{{ gridConfiguration }}">
+        </div>
+    {% else %}
+        <div class="row">
+            <div class="span-none-padding-xlarge-24 margin-auto">
+                <div class="span-none-xlarge-10 margin-top-20">
+                    <div class="info-empty-form">
+                        <div class="row"><i class="trinity-info"></i></div>
+                        <div class="row"><h2 class="warning">NO DATA</h2></div>
                     </div>
                 </div>
-                {% if (is_granted('ROLE_ADMIN_PRODUCT_EDIT')) %}
-                    <div class="info-empty-form">
-                        <a class="button button-addNew" id="newIcon" href="{{ path('admin_blog_article_new') }}">
-                            Add new article
-                        </a>
-                    </div>
-                {% endif %}
             </div>
-        {% endif %}
-    </div>
-{% endblock %}
+        </div>
+    {% endif %}
+
+    {% if (is_granted('ROLE_ADMIN_BLOG_EDIT')) %}
+        <div class="info-empty-form">
+            <a class="button button-addNew" id="newIcon" href="{{ path('admin_blog_article_new') }}">
+                Add new article
+            </a>
+        </div>
+    {% endif %}
+</div>

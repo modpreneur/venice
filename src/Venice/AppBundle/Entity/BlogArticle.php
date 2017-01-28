@@ -15,6 +15,7 @@ use Venice\AppBundle\Entity\Interfaces\BlogArticleInterface;
 use Venice\AppBundle\Entity\Interfaces\CategoryInterface;
 use Venice\AppBundle\Entity\Interfaces\ProductInterface;
 use Venice\AppBundle\Entity\Interfaces\UserInterface;
+use Venice\AppBundle\Traits\Taggable;
 use Venice\AppBundle\Traits\Timestampable;
 
 /**
@@ -23,6 +24,7 @@ use Venice\AppBundle\Traits\Timestampable;
 class BlogArticle implements BlogArticleInterface
 {
     use Timestampable;
+    use Taggable;
 
     /**
      * @var int Used for creating a preview
@@ -79,6 +81,7 @@ class BlogArticle implements BlogArticleInterface
         $this->updateTimestamps();
         $this->products = new ArrayCollection();
         $this->categories = new ArrayCollection();
+        $this->tags = new ArrayCollection();
     }
 
     /**
@@ -323,6 +326,7 @@ class BlogArticle implements BlogArticleInterface
     {
         if (!$this->categories->contains($category)) {
             $this->categories->add($category);
+            $category->addBlogArticle($this);
         }
 
         return $this;
@@ -336,6 +340,7 @@ class BlogArticle implements BlogArticleInterface
     public function removeCategory(CategoryInterface $category)
     {
         $this->categories->remove($category);
+        $category->removeBlogArticle($this);
 
         return $this;
     }

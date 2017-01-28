@@ -89,6 +89,18 @@ services:
         tags:
              - { name: trinity.grid, alias: blogarticle }
 
+    venice.admin.grid.category:
+        class: Venice\AdminBundle\Grid\CategoryGrid
+        parent: venice.admin.grid.base
+        tags:
+             - { name: trinity.grid, alias: category }
+
+    venice.admin.grid.tag:
+       class: Venice\AdminBundle\Grid\TagGrid
+       parent: venice.admin.grid.base
+       tags:
+            - { name: trinity.grid, alias: tag }
+
     venice.admin.grid.excetpion:
            class: Venice\AdminBundle\Grid\ExceptionGrid
            parent: venice.admin.grid.base

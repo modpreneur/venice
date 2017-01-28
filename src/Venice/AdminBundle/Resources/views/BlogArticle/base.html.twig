@@ -1,8 +1,4 @@
-{% extends('VeniceAdminBundle::adminBase.html.twig') %}
-
-{% block pageIcon %}
-    <i class="tiecons tiecons-book-text"></i>
-{% endblock %}
+{% extends('VeniceAdminBundle:Blog:base.html.twig') %}
 
 {% block pageAction %}
     {% if is_granted('ROLE_ADMIN_BLOG_EDIT') %}
@@ -15,4 +11,8 @@
             </span>
         </span>
     {% endif %}
+
+    {{ parent() }}
+    {% include "VeniceAdminBundle:Common:goUpAction.html.twig" with {"url": path("admin_blog_tabs"), "tooltip": "Go back to blog"} %}
+
 {% endblock %}

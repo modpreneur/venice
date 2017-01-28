@@ -8,6 +8,7 @@
 namespace Venice\AppBundle\Form;
 
 use Venice\AppBundle\Entity\BlogArticle;
+use Venice\AppBundle\Entity\Category;
 use Venice\AppBundle\Entity\Product\Product;
 use Trinity\AdminBundle\Form\FroalaType\FroalaType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -15,7 +16,11 @@ use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Venice\AppBundle\Entity\Tag;
 
+/**
+ * Class BlogArticleType
+ */
 class BlogArticleType extends BaseType
 {
     /**
@@ -62,7 +67,28 @@ class BlogArticleType extends BaseType
                     'label' => 'In products',
                 ]
             )
-
+            ->add(
+                'categories',
+                EntityType::class,
+                [
+                    'class' => Category::class,
+                    'choice_label' => 'name',
+                    'multiple' => true,
+                    'expanded' => true,
+                    'label' => 'In categories',
+                ]
+            )
+            ->add(
+                'tags',
+                EntityType::class,
+                [
+                    'class' => Tag::class,
+                    'choice_label' => 'name',
+                    'multiple' => true,
+                    'expanded' => true,
+                    'label' => 'With tags',
+                ]
+            )
             ->add(
                 'content',
                 FroalaType::class,

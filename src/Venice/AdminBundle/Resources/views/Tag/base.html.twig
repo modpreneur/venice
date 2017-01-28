@@ -1,0 +1,17 @@
+{% extends('VeniceAdminBundle::adminBase.html.twig') %}
+
+{% block pageAction %}
+    {% if is_granted('ROLE_ADMIN_BLOG_EDIT') %}
+        <span class="tooltip">
+            <span class="tooltip-hover">
+                <a class="new-entry" id="newEntryIcon" href="{{ path('admin_tag_new') }}">
+                    <i class="tiecons tiecons-plus-light"></i>
+                </a>
+                <div class="tooltip-left">Create a new tag</div>
+            </span>
+        </span>
+    {% endif %}
+
+    {{ parent() }}
+    {% include "VeniceAdminBundle:Common:goUpAction.html.twig" with {"url": path("admin_blog_tabs"), "tooltip": "Go back to blog"} %}
+{% endblock %}

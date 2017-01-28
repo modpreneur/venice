@@ -1,0 +1,43 @@
+Venice\AppBundle\Entity\Tag:
+    type: entity
+    inheritanceType: SINGLE_TABLE
+    discriminatorColumn:
+        name: discriminator
+        type: string
+    discriminatorMap:
+        venice_tag: Venice\AppBundle\Entity\Tag
+    table: tag
+    repositoryClass: Venice\AppBundle\Entity\Repositories\TagRepository
+
+    id:
+        id:
+            type: integer
+            scale: 0
+            length: null
+            unique: false
+            nullable: false
+            precision: 0
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        name:
+            type: string
+            scale: 0
+            length: null
+            unique: true
+            nullable: false
+            precision: 0
+
+        handle:
+            type: string
+            scale: 0
+            length: null
+            unique: true
+            nullable: false
+            precision: 0
+
+    manyToMany:
+          blogArticles:
+              targetEntity: Venice\AppBundle\Entity\BlogArticle
+              mappedBy: tags

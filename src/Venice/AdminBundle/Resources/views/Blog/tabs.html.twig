@@ -1,0 +1,42 @@
+{% extends "VeniceAdminBundle::Blog/base.html.twig" %}
+
+{% block pageTitle %}
+    Blog
+{% endblock %}
+
+{% block stylesheets  %}
+    {% include("VeniceAdminBundle:Common:froalaEditorStylesheets.html.twig") %}
+    <link rel="stylesheet" type="text/css" media="screen" href="/js/node_modules/react-widgets/dist/css/react-widgets.css"/>
+    {{ parent() }}
+{% endblock %}
+
+{% block pageAction %}
+    {{ parent() }}
+{% endblock %}
+
+{% block pageBody %}
+    <div class="tabs-wrapper">
+        {#{% if is_granted('ROLE_ADMIN_BLOG_SHOW') %}#}
+            <input type="radio" name="tab" id="tab1" class="tab-head" checked />
+            <label for="tab1">Articles</label>
+        {#{% endif %}#}
+        {#{% if is_granted('ROLE_ADMIN_BLOG_EDIT') %}#}
+            <input type="radio" name="tab" id="tab2" class="tab-head" />
+            <label for="tab2">Categories</label>
+
+            <input type="radio" name="tab" id="tab3" class="tab-head" />
+            <label for="tab3">Tags</label>
+        {#{% endif %}#}
+
+        <div class="tab-body-wrapper">
+            {#{% if is_granted('ROLE_ADMIN_BLOG_SHOW') %}#}
+                <div id="tab-body-1" class="tab-body" data-source="{{ path('admin_blog_article_index') }}"></div>
+            {#{% endif %}#}
+            {#{% if is_granted('ROLE_ADMIN_BLOG_EDIT') %}#}
+                <div id="tab-body-2" class="tab-body" data-source="{{ path('admin_category_index') }}"></div>
+                <div id="tab-body-3" class="tab-body" data-source="{{ path("admin_tag_index") }}"></div>
+            {#{% endif %}#}
+        </div>
+    </div>
+
+{% endblock %}

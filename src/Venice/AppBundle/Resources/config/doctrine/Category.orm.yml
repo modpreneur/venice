@@ -29,6 +29,14 @@ Venice\AppBundle\Entity\Category:
             nullable: false
             precision: 0
 
+        handle:
+            type: string
+            scale: 0
+            length: null
+            unique: true
+            nullable: false
+            precision: 0
+
     manyToMany:
           blogArticles:
               targetEntity: Venice\AppBundle\Entity\BlogArticle

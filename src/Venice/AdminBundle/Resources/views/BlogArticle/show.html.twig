@@ -33,6 +33,30 @@
                     </td>
                 </tr>
                 <tr>
+                    <th>In categories</th>
+                    <td>
+                        <ul>
+                            {% for index, category in article.categories %}
+                                <li>
+                                    <a href="{{ path("admin_category_tabs", {"id": category.id}) }}">{{ category.name }}</a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Tags</th>
+                    <td>
+                        <ul>
+                            {% for index, tag in article.tags %}
+                                <li>
+                                    <a href="{{ path("admin_tag_tabs", {"id": tag.id}) }}">{{ tag.name }}</a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
                     <th>Date to publish</th>
                     <td>{{ article.dateToPublish|date("Y-m-d")}}</td>
                 </tr>

@@ -4,6 +4,7 @@ namespace Venice\AppBundle\Configurators;
 
 use Venice\AppBundle\Entity\BillingPlan;
 use Venice\AppBundle\Entity\BlogArticle;
+use Venice\AppBundle\Entity\Category;
 use Venice\AppBundle\Entity\Content\Content;
 use Venice\AppBundle\Entity\Content\ContentInGroup;
 use Venice\AppBundle\Entity\Content\GroupContent;
@@ -16,9 +17,11 @@ use Venice\AppBundle\Entity\Product\FreeProduct;
 use Venice\AppBundle\Entity\Product\Product;
 use Venice\AppBundle\Entity\Product\StandardProduct;
 use Venice\AppBundle\Entity\ProductAccess;
+use Venice\AppBundle\Entity\Tag;
 use Venice\AppBundle\Entity\User;
 use Venice\AppBundle\Form\BillingPlanType;
 use Venice\AppBundle\Form\BlogArticleType;
+use Venice\AppBundle\Form\CategoryType;
 use Venice\AppBundle\Form\Content\ContentInGroupType;
 use Venice\AppBundle\Form\Content\ContentType;
 use Venice\AppBundle\Form\Content\GroupContentType;
@@ -31,6 +34,7 @@ use Venice\AppBundle\Form\Product\FreeProductType;
 use Venice\AppBundle\Form\Product\ProductType;
 use Venice\AppBundle\Form\Product\StandardProductType;
 use Venice\AppBundle\Form\ProductAccessType;
+use Venice\AppBundle\Form\TagType;
 use Venice\AppBundle\Form\User\UserType;
 
 /**
@@ -67,13 +71,17 @@ class EntityFormConfigurator extends BaseConfigurator
                     FreeProduct::class => FreeProductType::class,
                     Product::class => ProductType::class,
                     StandardProduct::class => StandardProductType::class,
+                    BillingPlan::class => BillingPlanType::class,
 
                     //user
                     User::class => UserType::class,
-
-                    BillingPlan::class => BillingPlanType::class,
-                    BlogArticle::class => BlogArticleType::class,
                     ProductAccess::class => ProductAccessType::class,
+
+                    //blog
+                    BlogArticle::class => BlogArticleType::class,
+                    Category::class => CategoryType::class,
+                    Tag::class => TagType::class,
+
                 ],
                 $configuration
             )

@@ -51,11 +51,17 @@ class MenuListener
             ->setExtra('orderNumber', 30)
             ->setExtra('roles', ['ROLE_ADMIN_CONTENT_VIEW']);
 
-        $menu
-            ->addChild('Blog articles', ['route' => 'admin_blog_article_index'])
-            ->setAttribute('icon', 'tiecons tiecons-book-text')
-            ->setExtra('orderNumber', 40)
-            ->setExtra('roles', ['ROLE_ADMIN_BLOG_VIEW']);
+        $blogUri = $this->router->generate('admin_blog_tabs');
+        $blogMenuItem = $menu->addChild('Blog', ['uri' => '#'])
+            ->setAttribute('icon', 'trinity trinity-projects2')
+            ->setAttribute('dropdown', true)
+            ->setAttribute('custom-attributes', ['data-ng-scope' => 'blog-menu'])
+            ->setExtra('orderNumber', 60)
+            ->setExtra('roles', ['ROLE_ADMIN_BLOG_VIEW'])
+        ;
+        $blogMenuItem->addChild('Articles', ['uri' => $blogUri . '#tab1']);
+        $blogMenuItem->addChild('Categories', ['uri' => $blogUri . '#tab2']);
+        $blogMenuItem->addChild('Tags', ['uri' => $blogUri . '#tab3']);
 
         $menu
             ->addChild('Users', ['route' => 'admin_user_index'])

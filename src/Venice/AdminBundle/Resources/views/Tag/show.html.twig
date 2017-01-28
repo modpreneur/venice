@@ -1,0 +1,32 @@
+<div class="wrapper-grid">
+    <div class="tag-show">
+        <table class="record_properties grid">
+            <tbody>
+                <tr>
+                    <th>#</th>
+                    <td>{{ tag.id }}</td>
+                </tr>
+                <tr>
+                    <th>Name</th>
+                    <td>{{ tag.name }}</td>
+                </tr>
+                <tr>
+                    <th>Handle</th>
+                    <td>{{ tag.handle }}</td>
+                </tr>
+                <tr>
+                    <th>Articles</th>
+                    <td>
+                        <ul>
+                        {% for index, article in tag.blogArticles %}
+                            <li>
+                                <a href="{{ path("admin_blog_article_tabs", {"id": article.id}) }}">{{ article.title }}</a>
+                            </li>
+                        {% endfor %}
+                        </ul>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

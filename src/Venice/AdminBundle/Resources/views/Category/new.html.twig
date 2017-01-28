@@ -1,0 +1,28 @@
+{% extends('VeniceAdminBundle::Category/base.html.twig') %}
+
+{% block pageTitle %}
+    New category
+{% endblock %}
+
+{% block pageBody %}
+    <div class="box box-new-form" id="category-form" data-slugify="{{ path('api_slugify')}}">
+
+        <div class="row">
+            <div class="span-none-padding-medium-24">
+                {% if error is defined %}
+                    <div id="error">{{ error }}</div>
+                {% endif %}
+            </div>
+        </div>
+
+        {{ form_start(form, {'attr': {'class': 'new-form'}} ) }}
+            {{ form_errors(form) }}
+
+            {{ form_row(form.name) }}
+            {{ form_row(form.handle) }}
+
+            {{ form_row(form.submit, {'attr': {'class': 'button button-success button-save'}} ) }}
+        {{ form_end(form) }}
+    </div>
+
+{% endblock %}

@@ -314,6 +314,18 @@ services:
         tags:
             - { name: form.type }
 
+    venice.app.form.category:
+        class: Venice\AppBundle\Form\CategoryType
+        parent: "venice.app.form.base"
+        tags:
+            - { name: form.type }
+
+    venice.app.form.tag:
+        class: Venice\AppBundle\Form\TagType
+        parent: "venice.app.form.base"
+        tags:
+            - { name: form.type }
+
     venice.app.form.product_access:
         class: Venice\AppBundle\Form\ProductAccessType
         parent: "venice.app.form.base"

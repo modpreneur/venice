@@ -1,9 +1,5 @@
 {% extends('VeniceAdminBundle::adminBase.html.twig') %}
 
-{% block pageIcon %}
-    <i class="tiecons tiecons-video"></i>
-{% endblock %}
-
 {% block pageAction %}
     {% if is_granted('ROLE_ADMIN_CONTENT_EDIT') %}
         <span class="tooltip">

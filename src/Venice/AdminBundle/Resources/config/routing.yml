@@ -2,8 +2,8 @@ admin_billing-plan:
     resource: "@VeniceAdminBundle/Resources/config/routing/billing-plan.yml"
     type:     yaml
 
-admin_blog-article:
-    resource: "@VeniceAdminBundle/Resources/config/routing/blog-article.yml"
+admin_blog:
+    resource: "@VeniceAdminBundle/Resources/config/routing/blog.yml"
     type:     yaml
 
 admin_content:

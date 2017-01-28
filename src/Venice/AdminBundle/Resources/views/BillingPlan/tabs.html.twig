@@ -4,10 +4,6 @@
     Billing plan
 {% endblock %}
 
-{% block pageIcon %}
-    <i class="trinity trinity-money"></i>
-{% endblock %}
-
 {% block pageAction %}
     {{ parent() }}
     {% include "VeniceAdminBundle:Common:viewInNecktieAction.html.twig" with {"url": necktieBillingPlanShowUrl} %}
