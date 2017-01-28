@@ -116,6 +116,7 @@ class ContentInGroupType extends BaseType
                 return $entityRepository
                     ->createQueryBuilder('c')
                     ->andWhere('c.id != :id')
+                    ->orderBy('c.name', 'ASC')
                     ->setParameter('id', $groupId);
             };
         } else {
