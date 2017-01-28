@@ -32,12 +32,13 @@ class GroupContent extends Content implements GroupContentInterface
      */
     public function validate(ExecutionContextInterface $context)
     {
-        $count = $this->items->count();
+        $items = array_values($this->items->toArray()); //reindex the array
 
+        $count = $this->items->count(); //2
         //the for cycle is used for better indexing
         /* @noinspection ForeachInvariantsInspection */
         for ($i = 0; $i < $count; ++$i) {
-            if ($this->items[$i]->getContent() && $this->id == $this->items[$i]->getContent()->getId()) {
+            if ($items[$i]->getContent() && $this->id == $items[$i]->getContent()->getId()) {
                 $context
                     ->buildViolation('Group content can not contain itself in "items" collection')
                     ->atPath('items')
@@ -45,12 +46,12 @@ class GroupContent extends Content implements GroupContentInterface
 
                 break;
             }
-            for ($j = $i + 1; $j < $count; ++$j) {
+            for ($j = $i + 1; $j < $count-1; ++$j) { //i=0. j=1, i=1,j=2
                 // If the item i in the collection twice
-                if ($this->items[$i]->getGroup() == $this->items[$j]->getGroup()
-                    && $this->items[$i]->getContent() == $this->items[$j]->getContent()
-                    && $this->items[$i]->getDelay() === $this->items[$j]->getDelay()
-                    && $this->items[$i]->getOrderNumber() === $this->items[$j]->getOrderNumber()
+                if ($items[$i]->getGroup() == $items[$j]->getGroup()
+                    && $items[$i]->getContent() == $items[$j]->getContent()
+                    && $items[$i]->getDelay() === $items[$j]->getDelay()
+                    && $items[$i]->getOrderNumber() === $items[$j]->getOrderNumber()
                 ) {
                     $context
                         ->buildViolation(

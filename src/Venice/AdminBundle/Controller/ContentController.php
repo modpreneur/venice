@@ -432,6 +432,8 @@ class ContentController extends BaseAdminController
             foreach ($originalItems as $originalItem) {
                 // If the item is not in the field data it was removed. So remove it from collection.
                 if (!$content->getItems()->contains($originalItem)) {
+                    $originalItem->setContent(null);
+                    $originalItem->setGroup(null);
                     $entityManager->remove($originalItem);
                 }
             }
