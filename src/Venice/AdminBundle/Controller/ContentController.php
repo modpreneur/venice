@@ -248,22 +248,12 @@ class ContentController extends BaseAdminController
 
         $entityManager = $this->getEntityManager();
 
-        $formOptions = [];
-
-        if ($this->getEntityOverrideHandler()->isInstanceOf($content, GroupContent::class)) {
-            $formOptions = [
-                'groupContent' => ($this->getEntityOverrideHandler()->isInstanceOf($content, GroupContent::class)) ?
-                    $content : null,
-            ];
-        }
-
         $form = $this->getFormCreator()
             ->createCreateForm(
                 $content,
                 $this->getEntityFormMatcher()->getFormClassForEntity($content),
                 'admin_content',
-                ['contentType' => $contentType],
-                $formOptions
+                ['contentType' => $contentType]
             );
 
         $form->handleRequest($request);
@@ -309,18 +299,11 @@ class ContentController extends BaseAdminController
      */
     public function editAction(Request $request, Content $content)
     {
-        $formOptions = [];
-        if ($this->getEntityOverrideHandler()->isInstanceOf($content, GroupContent::class)) {
-            $formOptions[] = ['groupContent' => $content];
-        }
-
-
         $form = $this->getFormCreator()
             ->createEditForm(
                 $content,
                 $this->getEntityFormMatcher()->getFormClassForEntity($content),
-                'admin_content',
-                $formOptions
+                'admin_content'
             );
 
         return $this->render(
