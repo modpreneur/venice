@@ -15,10 +15,10 @@
         {% if row.getDefaultBillingPlan() %}
             {{ row.getDefaultBillingPlan().price }}
         {% else %}
-            No billing plan
+            No default billing plan
         {% endif %}
     {% else %}
-        No billing plan
+        The product is free
     {% endif %}
 {% endblock %}
 
@@ -26,7 +26,6 @@
 {% block cell_type %}
     {{ value }}
 {% endblock %}
-
 
 {% block cell_details %}
     <a href="{{ path('admin_product_tabs',{'id':row.getId()}) }}" class="button-small pull-right margin-right-10">Get details</a>

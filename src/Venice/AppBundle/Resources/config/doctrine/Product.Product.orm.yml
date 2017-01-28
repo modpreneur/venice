@@ -58,7 +58,7 @@ Venice\AppBundle\Entity\Product\Product:
             nullable: false
             precision: 0
         description:
-            type: string
+            type: text
             scale: 0
             length: null
             unique: false
