@@ -9,7 +9,6 @@ namespace Venice\AppBundle\Form\User;
 
 use Venice\AppBundle\Entity\User;
 use Venice\AppBundle\Form\BaseType;
-use Symfony\Component\Form\Extension\Core\Type\CountryType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
@@ -41,17 +40,7 @@ class UserType extends BaseType
             ->add('firstName')
             ->add('lastName')
             ->add('phoneNumber')
-            ->add('website', UrlType::class, ['required' => false])
-            ->add('country', CountryType::class, [
-                'placeholder' => 'Choose an option',
-                'preferred_choices' => ['US', 'CZ'],
-                'required' => false,
-            ])
-            ->add('region')
-            ->add('city')
-            ->add('postalCode')
-            ->add('addressLine1')
-            ->add('addressLine2');
+            ->add('website', UrlType::class, ['required' => false]);
     }
 
     /**

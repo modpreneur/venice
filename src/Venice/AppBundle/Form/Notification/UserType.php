@@ -37,12 +37,6 @@ class UserType extends AbstractType implements NotificationTypeInterface
             ->add('lastName')
             ->add('phoneNumber')
             ->add('website', UrlType::class, ['required' => false])
-            ->add('country', TextType::class)
-            ->add('region')
-            ->add('city')
-            ->add('postalCode')
-            ->add('addressLine1')
-            ->add('addressLine2')
             ->add('id', IntegerType::class, ['property_path' => 'necktieId']);
     }
 

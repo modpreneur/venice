@@ -25,7 +25,7 @@ use Venice\AppBundle\Traits\Timestampable;
 /**
  * Class User.
  *
- * @N\Source(columns="necktieId, username, email, firstName, lastName, avatar, locked, phoneNumber, website, country, region, city, addressLine1, addressLine2, postalCode")
+ * @N\Source(columns="necktieId, username, email, firstName, lastName, avatar, locked, phoneNumber, website")
  * Users cannot be created on client so there is no need to use POST
  * @N\Methods(types={"put", "delete"})
  */
