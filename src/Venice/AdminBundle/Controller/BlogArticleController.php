@@ -37,9 +37,6 @@ class BlogArticleController extends BaseAdminController
      */
     public function indexAction(Request $request)
     {
-        $this->getBreadcrumbs()
-            ->addRouteItem('Blog', 'admin_blog_tabs');
-
         $max = $this->getEntityManager()->getRepository('VeniceAppBundle:BlogArticle')->count();
         $url = $this->generateUrl('grid_default', ['entity' => 'BlogArticle']);
 
@@ -82,6 +79,7 @@ class BlogArticleController extends BaseAdminController
     {
         $this->getBreadcrumbs()
             ->addRouteItem('Blog', 'admin_blog_tabs')
+            ->addItem('Articles', $this->generateUrl('admin_blog_tabs').'#tab1')
             ->addRouteItem($article->getTitle(), 'admin_blog_article_tabs', ['id' => $article->getId()]);
 
         if (!$article) {
@@ -132,6 +130,7 @@ class BlogArticleController extends BaseAdminController
     {
         $this->getBreadcrumbs()
             ->addRouteItem('Blog', 'admin_blog_tabs')
+            ->addItem('Articles', $this->generateUrl('admin_blog_tabs').'#tab1')
             ->addRouteItem('New blog article', 'admin_blog_article_new');
 
         $blogArticle = $this->getEntityOverrideHandler()->getEntityInstance(BlogArticle::class);

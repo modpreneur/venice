@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Venice\AppBundle\Entity\Category;
 
 /**
- * Class CategoryController.
+ * Class CategoryController
  */
 class CategoryController extends BaseAdminController
 {
@@ -29,9 +29,6 @@ class CategoryController extends BaseAdminController
      */
     public function indexAction(Request $request)
     {
-        $this->getBreadcrumbs()
-            ->addRouteItem('Blog', 'admin_blog_tabs');
-
         $max = $this->getEntityManager()->getRepository('VeniceAppBundle:Category')->count();
         $url = $this->generateUrl('grid_default', ['entity' => 'Category']);
 
@@ -61,7 +58,7 @@ class CategoryController extends BaseAdminController
      *
      * @Security("is_granted('ROLE_ADMIN_BLOG_VIEW')")
      *
-     * @param Request  $request
+     * @param Request $request
      * @param Category $category
      *
      * @return \Symfony\Component\HttpFoundation\Response
@@ -72,11 +69,8 @@ class CategoryController extends BaseAdminController
     {
         $this->getBreadcrumbs()
             ->addRouteItem('Blog', 'admin_blog_tabs')
+            ->addItem('Categories', $this->generateUrl('admin_blog_tabs').'#tab2')
             ->addRouteItem($category->getName(), 'admin_category_tabs', ['id' => $category->getId()]);
-
-//        if (!$category) {
-//            throw $this->createNotFoundException('Unable to find Category entity.');
-//        }
 
         return $this->render(
             'VeniceAdminBundle:Category:tabs.html.twig',
@@ -87,7 +81,7 @@ class CategoryController extends BaseAdminController
     /**
      * @Security("is_granted('ROLE_ADMIN_BLOG_VIEW')")
      *
-     * @param Request  $request
+     * @param Request $request
      * @param Category $category
      *
      * @return Response
@@ -122,6 +116,7 @@ class CategoryController extends BaseAdminController
     {
         $this->getBreadcrumbs()
             ->addRouteItem('Blog', 'admin_blog_tabs')
+            ->addItem('Categories', $this->generateUrl('admin_blog_tabs').'#tab2')
             ->addRouteItem('New category', 'admin_category_new');
 
         $category = $this->getEntityOverrideHandler()->getEntityInstance(Category::class);
@@ -198,7 +193,7 @@ class CategoryController extends BaseAdminController
      *
      * @Security("is_granted('ROLE_ADMIN_BLOG_EDIT')")
      *
-     * @param Request  $request
+     * @param Request $request
      * @param Category $category
      *
      * @return Response
@@ -236,7 +231,7 @@ class CategoryController extends BaseAdminController
      *
      * @Security("is_granted('ROLE_ADMIN_BLOG_EDIT')")
      *
-     * @param Request  $request
+     * @param Request     $request
      * @param Category $category
      *
      * @return JsonResponse
@@ -288,7 +283,7 @@ class CategoryController extends BaseAdminController
     /**
      * @Security("is_granted('ROLE_ADMIN_BLOG_EDIT')")
      *
-     * @param Request  $request
+     * @param Request $request
      * @param Category $category
      *
      * @return Response
@@ -319,7 +314,7 @@ class CategoryController extends BaseAdminController
     /**
      * @Security("is_granted('ROLE_ADMIN_BLOG_EDIT')")
      *
-     * @param Request  $request
+     * @param Request     $request
      * @param Category $category
      *
      * @return JsonResponse

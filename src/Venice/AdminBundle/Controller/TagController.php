@@ -29,9 +29,6 @@ class TagController extends BaseAdminController
      */
     public function indexAction(Request $request)
     {
-        $this->getBreadcrumbs()
-            ->addRouteItem('Blog', 'admin_blog_tabs');
-
         $max = $this->getEntityManager()->getRepository('VeniceAppBundle:Tag')->count();
         $url = $this->generateUrl('grid_default', ['entity' => 'Tag']);
 
@@ -72,6 +69,7 @@ class TagController extends BaseAdminController
     {
         $this->getBreadcrumbs()
             ->addRouteItem('Blog', 'admin_blog_tabs')
+            ->addItem('Tags', $this->generateUrl('admin_blog_tabs').'#tab3')
             ->addRouteItem($tag->getName(), 'admin_tag_tabs', ['id' => $tag->getId()]);
 
         return $this->render(
@@ -118,6 +116,7 @@ class TagController extends BaseAdminController
     {
         $this->getBreadcrumbs()
             ->addRouteItem('Blog', 'admin_blog_tabs')
+            ->addItem('Tags', $this->generateUrl('admin_blog_tabs').'#tab3')
             ->addRouteItem('New tag', 'admin_tag_new');
 
         $tag = $this->getEntityOverrideHandler()->getEntityInstance(Tag::class);
