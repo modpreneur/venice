@@ -21,7 +21,4 @@ Venice\AppBundle\Entity\Content\GroupContent:
             mappedBy: group
             inversedBy: null
             orphanRemoval: false
-            orderBy:
-                delay: ASC
-                orderNumber: ASC
     lifecycleCallbacks: {  }

@@ -60,8 +60,6 @@ Venice\AppBundle\Entity\Content\Content:
             mappedBy: content
             inversedBy: null
             orphanRemoval: false
-            orderBy:
-                orderNumber: ASC
         contentsInGroup:
             targetEntity: Venice\AppBundle\Entity\Content\ContentInGroup
             orderBy: { 'orderNumber': 'ASC' }
@@ -72,8 +70,6 @@ Venice\AppBundle\Entity\Content\Content:
             mappedBy: content
             inversedBy: null
             orphanRemoval: false
-            orderBy:
-                orderNumber: ASC
     manyToOne:
         author:
             targetEntity: Venice\AppBundle\Entity\User
