@@ -7,6 +7,7 @@
  */
 namespace Venice\AppBundle\Form;
 
+use Doctrine\ORM\EntityRepository;
 use Venice\AppBundle\Entity\Product\Product;
 use Venice\AppBundle\Entity\ProductAccess;
 use Venice\AppBundle\Form\DataTransformer\EntityToNumberTransformer;
@@ -34,6 +35,10 @@ class ProductAccessType extends BaseType
                 EntityType::class,
                 [
                     'class' => Product::class,
+                    'query_builder' => function (EntityRepository $repository) {
+                        return $repository->createQueryBuilder('p')
+                            ->orderBy('p.name', 'ASC');
+                    },
                     'choice_label' => 'Name',
                     'required' => true,
                 ]

@@ -7,6 +7,7 @@
  */
 namespace Venice\AppBundle\Form\ContentProduct;
 
+use Doctrine\ORM\EntityRepository;
 use Venice\AppBundle\Entity\Content\Content;
 use Venice\AppBundle\Entity\Product\Product;
 use Venice\AppBundle\Form\DataTransformer\EntityToNumberTransformer;
@@ -16,6 +17,9 @@ use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * Class ContentProductTypeWithHiddenContent
+ */
 class ContentProductTypeWithHiddenContent extends ContentProductType
 {
     /**
@@ -33,6 +37,10 @@ class ContentProductTypeWithHiddenContent extends ContentProductType
                 EntityType::class,
                 [
                     'class' => Product::class,
+                    'query_builder' => function (EntityRepository $repository) {
+                        return $repository->createQueryBuilder('p')
+                            ->orderBy('p.name', 'ASC');
+                    },
                     'choice_label' => 'name',
                 ]
             )

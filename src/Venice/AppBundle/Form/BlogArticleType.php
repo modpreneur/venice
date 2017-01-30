@@ -7,6 +7,7 @@
  */
 namespace Venice\AppBundle\Form;
 
+use Doctrine\ORM\EntityRepository;
 use Venice\AppBundle\Entity\BlogArticle;
 use Venice\AppBundle\Entity\Category;
 use Venice\AppBundle\Entity\Product\Product;
@@ -61,6 +62,10 @@ class BlogArticleType extends BaseType
                 EntityType::class,
                 [
                     'class' => Product::class,
+                    'query_builder' => function (EntityRepository $repository) {
+                        return $repository->createQueryBuilder('p')
+                            ->orderBy('p.name', 'ASC');
+                    },
                     'choice_label' => 'name',
                     'multiple' => true,
                     'expanded' => true,
@@ -72,6 +77,10 @@ class BlogArticleType extends BaseType
                 EntityType::class,
                 [
                     'class' => Category::class,
+                    'query_builder' => function (EntityRepository $repository) {
+                        return $repository->createQueryBuilder('c')
+                            ->orderBy('c.name', 'ASC');
+                    },
                     'choice_label' => 'name',
                     'multiple' => true,
                     'expanded' => true,
@@ -83,6 +92,10 @@ class BlogArticleType extends BaseType
                 EntityType::class,
                 [
                     'class' => Tag::class,
+                    'query_builder' => function (EntityRepository $repository) {
+                        return $repository->createQueryBuilder('t')
+                            ->orderBy('t.name', 'ASC');
+                    },
                     'choice_label' => 'name',
                     'multiple' => true,
                     'expanded' => true,
