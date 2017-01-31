@@ -2,8 +2,6 @@
 
 namespace Venice\AdminBundle\Grid;
 
-use Trinity\Bundle\GridBundle\Grid\BaseGrid;
-
 /**
  * Class ExceptionGrid.
  */
@@ -15,5 +13,6 @@ class ExceptionGrid extends BaseVeniceGrid
     public function setUp()
     {
         $this->addTemplate('VeniceAdminBundle:Logger/Exception:grid.html.twig');
+        $this->setEntityName('ExceptionLog');
     }
 }
