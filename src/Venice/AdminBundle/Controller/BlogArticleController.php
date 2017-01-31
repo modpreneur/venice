@@ -35,7 +35,7 @@ class BlogArticleController extends BaseAdminController
      * @throws \Trinity\Bundle\SettingsBundle\Exception\PropertyNotExistsException
      * @throws \Trinity\Bundle\GridBundle\Exception\DuplicateColumnException
      */
-    public function indexAction(Request $request)
+    public function indexAction()
     {
         $max = $this->getEntityManager()->getRepository('VeniceAppBundle:BlogArticle')->count();
         $url = $this->generateUrl('grid_default', ['entity' => 'BlogArticle']);
@@ -68,14 +68,13 @@ class BlogArticleController extends BaseAdminController
      *
      * @Security("is_granted('ROLE_ADMIN_BLOG_VIEW')")
      *
-     * @param Request $request
      * @param BlogArticle $article
      *
      * @return \Symfony\Component\HttpFoundation\Response
      *
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      */
-    public function tabsAction(Request $request, BlogArticle $article)
+    public function tabsAction(BlogArticle $article)
     {
         $this->getBreadcrumbs()
             ->addRouteItem('Blog', 'admin_blog_tabs')
@@ -95,12 +94,11 @@ class BlogArticleController extends BaseAdminController
     /**
      * @Security("is_granted('ROLE_ADMIN_BLOG_VIEW')")
      *
-     * @param Request $request
      * @param BlogArticle $article
      *
      * @return Response
      */
-    public function showAction(Request $request, BlogArticle $article)
+    public function showAction(BlogArticle $article)
     {
         return $this->render(
             'VeniceAdminBundle:BlogArticle:show.html.twig',
@@ -126,7 +124,7 @@ class BlogArticleController extends BaseAdminController
      * @throws \Symfony\Component\Form\Exception\LogicException
      * @throws \LogicException
      */
-    public function newAction(Request $request)
+    public function newAction()
     {
         $this->getBreadcrumbs()
             ->addRouteItem('Blog', 'admin_blog_tabs')
@@ -311,7 +309,6 @@ class BlogArticleController extends BaseAdminController
     /**
      * @Security("is_granted('ROLE_ADMIN_BLOG_EDIT')")
      *
-     * @param Request $request
      * @param BlogArticle $blogArticle
      *
      * @return Response
@@ -324,7 +321,7 @@ class BlogArticleController extends BaseAdminController
      * @throws \Symfony\Component\Routing\Exception\InvalidParameterException
      * @throws \Symfony\Component\Form\Exception\LogicException
      */
-    public function deleteTabAction(Request $request, BlogArticle $blogArticle)
+    public function deleteTabAction(BlogArticle $blogArticle)
     {
         $formFactory = $this->getFormCreator();
         $form = $formFactory->createDeleteForm(
