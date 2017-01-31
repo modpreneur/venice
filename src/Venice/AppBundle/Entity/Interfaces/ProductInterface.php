@@ -8,7 +8,7 @@ use Trinity\Component\EntityCore\Entity\BaseProduct;
 /**
  * Class BaseProduct.
  */
-interface ProductInterface
+interface ProductInterface extends BaseEntityInterface
 {
     /**
      * Get id.

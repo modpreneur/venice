@@ -466,4 +466,12 @@ class User extends BaseUser implements NotificationEntityInterface, UserInterfac
             }
         }
     }
+
+    /**
+     * @return bool
+     */
+    public function getPublic()
+    {
+        return $this->public;
+    }
 }

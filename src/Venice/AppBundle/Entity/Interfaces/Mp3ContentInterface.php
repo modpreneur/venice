@@ -5,7 +5,7 @@ namespace Venice\AppBundle\Entity\Interfaces;
 /**
  * Class Mp3Content.
  */
-interface Mp3ContentInterface extends AbstractPlayableContentInterface
+interface Mp3ContentInterface extends AbstractPlayableContentInterface, ContentInterface
 {
     /**
      * @return string

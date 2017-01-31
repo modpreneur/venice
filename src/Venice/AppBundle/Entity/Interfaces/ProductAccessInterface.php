@@ -7,15 +7,8 @@ use Trinity\Component\Core\Interfaces\ClientInterface;
 /**
  * ProductAccess.
  */
-interface ProductAccessInterface
+interface ProductAccessInterface extends BaseEntityInterface
 {
-    /**
-     * Get id.
-     *
-     * @return int
-     */
-    public function getId();
-
     /**
      * Set user.
      *
@@ -96,11 +89,6 @@ interface ProductAccessInterface
      * @return ClientInterface[]
      */
     public function getClients();
-
-    /**
-     * @return string
-     */
-    public function __toString();
 
     /**
      * Returns createdAt value.

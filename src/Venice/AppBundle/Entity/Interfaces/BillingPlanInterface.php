@@ -7,15 +7,8 @@ use Venice\AppBundle\Entity\BillingPlan;
 /**
  * Class BillingPlan.
  */
-interface BillingPlanInterface
+interface BillingPlanInterface extends BaseEntityInterface
 {
-    /**
-     * Get id.
-     *
-     * @return int
-     */
-    public function getId();
-
     /**
      * @return int
      */
