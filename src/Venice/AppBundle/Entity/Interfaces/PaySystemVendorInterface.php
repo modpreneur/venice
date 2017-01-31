@@ -9,15 +9,8 @@ use Trinity\Component\EntityCore\Entity\BasePaySystemVendor;
 /**
  * Class PaySystemVendor
  */
-interface PaySystemVendorInterface
+interface PaySystemVendorInterface extends BaseEntityInterface
 {
-    /**
-     * Get id.
-     *
-     * @return int
-     */
-    public function getId();
-
     /**
      * Set name.
      *
@@ -33,11 +26,6 @@ interface PaySystemVendorInterface
      * @return string
      */
     public function getName();
-
-    /**
-     * @return string
-     */
-    public function __toString();
 
     /** @return ClientInterface[] */
     public function getClients();

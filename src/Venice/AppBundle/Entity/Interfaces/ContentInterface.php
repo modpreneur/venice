@@ -7,7 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 /**
  * Class AbstractContent.
  */
-interface ContentInterface
+interface ContentInterface extends BaseEntityInterface
 {
     /**
      * Return Content's content no matter what concrete implementation is.
@@ -25,11 +25,6 @@ interface ContentInterface
      * @param string $name
      */
     public function setName($name);
-
-    /**
-     * @return int
-     */
-    public function getId();
 
     /**
      * @return UserInterface
@@ -81,10 +76,6 @@ interface ContentInterface
      */
     public static function createContentClassByType($type);
 
-    /**
-     * @return string
-     */
-    public function __toString();
 
     /**
      * Get the content type string.

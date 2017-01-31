@@ -10,7 +10,7 @@ use Venice\AppBundle\Entity\Category;
 /**
  * Class BlogArticle.
  */
-interface BlogArticleInterface extends EntityInterface
+interface BlogArticleInterface extends BaseEntityInterface
 {
     /**
      * @return string

@@ -5,27 +5,14 @@ use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use FOS\UserBundle\Model\GroupInterface;
 use Trinity\Component\Core\Interfaces\ClientInterface;
+use Trinity\Component\Core\Interfaces\UserInterface as TrinityUserInterface;
 
 
 /**
  * Class User.
  */
-interface UserInterface
+interface UserInterface extends TrinityUserInterface, BaseEntityInterface
 {
-    /**
-     * Get id.
-     *
-     * @return int
-     */
-    public function getId();
-
-    /**
-     * Get firstName.
-     *
-     * @return string
-     */
-    public function getFirstName();
-
     /**
      * Set firstName.
      *
@@ -34,13 +21,6 @@ interface UserInterface
      * @return $this
      */
     public function setFirstName($firstName);
-
-    /**
-     * Get lastName.
-     *
-     * @return string
-     */
-    public function getLastName();
 
     /**
      * Set lastName.
@@ -52,20 +32,6 @@ interface UserInterface
     public function setLastName($lastName);
 
     /**
-     * Get fullName.
-     *
-     * @return string
-     */
-    public function getFullName();
-
-    /**
-     * Get phoneNumber.
-     *
-     * @return string
-     */
-    public function getPhoneNumber();
-
-    /**
      * Set phoneNumber.
      *
      * @param string $phoneNumber
@@ -75,13 +41,6 @@ interface UserInterface
     public function setPhoneNumber($phoneNumber);
 
     /**
-     * Get website.
-     *
-     * @return string
-     */
-    public function getWebsite();
-
-    /**
      * Set website.
      *
      * @param string $website
@@ -89,13 +48,6 @@ interface UserInterface
      * @return $this
      */
     public function setWebsite($website);
-
-    /**
-     * Get avatar.
-     *
-     * @return string
-     */
-    public function getAvatar();
 
     /**
      * Set avatar.
@@ -144,16 +96,6 @@ interface UserInterface
      * @return UserInterface
      */
     public function setAdmin($admin);
-
-    /**
-     * @return string
-     */
-    public function __toString() : string;
-
-    /**
-     * @return int
-     */
-    public function getSettingIdentifier();
 
     /**
      * Returns createdAt value.

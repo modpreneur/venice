@@ -10,9 +10,9 @@ use Symfony\Component\Routing\Exception\InvalidParameterException;
 use Symfony\Component\Routing\Exception\MissingMandatoryParametersException;
 use Symfony\Component\Routing\Exception\RouteNotFoundException;
 use Trinity\Bundle\GridBundle\Exception\DuplicateColumnException;
+use Trinity\Bundle\LoggerBundle\Entity\ExceptionLog;
 use Trinity\Bundle\LoggerBundle\Services\ElasticReadLogService;
 use Trinity\Bundle\SettingsBundle\Exception\PropertyNotExistsException;
-use Trinity\FrameworkBundle\Entity\ExceptionLog;
 
 /**
  * Class LoggerController.
@@ -92,6 +92,7 @@ class LoggerController extends BaseAdminController
     {
         /** @var ElasticReadLogService $esLogger */
         $esLogger = $this->get('trinity.logger.elastic_read_log_service');
+
         /** @var ExceptionLog $entity */
         $entity = $esLogger->getById('ExceptionLog', $id);
 

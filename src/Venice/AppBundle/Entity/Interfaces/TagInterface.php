@@ -8,7 +8,7 @@ use Trinity\Component\Core\Interfaces\EntityInterface;
 /**
  * Class Tag.
  */
-interface TagInterface extends EntityInterface
+interface TagInterface extends BaseEntityInterface
 {
     /**
      * @return string

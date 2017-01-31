@@ -3,13 +3,12 @@ namespace Venice\AppBundle\Entity\Interfaces;
 
 use Doctrine\Common\Collections\ArrayCollection;
 
-interface InvoiceInterface
+/**
+ * Interface InvoiceInterface
+ * @package Venice\AppBundle\Entity\Interfaces
+ */
+interface InvoiceInterface extends BaseEntityInterface
 {
-    /**
-     * @return int
-     */
-    public function getId();
-
     /**
      * @param int $id
      *
