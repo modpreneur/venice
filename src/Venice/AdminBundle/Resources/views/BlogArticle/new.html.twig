@@ -97,6 +97,10 @@
                     </div>
                 {% endif %}
 
+                {% for key, item in form.children if key != "submit" and key != "content" %}
+                    {{ form_row(form[key]) }}
+                {% endfor %}
+
                 <div class="row">
                     {% embed "TrinityAdminBundle:Form:form_layout.html.twig" %}
                         {% block form_row_label_content %}
