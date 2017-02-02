@@ -242,7 +242,7 @@ trinity_settings:
   settings:
      currency: 'USD'
      items_on_page: 20
-     date_format: 'y-m-d'
+     date_format: 'Y-M-D H:m'
      logger_ttl: 90 #days
 
 trinity_admin:
