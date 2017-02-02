@@ -5,11 +5,15 @@
  * Date: 05.11.15
  * Time: 10:18.
  */
+
 namespace Venice\AppBundle\Form\Product;
 
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 
+/**
+ * Class FreeProductType.
+ */
 class FreeProductType extends ProductType
 {
     /**

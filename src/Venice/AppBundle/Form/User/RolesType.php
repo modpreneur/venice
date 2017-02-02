@@ -5,6 +5,7 @@
  * Date: 04.02.16
  * Time: 11:59.
  */
+
 namespace Venice\AppBundle\Form\User;
 
 use Doctrine\ORM\EntityManagerInterface;
@@ -16,6 +17,9 @@ use Venice\AppBundle\Form\BaseType;
 use Venice\AppBundle\Services\EntityOverrideHandler;
 use Venice\AppBundle\Services\RolesLoader;
 
+/**
+ * Class RolesType
+ */
 class RolesType extends BaseType
 {
     protected $roles;

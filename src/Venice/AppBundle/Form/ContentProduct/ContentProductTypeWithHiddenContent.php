@@ -5,6 +5,7 @@
  * Date: 01.02.16
  * Time: 17:56.
  */
+
 namespace Venice\AppBundle\Form\ContentProduct;
 
 use Doctrine\ORM\EntityRepository;
@@ -18,7 +19,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Class ContentProductTypeWithHiddenContent
+ * Class ContentProductTypeWithHiddenContent.
  */
 class ContentProductTypeWithHiddenContent extends ContentProductType
 {

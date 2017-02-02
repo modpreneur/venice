@@ -5,6 +5,7 @@
  * Date: 28.04.16
  * Time: 12:04.
  */
+
 namespace Venice\AppBundle\Form\Notification;
 
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
@@ -12,9 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Trinity\NotificationBundle\DataTransformer\NotificationTransformer;
 use Trinity\NotificationBundle\Interfaces\NotificationTypeInterface;
-use Venice\AppBundle\Entity\BillingPlan;
 use Venice\AppBundle\Entity\Product\StandardProduct;
 use Venice\AppBundle\Form\BaseType;
 
@@ -50,7 +49,7 @@ class ProductType extends BaseType implements NotificationTypeInterface
         $resolver->setDefaults(
             [
                 'data_class' => StandardProduct::class,
-                'csrf_protection' => false
+                'csrf_protection' => false,
             ]
         );
     }

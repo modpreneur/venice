@@ -5,6 +5,7 @@
  * Date: 01.02.16
  * Time: 17:57.
  */
+
 namespace Venice\AppBundle\Form\ContentProduct;
 
 use Doctrine\ORM\EntityRepository;

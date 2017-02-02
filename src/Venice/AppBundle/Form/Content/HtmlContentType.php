@@ -5,6 +5,7 @@
  * Date: 03.11.15
  * Time: 18:54.
  */
+
 namespace Venice\AppBundle\Form\Content;
 
 use Trinity\AdminBundle\Form\FroalaType\FroalaType;
@@ -26,7 +27,7 @@ class HtmlContentType extends ContentType
             ->add('html', FroalaType::class, [
                 'required' => false,
                 'attr' => [
-                'style'=>'display:none'
+                'style' => 'display:none',
                 ],
             ]);
     }

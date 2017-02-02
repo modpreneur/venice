@@ -5,6 +5,7 @@
  * Date: 03.11.15
  * Time: 18:55.
  */
+
 namespace Venice\AppBundle\Form\Content;
 
 use Symfony\Component\Form\Extension\Core\Type\TextType;

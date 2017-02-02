@@ -5,6 +5,7 @@
  * Date: 03.12.15
  * Time: 19:16.
  */
+
 namespace Venice\AppBundle\Form;
 
 use Doctrine\ORM\EntityRepository;
@@ -20,7 +21,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Venice\AppBundle\Entity\Tag;
 
 /**
- * Class BlogArticleType
+ * Class BlogArticleType.
  */
 class BlogArticleType extends BaseType
 {
@@ -48,7 +49,7 @@ class BlogArticleType extends BaseType
                     'required' => false,
                 ]
             )
-            ->add(
+            ->add(//todo: @JakubFajkus add a time
                 'dateToPublish',
                 DateTimeType::class,
                 [
@@ -70,6 +71,7 @@ class BlogArticleType extends BaseType
                     'multiple' => true,
                     'expanded' => true,
                     'label' => 'In products',
+                    'required' => false,
                 ]
             )
             ->add(
@@ -85,6 +87,7 @@ class BlogArticleType extends BaseType
                     'multiple' => true,
                     'expanded' => true,
                     'label' => 'In categories',
+                    'required' => false,
                 ]
             )
             ->add(
@@ -100,6 +103,7 @@ class BlogArticleType extends BaseType
                     'multiple' => true,
                     'expanded' => true,
                     'label' => 'With tags',
+                    'required' => false,
                 ]
             )
             ->add(

@@ -5,6 +5,7 @@
  * Date: 03.11.15
  * Time: 18:28.
  */
+
 namespace Venice\AppBundle\Form\Product;
 
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
@@ -24,8 +25,8 @@ class StandardProductType extends ProductType
     {
         parent::buildForm($builder, $options);
 
-        //todo: name - disabled
         $builder
+            ->add('name', TextType::class, ['disabled' => 'true'])
             ->add('necktieId', NumberType::class, ['required' => true])
             ->add(
                 'submit',

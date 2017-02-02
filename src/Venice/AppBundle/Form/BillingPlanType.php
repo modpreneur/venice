@@ -15,6 +15,11 @@ use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * Class BillingPlanType
+ *
+ * This class is not used anymore
+ */
 class BillingPlanType extends BaseType
 {
     /**

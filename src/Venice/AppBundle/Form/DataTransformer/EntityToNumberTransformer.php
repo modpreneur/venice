@@ -5,6 +5,7 @@
  * Date: 24.12.15
  * Time: 11:51.
  */
+
 namespace Venice\AppBundle\Form\DataTransformer;
 
 use Doctrine\ORM\EntityManagerInterface;
@@ -19,9 +20,14 @@ class EntityToNumberTransformer implements DataTransformerInterface
     /** @var EntityManagerInterface */
     protected $entityManager;
 
-    /** @var  string */
+    /** @var string */
     protected $entityClass;
 
+    /**
+     * EntityToNumberTransformer constructor.
+     * @param EntityManagerInterface $entityManager
+     * @param $entityClass
+     */
     public function __construct(EntityManagerInterface $entityManager, $entityClass)
     {
         $this->entityManager = $entityManager;
@@ -49,11 +55,11 @@ class EntityToNumberTransformer implements DataTransformerInterface
      * By convention, transform() should return an empty string if NULL is
      * passed.
      *
-     * @param mixed $value The value in the original representation. Entity in this case.
+     * @param mixed $value The value in the original representation. Entity in this case
      *
      * @return mixed The value in the transformed representation
      *
-     * @throws TransformationFailedException When the transformation fails.
+     * @throws TransformationFailedException When the transformation fails
      */
     public function transform($value)
     {
@@ -94,7 +100,7 @@ class EntityToNumberTransformer implements DataTransformerInterface
      *
      * @return mixed The value in the original representation
      *
-     * @throws TransformationFailedException When the transformation fails.
+     * @throws TransformationFailedException When the transformation fails
      */
     public function reverseTransform($value)
     {

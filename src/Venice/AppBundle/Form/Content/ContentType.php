@@ -5,6 +5,7 @@
  * Date: 03.11.15
  * Time: 18:48.
  */
+
 namespace Venice\AppBundle\Form\Content;
 
 use Venice\AppBundle\Form\BaseType;
