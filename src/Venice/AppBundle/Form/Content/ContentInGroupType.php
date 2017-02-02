@@ -5,6 +5,7 @@
  * Date: 03.12.15
  * Time: 13:55.
  */
+
 namespace Venice\AppBundle\Form\Content;
 
 use Doctrine\ORM\EntityRepository;
@@ -20,6 +21,9 @@ use Venice\AppBundle\Entity\Interfaces\GroupContentInterface;
 use Venice\AppBundle\Form\BaseType;
 use Venice\AppBundle\Form\DataTransformer\EntityToNumberTransformer;
 
+/**
+ * Class ContentInGroupType
+ */
 class ContentInGroupType extends BaseType
 {
     /**

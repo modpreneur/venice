@@ -5,6 +5,7 @@
  * Date: 30.11.15
  * Time: 21:08.
  */
+
 namespace Venice\AppBundle\Form\Content;
 
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -19,7 +20,7 @@ use Venice\AppBundle\Form\Collection\CollectionType;
  */
 class GroupContentType extends ContentType
 {
-    /** @var  GroupContentInterface */
+    /** @var GroupContentInterface */
     protected $groupContent;
 
     /**
@@ -61,7 +62,7 @@ class GroupContentType extends ContentType
     {
         $resolver->setDefaults(
             [
-                'data_class' => GroupContent::class
+                'data_class' => GroupContent::class,
             ]
         );
     }

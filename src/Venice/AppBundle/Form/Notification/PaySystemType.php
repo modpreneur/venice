@@ -14,7 +14,7 @@ use Venice\AppBundle\Entity\PaySystemVendor;
 use Venice\AppBundle\Form\BaseType;
 
 /**
- * Class PaySystemType
+ * Class PaySystemType.
  */
 class PaySystemType extends BaseType implements NotificationTypeInterface
 {

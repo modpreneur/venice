@@ -5,6 +5,7 @@
  * Date: 03.11.15
  * Time: 18:57.
  */
+
 namespace Venice\AppBundle\Form\Content;
 
 use Trinity\AdminBundle\Form\FroalaType\FroalaType;

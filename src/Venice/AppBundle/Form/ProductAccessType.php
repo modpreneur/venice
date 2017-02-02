@@ -5,6 +5,7 @@
  * Date: 22.01.16
  * Time: 14:03.
  */
+
 namespace Venice\AppBundle\Form;
 
 use Doctrine\ORM\EntityRepository;
@@ -17,6 +18,11 @@ use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * Class ProductAccessType.
+ *
+ * This class is not used anymore
+ */
 class ProductAccessType extends BaseType
 {
     /**

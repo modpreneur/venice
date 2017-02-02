@@ -5,6 +5,7 @@
  * Date: 29.11.15
  * Time: 16:33.
  */
+
 namespace Venice\AppBundle\Form\ContentProduct;
 
 use Venice\AppBundle\Entity\ContentProduct;

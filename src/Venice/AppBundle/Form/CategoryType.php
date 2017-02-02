@@ -3,7 +3,7 @@
  * Created by PhpStorm.
  * User: marek
  * Date: 25/01/17
- * Time: 16:56
+ * Time: 16:56.
  */
 
 namespace Venice\AppBundle\Form;
@@ -14,7 +14,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Venice\AppBundle\Entity\Category;
 
 /**
- * Class CategoryType
+ * Class CategoryType.
  */
 class CategoryType extends BaseType
 {
