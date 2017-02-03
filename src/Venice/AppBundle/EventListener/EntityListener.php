@@ -80,7 +80,6 @@ class EntityListener
                     $invalidValue = $invalidValue->format(\DateTime::W3C);
                 }
 
-                //todo: convert datetime to string
                 $message .= 'Validation failed for entity: '.get_class($entity).
                     ' at property: '.$violation->getPropertyPath().': '.
                     $violation->getMessage().'The value is:'.$invalidValue
