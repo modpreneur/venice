@@ -58,8 +58,7 @@ class ProductController extends BaseAdminController
             ['type' => 'double', 'allowOrder' => false]
         );
 
-        $gridConfBuilder->addColumn('type', 'Type', ['allowOrder' => false]);
-//        $gridConfBuilder->addColumn('updatedAt', 'Updated At', ['type' => 'date']);
+        $gridConfBuilder->addColumn('productType', 'Type', ['allowOrder' => false]);
         $gridConfBuilder->addColumn('details', ' ', ['allowOrder' => false, 'className' => 'cell-center']);
 
         return $this->render('VeniceAdminBundle:Product:index.html.twig', [

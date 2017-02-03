@@ -26,7 +26,7 @@ class StandardProductType extends ProductType
         parent::buildForm($builder, $options);
 
         $builder
-            ->add('name', TextType::class, ['disabled' => 'true'])
+            ->add('name', TextType::class, ['disabled' => true])
             ->add('necktieId', NumberType::class, ['required' => true])
             ->add(
                 'submit',
