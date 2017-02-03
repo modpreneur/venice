@@ -1141,16 +1141,16 @@
         },
         {
             "name": "egulias/email-validator",
-            "version": "2.1.1",
+            "version": "2.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/egulias/EmailValidator.git",
-                "reference": "30562b69fc6c8e9740645877a98063b3842204b2"
+                "reference": "bc31baa11ea2883e017f0a10d9722ef9d50eac1c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/egulias/EmailValidator/zipball/30562b69fc6c8e9740645877a98063b3842204b2",
-                "reference": "30562b69fc6c8e9740645877a98063b3842204b2",
+                "url": "https://api.github.com/repos/egulias/EmailValidator/zipball/bc31baa11ea2883e017f0a10d9722ef9d50eac1c",
+                "reference": "bc31baa11ea2883e017f0a10d9722ef9d50eac1c",
                 "shasum": ""
             },
             "require": {
@@ -1163,7 +1163,7 @@
                 "satooshi/php-coveralls": "dev-master"
             },
             "suggest": {
-                "ext/php-intl": "PHP Internationalization Libraries are required to use the SpoofChecking validation"
+                "ext-intl": "PHP Internationalization Libraries are required to use the SpoofChecking validation"
             },
             "type": "library",
             "extra": {
@@ -1194,7 +1194,7 @@
                 "validation",
                 "validator"
             ],
-            "time": "2016-08-07 21:18:59"
+            "time": "2017-01-30 22:07:36"
         },
         {
             "name": "elasticsearch/elasticsearch",
@@ -1353,12 +1353,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfSymfony/FOSUserBundle.git",
-                "reference": "6b8828bcc64d0861b3918e1551947112d58e4d0c"
+                "reference": "a314d4aef3c3a34742bb6ae99065f27e6e49e000"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSUserBundle/zipball/6b8828bcc64d0861b3918e1551947112d58e4d0c",
-                "reference": "6b8828bcc64d0861b3918e1551947112d58e4d0c",
+                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSUserBundle/zipball/a314d4aef3c3a34742bb6ae99065f27e6e49e000",
+                "reference": "a314d4aef3c3a34742bb6ae99065f27e6e49e000",
                 "shasum": ""
             },
             "require": {
@@ -1368,7 +1368,8 @@
                 "symfony/framework-bundle": "^2.7 || ^3.0",
                 "symfony/security-bundle": "^2.7 || ^3.0",
                 "symfony/templating": "^2.7 || ^3.0",
-                "symfony/twig-bundle": "^2.7 || ^3.0"
+                "symfony/twig-bundle": "^2.7 || ^3.0",
+                "twig/twig": "^1.28 || ^2.0"
             },
             "conflict": {
                 "doctrine/doctrine-bundle": "<1.3",
@@ -1421,7 +1422,7 @@
             "keywords": [
                 "User management"
             ],
-            "time": "2017-01-27 14:24:54"
+            "time": "2017-02-02 14:13:19"
         },
         {
             "name": "fzaninotto/faker",
@@ -4665,16 +4666,16 @@
         },
         {
             "name": "sensio/framework-extra-bundle",
-            "version": "v3.0.19",
+            "version": "v3.0.20",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sensiolabs/SensioFrameworkExtraBundle.git",
-                "reference": "d57c2f297d17ee82baf8cae0b16dae34a9378784"
+                "reference": "0d8fa024edb41f9228daf78f96552f9d9079854e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sensiolabs/SensioFrameworkExtraBundle/zipball/d57c2f297d17ee82baf8cae0b16dae34a9378784",
-                "reference": "d57c2f297d17ee82baf8cae0b16dae34a9378784",
+                "url": "https://api.github.com/repos/sensiolabs/SensioFrameworkExtraBundle/zipball/0d8fa024edb41f9228daf78f96552f9d9079854e",
+                "reference": "0d8fa024edb41f9228daf78f96552f9d9079854e",
                 "shasum": ""
             },
             "require": {
@@ -4729,7 +4730,7 @@
                 "annotations",
                 "controllers"
             ],
-            "time": "2017-01-10 19:42:56"
+            "time": "2017-02-01 15:59:54"
         },
         {
             "name": "sensiolabs/security-checker",
@@ -5616,12 +5617,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/modpreneur/trinity-admin.git",
-                "reference": "d7d6f6718ba5cb6098f00841681bf0a0bec53dc1"
+                "reference": "801cb95579e178b88f6c17f30fbd6692e8c0af82"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/modpreneur/trinity-admin/zipball/d7d6f6718ba5cb6098f00841681bf0a0bec53dc1",
-                "reference": "d7d6f6718ba5cb6098f00841681bf0a0bec53dc1",
+                "url": "https://api.github.com/repos/modpreneur/trinity-admin/zipball/801cb95579e178b88f6c17f30fbd6692e8c0af82",
+                "reference": "801cb95579e178b88f6c17f30fbd6692e8c0af82",
                 "shasum": ""
             },
             "require": {
@@ -5665,7 +5666,7 @@
                 }
             ],
             "description": "Trinity Admin bundle",
-            "time": "2017-01-23 14:36:48"
+            "time": "2017-01-30 15:04:00"
         },
         {
             "name": "trinity/bunny-bundle",
@@ -5711,12 +5712,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/modpreneur/trinity-core-entities.git",
-                "reference": "02d4428163cff3ad641c44251d984940143e74a5"
+                "reference": "640e32426969595042afb903fe9dd2e4b6d20fb3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/modpreneur/trinity-core-entities/zipball/02d4428163cff3ad641c44251d984940143e74a5",
-                "reference": "02d4428163cff3ad641c44251d984940143e74a5",
+                "url": "https://api.github.com/repos/modpreneur/trinity-core-entities/zipball/640e32426969595042afb903fe9dd2e4b6d20fb3",
+                "reference": "640e32426969595042afb903fe9dd2e4b6d20fb3",
                 "shasum": ""
             },
             "require": {
@@ -5756,7 +5757,7 @@
                 }
             ],
             "description": "Trinity Framework",
-            "time": "2017-01-04 14:46:15"
+            "time": "2017-02-02 15:12:39"
         },
         {
             "name": "trinity/core-interfaces",
@@ -5939,12 +5940,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/modpreneur/trinity-logger.git",
-                "reference": "4397c32c6fe8644ffe5b17065049bd5509cda553"
+                "reference": "1b8e23d55c93274b5ffb3e6ee9c05b3e928e215f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/modpreneur/trinity-logger/zipball/4397c32c6fe8644ffe5b17065049bd5509cda553",
-                "reference": "4397c32c6fe8644ffe5b17065049bd5509cda553",
+                "url": "https://api.github.com/repos/modpreneur/trinity-logger/zipball/1b8e23d55c93274b5ffb3e6ee9c05b3e928e215f",
+                "reference": "1b8e23d55c93274b5ffb3e6ee9c05b3e928e215f",
                 "shasum": ""
             },
             "require": {
@@ -5990,7 +5991,7 @@
                 }
             ],
             "description": "Trinity Logger bundle",
-            "time": "2017-01-25 17:59:51"
+            "time": "2017-02-02 11:53:19"
         },
         {
             "name": "trinity/messages",
@@ -6179,16 +6180,16 @@
         },
         {
             "name": "trinity/settings",
-            "version": "v1.2.3",
+            "version": "v1.2.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/modpreneur/trinity-settings.git",
-                "reference": "fdd9259f1b5120357486366d5e68d1826a7888d0"
+                "reference": "3a1ee1f6796b8fe940ccbbb63d3faffb8fdfe20e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/modpreneur/trinity-settings/zipball/fdd9259f1b5120357486366d5e68d1826a7888d0",
-                "reference": "fdd9259f1b5120357486366d5e68d1826a7888d0",
+                "url": "https://api.github.com/repos/modpreneur/trinity-settings/zipball/3a1ee1f6796b8fe940ccbbb63d3faffb8fdfe20e",
+                "reference": "3a1ee1f6796b8fe940ccbbb63d3faffb8fdfe20e",
                 "shasum": ""
             },
             "require": {
@@ -6237,7 +6238,7 @@
                 }
             ],
             "description": "Trinity Settings bundle",
-            "time": "2017-01-09 12:28:06"
+            "time": "2017-02-01 09:51:28"
         },
         {
             "name": "trinity/utils",
@@ -6245,12 +6246,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/modpreneur/trinity-utils.git",
-                "reference": "588907048091a6dfa52171d7f5e9faa327190d67"
+                "reference": "0dbe64431731f96c86cff5c024b8219a28bd9372"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/modpreneur/trinity-utils/zipball/588907048091a6dfa52171d7f5e9faa327190d67",
-                "reference": "588907048091a6dfa52171d7f5e9faa327190d67",
+                "url": "https://api.github.com/repos/modpreneur/trinity-utils/zipball/0dbe64431731f96c86cff5c024b8219a28bd9372",
+                "reference": "0dbe64431731f96c86cff5c024b8219a28bd9372",
                 "shasum": ""
             },
             "require": {
@@ -6264,7 +6265,7 @@
                 "symfony/http-kernel": "~2.8|~3.0",
                 "symfony/intl": "~3",
                 "trinity/core-interfaces": "dev-master",
-                "trinity/settings": "~1.1",
+                "trinity/settings": "~1.2",
                 "twig/twig": "~1"
             },
             "type": "symfony-bundle",
@@ -6292,7 +6293,7 @@
                 }
             ],
             "description": "Trinity Utils bundle",
-            "time": "2016-09-19 12:48:19"
+            "time": "2017-02-01 11:39:49"
         },
         {
             "name": "twig/extensions",

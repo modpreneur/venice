@@ -78,6 +78,8 @@ abstract class Product extends BaseProduct implements ProductInterface
 
     public function __construct()
     {
+        parent::__construct();
+
         $this->enabled = true;
         $this->productAccesses = new ArrayCollection();
         $this->orderNumber = 0;
@@ -339,7 +341,11 @@ abstract class Product extends BaseProduct implements ProductInterface
      */
     public function compare(ContentProductInterface $cp1, ContentProductInterface $cp2)
     {
-        return $cp1->getOrderNumber() > $cp2->getOrderNumber();
+        if ($cp1->getOrderNumber() === $cp2->getOrderNumber()) {
+            return 0;
+        }
+
+        return ($cp1->getOrderNumber() < $cp2->getOrderNumber()) ? -1 : 1;
     }
 
 

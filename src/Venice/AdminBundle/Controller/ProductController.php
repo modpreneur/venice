@@ -226,6 +226,7 @@ class ProductController extends BaseAdminController
             throw new NotFoundHttpException('Product type: '.$productType.' not found.');
         }
 
+        /** @var $entityManager */
         $entityManager = $this->getEntityManager();
 
         $productForm = $this->getFormCreator()
@@ -445,7 +446,7 @@ class ProductController extends BaseAdminController
         $gridConfBuilder->addColumn('content', 'Content');
         $gridConfBuilder->addColumn('orderNumber', 'Order number');
         $gridConfBuilder->addColumn('delay', 'Delay[hours]');
-        $gridConfBuilder->addColumn('products', 'Products');
+        $gridConfBuilder->addColumn('type', 'Type');
         $gridConfBuilder->addColumn('details', ' ', ['allowOrder' => false, 'className' => 'cell-center']);
 
         $gridConfBuilder->setProperty('filter', 'product:id = '.$product->getId());

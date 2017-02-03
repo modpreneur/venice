@@ -22,6 +22,10 @@
     {{ value.name }}
 {% endblock %}
 
+{% block cell_type %}
+    {{ row.content.getType() }}
+{% endblock %}
+
 {% block cell_details %}
     <a href="{{ path("admin_content_content_product_tabs", {"id": row.getId()}) }}"
        class="button-small pull-right margin-right-10">Get details</a>
