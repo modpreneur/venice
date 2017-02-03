@@ -2,37 +2,34 @@
 
 namespace Venice\AppBundle\Services;
 
-use Doctrine\Bundle\DoctrineBundle\Registry;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bridge\Doctrine\RegistryInterface;
 use Trinity\Bundle\LoggerBundle\Interfaces\UserProviderInterface;
+use Trinity\Component\Core\Interfaces\UserInterface;
 use Venice\AppBundle\Entity\User;
 
 /**
- * {@inheritDoc}
+ * Class LoggerUserProvider
  */
 class LoggerUserProvider implements UserProviderInterface
 {
-    /**
-     * @var Registry
-     */
-    protected $entityManager;
+    /** @var  RegistryInterface */
+    protected $doctrineRegistry;
+
+    /** @var  EntityOverrideHandler */
+    protected $entityOverrideHandler;
 
     /**
-     * @var EntityOverrideHandler
+     * UserProvider constructor.
+     *
+     * @param RegistryInterface $registry
+     * @param EntityOverrideHandler $entityOverrideHandler
      */
-    protected $overrideHandler;
-
-    /**
-     * LoggerUserProvider constructor.
-     * @param EntityManagerInterface $entityManager
-     * @param EntityOverrideHandler $overrideHandler
-     */
-    public function __construct(Registry $doctrine, EntityOverrideHandler $overrideHandler)
+    public function __construct(RegistryInterface $registry, EntityOverrideHandler $entityOverrideHandler)
     {
-        $this->doctrine = $doctrine;
-        $this->overrideHandler = $overrideHandler;
+        $this->doctrineRegistry = $registry;
+        $this->entityOverrideHandler = $entityOverrideHandler;
     }
-
 
     /**
      * Get user by id.
@@ -43,8 +40,11 @@ class LoggerUserProvider implements UserProviderInterface
      */
     public function getUserById(int $userId)
     {
-        $class = $this->overrideHandler->getEntityClass(User::class);
+        /** @var UserInterface $user */
+        $user = $this->doctrineRegistry->getEntityManager()->getRepository(
+            $this->entityOverrideHandler->getEntityClass(User::class)
+        )->find($userId);
 
-        return $this->doctrine->getManager()->getRepository($class)->find($userId);
+        return $user;
     }
 }

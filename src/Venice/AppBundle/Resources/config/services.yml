@@ -120,6 +120,17 @@ services:
             - "@doctrine.orm.entity_manager"
             - "@venice.app.entity_override_handler"
 
+    venice.app.logger_user_provider:
+        class: Venice\AppBundle\Services\LoggerUserProvider
+        arguments:
+            - "@doctrine"
+            - "@venice.app.entity_override_handler"
+
+    venice.app.logger_ttl_provider:
+        class: Venice\AppBundle\Services\LoggerTtlProvider
+        arguments:
+            - "@trinity.settings"
+
     # EVENT LISTENERS #
 
     venice.app.backtrace_logger_listener:
@@ -165,10 +176,13 @@ services:
             - "@trinity.notification.entity_alias_translator"
             - "@venice.app.entity_override_handler"
             - "@logger"
+            - "@event_dispatcher"
         tags:
-            - {name: "kernel.event_listener", event: "trinity.notifications.changesDone", method: "onChangesDone", priority: 100}
-            - {name: "kernel.event_listener", event: "trinity.notifications.beforeDeleteEntity", method: "onBeforeDeleteEntity", priority: 100}
-            - {name: "kernel.event_listener", event: "trinity.messages.readMessage", method: "onMessageRead", priority: 100}
+            - { name: "kernel.event_listener", event: "trinity.notifications.changesDone", method: "onChangesDone", priority: 100}
+            - { name: "kernel.event_listener", event: "trinity.notifications.beforeDeleteEntity", method: "onBeforeDeleteEntity", priority: 100}
+            - { name: "kernel.event_listener", event: "trinity.messages.readMessage", method: "onMessageRead", priority: 100}
+            - { name: "kernel.event_listener", event: "trinity.notifications.beforeNotificationBatchProcess", method: forwardBeforeNotificationBatchProcessEvent, priority: 100}
+            - { name: "kernel.event_listener", event: "trinity.notifications.afterNotificationBatchProcess", method: forwardAfterNotificationBatchProcessEvent, priority: 100}
 
     venice.app.doctrine_discriminator_listener:
         class: Venice\AppBundle\EventListener\DoctrineDiscriminatorListener

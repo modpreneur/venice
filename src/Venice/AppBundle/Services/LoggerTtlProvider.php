@@ -30,6 +30,7 @@ class LoggerTtlProvider implements LoggerTtlProviderInterface
      * @param string $typeName Name of the elasticlog type
      *
      * @return int Ttl in days. 0(zero) stands for no ttl.
+     * @throws \Trinity\Bundle\SettingsBundle\Exception\PropertyNotExistsException
      * @throws PropertyNotExistsException
      */
     public function getTtlForType(string $typeName)

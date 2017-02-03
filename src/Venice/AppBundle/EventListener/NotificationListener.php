@@ -9,10 +9,15 @@ namespace Venice\AppBundle\EventListener;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Trinity\Bundle\LoggerBundle\Event\RemoveNotificationUserEvent;
+use Trinity\Bundle\LoggerBundle\Event\SetNotificationUserEvent;
 use Trinity\Bundle\MessagesBundle\Event\ReadMessageEvent;
 use Trinity\Component\Utils\Services\PriceStringGenerator;
 use Trinity\NotificationBundle\Entity\SynchronizationStoppedMessage;
+use Trinity\NotificationBundle\Event\AfterNotificationBatchProcessEvent;
 use Trinity\NotificationBundle\Event\BeforeDeleteEntityEvent;
+use Trinity\NotificationBundle\Event\BeforeNotificationBatchProcessEvent;
 use Trinity\NotificationBundle\Event\ChangesDoneEvent;
 use Trinity\NotificationBundle\Services\EntityAliasTranslator;
 use Venice\AppBundle\Entity\BillingPlan;
@@ -40,27 +45,33 @@ class NotificationListener
     /** @var  LoggerInterface */
     protected $logger;
 
+    /** @var  EventDispatcherInterface */
+    protected $eventDispatcher;
+
     /**
      * NotificationListener constructor.
      *
-     * @param PriceStringGenerator   $priceStringGenerator
+     * @param PriceStringGenerator $priceStringGenerator
      * @param EntityManagerInterface $entityManager
-     * @param EntityAliasTranslator  $entityAliasTranslator
-     * @param EntityOverrideHandler  $entityOverrideHandler
-     * @param LoggerInterface        $logger
+     * @param EntityAliasTranslator $entityAliasTranslator
+     * @param EntityOverrideHandler $entityOverrideHandler
+     * @param LoggerInterface $logger
+     * @param EventDispatcherInterface $eventDispatcher
      */
     public function __construct(
         PriceStringGenerator $priceStringGenerator,
         EntityManagerInterface $entityManager,
         EntityAliasTranslator $entityAliasTranslator,
         EntityOverrideHandler $entityOverrideHandler,
-        LoggerInterface $logger
+        LoggerInterface $logger,
+        EventDispatcherInterface $eventDispatcher
     ) {
         $this->priceStringGenerator = $priceStringGenerator;
         $this->entityManager = $entityManager;
         $this->entityAliasTranslator = $entityAliasTranslator;
         $this->entityOverrideHandler = $entityOverrideHandler;
         $this->logger = $logger;
+        $this->eventDispatcher = $eventDispatcher;
     }
 
     /**
@@ -117,6 +128,31 @@ class NotificationListener
             $event->stopPropagation();
             $event->setEventProcessed(true);
         }
+    }
+
+    /**
+     * @param BeforeNotificationBatchProcessEvent $notificationEvent
+     */
+    public function forwardBeforeNotificationBatchProcessEvent(BeforeNotificationBatchProcessEvent $notificationEvent)
+    {
+        $this->eventDispatcher->dispatch(
+            SetNotificationUserEvent::NAME,
+            new SetNotificationUserEvent($notificationEvent->getUserIdentification(), $notificationEvent->getClientId())
+        );
+    }
+
+    /**
+     * @param AfterNotificationBatchProcessEvent $notificationEvent
+     */
+    public function forwardAfterNotificationBatchProcessEvent(AfterNotificationBatchProcessEvent $notificationEvent)
+    {
+        $this->eventDispatcher->dispatch(
+            RemoveNotificationUserEvent::NAME,
+            new RemoveNotificationUserEvent(
+                $notificationEvent->getUserIdentification(),
+                $notificationEvent->getClientId()
+            )
+        );
     }
 
     /**

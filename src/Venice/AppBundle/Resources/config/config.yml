@@ -53,7 +53,7 @@ trinity_notification:
     unknown_entity_strategy: "@venice.app.notification_unknown_entity_name_strategy"
 
 trinity_logger:
-    logger_user_provider: "@venice_app.logger_user_provider"
+    logger_user_provider: "@venice.app.logger_user_provider"
     logger_ttl_provider: "@venice.app.logger_ttl_provider"
     elastic_logs:
         elastic_host: '%elasticsearch_host%'
