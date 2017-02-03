@@ -64,6 +64,9 @@ Venice\AppBundle\Entity\ProductAccess:
         user:
             targetEntity: Venice\AppBundle\Entity\User
             inversedBy: productAccesses
+            cascade:
+                - remove
+                - persist
             joinColumn:
                 name: user_id
                 referencedColumnName: id

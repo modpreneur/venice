@@ -52,6 +52,9 @@ Venice\AppBundle\Entity\User:
         productAccesses:
             targetEntity: Venice\AppBundle\Entity\ProductAccess
             mappedBy: user
+            cascade:
+                - remove
+                - persist
 
         OAuthTokens:
             targetEntity: Venice\AppBundle\Entity\OAuthToken
