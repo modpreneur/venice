@@ -37,9 +37,7 @@ class ProductAccessType extends BaseType implements NotificationTypeInterface
         $builder
             ->add(
                 'product',
-                TextType::class,
-                [
-                ]
+                TextType::class
             )
             ->add(
                 'fromDate',
@@ -59,14 +57,14 @@ class ProductAccessType extends BaseType implements NotificationTypeInterface
             )
             ->add(
                 'user',
-                TextType::class,
-                [
-                ]
+                TextType::class
             )
             ->add(
                 'id',
                 IntegerType::class,
-                ['property_path' => 'necktieId']
+                [
+                    'property_path' => 'necktieId'
+                ]
             );
 
         $builder->get('product')
@@ -99,8 +97,8 @@ class ProductAccessType extends BaseType implements NotificationTypeInterface
 
         $resolver->setDefaults(
             [
-                'data_class' => ProductAccess::class,
                 'csrf_protection' => false,
+                'data_class' => ProductAccess::class,
                 'standardProductClass' => StandardProduct::class,
                 'userClass' => User::class,
             ]

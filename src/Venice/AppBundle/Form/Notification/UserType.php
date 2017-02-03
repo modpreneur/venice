@@ -30,14 +30,39 @@ class UserType extends AbstractType implements NotificationTypeInterface
         parent::buildForm($builder, $options);
 
         $builder
-            ->add('username')
-            ->add('email', EmailType::class)
-            ->add('locked')
-            ->add('firstName')
-            ->add('lastName')
-            ->add('phoneNumber')
-            ->add('website', UrlType::class, ['required' => false])
-            ->add('id', IntegerType::class, ['property_path' => 'necktieId']);
+            ->add(
+                'username'
+            )
+            ->add(
+                'email',
+                EmailType::class
+            )
+            ->add(
+                'locked'
+            )
+            ->add(
+                'firstName'
+            )
+            ->add(
+                'lastName'
+            )
+            ->add(
+                'phoneNumber'
+            )
+            ->add(
+                'website',
+                UrlType::class,
+                [
+                    'required' => false
+                ]
+            )
+            ->add(
+                'id',
+                IntegerType::class,
+                [
+                    'property_path' => 'necktieId'
+                ]
+            );
     }
 
     /**
@@ -51,8 +76,8 @@ class UserType extends AbstractType implements NotificationTypeInterface
 
         $resolver->setDefaults(
             [
-                'data_class' => User::class,
                 'csrf_protection' => false,
+                'data_class' => User::class,
             ]
         );
     }

@@ -12,7 +12,7 @@ use Trinity\AdminBundle\Form\FroalaType\FroalaType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
- * {@inheritdoc}
+ * Class IframeContentType
  */
 class IframeContentType extends ContentType
 {
@@ -24,6 +24,12 @@ class IframeContentType extends ContentType
         parent::buildForm($builder, $options);
 
         $builder
-            ->add('html', FroalaType::class, ['required' => false]);
+            ->add(
+                'html',
+                FroalaType::class,
+                [
+                    'required' => false
+                ]
+            );
     }
 }

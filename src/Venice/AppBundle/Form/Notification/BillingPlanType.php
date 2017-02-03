@@ -52,19 +52,17 @@ class BillingPlanType extends BaseType implements NotificationTypeInterface
             )
             ->add(
                 'product',
-                TextType::class,
-                [
-                ]
+                TextType::class
             )->add(
                 'paySystemVendor',
-                TextType::class,
-                [
-                ]
+                TextType::class
             )
             ->add(
                 'id',
                 IntegerType::class,
-                ['property_path' => 'necktieId']
+                [
+                    'property_path' => 'necktieId'
+                ]
             );
 
         $builder->get('product')
@@ -97,8 +95,8 @@ class BillingPlanType extends BaseType implements NotificationTypeInterface
 
         $resolver->setDefaults(
             [
-                'data_class' => BillingPlan::class,
                 'csrf_protection' => false,
+                'data_class' => BillingPlan::class,
                 'standardProductClass' => StandardProduct::class,
                 'paySystemVendorClass' => PaySystemVendor::class,
             ]

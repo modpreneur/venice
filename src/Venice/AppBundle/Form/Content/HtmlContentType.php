@@ -12,7 +12,7 @@ use Trinity\AdminBundle\Form\FroalaType\FroalaType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
- * {@inheritdoc}
+ * Class HtmlContentType
  */
 class HtmlContentType extends ContentType
 {
@@ -24,11 +24,15 @@ class HtmlContentType extends ContentType
         parent::buildForm($builder, $options);
 
         $builder
-            ->add('html', FroalaType::class, [
-                'required' => false,
-                'attr' => [
-                'style' => 'display:none',
-                ],
-            ]);
+            ->add(
+                'html',
+                FroalaType::class,
+                [
+                    'required' => false,
+                    'attr' => [
+                        'style' => 'display:none',
+                    ],
+                ]
+            );
     }
 }

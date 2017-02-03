@@ -12,7 +12,7 @@ use Symfony\Component\Form\AbstractType;
 use Venice\AppBundle\Services\EntityOverrideHandler;
 
 /**
- * {@inheritdoc}
+ * Class BaseType
  */
 abstract class BaseType extends AbstractType
 {

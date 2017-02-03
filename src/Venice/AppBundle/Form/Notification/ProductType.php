@@ -32,10 +32,28 @@ class ProductType extends BaseType implements NotificationTypeInterface
         parent::buildForm($builder, $options);
 
         $builder
-            ->add('name', TextType::class)
-            ->add('productType', TextType::class)
-            ->add('description', TextareaType::class, ['property_path' => 'necktieDescription'])
-            ->add('id', IntegerType::class, ['property_path' => 'necktieId']);
+            ->add(
+                'name',
+                TextType::class
+            )
+            ->add(
+                'productType',
+                TextType::class
+            )
+            ->add(
+                'description',
+                TextareaType::class,
+                [
+                    'property_path' => 'necktieDescription'
+                ]
+            )
+            ->add(
+                'id',
+                IntegerType::class,
+                [
+                    'property_path' => 'necktieId'
+                ]
+            );
     }
 
     /**

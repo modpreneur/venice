@@ -12,6 +12,9 @@ use Venice\AppBundle\Entity\ContentProduct;
 use Venice\AppBundle\Form\BaseType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * Class ContentProductType
+ */
 abstract class ContentProductType extends BaseType
 {
     /**

@@ -55,6 +55,7 @@ class EntityOverrideHandler
 
     /**
      * Check if given $entity is instance of $class.
+     * You can either use this method or use the instanceof operator with the entity interface.
      *
      * @param object|string $entity
      * @param string        $class

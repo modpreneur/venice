@@ -12,7 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
- * {@inheritdoc}
+ * Class PdfContentType
  */
 class PdfContentType extends ContentType
 {
@@ -24,6 +24,9 @@ class PdfContentType extends ContentType
         parent::buildForm($builder, $options);
 
         $builder
-            ->add('link', TextType::class);
+            ->add(
+                'link',
+                TextType::class
+            );
     }
 }

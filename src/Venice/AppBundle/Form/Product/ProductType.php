@@ -26,14 +26,35 @@ class ProductType extends BaseType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('handle', TextType::class)
-            ->add('description', TextareaType::class, ['required' => false, 'label' => 'Venice description'])
-            ->add('image', TextType::class)
-            ->add('enabled', CheckboxType::class, [
-                'required' => false,
-                'attr' => ['disable_widget_label' => true],
-            ])
-            ->add('orderNumber', IntegerType::class)
-        ;
+            ->add(
+                'handle',
+                TextType::class
+            )
+            ->add(
+                'description',
+                TextareaType::class,
+                [
+                    'required' => false,
+                    'label' => 'Venice description'
+                ]
+            )
+            ->add(
+                'image',
+                TextType::class
+            )
+            ->add(
+                'enabled',
+                CheckboxType::class,
+                [
+                    'required' => false,
+                    'attr' => [
+                        'disable_widget_label' => true
+                    ],
+                ]
+            )
+            ->add(
+                'orderNumber',
+                IntegerType::class
+            );
     }
 }

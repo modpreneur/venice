@@ -34,14 +34,14 @@ class PaySystemType extends BaseType implements NotificationTypeInterface
             )
             ->add(
                 'defaultVendor',
-                HiddenType::class,
-                [
-                ]
+                HiddenType::class
             )
             ->add(
                 'id',
                 IntegerType::class,
-                ['property_path' => 'necktieId']
+                [
+                    'property_path' => 'necktieId'
+                ]
             );
 
         $builder->get('defaultVendor')
@@ -65,8 +65,8 @@ class PaySystemType extends BaseType implements NotificationTypeInterface
 
         $resolver->setDefaults(
             [
-                'data_class' => PaySystem::class,
                 'csrf_protection' => false,
+                'data_class' => PaySystem::class,
             ]
         );
     }

@@ -23,11 +23,20 @@ class FreeProductType extends ProductType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', TextType::class);
+            ->add(
+                'name',
+                TextType::class
+            );
 
         parent::buildForm($builder, $options);
 
         $builder
-            ->add('submit', SubmitType::class, ['label' => 'Create']);
+            ->add(
+                'submit',
+                SubmitType::class,
+                [
+                    'label' => 'Create'
+                ]
+            );
     }
 }

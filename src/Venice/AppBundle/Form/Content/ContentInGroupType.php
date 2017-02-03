@@ -22,7 +22,7 @@ use Venice\AppBundle\Form\BaseType;
 use Venice\AppBundle\Form\DataTransformer\EntityToNumberTransformer;
 
 /**
- * Class ContentInGroupType
+ * Class ContentInGroupType.
  */
 class ContentInGroupType extends BaseType
 {

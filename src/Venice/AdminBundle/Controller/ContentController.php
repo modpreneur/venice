@@ -336,6 +336,7 @@ class ContentController extends BaseAdminController
      */
     public function updateAction(Request $request, Content $content)
     {
+        //todo: @JakubFajkus use entityOverrideHnalder and check for all other usages
         if ($this->getEntityOverrideHandler()->isInstanceOf($content, GroupContent::class)) {
             return $this->updateGroupContent($request, $content);
         } else {

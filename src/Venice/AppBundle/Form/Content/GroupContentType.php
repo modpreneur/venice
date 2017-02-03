@@ -16,7 +16,7 @@ use Venice\AppBundle\Entity\Interfaces\GroupContentInterface;
 use Venice\AppBundle\Form\Collection\CollectionType;
 
 /**
- * {@inheritdoc}
+ * Class GroupContentType
  */
 class GroupContentType extends ContentType
 {

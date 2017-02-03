@@ -25,6 +25,9 @@ abstract class ContentType extends BaseType
         parent::buildForm($builder, $options);
 
         $builder
-            ->add('name', TextType::class);
+            ->add(
+                'name',
+                TextType::class
+            );
     }
 }
