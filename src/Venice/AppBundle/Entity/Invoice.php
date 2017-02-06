@@ -140,4 +140,12 @@ class Invoice implements InvoiceInterface
 
         return $this;
     }
+    
+        /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return json_encode($this->items->toArray());
+    }
 }
