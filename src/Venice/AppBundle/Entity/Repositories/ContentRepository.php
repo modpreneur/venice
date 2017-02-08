@@ -63,4 +63,24 @@ class ContentRepository extends EntityRepository
 
         return $query->getSingleScalarResult();
     }
+
+    /**
+     * @param array $productIds
+     * @return Content[]
+     */
+    public function getByProducts(array $productIds)
+    {
+        $query = $this->getEntityManager()->createQuery("
+              SELECT c
+              FROM {$this->_entityName} as c
+              JOIN c.contentProducts cp
+              WHERE cp.product in (:productIds)
+              ORDER BY cp.orderNumber
+            
+        ")
+            ->setParameter('productIds', $productIds)
+        ;
+
+        return $query->getResult();
+    }
 }
