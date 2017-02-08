@@ -14,6 +14,8 @@ use Venice\AppBundle\Entity\Interfaces\VideoContentInterface;
  */
 class VideoContent extends AbstractPlayableContent implements VideoContentInterface
 {
+    const TYPE = 'video';
+
     /**
      * @var string Url to the preview image
      */
@@ -148,14 +150,6 @@ class VideoContent extends AbstractPlayableContent implements VideoContentInterf
     }
 
     /**
-     * {@inheritdoc}
-     */
-    public function getType()
-    {
-        return 'video';
-    }
-
-    /**
      * @return string
      */
     public function getPreviewImage()
@@ -173,5 +167,15 @@ class VideoContent extends AbstractPlayableContent implements VideoContentInterf
         $this->previewImage = $previewImage;
 
         return $this;
+    }
+
+    /**
+     * Get the content type string.
+     *
+     * @return string
+     */
+    public function getType()
+    {
+        return self::TYPE;
     }
 }

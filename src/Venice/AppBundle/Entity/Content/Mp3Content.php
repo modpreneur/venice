@@ -14,6 +14,8 @@ use Venice\AppBundle\Entity\Interfaces\Mp3ContentInterface;
  */
 class Mp3Content extends AbstractPlayableContent implements Mp3ContentInterface
 {
+    const TYPE = 'mp3';
+
     /**
      * @var string Url address to the file.
      */
@@ -50,16 +52,6 @@ class Mp3Content extends AbstractPlayableContent implements Mp3ContentInterface
     }
 
     /**
-     * Get the content type string.
-     *
-     * @return string
-     */
-    public function getType()
-    {
-        return 'mp3';
-    }
-
-    /**
      * @return string
      */
     public function getLink()
@@ -75,5 +67,15 @@ class Mp3Content extends AbstractPlayableContent implements Mp3ContentInterface
     public function setLink(string $link)
     {
         $this->link = $link;
+    }
+
+    /**
+     * Get the content type string.
+     *
+     * @return string
+     */
+    public function getType()
+    {
+        return self::TYPE;
     }
 }

@@ -14,6 +14,8 @@ use Venice\AppBundle\Entity\Interfaces\HtmlContentInterface;
  */
 class HtmlContent extends Content implements HtmlContentInterface
 {
+    const TYPE = 'html';
+
     /**
      * @var string
      */
@@ -50,10 +52,12 @@ class HtmlContent extends Content implements HtmlContentInterface
     }
 
     /**
-     * {@inheritdoc}
+     * Get the content type string.
+     *
+     * @return string
      */
     public function getType()
     {
-        return 'html';
+        return self::TYPE;
     }
 }

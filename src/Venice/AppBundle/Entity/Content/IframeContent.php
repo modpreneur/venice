@@ -14,6 +14,8 @@ use Venice\AppBundle\Entity\Interfaces\IframeContentInterface;
  */
 class IframeContent extends Content implements IframeContentInterface
 {
+    const TYPE = 'iframe';
+
     /**
      * @var string
      */
@@ -48,10 +50,12 @@ class IframeContent extends Content implements IframeContentInterface
     }
 
     /**
-     * {@inheritdoc}
+     * Get the content type string.
+     *
+     * @return string
      */
     public function getType()
     {
-        return 'iframe';
+        return self::TYPE;
     }
 }

@@ -21,6 +21,8 @@ abstract class Content implements EntityInterface, ContentInterface
 {
     use Timestampable;
 
+    const TYPE = 'abstractContent';
+
     /**
      * @var int
      */

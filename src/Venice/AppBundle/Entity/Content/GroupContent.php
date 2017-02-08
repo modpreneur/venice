@@ -17,6 +17,8 @@ use Venice\AppBundle\Entity\Interfaces\GroupContentInterface;
  */
 class GroupContent extends Content implements GroupContentInterface
 {
+    const TYPE = 'group';
+
     /**
      * @var ArrayCollection<ContentInGroup>
      */
@@ -177,6 +179,6 @@ class GroupContent extends Content implements GroupContentInterface
      */
     public function getType()
     {
-        return 'group';
+        return self::TYPE;
     }
 }

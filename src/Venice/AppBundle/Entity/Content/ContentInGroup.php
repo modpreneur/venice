@@ -34,7 +34,7 @@ class ContentInGroup implements EntityInterface
     protected $content;
 
     /**
-     * @var int
+     * @var int Delay in hours
      */
     protected $delay;
 

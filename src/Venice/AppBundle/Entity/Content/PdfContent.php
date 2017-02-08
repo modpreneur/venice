@@ -14,6 +14,8 @@ use Venice\AppBundle\Entity\Interfaces\PdfContentInterface;
  */
 class PdfContent extends Content implements PdfContentInterface
 {
+    const TYPE = 'pdf';
+
     /**
      * @var string Url address to the file.
      */
@@ -27,16 +29,6 @@ class PdfContent extends Content implements PdfContentInterface
     public function getContent()
     {
         return $this->link;
-    }
-
-    /**
-     * Get the content type string.
-     *
-     * @return string
-     */
-    public function getType()
-    {
-        return 'pdf';
     }
 
     /**
@@ -55,5 +47,15 @@ class PdfContent extends Content implements PdfContentInterface
     public function setLink(string $link)
     {
         $this->link = $link;
+    }
+
+    /**
+     * Get the content type string.
+     *
+     * @return string
+     */
+    public function getType()
+    {
+        return self::TYPE;
     }
 }
