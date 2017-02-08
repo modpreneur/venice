@@ -365,7 +365,7 @@ abstract class Product extends BaseProduct implements ProductInterface
         /** @var ContentProductInterface $contentProduct */
         foreach ($this->contentProducts as $contentProduct) {
             if ($contentProduct->getContent()->getType() === $type) {
-                $content[] = $content;
+                $content[] = $contentProduct->getContent();
             }
         }
 
