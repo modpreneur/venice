@@ -49,6 +49,13 @@ Venice\AppBundle\Entity\Content\Content:
             nullable: false
             precision: 0
             column: updated_at
+        description:
+            type: text
+            scale: 0
+            length: null
+            unique: false
+            nullable: true
+            precision: 0
     oneToMany:
         contentProducts:
             targetEntity: Venice\AppBundle\Entity\ContentProduct

@@ -28,6 +28,13 @@ abstract class ContentType extends BaseType
             ->add(
                 'name',
                 TextType::class
+            )
+            ->add(
+                'description',
+                TextType::class,
+                [
+                    'required' => false
+                ]
             );
     }
 }

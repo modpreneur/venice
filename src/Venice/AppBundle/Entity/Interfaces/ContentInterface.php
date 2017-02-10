@@ -114,4 +114,14 @@ interface ContentInterface extends BaseEntityInterface
      * Updates createdAt and updatedAt timestamps.
      */
     public function updateTimestamps();
+
+    /**
+     * @param string $description
+     */
+    public function setDescription($description);
+
+    /**
+     * @return string
+     */
+    public function getDescription(): string;
 }

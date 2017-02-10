@@ -49,15 +49,24 @@ abstract class Content implements EntityInterface, ContentInterface
     protected $contentsInGroup;
 
     /**
+     * @var string
+     */
+    protected $description;
+
+    /**
      * Return Content's content no matter what concrete implementation is.
      *
      * @return string
      */
     abstract public function getContent();
 
+    /**
+     * Content constructor.
+     */
     public function __construct()
     {
         $this->updateTimestamps();
+        $this->description = '';
     }
 
     /**
@@ -173,6 +182,22 @@ abstract class Content implements EntityInterface, ContentInterface
         }
 
         return $type;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDescription(): string
+    {
+        return $this->description ?? '';
+    }
+
+    /**
+     * @param string $description
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
     }
 
     /**
