@@ -12,6 +12,7 @@ services:
         arguments:
             - "@form.factory"
             - "@router"
+            - "@translator"
 
     venice.admin.main_menu:
         class: Knp\Menu\MenuItem
