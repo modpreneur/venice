@@ -5,6 +5,7 @@
  * Date: 02.10.15
  * Time: 17:36.
  */
+
 namespace Venice\AppBundle\Entity;
 
 use DateTime;
@@ -63,6 +64,11 @@ class User extends BaseUser implements NotificationEntityInterface, UserInterfac
      * @var ArrayCollection<OAuthToken>
      */
     protected $OAuthTokens;
+
+    /**
+     * @var ArrayCollection<OAuthToken>
+     */
+    protected $blogArticles;
 
     /**
      * @var bool
@@ -331,7 +337,7 @@ class User extends BaseUser implements NotificationEntityInterface, UserInterfac
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isLocked(): bool
     {
@@ -339,7 +345,7 @@ class User extends BaseUser implements NotificationEntityInterface, UserInterfac
     }
 
     /**
-     * @param boolean $locked
+     * @param bool $locked
      */
     public function setLocked(bool $locked)
     {
@@ -356,7 +362,7 @@ class User extends BaseUser implements NotificationEntityInterface, UserInterfac
 //     */
 //    public function giveAccessToProduct(Product $product, \DateTime $fromDate, \DateTime $toDate = null, $necktieId = null)
 //    {
-//
+
 //        //create a new ProductAccess record
 //        if (!$this->hasAccessToProduct($product)) {
 //            $productAccess = new ProductAccess();
@@ -366,9 +372,9 @@ class User extends BaseUser implements NotificationEntityInterface, UserInterfac
 //                ->setUser($this)
 //                ->setFromDate($fromDate)
 //                ->setToDate($toDate);
-//
+
 //            $this->addProductAccess($productAccess);
-//
+
 //            return $productAccess;
 //        } //edit existing product access record
 //        else {
@@ -387,22 +393,22 @@ class User extends BaseUser implements NotificationEntityInterface, UserInterfac
 //                        $productAccess->setUser($this);
 //                        $productAccess->setFromDate($fromDate);
 //                        $productAccess->setToDate($toDate);
-//
+
 //                        return $productAccess;
 //                    }
 //                }
-//
+
 //            }
 //        }
-//
+
 //        return null;
 //    }
 
     /**
      * @param ProductInterface $product
-     * @param DateTime $fromDate
-     * @param DateTime|null $toDate
-     * @param int|null $necktieId
+     * @param DateTime         $fromDate
+     * @param DateTime|null    $toDate
+     * @param int|null         $necktieId
      *
      * @return ProductAccessInterface|null
      */
@@ -473,5 +479,39 @@ class User extends BaseUser implements NotificationEntityInterface, UserInterfac
     public function getPublic()
     {
         return $this->public;
+    }
+
+    /**
+     * @return ArrayCollection<BlogArticle>
+     */
+    public function getBlogArticles()
+    {
+        return $this->blogArticles;
+    }
+
+    /**
+     * @param BlogArticle $blogArticle
+     *
+     * @return $this
+     */
+    public function addBlogArticle(BlogArticle $blogArticle)
+    {
+        if (!$this->blogArticles->contains($blogArticle)) {
+            $this->blogArticles->add($blogArticle);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param BlogArticle $blogArticle
+     *
+     * @return $this
+     */
+    public function removeBlogArticle(BlogArticle $blogArticle)
+    {
+        $this->blogArticles->remove($blogArticle);
+
+        return $this;
     }
 }

@@ -56,6 +56,12 @@ Venice\AppBundle\Entity\User:
                 - remove
                 - persist
 
+        blogArticles:
+            targetEntity: Venice\AppBundle\Entity\BlogArticle
+            mappedBy: publisher
+            cascade:
+                - persist
+
         OAuthTokens:
             targetEntity: Venice\AppBundle\Entity\OAuthToken
             cascade:

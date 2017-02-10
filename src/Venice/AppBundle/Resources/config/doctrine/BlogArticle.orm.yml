@@ -65,12 +65,14 @@ Venice\AppBundle\Entity\BlogArticle:
             nullable: false
             precision: 0
             column: updated_at
+
+    manyToOne:
         publisher:
             targetEntity: Venice\AppBundle\Entity\User
             cascade: {  }
             fetch: LAZY
             mappedBy: null
-            inversedBy: null
+            inversedBy: blogArticles
             joinColumns:
                 user_id:
                     referencedColumnName: id
