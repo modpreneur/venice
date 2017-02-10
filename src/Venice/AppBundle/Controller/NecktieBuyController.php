@@ -43,7 +43,7 @@ class NecktieBuyController extends Controller
         try {
             return $this->createRedirectBuyResponse($request, $product, $paySystem);
         } catch (\Throwable $error) {
-            $this->logError($product, $paySystem);
+            $this->logError($product, $paySystem, $error);
 
             throw $error;
         }
@@ -53,10 +53,11 @@ class NecktieBuyController extends Controller
      * @param StandardProductInterface $product
      * @param string $paySystem
      */
-    protected function logError(StandardProductInterface $product, string $paySystem)
+    protected function logError(StandardProductInterface $product, string $paySystem, \Throwable $error)
     {
         $this->get('logger')->emergency(
-            "Could no buy a product with necktieId: {$product->getNecktieId()} with pay system {$paySystem}"
+            "Could no buy a product with necktieId: {$product->getNecktieId()} with pay system {$paySystem}. ' . 
+            'Original error: ".$error->getTraceAsString()
         );
     }
 
@@ -64,7 +65,20 @@ class NecktieBuyController extends Controller
      * @param Request $request
      * @param StandardProductInterface $product
      * @param string $paySystem
+     *
      * @return RedirectResponse
+     *
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Venice\AppBundle\Exceptions\UnsuccessfulNecktieResponseException
+     * @throws \RuntimeException
+     * @throws \Venice\AppBundle\Exceptions\ExpiredRefreshTokenException
+     * @throws \Symfony\Component\Intl\Exception\MethodArgumentNotImplementedException
+     * @throws \Trinity\Bundle\SettingsBundle\Exception\PropertyNotExistsException
+     * @throws \Symfony\Component\Intl\Exception\MethodArgumentValueNotImplementedException
+     * @throws \InvalidArgumentException
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     *
+     * @throws \LogicException
      */
     protected function createRedirectBuyResponse(Request $request, StandardProductInterface $product, string $paySystem)
     {
@@ -88,12 +102,10 @@ class NecktieBuyController extends Controller
         $productId = $product->getNecktieId();
 
         if ($paySystem === 'Clickbank') {
-            $paySystemUrlPart = 'cb/ocb';
+            $paySystemUrlPart = 'click-bank/ocb';
         } elseif ($paySystem === 'Braintree') {
             $paySystemUrlPart = 'braintree/buy';
         } else {
-            $this->logError($product, $paySystem);
-
             throw new NotFoundHttpException('Unsupported pay system: '.$paySystem);
         }
 
@@ -103,9 +115,7 @@ class NecktieBuyController extends Controller
             );
 
             if (!$billingPlan) {
-                $this->logError($product, $paySystem);
-
-                throw new NotFoundHttpException('No billing plan found');
+                throw new NotFoundHttpException('No billing plan found with id: ' . $billingPlanId);
             }
 
             $price = $priceStringGenerator->generateFullPriceStr($billingPlan);
