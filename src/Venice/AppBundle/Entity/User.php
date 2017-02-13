@@ -66,7 +66,7 @@ class User extends BaseUser implements NotificationEntityInterface, UserInterfac
     protected $OAuthTokens;
 
     /**
-     * @var ArrayCollection<OAuthToken>
+     * @var ArrayCollection<BlogArticle>
      */
     protected $blogArticles;
 
