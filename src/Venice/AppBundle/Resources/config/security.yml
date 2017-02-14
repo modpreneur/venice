@@ -72,5 +72,6 @@ security:
         - { path: ^/login, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/login-response, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/notify, role: [IS_AUTHENTICATED_ANONYMOUSLY]}
+        - { path: ^/registration, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/*, role: [IS_AUTHENTICATED, IS_AUTHENTICATED_REMEMBERED, IS_AUTHENTICATED_FULLY ]}
 
