@@ -59,7 +59,7 @@ class FroalaController extends Controller
      */
     public function deleteImageAction(Request $request)
     {
-        //todo
+        return new JsonResponse();
     }
 
     /**

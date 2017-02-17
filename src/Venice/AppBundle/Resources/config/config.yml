@@ -248,7 +248,9 @@ trinity_settings:
 trinity_admin:
     froala_editor_settings:
         language: "en_gb"
-        pluginsEnabled: ['url', 'link', 'codeView', 'entities', 'align', 'charCounter']
+        pluginsEnabled: ['url', 'link', 'codeView', 'entities', 'align', 'charCounter', 'image']
+        imageUploadURL: "app_froala_upload_image"
+        imageDeleteURL: "app_froala_load_images"
 
 knp_gaufrette:
     adapters:
