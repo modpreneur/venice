@@ -234,6 +234,7 @@ class User extends BaseUser implements NotificationEntityInterface, UserInterfac
         if (false !== $token) {
             return $token->getRefreshToken();
         }
+        return null;
     }
 
     /**
@@ -257,27 +258,27 @@ class User extends BaseUser implements NotificationEntityInterface, UserInterfac
     }
 
     /**
-     * @param OAuthTokenInterface $OAuthToken
+     * @param OAuthTokenInterface $oauthToken
      *
      * @return $this
      */
-    public function addOAuthToken(OAuthTokenInterface $OAuthToken)
+    public function addOAuthToken(OAuthTokenInterface $oauthToken)
     {
-        if (!$this->OAuthTokens->contains($OAuthToken)) {
-            $this->OAuthTokens->add($OAuthToken);
+        if (!$this->OAuthTokens->contains($oauthToken)) {
+            $this->OAuthTokens->add($oauthToken);
         }
 
         return $this;
     }
 
     /**
-     * @param OAuthTokenInterface $OAuthToken
+     * @param OAuthTokenInterface $oauthToken
      *
      * @return $this
      */
-    public function removeOAuthToken(OAuthTokenInterface $OAuthToken)
+    public function removeOAuthToken(OAuthTokenInterface $oauthToken)
     {
-        $this->OAuthTokens->remove($OAuthToken);
+        $this->OAuthTokens->remove($oauthToken);
 
         return $this;
     }
@@ -467,7 +468,7 @@ class User extends BaseUser implements NotificationEntityInterface, UserInterfac
     {
         /** @var ProductAccessInterface $productAccess */
         foreach ($this->productAccesses as $productAccess) {
-            if ($productAccess->getProduct() == $product) {
+            if ($productAccess->getProduct() === $product) {
                 return $productAccess;
             }
         }

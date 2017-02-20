@@ -105,7 +105,7 @@ class EntityToNumberTransformer implements DataTransformerInterface
     public function reverseTransform($value)
     {
         if ($value === null || empty($value)) {
-            return;
+            return null;
         }
 
         return $this
