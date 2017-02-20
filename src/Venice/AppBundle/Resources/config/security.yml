@@ -66,6 +66,7 @@ security:
 
 
     access_control:
+        - { path: ^/css, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/public, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/froala, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin, role: ROLE_ADMIN }
