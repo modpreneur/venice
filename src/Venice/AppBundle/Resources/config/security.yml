@@ -48,6 +48,10 @@ security:
             id: fos_user.user_provider.username_email
 
     firewalls:
+        dev:
+            pattern:    ^/(_profiler|_wdt|css|js|assets)
+            security:   false
+    
         notify_api:
             pattern: ^/notify/^
             anonymous: true
