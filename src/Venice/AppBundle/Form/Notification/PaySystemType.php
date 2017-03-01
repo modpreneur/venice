@@ -33,6 +33,10 @@ class PaySystemType extends BaseType implements NotificationTypeInterface
                 TextType::class
             )
             ->add(
+                'handle',
+                TextType::class
+            )
+            ->add(
                 'defaultVendor',
                 HiddenType::class
             )
