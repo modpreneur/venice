@@ -101,11 +101,12 @@ class NecktieBuyController extends Controller
         $billingPlanId = $request->query->get('billingPlanId');
         $productId = $product->getNecktieId();
 
-        if ($paySystem === 'Clickbank') {
+        if ($paySystem === 'ClickBank') {
             $paySystemUrlPart = 'click-bank/ocb';
         } elseif ($paySystem === 'Braintree') {
             $paySystemUrlPart = 'braintree/buy';
         } else {
+            $this->get('logger')->emergency("Can not buy product");
             throw new NotFoundHttpException('Unsupported pay system: '.$paySystem);
         }
 

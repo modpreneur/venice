@@ -141,6 +141,19 @@ class User extends BaseUser implements NotificationEntityInterface, UserInterfac
     }
 
     /**
+     * @return ArrayCollection
+     */
+    public function getProducts()
+    {
+        $products = new ArrayCollection();
+        foreach ($this->productAccesses as $productAccess) {
+            $products->add($productAccess);
+        }
+
+        return $products;
+    }
+
+    /**
      * @param ProductAccessInterface $productAccess
      *
      * @return $this
