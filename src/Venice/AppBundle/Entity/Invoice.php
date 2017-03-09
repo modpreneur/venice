@@ -10,24 +10,63 @@ namespace Venice\AppBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Venice\AppBundle\Entity\Interfaces\InvoiceInterface;
 
-class Invoice implements InvoiceInterface
+class Invoice
 {
     protected $id;
 
-    protected $totalPrice;
-
-    protected $transactionTime;
-
-    protected $transactionType;
+    protected $firstPaymentDate;
 
     protected $items;
 
+    //todo @JakubFajkus this was copied from necktie and reduced... just temporally for the flofit
+
+    //This happen in rare conditions, when user came on thank-you page and we don't have
+    //the IPN yet. Necktie does not allow access on thank-you without payment information, so as for now should not
+    //be created by standard invoice flow.
+    /** @deprecated for migration from amember */
+    const STATUS_PENDING = 'PENDING';       // Free trial, waiting for first payment
+
+    const STATUS_NORMAL = 'NORMAL';         // Sale standard, one payment
+    const STATUS_RECURRING = 'RECURRING';   // Recurring payment, can be cancelled
+    const STATUS_CANCELED = 'CANCELED';     // Cancel recurring (from PENDING or RECURRING)
+    const STATUS_COMPLETED = 'COMPLETED';   // After last recurring payment
+    const STATUS_REFUNDED = 'REFUNDED';     // Invoice was refunded
+
+    const VALID_STATUSES = [
+        self::STATUS_PENDING,
+        self::STATUS_NORMAL,
+        self::STATUS_RECURRING,
+        self::STATUS_CANCELED,
+        self::STATUS_REFUNDED,
+        self::STATUS_COMPLETED,
+    ];
+
+    /**
+     * @var string
+     */
+    private $status = self::STATUS_NORMAL;
+
+    /**
+     * @var string
+     */
+    private $receipt;
+
+    /**
+     * @var string
+     */
+    private $stringPrice;
+
+    /**
+     * Invoice constructor.
+     */
     public function __construct()
     {
-        $this->items = new ArrayCollection();
+        $this->items = [];
     }
 
     /**
+     * Get id.
+     *
      * @return int
      */
     public function getId()
@@ -36,116 +75,130 @@ class Invoice implements InvoiceInterface
     }
 
     /**
-     * @param int $id
-     *
-     * @return InvoiceInterface
+     * @param mixed $id
      */
     public function setId($id)
     {
         $this->id = $id;
+    }
 
-        return $this;
+
+    /**
+     * @return string
+     */
+    public function getStatus(): string
+    {
+        return $this->status;
     }
 
     /**
-     * @return float
+     * @param string $status
      */
-    public function getTotalPrice()
+    public function setStatus($status)
     {
-        return $this->totalPrice;
-    }
-
-    /**
-     * @param float $totalPrice
-     *
-     * @return InvoiceInterface
-     */
-    public function setTotalPrice($totalPrice)
-    {
-        $this->totalPrice = $totalPrice;
-
-        return $this;
+        $this->status = $status;
     }
 
     /**
      * @return \DateTime
      */
-    public function getTransactionTime()
+    public function getFirstPaymentDate(): ?\DateTime
     {
-        return $this->transactionTime;
+        return $this->firstPaymentDate;
     }
 
     /**
-     * @param \DateTime $transactionTime
-     *
-     * @return InvoiceInterface
+     * @param \DateTime $firstPayment
      */
-    public function setTransactionTime(\DateTime $transactionTime)
+    public function setFirstPaymentDate(\DateTime $firstPayment)
     {
-        $this->transactionTime = $transactionTime;
+        $this->firstPaymentDate = $firstPayment;
+    }
+
+    /**
+     * Set receipt.
+     *
+     * @param string $receipt
+     *
+     * @return Invoice
+     */
+    public function setReceipt($receipt)
+    {
+        $this->receipt = $receipt;
 
         return $this;
     }
 
+
     /**
+     * Get receipt.
+     *
      * @return string
      */
-    public function getTransactionType()
+    public function getReceipt()
     {
-        return $this->transactionType;
+        return $this->receipt;
     }
 
     /**
-     * @param string $transactionType
-     *
-     * @return InvoiceInterface
+     * @param mixed $items
      */
-    public function setTransactionType($transactionType)
+    public function setItems($items)
     {
-        $this->transactionType = $transactionType;
+        $this->items = $items;
+    }
 
-        return $this;
+    public function addItem($item)
+    {
+        $this->items[] = $item;
     }
 
     /**
-     * @return ArrayCollection<string>
+     * @return array
      */
     public function getItems()
     {
         return $this->items;
     }
-
     /**
-     * @param string $item
-     *
-     * @return $this
+     * @return bool
      */
-    public function addItem($item)
+    public function canBeCancel(): bool
     {
-        if (!$this->items->contains($item)) {
-            $this->items->add($item);
-        }
-
-        return $this;
+        return $this->status === self::STATUS_RECURRING;
     }
 
     /**
-     * @param string $item
-     *
-     * @return $this
+     * For symfony form validation callback
+     * @return array
      */
-    public function removeItem($item)
+    public static function validStatuses()
     {
-        $this->items->remove($item);
-
-        return $this;
+        return self::VALID_STATUSES;
     }
-    
-        /**
+
+    /**
      * @return string
      */
-    public function __toString()
+    public function getStringPrice(): string
     {
-        return json_encode($this->items->toArray());
+        return $this->stringPrice;
+    }
+
+    /**
+     * @param string $stringPrice
+     */
+    public function setStringPrice(string $stringPrice)
+    {
+        $this->stringPrice = $stringPrice;
+    }
+
+
+    /**
+     * @return array
+     */
+    public static function selectStatusChoices()
+    {
+        return array_combine(self::VALID_STATUSES, self::VALID_STATUSES);
     }
 }

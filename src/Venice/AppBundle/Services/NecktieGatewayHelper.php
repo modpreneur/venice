@@ -72,15 +72,13 @@ class NecktieGatewayHelper implements NecktieGatewayHelperInterface
      */
     public function getInvoicesFromNecktieResponse(array $response)
     {
-        if (array_key_exists('invoices', $response) && is_array($response['invoices'])) {
-            $response = $response['invoices'];
-        } else {
+        if (!array_key_exists('invoices', $response) && is_array($response['invoices'])) {
             return [];
         }
 
         $invoices = [];
 
-        foreach ($response as $invoice) {
+        foreach ($response['invoices'] as $invoice) {
             $invoiceObject = new Invoice();
 
             if (array_key_exists('id', $invoice)) {
@@ -89,34 +87,36 @@ class NecktieGatewayHelper implements NecktieGatewayHelperInterface
                 continue;
             }
 
-            if (array_key_exists('total_customer_price', $invoice)) {
-                $invoiceObject->setTotalPrice($invoice['total_customer_price']);
+            if (array_key_exists('status', $invoice)) {
+                $invoiceObject->setStatus($invoice['status']);
             } else {
                 continue;
             }
 
-            if (array_key_exists('transaction_type', $invoice)) {
-                $invoiceObject->setTransactionType($invoice['transaction_type']);
-            } else {
-                continue;
-            }
-
-            if (array_key_exists('transaction_time', $invoice)) {
-                $date = \DateTime::createFromFormat(\DateTime::W3C, $invoice['transaction_time']);
-                $invoiceObject->setTransactionTime($date);
+            if (array_key_exists('first_payment_date', $invoice)) {
+                $date = \DateTime::createFromFormat(\DateTime::W3C, $invoice['first_payment_date']);
+                $invoiceObject->setFirstPaymentDate($date);
             } else {
                 continue;
             }
 
             if (array_key_exists('items', $invoice)) {
                 foreach ($invoice['items'] as $invoiceItem) {
-                    if (array_key_exists('product', $invoiceItem)
-                        && array_key_exists('name', $invoiceItem['product'])) {
-                        $invoiceObject->addItem($invoiceItem['product']['name']);
+                    if (array_key_exists('billing_plan', $invoiceItem)
+                        && array_key_exists('product', $invoiceItem['billing_plan'])
+                        && array_key_exists('name', $invoiceItem['billing_plan']['product'])
+                    ) {
+                        $invoiceObject->addItem($invoiceItem['billing_plan']['product']['name']);
                     }
                 }
             } else {
                 continue;
+            }
+
+            if (array_key_exists('full_prices', $response)) {
+                if (array_key_exists($invoiceObject->getReceipt(), $response['full_prices'])) {
+                    $invoiceObject->setStringPrice($response['full_prices'][$invoiceObject->getReceipt()]);
+                }
             }
 
             $invoices[] = $invoiceObject;
