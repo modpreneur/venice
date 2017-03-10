@@ -93,6 +93,12 @@ class NecktieGatewayHelper implements NecktieGatewayHelperInterface
                 continue;
             }
 
+            if (array_key_exists('receipt', $invoice)) {
+                $invoiceObject->setReceipt($invoice['receipt']);
+            } else {
+                continue;
+            }
+
             if (array_key_exists('first_payment_date', $invoice)) {
                 $date = \DateTime::createFromFormat(\DateTime::W3C, $invoice['first_payment_date']);
                 $invoiceObject->setFirstPaymentDate($date);
