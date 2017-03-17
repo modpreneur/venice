@@ -22,6 +22,7 @@ use Trinity\NotificationBundle\Event\ChangesDoneEvent;
 use Trinity\NotificationBundle\Services\EntityAliasTranslator;
 use Venice\AppBundle\Entity\BillingPlan;
 use Venice\AppBundle\Entity\Interfaces\StandardProductInterface;
+use Venice\AppBundle\Entity\PaySystemVendor;
 use Venice\AppBundle\Entity\Product\StandardProduct;
 use Venice\AppBundle\Services\EntityOverrideHandler;
 
@@ -91,6 +92,16 @@ class NotificationListener
             } elseif ($this->entityOverrideHandler->isInstanceOf($entity, StandardProduct::class)) {
                 /* @var $entity StandardProductInterface */
                 $entity->setPurchasable(true);
+            } elseif ($this->entityOverrideHandler->isInstanceOf($entity, PaySystemVendor::class)) {
+                // if there is no default vendor, set this one
+                $defaultVendor = $this->entityManager->getRepository(PaySystemVendor::class)
+                    ->findOneBy(['defaultForVenice' => true]);
+
+                if (!$defaultVendor) {
+                    /** @var $entity PaySystemVendor */
+                    $entity->setDefaultForVenice(true);
+                }
+
             }
 
             $this->entityManager->persist($entity);
