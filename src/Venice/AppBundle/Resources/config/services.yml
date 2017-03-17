@@ -172,7 +172,7 @@ services:
         class: Venice\AppBundle\EventListener\NotificationListener
         arguments:
             - "@trinity.services.price_string_generator"
-            - "@doctrine.orm.entity_manager"
+            - "@doctrine"
             - "@trinity.notification.entity_alias_translator"
             - "@venice.app.entity_override_handler"
             - "@logger"

@@ -9,6 +9,7 @@ namespace Venice\AppBundle\EventListener;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
+use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Trinity\Bundle\LoggerBundle\Event\RemoveNotificationUserEvent;
 use Trinity\Bundle\LoggerBundle\Event\SetNotificationUserEvent;
@@ -37,6 +38,9 @@ class NotificationListener
     /** @var  EntityManagerInterface */
     protected $entityManager;
 
+    /** @var  RegistryInterface */
+    protected $doctrine;
+
     /** @var  EntityAliasTranslator */
     protected $entityAliasTranslator;
 
@@ -53,7 +57,7 @@ class NotificationListener
      * NotificationListener constructor.
      *
      * @param PriceStringGenerator $priceStringGenerator
-     * @param EntityManagerInterface $entityManager
+     * @param RegistryInterface $doctrine
      * @param EntityAliasTranslator $entityAliasTranslator
      * @param EntityOverrideHandler $entityOverrideHandler
      * @param LoggerInterface $logger
@@ -61,14 +65,15 @@ class NotificationListener
      */
     public function __construct(
         PriceStringGenerator $priceStringGenerator,
-        EntityManagerInterface $entityManager,
+        RegistryInterface $doctrine,
         EntityAliasTranslator $entityAliasTranslator,
         EntityOverrideHandler $entityOverrideHandler,
         LoggerInterface $logger,
         EventDispatcherInterface $eventDispatcher
     ) {
         $this->priceStringGenerator = $priceStringGenerator;
-        $this->entityManager = $entityManager;
+        $this->doctrine = $doctrine;
+        $this->entityManager = $doctrine->getManager();
         $this->entityAliasTranslator = $entityAliasTranslator;
         $this->entityOverrideHandler = $entityOverrideHandler;
         $this->logger = $logger;
@@ -106,9 +111,15 @@ class NotificationListener
 
             $this->entityManager->persist($entity);
             $this->logger->error('CUSTOM ERROR: NECKID:'. $entity->getNecktieId().' CLASSNAME: '.get_class($entity));
+            //todo: this could cause errors while persisting e.g. user with product access
+
+            try {
+                $this->entityManager->flush();
+            } catch (\Exception $exception) {
+                $this->entityManager = $this->doctrine->resetManager();
+            }
         }
 
-        $this->entityManager->flush();
         $this->entityManager->clear();
     }
 
