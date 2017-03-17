@@ -16,10 +16,11 @@ use Trinity\Bundle\MessagesBundle\Event\UnpackMessageEvent;
 /**
  * //todo: see http://ac5.modpreneur.com/projects/6?modal=Task-453-6.
  *
+ * //todo: hardcoded for flofit
  * @Consumer(
- *     queue="client_3",
- *     maxMessages=1000,
- *     maxSeconds=3600.0,
+ *     queue="client_1",
+ *     maxMessages=100,
+ *     maxSeconds=600.0,
  *     prefetchCount=1,
  *     method = "readMessage"
  * )

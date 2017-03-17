@@ -94,9 +94,11 @@ class NotificationListener
             }
 
             $this->entityManager->persist($entity);
+            $this->logger->error('CUSTOM ERROR: NECKID:'. $entity->getNecktieId().' CLASSNAME: '.get_class($entity));
         }
 
         $this->entityManager->flush();
+        $this->entityManager->clear();
     }
 
     /**
