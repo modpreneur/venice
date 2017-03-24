@@ -10,10 +10,12 @@ namespace Venice\AppBundle\Services;
 use Doctrine\ORM\EntityManagerInterface;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\Routing\RouterInterface;
 use Venice\AppBundle\Entity\Interfaces\UserInterface;
 use Venice\AppBundle\Entity\Product\StandardProduct;
+use Venice\AppBundle\Entity\ProductAccess;
 use Venice\AppBundle\Entity\User;
 use Venice\AppBundle\Exceptions\ExpiredRefreshTokenException;
 use Venice\AppBundle\Exceptions\UnsuccessfulNecktieResponseException;
@@ -30,6 +32,8 @@ class NecktieGateway implements NecktieGatewayInterface
     const NECKTIE_BILLING_PLAN_URI = 'api/v1/billing-plan/{id}';
     const NECKTIE_PRODUCT_BILLING_PLANS_URI = 'api/v1/product/{productId}/billing-plans';
     const NECKTIE_PRODUCT_URI = 'api/v1/product/{id}';
+    const NECKTIE_CREATE_TRIAL_PRODUCT_ACCESS = 'api/v1/product-access/create-trial/{id}';
+    const NECKTIE_GET_PRODUCT_ACCESS = 'api/v1/product-access/{id}';
 
     const STATE_COOKIE_NAME = 'state';
 
@@ -88,12 +92,18 @@ class NecktieGateway implements NecktieGatewayInterface
      */
     protected $loginResponseRoute;
 
+    /**
+     * @var LoggerInterface
+     */
+    protected $logger;
+
     public function __construct(
         EntityManagerInterface $entityManager,
         RouterInterface $router,
         NecktieGatewayHelperInterface $helper,
         NecktieConnector $connector,
         EntityOverrideHandler $entityOverrideHandler,
+        LoggerInterface $logger,
         string $necktieUrl = null,
         string $necktieClientId = null,
         string $necktieClientSecret = null,
@@ -104,6 +114,7 @@ class NecktieGateway implements NecktieGatewayInterface
         $this->helper = $helper;
         $this->connector = $connector;
         $this->entityOverrideHandler = $entityOverrideHandler;
+        $this->logger = $logger;
 
         $this->necktieUrl = $necktieUrl;
         $this->necktieClientId = $necktieClientId;
@@ -308,6 +319,65 @@ class NecktieGateway implements NecktieGatewayInterface
 
     /**
      * @param UserInterface $user
+     * @param int $productAccessNecktieId
+     * @return bool|null|ProductAccess
+     * @throws \Venice\AppBundle\Exceptions\ExpiredRefreshTokenException
+     * @throws \Venice\AppBundle\Exceptions\UnsuccessfulNecktieResponseException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \RuntimeException
+     * @throws \Exception
+     */
+    public function getProductAccess(UserInterface $user, int $productAccessNecktieId)
+    {
+        $necktieUrl = str_replace('{id}', $productAccessNecktieId, self::NECKTIE_GET_PRODUCT_ACCESS);
+
+        $this->refreshAccessTokenIfNeeded($user);
+
+        try {
+            $resp = $this->connector->getResponse(
+                $user,
+                'GET',
+                $necktieUrl
+            );
+            $response = json_decode(
+                $resp,
+                true
+            );
+        } catch (UnsuccessfulNecktieResponseException $exception) {
+            $this->logger->error($exception->getMessage());
+
+            return null;
+        }
+
+        if (!is_array($response) || !array_key_exists('product access', $response)) {
+            $this->logger->error(
+                'Invalid response from necktie uri' . self::NECKTIE_CREATE_TRIAL_PRODUCT_ACCESS,
+                [$resp, $response]
+            );
+
+            return false;
+        }
+
+        $accessData = $response['product access'];
+        $product = $this
+            ->entityManager
+            ->getRepository(StandardProduct::class)
+            ->findOneBy(['necktieId' => $accessData['product']]);
+
+        $access = new ProductAccess();
+        $access->setProduct($product);
+        $fromDate = \DateTime::createFromFormat(\DateTime::W3C, $accessData['from_date']);
+        $access->setFromDate($fromDate);
+        $toDate = \DateTime::createFromFormat(\DateTime::W3C, $accessData['to_date']);
+        $access->setToDate($toDate);
+        $access->setUser($user);
+        $access->setNecktieId($accessData['id']);
+
+        return $access;
+    }
+
+    /**
+     * @param UserInterface $user
      *
      * @return array
      *
@@ -427,6 +497,52 @@ class NecktieGateway implements NecktieGatewayInterface
         if (!$user->isLastAccessTokenValid() || ($dateDiff->h < 0 && $dateDiff->m < 10)) {
             $this->refreshAccessToken($user);
         }
+    }
+
+    /**
+     * @param UserInterface $user
+     * @param int $billingPlanNecktieId
+     *
+     * @return bool|int
+     * @throws \Venice\AppBundle\Exceptions\ExpiredRefreshTokenException
+     * @throws \Venice\AppBundle\Exceptions\UnsuccessfulNecktieResponseException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \RuntimeException
+     * @throws \Exception
+     */
+    public function createTrialProductAccess(UserInterface $user, int $billingPlanNecktieId)
+    {
+        $this->refreshAccessTokenIfNeeded($user);
+
+        $necktieUrl = str_replace('{id}', $billingPlanNecktieId, self::NECKTIE_CREATE_TRIAL_PRODUCT_ACCESS);
+
+
+        try {
+            $resp = $this->connector->getResponse(
+                $user,
+                'POST',
+                $necktieUrl
+            );
+            $response = json_decode(
+                $resp,
+                true
+            );
+        } catch (UnsuccessfulNecktieResponseException $exception) {
+            $this->logger->error($exception->getMessage());
+
+            return false;
+        }
+
+        if (!is_array($response) || !array_key_exists('productAccessId', $response)) {
+            $this->logger->error(
+                'Invalid response from necktie uri' . self::NECKTIE_CREATE_TRIAL_PRODUCT_ACCESS,
+                $response
+            );
+
+            return false;
+        }
+
+        return $response['productAccessId'];
     }
 
 //    /**

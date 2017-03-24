@@ -9,6 +9,7 @@ namespace Venice\AppBundle\Interfaces;
 
 use Symfony\Component\HttpFoundation\Cookie;
 use Venice\AppBundle\Entity\Interfaces\UserInterface;
+use Venice\AppBundle\Entity\ProductAccess;
 use Venice\AppBundle\Exceptions\ExpiredRefreshTokenException;
 use Venice\AppBundle\Exceptions\UnsuccessfulNecktieResponseException;
 
@@ -47,4 +48,30 @@ interface NecktieGatewayInterface extends GatewayInterface
      * @throws ExpiredRefreshTokenException
      */
     public function refreshAccessTokenIfNeeded(UserInterface $user);
+
+    /**
+     * @param UserInterface $user
+     * @param int $billingPlanNecktieId
+     *
+     * @return bool|int
+     * @throws \Venice\AppBundle\Exceptions\ExpiredRefreshTokenException
+     * @throws \Venice\AppBundle\Exceptions\UnsuccessfulNecktieResponseException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \RuntimeException
+     * @throws \Exception
+     */
+    public function createTrialProductAccess(UserInterface $user, int $billingPlanNecktieId);
+
+    /**
+     * @param UserInterface $user
+     * @param int $productAccessNecktieId
+     * @return bool|null|ProductAccess
+     * @throws \Venice\AppBundle\Exceptions\ExpiredRefreshTokenException
+     * @throws \Venice\AppBundle\Exceptions\UnsuccessfulNecktieResponseException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \RuntimeException
+     * @throws \Exception
+     */
+    public function getProductAccess(UserInterface $user, int $productAccessNecktieId);
+
 }
