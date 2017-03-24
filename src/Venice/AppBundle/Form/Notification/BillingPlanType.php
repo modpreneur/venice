@@ -53,6 +53,10 @@ class BillingPlanType extends BaseType implements NotificationTypeInterface
             ->add(
                 'product',
                 TextType::class
+            )
+            ->add(
+                'itemId',
+                TextType::class
             )->add(
                 'paySystemVendor',
                 TextType::class

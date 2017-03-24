@@ -73,6 +73,11 @@ Venice\AppBundle\Entity\BillingPlan:
             unique: false
             nullable: true
             precision: 0
+        itemId:
+            type: text
+            length: 10
+            unique: false
+            nullable: true
     manyToOne:
         product:
             targetEntity: Venice\AppBundle\Entity\Product\StandardProduct
