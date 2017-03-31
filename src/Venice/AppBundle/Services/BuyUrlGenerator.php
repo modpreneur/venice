@@ -55,17 +55,18 @@ class BuyUrlGenerator
 
     /**
      * @param StandardProduct $product
-     * @param int             $billingPlanVeniceId
-     * @param bool            $useStoredCreditCard
+     * @param int $billingPlanVeniceId
+     * @param bool $useStoredCreditCard
+     * @param array $customParameters
      *
      * @return string
-     *
      * @throws \Exception
      */
     protected function generateNecktieBuyUrl(
         StandardProduct $product,
         int $billingPlanVeniceId = null,
-        bool $useStoredCreditCard = false
+        bool $useStoredCreditCard = false,
+        array $customParameters = []
     ) : string {
         $router = $this->router;
         $billingPlanNecktieId = null;
@@ -86,21 +87,23 @@ class BuyUrlGenerator
             throw new \Exception("No billing plan with venice id {$billingPlanVeniceId} found.");
         }
 
-        $url = $router->generate(
-            'necktie_buy_product',
-            [
-                'id' => $product->getId(),
-                'paySystem' => $paySystemName,
-            ],
-            $router::ABSOLUTE_URL
-        ).'?';
-
-
-        $url .= "billingPlanId={$billingPlanNecktieId}";
+        $parameters = [
+            'id' => $product->getId(),
+            'paySystem' => $paySystemName,
+            'billingPlanId' => $billingPlanNecktieId
+        ];
 
         if ($useStoredCreditCard) {
-            $url .= '&useStoredCC';
+            $parameters['useStoredCC'] = true;
         }
+
+        $parameters = array_merge($parameters, $customParameters);
+
+        $url = $router->generate(
+            'necktie_buy_product',
+            $parameters,
+            $router::ABSOLUTE_URL
+        );
 
         return $url;
     }
