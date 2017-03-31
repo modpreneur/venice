@@ -44,10 +44,16 @@ class BuyUrlGenerator
     public function generateBuyUrl(
         StandardProduct $product,
         int $veniceBillingPlanId = null,
-        bool $useStoredCreditCard = false
+        bool $useStoredCreditCard = false,
+        array $customParameters = []
     ) : string {
         if ($this->necktieUrl) {
-            return $this->generateNecktieBuyUrl($product, $veniceBillingPlanId, $useStoredCreditCard);
+            return $this->generateNecktieBuyUrl(
+                $product,
+                $veniceBillingPlanId,
+                $useStoredCreditCard,
+                $customParameters
+            );
         } else {
             throw new \Exception('No method found to generate buy url when not connected to necktie');
         }
