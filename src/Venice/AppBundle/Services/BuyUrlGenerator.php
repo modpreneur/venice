@@ -44,10 +44,16 @@ class BuyUrlGenerator
     public function generateBuyUrl(
         StandardProduct $product,
         int $veniceBillingPlanId = null,
-        bool $useStoredCreditCard = false
+        bool $useStoredCreditCard = false,
+        array $customParameters = []
     ) : string {
         if ($this->necktieUrl) {
-            return $this->generateNecktieBuyUrl($product, $veniceBillingPlanId, $useStoredCreditCard);
+            return $this->generateNecktieBuyUrl(
+                $product,
+                $veniceBillingPlanId,
+                $useStoredCreditCard,
+                $customParameters
+            );
         } else {
             throw new \Exception('No method found to generate buy url when not connected to necktie');
         }
@@ -55,17 +61,18 @@ class BuyUrlGenerator
 
     /**
      * @param StandardProduct $product
-     * @param int             $billingPlanVeniceId
-     * @param bool            $useStoredCreditCard
+     * @param int $billingPlanVeniceId
+     * @param bool $useStoredCreditCard
+     * @param array $customParameters
      *
      * @return string
-     *
      * @throws \Exception
      */
     protected function generateNecktieBuyUrl(
         StandardProduct $product,
         int $billingPlanVeniceId = null,
-        bool $useStoredCreditCard = false
+        bool $useStoredCreditCard = false,
+        array $customParameters = []
     ) : string {
         $router = $this->router;
         $billingPlanNecktieId = null;
@@ -86,21 +93,23 @@ class BuyUrlGenerator
             throw new \Exception("No billing plan with venice id {$billingPlanVeniceId} found.");
         }
 
-        $url = $router->generate(
-            'necktie_buy_product',
-            [
-                'id' => $product->getId(),
-                'paySystem' => $paySystemName,
-            ],
-            $router::ABSOLUTE_URL
-        ).'?';
-
-
-        $url .= "billingPlanId={$billingPlanNecktieId}";
+        $parameters = [
+            'id' => $product->getId(),
+            'paySystem' => $paySystemName,
+            'billingPlanId' => $billingPlanNecktieId
+        ];
 
         if ($useStoredCreditCard) {
-            $url .= '&useStoredCC';
+            $parameters['useStoredCC'] = true;
         }
+
+        $parameters = array_merge($parameters, $customParameters);
+
+        $url = $router->generate(
+            'necktie_buy_product',
+            $parameters,
+            $router::ABSOLUTE_URL
+        );
 
         return $url;
     }
