@@ -27,7 +27,7 @@ class NecktieGateway implements NecktieGatewayInterface
     const NECKTIE_OAUTH_AUTH_URI = 'oauth/v2/auth';
     const NECKTIE_OATH_TOKEN_URI = 'oauth/v2/token';
     const NECKTIE_USER_PROFILE_URI = 'api/v1/profile';
-    const NECKTIE_USER_INVOICES_URI = 'api/v1/invoices';
+    const NECKTIE_USER_ORDERS_URI = 'api/v1/orders';
     const NECKTIE_PRODUCT_ACCESSES_URI = 'api/v1/product-accesses';
     const NECKTIE_BILLING_PLAN_URI = 'api/v1/billing-plan/{id}';
     const NECKTIE_PRODUCT_BILLING_PLANS_URI = 'api/v1/product/{productId}/billing-plans';
@@ -387,25 +387,29 @@ class NecktieGateway implements NecktieGatewayInterface
      * @throws \Exception
      * @throws UnsuccessfulNecktieResponseException
      */
-    public function getInvoices(UserInterface $user)
+    public function getOrders(UserInterface $user)
     {
         $this->refreshAccessTokenIfNeeded($user);
 
+        $resp = $this->connector->getResponse(
+            $user,
+            'GET',
+            self::NECKTIE_USER_ORDERS_URI,
+            ['withItems' => true]
+        );
+
         $response = json_decode(
-            $this->connector->getResponse(
-                $user,
-                'GET',
-                self::NECKTIE_USER_INVOICES_URI,
-                ['withItems' => true]
-            ),
+            $resp,
             true
         );
 
-        if (!is_array($response) || !array_key_exists('invoices', $response)) {
+        dump($resp, $response);
+
+        if (!is_array($response) || !array_key_exists('orders', $response)) {
             return [];
         }
 
-        return $this->helper->getInvoicesFromNecktieResponse($response);
+        return $this->helper->getOrdersFromNecktieResponse($response);
     }
 
     /**

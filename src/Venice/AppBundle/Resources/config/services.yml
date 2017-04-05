@@ -61,6 +61,8 @@ services:
 
     venice.app.necktie_gateway_helper:
         class: Venice\AppBundle\Services\NecktieGatewayHelper
+        arguments:
+            - "@doctrine.orm.entity_manager"
 
     venice.app.form_error_serializer:
         class: Venice\AppBundle\Services\FormErrorSerializer

@@ -7,18 +7,25 @@
  */
 namespace Venice\AppBundle\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Venice\AppBundle\Entity\Interfaces\InvoiceInterface;
-
-class Invoice
+class Order
 {
-    protected $id;
+    /**
+     * @var int Necktie id
+     */
+    protected $necktieId;
 
+    /**
+     * @var \DateTime date of the first payment
+     */
     protected $firstPaymentDate;
 
+    /**
+     * @var OrderItem[]
+     */
     protected $items;
 
-    //todo @JakubFajkus this was copied from necktie and reduced... just temporally for the flofit
+    //todo @JakubFajkus this was copied from necktie and reduced...
+    //todo consider moving that into trinity
 
     //This happen in rare conditions, when user came on thank-you page and we don't have
     //the IPN yet. Necktie does not allow access on thank-you without payment information, so as for now should not
@@ -69,17 +76,17 @@ class Invoice
      *
      * @return int
      */
-    public function getId()
+    public function getNecktieId()
     {
-        return $this->id;
+        return $this->necktieId;
     }
 
     /**
-     * @param mixed $id
+     * @param int $necktieId
      */
-    public function setId($id)
+    public function setNecktieId($necktieId)
     {
-        $this->id = $id;
+        $this->necktieId = $necktieId;
     }
 
 
@@ -120,7 +127,7 @@ class Invoice
      *
      * @param string $receipt
      *
-     * @return Invoice
+     * @return Order
      */
     public function setReceipt($receipt)
     {

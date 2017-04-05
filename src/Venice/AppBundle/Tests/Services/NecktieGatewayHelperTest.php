@@ -7,7 +7,7 @@
  */
 namespace Venice\AppBundle\Tests\Services;
 
-use Venice\AppBundle\Entity\Invoice;
+use Venice\AppBundle\Entity\Order;
 use Venice\AppBundle\Entity\OAuthToken;
 use Venice\AppBundle\Services\NecktieGatewayHelper;
 use Venice\AppBundle\Tests\BaseTest;
@@ -50,7 +50,7 @@ class NecktieGatewayHelperTest extends BaseTest
      */
     public function testGetInvoicesFromNecktieResponse($input, $expectedOutput)
     {
-        $result = $this->helper->getInvoicesFromNecktieResponse($input);
+        $result = $this->helper->getOrdersFromNecktieResponse($input);
 
         $this->assertEquals($expectedOutput, $result);
     }
@@ -254,7 +254,7 @@ class NecktieGatewayHelperTest extends BaseTest
 
     public function providerTestGetInvoicesFromNecktieResponse()
     {
-        $invoice = new Invoice();
+        $invoice = new Order();
         $invoice
             ->setId(1)
             ->setTotalPrice(133)

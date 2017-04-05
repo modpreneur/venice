@@ -29,7 +29,7 @@ interface GatewayInterface
      *
      * @return array
      */
-    public function getInvoices(UserInterface $user);
+    public function getOrders(UserInterface $user);
 
     /** todo
      * @param UserInterface $user

@@ -7,9 +7,11 @@
  */
 namespace Venice\AppBundle\Services;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Venice\AppBundle\Entity\BillingPlan;
-use Venice\AppBundle\Entity\Invoice;
+use Venice\AppBundle\Entity\Order;
 use Venice\AppBundle\Entity\OAuthToken;
+use Venice\AppBundle\Entity\OrderItem;
 use Venice\AppBundle\Interfaces\NecktieGatewayHelperInterface;
 
 class NecktieGatewayHelper implements NecktieGatewayHelperInterface
@@ -19,6 +21,21 @@ class NecktieGatewayHelper implements NecktieGatewayHelperInterface
     //this message is the same for expired as well as invalid refresh token
     const NECKTIE_EXPIRED_REFRESH_TOKEN_ERROR = '{"error":"invalid_grant","error_description":"Invalid refresh token"}';
     const NECKTIE_INVALID_CLIENT_ERROR = '{"error":"invalid_token","error_description":"The client credentials are invalid"}';
+
+    /**
+     * @var EntityManagerInterface
+     */
+    protected $entityManager;
+
+    /**
+     * EntityManagerInterface constructor.
+     *
+     * @param $entityManager
+     */
+    public function __construct(EntityManagerInterface $entityManager)
+    {
+        $this->entityManager = $entityManager;
+    }
 
     /**
      * {@inheritdoc}
@@ -70,49 +87,83 @@ class NecktieGatewayHelper implements NecktieGatewayHelperInterface
     /**
      * {@inheritdoc}
      */
-    public function getInvoicesFromNecktieResponse(array $response)
+    public function getOrdersFromNecktieResponse(array $response)
     {
-        if (!array_key_exists('invoices', $response) && is_array($response['invoices'])) {
+        if (!array_key_exists('orders', $response) && is_array($response['orders'])) {
             return [];
         }
 
-        $invoices = [];
+        $orders = [];
 
-        foreach ($response['invoices'] as $invoice) {
-            $invoiceObject = new Invoice();
+        foreach ($response['orders'] as $order) {
+            $orderObject = new Order();
 
-            if (array_key_exists('id', $invoice)) {
-                $invoiceObject->setId($invoice['id']);
+            if (array_key_exists('id', $order)) {
+                $orderObject->setNecktieId($order['id']);
             } else {
                 continue;
             }
 
-            if (array_key_exists('status', $invoice)) {
-                $invoiceObject->setStatus($invoice['status']);
+            if (array_key_exists('status', $order)) {
+                $orderObject->setStatus($order['status']);
             } else {
                 continue;
             }
 
-            if (array_key_exists('receipt', $invoice)) {
-                $invoiceObject->setReceipt($invoice['receipt']);
+            if (array_key_exists('receipt', $order)) {
+                $orderObject->setReceipt($order['receipt']);
             } else {
                 continue;
             }
 
-            if (array_key_exists('first_payment_date', $invoice)) {
-                $date = \DateTime::createFromFormat(\DateTime::W3C, $invoice['first_payment_date']);
-                $invoiceObject->setFirstPaymentDate($date);
+            if (array_key_exists('first_payment_date', $order)) {
+                $date = \DateTime::createFromFormat(\DateTime::W3C, $order['first_payment_date']);
+                $orderObject->setFirstPaymentDate($date);
             } else {
                 continue;
             }
 
-            if (array_key_exists('items', $invoice)) {
-                foreach ($invoice['items'] as $invoiceItem) {
-                    if (array_key_exists('billing_plan', $invoiceItem)
-                        && array_key_exists('product', $invoiceItem['billing_plan'])
-                        && array_key_exists('name', $invoiceItem['billing_plan']['product'])
+            if (array_key_exists('items', $order)) {
+                foreach ($order['items'] as $orderItem) {
+                    $orderItemObject = new OrderItem();
+                    $orderObject->addItem($orderItemObject);
+                    $orderItemObject->setOrder($orderObject);
+
+                    if (array_key_exists('billing_plan', $orderItem)
+                        && array_key_exists('product', $orderItem['billing_plan'])
+                        && array_key_exists('name', $orderItem['billing_plan']['product'])
                     ) {
-                        $invoiceObject->addItem($invoiceItem['billing_plan']['product']['name']);
+                        $orderItemObject->setProductName($orderItem['billing_plan']['product']['name']);
+                    }
+
+                    if (array_key_exists('initial_price', $orderItem)) {
+                        $orderItemObject->setInitialPrice($orderItem['initial_price']);
+                    } else {
+                        continue;
+                    }
+
+                    if (array_key_exists('rebill_price', $orderItem)) {
+                        $orderItemObject->setRebillPrice($orderItem['rebill_price']);
+                    } else {
+                        continue;
+                    }
+
+                    if (array_key_exists('rebill_times', $orderItem)) {
+                        $orderItemObject->setRebillTimes($orderItem['rebill_times']);
+                    } else {
+                        continue;
+                    }
+
+                    if (array_key_exists('id', $orderItem)) {
+                        $orderItemObject->setNecktieId($orderItem['id']);
+                    } else {
+                        continue;
+                    }
+
+                    if (array_key_exists('type', $orderItem)) {
+                        $orderItemObject->setType($orderItem['type']);
+                    } else {
+                        continue;
                     }
                 }
             } else {
@@ -120,15 +171,15 @@ class NecktieGatewayHelper implements NecktieGatewayHelperInterface
             }
 
             if (array_key_exists('full_prices', $response)) {
-                if (array_key_exists($invoiceObject->getReceipt(), $response['full_prices'])) {
-                    $invoiceObject->setStringPrice($response['full_prices'][$invoiceObject->getReceipt()]);
+                if (array_key_exists($orderObject->getReceipt(), $response['full_prices'])) {
+                    $orderObject->setStringPrice($response['full_prices'][$orderObject->getReceipt()]);
                 }
             }
 
-            $invoices[] = $invoiceObject;
+            $orders[] = $orderObject;
         }
 
-        return $invoices;
+        return $orders;
     }
 
     /**
