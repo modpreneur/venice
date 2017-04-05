@@ -464,6 +464,8 @@ class NecktieGateway implements NecktieGatewayInterface
             if ($token) {
                 $user->addOAuthToken($token);
                 $token->setUser($user);
+                $this->entityManager->persist($user);
+                $this->entityManager->flush();
             } else {
                 throw new \Exception('Could not get token from response.');
             }
