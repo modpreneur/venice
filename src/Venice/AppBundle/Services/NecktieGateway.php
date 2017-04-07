@@ -305,6 +305,7 @@ class NecktieGateway implements NecktieGatewayInterface
                     $dateTo = null;
                 }
 
+                //todo: @JakubFajkus refactor to the service
                 $givenProductAccesses[] = $user->giveAccessToProduct(
                     $product,
                     $dateFrom,

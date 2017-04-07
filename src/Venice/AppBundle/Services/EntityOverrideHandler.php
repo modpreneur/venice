@@ -6,6 +6,8 @@ use Venice\AppBundle\Interfaces\ConfiguratorInterface;
 
 /**
  * Class EntityOverrideHandler.
+ *
+ * todo: refactor to factory and split to 2 classes? EntityFactory and
  */
 class EntityOverrideHandler
 {

@@ -419,6 +419,11 @@ class User extends BaseUser implements NotificationEntityInterface, UserInterfac
 //    }
 
     /**
+     * todo: @JakubFajkus this whole method, as well as the logic about the accesses must be moved
+     *  away because of the new ProductAccess(discriminators, you remember?)
+     *
+     * @deprecated Should not be used as the doctrine will not find the access while querying the inherited entity
+     *
      * @param ProductInterface $product
      * @param DateTime         $fromDate
      * @param DateTime|null    $toDate
