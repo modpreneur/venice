@@ -83,7 +83,7 @@ class NecktieBuyController extends Controller
     protected function createRedirectBuyResponse(Request $request, StandardProduct $product, string $paySystem)
     {
         $priceStringGenerator = $this->get('trinity.services.price_string_generator');
-
+        $parameters = [];
         if (!$product->isPurchasable()) {
             throw new \LogicException('Can not buy product '.$product->getName().' as it is not purchasable.');
         }
@@ -97,18 +97,24 @@ class NecktieBuyController extends Controller
         $entityManager->flush();
 
         $token = $user->getLastAccessToken();
-        $useStoredCC = $request->query->has('useStoredCC') ? 'useStoredCC=true' : '';
+        $parameters['access_token'] = $token;
+        $parameters['useStoredCC'] = $request->query->get('useStoredCC');
+
         $billingPlanId = $request->query->get('billingPlanId');
         $productId = $product->getNecktieId();
 
         if ($paySystem === 'ClickBank') {
             $paySystemUrlPart = 'click-bank/ocb';
+            $parameters['cbskin'] = $request->query->get('cbskin');
+            $parameters['vtid'] =   $request->query->get('vtid');
+            $parameters['cbfid'] =  $request->query->get('cbfid');
         } elseif ($paySystem === 'Braintree') {
             $paySystemUrlPart = 'braintree/buy';
         } else {
             $this->get('logger')->emergency("Can not buy product");
             throw new NotFoundHttpException('Unsupported pay system: '.$paySystem);
         }
+
 
         if ($billingPlanId) {
             $billingPlan = $entityManager->getRepository('VeniceAppBundle:BillingPlan')->findOneBy(
@@ -118,20 +124,13 @@ class NecktieBuyController extends Controller
             if (!$billingPlan) {
                 throw new NotFoundHttpException('No billing plan found with id: ' . $billingPlanId);
             }
+            $host = $this->getParameter('necktie_url')."/payment/{$paySystemUrlPart}/billing/{$billingPlanId}";
 
-            $price = $priceStringGenerator->generateFullPriceStr($billingPlan);
-
-            return new RedirectResponse(
-                $this->getParameter('necktie_url')."/payment/{$paySystemUrlPart}/billing/{$billingPlanId}?access_token={$token}&{$useStoredCC}&price={$price}",
-                302
-            );
+            $parameters['price'] = $priceStringGenerator->generateFullPriceStr($billingPlan);
         } else {
-            $price = $priceStringGenerator->generateFullPriceStr($product->getDefaultBillingPlan());
-
-            return new RedirectResponse(
-                $this->getParameter('necktie_url')."/payment/{$paySystemUrlPart}/{$productId}?access_token={$token}&{$useStoredCC}&price={$price}",
-                302
-            );
+            $host = $this->getParameter('necktie_url')."/payment/{$paySystemUrlPart}/{$productId}";
+            $parameters['price'] = $priceStringGenerator->generateFullPriceStr($product->getDefaultBillingPlan());
         }
+        return $this->redirect($host . '?' . http_build_query($parameters), 302);
     }
 }

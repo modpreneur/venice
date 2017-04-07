@@ -34,11 +34,12 @@ class BuyUrlGenerator
      * Generate buy url.
      *
      * @param StandardProduct $product
-     * @param int             $veniceBillingPlanId
-     * @param bool            $useStoredCreditCard
+     * @param int $veniceBillingPlanId
+     * @param bool $useStoredCreditCard
+     *
+     * @param array $customParameters
      *
      * @return string
-     *
      * @throws \Exception
      */
     public function generateBuyUrl(
