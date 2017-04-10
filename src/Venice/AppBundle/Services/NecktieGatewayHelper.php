@@ -28,13 +28,19 @@ class NecktieGatewayHelper implements NecktieGatewayHelperInterface
     protected $entityManager;
 
     /**
-     * EntityManagerInterface constructor.
-     *
-     * @param $entityManager
+     * @var EntityOverrideHandler
      */
-    public function __construct(EntityManagerInterface $entityManager)
+    protected $entityOverrideHandler;
+
+    /**
+     * NecktieGatewayHelper constructor.
+     * @param EntityManagerInterface $entityManager
+     * @param EntityOverrideHandler $entityOverrideHandler
+     */
+    public function __construct(EntityManagerInterface $entityManager, EntityOverrideHandler $entityOverrideHandler)
     {
         $this->entityManager = $entityManager;
+        $this->entityOverrideHandler = $entityOverrideHandler;
     }
 
     /**
@@ -72,7 +78,7 @@ class NecktieGatewayHelper implements NecktieGatewayHelperInterface
             && array_key_exists('scope', $array)
             && array_key_exists('expires_in', $array)
         ) {
-            $necktieToken = new OAuthToken();
+            $necktieToken = $this->entityOverrideHandler->getEntityInstance(OAuthToken::class);
             $necktieToken->setAccessToken($array['access_token']);
             $necktieToken->setRefreshToken($array['refresh_token']);
             $necktieToken->setScope($array['scope']);
