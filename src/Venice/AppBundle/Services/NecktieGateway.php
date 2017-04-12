@@ -365,7 +365,7 @@ class NecktieGateway implements NecktieGatewayInterface
             ->getRepository(StandardProduct::class)
             ->findOneBy(['necktieId' => $accessData['product']]);
 
-        $access = new ProductAccess();
+        $access = $this->entityOverrideHandler->getEntityInstance(ProductAccess::class);
         $access->setProduct($product);
         $fromDate = \DateTime::createFromFormat(\DateTime::W3C, $accessData['from_date']);
         $access->setFromDate($fromDate);

@@ -211,7 +211,7 @@ class NecktieGatewayHelper implements NecktieGatewayHelperInterface
      */
     public function getBillingPlanFromResponse($response)
     {
-        $billingPlan = new BillingPlan();
+        $billingPlan = $this->overrideHandler->getEntityInstance(BillingPlan::class);
 
         if (array_key_exists('initial_price', $response)) {
             $billingPlan->setInitialPrice($response['initial_price']);
