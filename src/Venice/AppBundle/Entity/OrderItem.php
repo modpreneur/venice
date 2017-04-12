@@ -31,7 +31,7 @@ class OrderItem
     /**
      * @var int
      */
-    protected $initial_price;
+    protected $initialPrice;
 
     /**
      * @var int
@@ -112,15 +112,15 @@ class OrderItem
      */
     public function getInitialPrice(): int
     {
-        return $this->initial_price;
+        return $this->initialPrice;
     }
 
     /**
-     * @param int $initial_price
+     * @param int $initialPrice
      */
-    public function setInitialPrice(int $initial_price)
+    public function setInitialPrice(int $initialPrice)
     {
-        $this->initial_price = $initial_price;
+        $this->initialPrice = $initialPrice;
     }
 
     /**
