@@ -2,6 +2,10 @@
 
 namespace Venice\AppBundle\Entity;
 
+/**
+ * Class OrderItem
+ * @package Venice\AppBundle\Entity
+ */
 class OrderItem
 {
     /**

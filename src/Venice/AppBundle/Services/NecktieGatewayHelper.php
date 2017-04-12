@@ -14,13 +14,25 @@ use Venice\AppBundle\Entity\OAuthToken;
 use Venice\AppBundle\Entity\OrderItem;
 use Venice\AppBundle\Interfaces\NecktieGatewayHelperInterface;
 
+/**
+ * Class NecktieGatewayHelper
+ * @package Venice\AppBundle\Services
+ */
 class NecktieGatewayHelper implements NecktieGatewayHelperInterface
 {
-    const NECKTIE_EXPIRED_ACCESS_TOKEN_ERROR = '{"error":"invalid_grant","error_description":"The access token provided has expired."}';
-    const NECKTIE_INVALID_ACCESS_TOKEN_ERROR = '{"error":"invalid_grant","error_description":"The access token provided is invalid."}';
+    const NECKTIE_EXPIRED_ACCESS_TOKEN_ERROR =
+        '{"error":"invalid_grant","error_description":"The access token provided has expired."}'
+    ;
+    const NECKTIE_INVALID_ACCESS_TOKEN_ERROR =
+        '{"error":"invalid_grant","error_description":"The access token provided is invalid."}'
+    ;
     //this message is the same for expired as well as invalid refresh token
-    const NECKTIE_EXPIRED_REFRESH_TOKEN_ERROR = '{"error":"invalid_grant","error_description":"Invalid refresh token"}';
-    const NECKTIE_INVALID_CLIENT_ERROR = '{"error":"invalid_token","error_description":"The client credentials are invalid"}';
+    const NECKTIE_EXPIRED_REFRESH_TOKEN_ERROR =
+        '{"error":"invalid_grant","error_description":"Invalid refresh token"}'
+    ;
+    const NECKTIE_INVALID_CLIENT_ERROR =
+        '{"error":"invalid_token","error_description":"The client credentials are invalid"}'
+    ;
 
     /**
      * @var EntityManagerInterface
@@ -178,10 +190,10 @@ class NecktieGatewayHelper implements NecktieGatewayHelperInterface
                 continue;
             }
 
-            if (array_key_exists('full_prices', $response)) {
-                if (array_key_exists($orderObject->getReceipt(), $response['full_prices'])) {
-                    $orderObject->setStringPrice($response['full_prices'][$orderObject->getReceipt()]);
-                }
+            if (array_key_exists('full_prices', $response) &&
+                array_key_exists($orderObject->getReceipt(), $response['full_prices'])
+            ) {
+                $orderObject->setStringPrice($response['full_prices'][$orderObject->getReceipt()]);
             }
 
             $orders[] = $orderObject;
@@ -213,7 +225,7 @@ class NecktieGatewayHelper implements NecktieGatewayHelperInterface
             $billingPlan->setId($response['id']);
         }
 
-        if (array_key_exists('type', $response) && $response['type'] == 'recurring') {
+        if (array_key_exists('type', $response) && $response['type'] === 'recurring') {
             if (array_key_exists('rebill_price', $response)) {
                 $billingPlan->setRebillPrice($response['rebill_price']);
             }
@@ -230,6 +242,7 @@ class NecktieGatewayHelper implements NecktieGatewayHelperInterface
         return $billingPlan;
     }
 
+
     /**
      * {@inheritdoc}
      */
@@ -243,74 +256,63 @@ class NecktieGatewayHelper implements NecktieGatewayHelperInterface
         );
     }
 
+
     /**
      * {@inheritdoc}
      */
     public function isAccessTokenInvalidResponse($response)
     {
-        if ((is_string($response) && false !== strpos($response, self::NECKTIE_INVALID_ACCESS_TOKEN_ERROR))
-            || (is_array($response) && ($response == json_decode(self::NECKTIE_INVALID_ACCESS_TOKEN_ERROR, true))
+        return (
+            (is_string($response) && false !== strpos($response, self::NECKTIE_INVALID_ACCESS_TOKEN_ERROR))
+            || (is_array($response) && ($response === json_decode(self::NECKTIE_INVALID_ACCESS_TOKEN_ERROR, true))
             )
-        ) {
-            return true;
-        } else {
-            return false;
-        }
+        );
     }
+
 
     /**
      * {@inheritdoc}
      */
     public function isAccessTokenExpiredResponse($response)
     {
-        if ((is_string($response) && false !== strpos($response, self::NECKTIE_EXPIRED_ACCESS_TOKEN_ERROR))
+        return ((is_string($response) && false !== strpos($response, self::NECKTIE_EXPIRED_ACCESS_TOKEN_ERROR))
             || (is_array($response) && $response === json_decode(self::NECKTIE_EXPIRED_ACCESS_TOKEN_ERROR, true))
-        ) {
-            return true;
-        } else {
-            return false;
-        }
+        );
     }
+
 
     /**
      * {@inheritdoc}
      */
     public function isRefreshTokenExpiredResponse($response)
     {
-        if ((is_string($response) && false !== strpos($response, self::NECKTIE_EXPIRED_REFRESH_TOKEN_ERROR))
-            || (is_array($response) && $response == json_decode(self::NECKTIE_EXPIRED_REFRESH_TOKEN_ERROR, true))
-        ) {
-            return true;
-        } else {
-            return false;
-        }
+        return (
+            (is_string($response) && false !== strpos($response, self::NECKTIE_EXPIRED_REFRESH_TOKEN_ERROR))
+            || (is_array($response) && $response === json_decode(self::NECKTIE_EXPIRED_REFRESH_TOKEN_ERROR, true))
+        );
     }
+
 
     /**
      * {@inheritdoc}
      */
     public function isInvalidClientResponse($response)
     {
-        if ((is_string($response) && false !== strpos($response, self::NECKTIE_INVALID_CLIENT_ERROR))
-            || (is_array($response) && $response == json_decode(self::NECKTIE_INVALID_CLIENT_ERROR, true))
-        ) {
-            return true;
-        } else {
-            return false;
-        }
+        return (
+            (is_string($response) && false !== strpos($response, self::NECKTIE_INVALID_CLIENT_ERROR))
+            || (is_array($response) && $response === json_decode(self::NECKTIE_INVALID_CLIENT_ERROR, true))
+        );
     }
+
 
     /**
      * {@inheritdoc}
      */
     public function hasError($response)
     {
-        if ((is_string($response) && false !== strpos($response, 'error'))
+        return (
+            (is_string($response) && false !== strpos($response, 'error'))
             || (is_array($response) && array_key_exists('error', $response))
-        ) {
-            return true;
-        } else {
-            return false;
-        }
+        );
     }
 }

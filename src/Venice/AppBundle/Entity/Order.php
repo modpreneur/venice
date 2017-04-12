@@ -7,6 +7,10 @@
  */
 namespace Venice\AppBundle\Entity;
 
+/**
+ * Class Order
+ * @package Venice\AppBundle\Entity
+ */
 class Order
 {
     /**
@@ -155,6 +159,9 @@ class Order
         $this->items = $items;
     }
 
+    /**
+     * @param $item
+     */
     public function addItem($item)
     {
         $this->items[] = $item;

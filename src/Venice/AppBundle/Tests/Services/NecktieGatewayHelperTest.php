@@ -12,6 +12,9 @@ use Venice\AppBundle\Entity\OAuthToken;
 use Venice\AppBundle\Services\NecktieGatewayHelper;
 use Venice\AppBundle\Tests\BaseTest;
 
+/**
+ * {@inheritDoc}
+ */
 class NecktieGatewayHelperTest extends BaseTest
 {
     const ACCESS_TOKEN = 'ZTcxZDNmYjU1ZTQ2NWExYmQ0YTRmMDBiZGJmZDEyOTBkNzhiYWQyNWQxM2UyZTMzMjQwMzY5OGRlODVhNzAwNw';
