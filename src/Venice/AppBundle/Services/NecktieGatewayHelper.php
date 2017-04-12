@@ -140,6 +140,8 @@ class NecktieGatewayHelper implements NecktieGatewayHelperInterface
                         && array_key_exists('name', $orderItem['billing_plan']['product'])
                     ) {
                         $orderItemObject->setProductName($orderItem['billing_plan']['product']['name']);
+                    } else {
+                        $orderItemObject->setProductName('');
                     }
 
                     if (array_key_exists('initial_price', $orderItem)) {
