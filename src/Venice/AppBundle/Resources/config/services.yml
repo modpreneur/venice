@@ -47,6 +47,7 @@ services:
             - "@venice.app.necktie_connector"
             - "@venice.app.entity_override_handler"
             - "@monolog.logger"
+            - "@venice.app.user_access_service"
             - "%necktie_url%"
             - "%necktie_client_id%"
             - "%necktie_client_secret%"
@@ -130,11 +131,6 @@ services:
             - "@doctrine"
             - "@venice.app.entity_override_handler"
 
-    venice.app.logger_ttl_provider:
-        class: Venice\AppBundle\Services\LoggerTtlProvider
-        arguments:
-            - "@trinity.settings"
-
     # EVENT LISTENERS #
 
     venice.app.backtrace_logger_listener:
@@ -206,6 +202,11 @@ services:
         class: Venice\AppBundle\Services\LoggerTtlProvider
         arguments:
             - "@trinity.settings"
+
+    venice.app.user_access_service:
+        class: Venice\AppBundle\Services\UserAccessService
+        arguments:
+            - "@venice.app.entity_override_handler"
 
     # TWIG EXTENSIONS #
 

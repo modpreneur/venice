@@ -93,10 +93,30 @@ class NecktieGateway implements NecktieGatewayInterface
     protected $loginResponseRoute;
 
     /**
+     * @var UserAccessService
+     */
+    protected $userAccessService;
+
+
+    /**
      * @var LoggerInterface
      */
     protected $logger;
 
+    /**
+     * NecktieGateway constructor.
+     * @param EntityManagerInterface $entityManager
+     * @param RouterInterface $router
+     * @param NecktieGatewayHelperInterface $helper
+     * @param NecktieConnector $connector
+     * @param EntityOverrideHandler $entityOverrideHandler
+     * @param LoggerInterface $logger
+     * @param UserAccessService $accessService
+     * @param string|null $necktieUrl
+     * @param string|null $necktieClientId
+     * @param string|null $necktieClientSecret
+     * @param string|null $loginResponseRoute
+     */
     public function __construct(
         EntityManagerInterface $entityManager,
         RouterInterface $router,
@@ -104,6 +124,7 @@ class NecktieGateway implements NecktieGatewayInterface
         NecktieConnector $connector,
         EntityOverrideHandler $entityOverrideHandler,
         LoggerInterface $logger,
+        UserAccessService $accessService,
         string $necktieUrl = null,
         string $necktieClientId = null,
         string $necktieClientSecret = null,
@@ -115,6 +136,7 @@ class NecktieGateway implements NecktieGatewayInterface
         $this->connector = $connector;
         $this->entityOverrideHandler = $entityOverrideHandler;
         $this->logger = $logger;
+        $this->userAccessService = $accessService;
 
         $this->necktieUrl = $necktieUrl;
         $this->necktieClientId = $necktieClientId;
@@ -306,7 +328,8 @@ class NecktieGateway implements NecktieGatewayInterface
                 }
 
                 //todo: @JakubFajkus refactor to the service
-                $givenProductAccesses[] = $user->giveAccessToProduct(
+                $givenProductAccesses[] = $this->userAccessService->giveAccessToProduct(
+                    $user,
                     $product,
                     $dateFrom,
                     $dateTo,

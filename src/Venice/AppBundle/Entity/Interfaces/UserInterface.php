@@ -407,18 +407,6 @@ interface UserInterface extends TrinityUserInterface, BaseEntityInterface
     public function setLocked(bool $locked);
 
     /**
-     * @deprecated Should not be used as the doctrine will not find the access while querying the inherited entity
-     *
-     * @param ProductInterface $product
-     * @param DateTime $fromDate
-     * @param DateTime|null $toDate
-     * @param int|null $necktieId
-     *
-     * @return ProductAccessInterface|null
-     */
-    public function giveAccessToProduct(ProductInterface $product, \DateTime $fromDate, \DateTime $toDate = null, $necktieId = null);
-
-    /**
      * {@inheritdoc}
      */
     public function getEmail();
