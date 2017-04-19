@@ -22,6 +22,7 @@ use Venice\AppBundle\Entity\Interfaces\ProductInterface;
 use Venice\AppBundle\Entity\Interfaces\UserInterface;
 use Venice\AppBundle\Entity\Product\FreeProduct;
 use Venice\AppBundle\Traits\Timestampable;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
  * Class User.
@@ -62,11 +63,13 @@ class User extends BaseUser implements NotificationEntityInterface, UserInterfac
 
     /**
      * @var ArrayCollection<OAuthToken>
+     * @Serializer\Exclude()
      */
     protected $OAuthTokens;
 
     /**
      * @var ArrayCollection<BlogArticle>
+     * @Serializer\Exclude()
      */
     protected $blogArticles;
 

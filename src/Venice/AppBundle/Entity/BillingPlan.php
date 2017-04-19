@@ -15,7 +15,7 @@ use Trinity\NotificationBundle\Entity\NotificationEntityInterface;
 use Venice\AppBundle\Entity\Interfaces\BillingPlanInterface;
 use Venice\AppBundle\Entity\Interfaces\PaySystemVendorInterface;
 use Venice\AppBundle\Entity\Interfaces\StandardProductInterface;
-use Venice\AppBundle\Entity\Product\StandardProduct;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
  * Class BillingPlan.
@@ -30,11 +30,13 @@ class BillingPlan extends BaseBillingPlan implements NotificationEntityInterface
 
     /**
      * @var StandardProductInterface
+     * @Serializer\Exclude()
      */
     protected $product;
 
     /**
      * @var PaySystemVendorInterface paySystemVendor
+     * @Serializer\Exclude()
      */
     protected $paySystemVendor;
 

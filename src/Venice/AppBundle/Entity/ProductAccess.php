@@ -12,8 +12,8 @@ use Trinity\NotificationBundle\Entity\NotificationEntityInterface;
 use Venice\AppBundle\Entity\Interfaces\ProductAccessInterface;
 use Venice\AppBundle\Entity\Interfaces\ProductInterface;
 use Venice\AppBundle\Entity\Interfaces\UserInterface;
-use Venice\AppBundle\Entity\Product\Product;
 use Venice\AppBundle\Traits\Timestampable;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
  * ProductAccess.
@@ -37,11 +37,13 @@ class ProductAccess implements NotificationEntityInterface, EntityInterface, Pro
 
     /**
      * @var UserInterface
+     * @Serializer\Exclude()
      */
     private $user;
 
     /**
      * @var ProductInterface
+     * @Serializer\Exclude()
      */
     private $product;
 

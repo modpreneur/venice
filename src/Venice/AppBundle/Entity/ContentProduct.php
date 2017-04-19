@@ -8,6 +8,7 @@
 namespace Venice\AppBundle\Entity;
 
 use DateTime;
+use JMS\Serializer\Annotation as Serializer;
 use Trinity\Component\Core\Interfaces\EntityInterface;
 use Venice\AppBundle\Entity\Interfaces\ContentInterface;
 use Venice\AppBundle\Entity\Interfaces\ContentProductInterface;
@@ -29,11 +30,13 @@ class ContentProduct implements EntityInterface, ContentProductInterface
 
     /**
      * @var ContentInterface
+     * @Serializer\Exclude()
      */
     protected $content;
 
     /**
      * @var ProductInterface
+     * @Serializer\Exclude()
      */
     protected $product;
 

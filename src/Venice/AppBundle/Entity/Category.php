@@ -11,6 +11,7 @@ namespace Venice\AppBundle\Entity;
 use Cocur\Slugify\Slugify;
 use Doctrine\Common\Collections\ArrayCollection;
 use Venice\AppBundle\Entity\Interfaces\CategoryInterface;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
  * Class Category.
@@ -34,6 +35,7 @@ class Category implements CategoryInterface
 
     /**
      * @var ArrayCollection<BlogArticle>
+     * @Serializer\Exclude()
      */
     protected $blogArticles;
 

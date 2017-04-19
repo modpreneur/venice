@@ -16,6 +16,7 @@ use Venice\AppBundle\Entity\Interfaces\ContentProductInterface;
 use Venice\AppBundle\Entity\Interfaces\ProductAccessInterface;
 use Venice\AppBundle\Entity\Interfaces\ProductInterface;
 use Venice\AppBundle\Entity\Interfaces\UserInterface;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
  * Class BaseProduct.
@@ -56,16 +57,19 @@ abstract class Product extends BaseProduct implements ProductInterface
 
     /**
      * @var ArrayCollection<ProductAccess>
+     * @Serializer\Exclude()
      */
     protected $productAccesses;
 
     /**
      * @var ArrayCollection<ContentProduct>
+     * @Serializer\Exclude()
      */
     protected $contentProducts;
 
     /**
      * @var ArrayCollection<BlogArticle>
+     * @Serializer\Exclude()
      */
     protected $articles;
 

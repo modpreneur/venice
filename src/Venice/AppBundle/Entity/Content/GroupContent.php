@@ -11,6 +11,7 @@ use Cocur\Slugify\Slugify;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 use Venice\AppBundle\Entity\Interfaces\GroupContentInterface;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
  * Class GroupContent.
@@ -21,6 +22,7 @@ class GroupContent extends Content implements GroupContentInterface
 
     /**
      * @var ArrayCollection<ContentInGroup>
+     * @Serializer\Exclude()
      */
     protected $items;
 

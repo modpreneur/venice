@@ -13,6 +13,7 @@ use Venice\AppBundle\Entity\Interfaces\ContentInterface;
 use Venice\AppBundle\Entity\Interfaces\ContentProductInterface;
 use Venice\AppBundle\Entity\Interfaces\UserInterface;
 use Venice\AppBundle\Traits\Timestampable;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
  * Class AbstractContent.
@@ -35,16 +36,19 @@ abstract class Content implements EntityInterface, ContentInterface
 
     /**
      * @var ArrayCollection<ContentProduct>
+     * @Serializer\Exclude()
      */
     protected $contentProducts;
 
     /**
      * @var UserInterface
+     * @Serializer\Exclude()
      */
     protected $author;
 
     /**
      * @var ContentInGroup
+     * @Serializer\Exclude()
      */
     protected $contentsInGroup;
 

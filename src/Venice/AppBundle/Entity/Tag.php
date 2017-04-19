@@ -12,6 +12,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Trinity\Component\Core\Interfaces\EntityInterface;
 use Venice\AppBundle\Entity\Interfaces\BlogArticleInterface;
 use Venice\AppBundle\Entity\Interfaces\TagInterface;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
  * Class Tag.
@@ -35,6 +36,7 @@ class Tag implements TagInterface
 
     /**
      * @var ArrayCollection<BlogArticle>
+     * @Serializer\Exclude()
      */
     protected $blogArticles;
 

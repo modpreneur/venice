@@ -14,6 +14,7 @@ use Trinity\NotificationBundle\Annotations as N;
 use Trinity\NotificationBundle\Entity\NotificationEntityInterface;
 use Venice\AppBundle\Entity\BillingPlan;
 use Venice\AppBundle\Entity\Interfaces\StandardProductInterface;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
  * @N\Source(columns="necktieId, name")
@@ -41,11 +42,13 @@ class StandardProduct extends Product implements NotificationEntityInterface, St
 
     /**
      * @var BillingPlan Default billing plan of the product which is set on Necktie
+     * @Serializer\Exclude()
      */
     protected $necktieDefaultBillingPlan;
 
     /**
      * @var BillingPlan Billing plan of the product which is set on Venice. It has higher priority than the Necktie one.
+     * @Serializer\Exclude()
      */
     protected $veniceDefaultBillingPlan;
 
@@ -56,6 +59,7 @@ class StandardProduct extends Product implements NotificationEntityInterface, St
 
     /**
      * @var ArrayCollection
+     * @Serializer\Exclude()
      */
     protected $billingPlans;
 

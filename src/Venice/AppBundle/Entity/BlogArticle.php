@@ -17,6 +17,7 @@ use Venice\AppBundle\Entity\Interfaces\ProductInterface;
 use Venice\AppBundle\Entity\Interfaces\UserInterface;
 use Venice\AppBundle\Traits\Taggable;
 use Venice\AppBundle\Traits\Timestampable;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
  * Class BlogArticle.
@@ -48,6 +49,7 @@ class BlogArticle implements BlogArticleInterface
 
     /**
      * @var UserInterface
+     * @Serializer\Exclude()
      */
     protected $publisher;
 
@@ -68,11 +70,13 @@ class BlogArticle implements BlogArticleInterface
 
     /**
      * @var ArrayCollection<Product>
+     * @Serializer\Exclude()
      */
     protected $products;
 
     /**
      * @var ArrayCollection<Category>
+     * @Serializer\Exclude()
      */
     protected $categories;
 

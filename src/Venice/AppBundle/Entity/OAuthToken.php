@@ -9,6 +9,7 @@ namespace Venice\AppBundle\Entity;
 
 use Venice\AppBundle\Entity\Interfaces\OAuthTokenInterface;
 use Venice\AppBundle\Traits\Timestampable;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
  * Class OAuthToken.
@@ -23,7 +24,8 @@ class OAuthToken implements OAuthTokenInterface
     protected $id;
 
     /**
-     * @var
+     * @var User
+     * @Serializer\Exclude()
      */
     protected $user;
 

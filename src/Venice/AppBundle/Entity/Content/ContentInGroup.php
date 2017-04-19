@@ -12,6 +12,7 @@ use Venice\AppBundle\Entity\Interfaces\ContentInterface;
 use Venice\AppBundle\Entity\Interfaces\GroupContentInterface;
 use Venice\AppBundle\Entity\Interfaces\ProductInterface;
 use Venice\AppBundle\Entity\Interfaces\UserInterface;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
  * Class ContentInGroup.
@@ -25,11 +26,13 @@ class ContentInGroup implements EntityInterface
 
     /**
      * @var GroupContentInterface
+     * @Serializer\Exclude()
      */
     protected $group;
 
     /**
      * @var ContentInterface
+     * @Serializer\Exclude()
      */
     protected $content;
 
