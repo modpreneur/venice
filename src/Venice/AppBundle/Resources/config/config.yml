@@ -216,10 +216,14 @@ white_october_breadcrumbs:
 
 monolog:
     handlers:
-        error:
-            type: service
-            id: trinity.logger.database_handler
-            level: ERROR
+        main:
+            type:   rotating_file
+            path:   "%kernel.logs_dir%/%kernel.environment%.log"
+            level:  error
+            channels: [!event]
+            # max number of log files to keep
+            # defaults to zero, which means infinite files
+            max_files: 3
 
 snc_redis:
     # Data are separated on redis databases:
