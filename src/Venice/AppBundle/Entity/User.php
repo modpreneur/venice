@@ -120,7 +120,7 @@ class User extends BaseUser implements NotificationEntityInterface, UserInterfac
      */
     public function setPreferredUnits($preferredUnits)
     {
-        if ($preferredUnits !== self::PREFERRED_UNITS_METRIC || $preferredUnits !== self::PREFERRED_UNITS_IMPERIAL) {
+        if ($preferredUnits !== self::PREFERRED_UNITS_METRIC && $preferredUnits !== self::PREFERRED_UNITS_IMPERIAL) {
             throw new InvalidArgumentException(
                 'Preferred units has to be one of '.
                 self::PREFERRED_UNITS_METRIC.
