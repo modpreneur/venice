@@ -673,12 +673,16 @@ class NecktieGateway implements NecktieGatewayInterface
                 'POST',
                 $necktieUrl
             );
+            
             $response = json_decode(
                 $resp,
                 true
             );
+            
+             $response = $response ?? [];
         } catch (UnsuccessfulNecktieResponseException $exception) {
             $this->logger->error($exception->getMessage());
+            
             return false;
         }
         if (!is_array($response) || !array_key_exists('productAccessId', $response)) {
@@ -686,6 +690,7 @@ class NecktieGateway implements NecktieGatewayInterface
                 'Invalid response from necktie uri' . self::NECKTIE_CREATE_TRIAL_PRODUCT_ACCESS,
                 $response
             );
+            
             return false;
         }
 
