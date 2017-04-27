@@ -636,11 +636,12 @@ class NecktieGateway implements NecktieGatewayInterface
      * @throws \RuntimeException
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function refreshAccessTokenIfNeeded(UserInterface $user)
+    public function refreshAccessTokenIfNeeded(UserInterface $user): void
     {
         $dateDiff = $user->getLastToken()->getValidTo()->diff(new \DateTime());
         // if the access token is expired or will expire in 10 minutes
-        if (!$user->isLastAccessTokenValid() || ($dateDiff->h < 0 && $dateDiff->m < 10)) {
+        // @note: m = months, i = minutes. Really English?
+        if (($dateDiff->h < 1 && $dateDiff->i < 10) || !$user->isLastAccessTokenValid()) {
             $this->refreshAccessToken($user);
         }
     }
