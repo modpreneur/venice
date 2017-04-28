@@ -168,9 +168,9 @@ class Order
     }
 
     /**
-     * @return array
+     * @return OrderItem[]
      */
-    public function getItems()
+    public function getItems():array
     {
         return $this->items;
     }

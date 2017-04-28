@@ -131,6 +131,9 @@ services:
             - "@doctrine"
             - "@venice.app.entity_override_handler"
 
+    venice.app.invoice_order_service:
+        class: Venice\AppBundle\Services\InvoiceOrderService
+
     # EVENT LISTENERS #
 
     venice.app.backtrace_logger_listener:
