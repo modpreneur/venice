@@ -16,6 +16,7 @@ services:
 
     venice.bunny.messages_consumer:
         class: Venice\BunnyBundle\MessagesConsumer
+        abstract: true
         arguments:
             - "@event_dispatcher"
             - "%client_identification%"

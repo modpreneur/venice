@@ -10,22 +10,25 @@ namespace Venice\BunnyBundle;
 use Bunny\Channel;
 use Bunny\Message;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Trinity\Bundle\BunnyBundle\Annotation\Consumer;
 use Trinity\Bundle\MessagesBundle\Event\UnpackMessageEvent;
 
-/**
- * //todo: see http://ac5.modpreneur.com/projects/6?modal=Task-453-6.
+/*
+ * This is the annotation which should be in the inherited class's docblock.
  *
- * //todo: hardcoded for flofit
  * @Consumer(
- *     queue="client_1",
+ *     queue="client_3",
  *     maxMessages=100,
  *     maxSeconds=600.0,
  *     prefetchCount=1,
  *     method = "readMessage"
  * )
  */
-class MessagesConsumer
+
+/**
+ * This is base consumer class.
+ * The client application should extend this class and define the annotation which is shown above.
+ */
+abstract class MessagesConsumer
 {
     /** @var  EventDispatcherInterface */
     protected $dispatcher;
