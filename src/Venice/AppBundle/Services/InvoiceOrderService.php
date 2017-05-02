@@ -16,17 +16,17 @@ use Venice\AppBundle\Entity\Order;
 class InvoiceOrderService
 {
     /**
+     * @param array $orders
      * @param string $productName
-     *
      * @return int
      */
-    public function getInvoiceOrderForProductName(array $orders, string $productName)
+    public function getInvoiceOrderForProductName(array $orders, string $productName): int
     {
-        if (count($orders) === 0) {
+        if (\count($orders) === 0) {
             return 0;
         }
 
-        if (count($orders) > 1) {
+        if (\count($orders) > 1) {
             \usort($orders, function ($a, $b) {
                 /** @var $a Order */
                 /** @var $b Order */
