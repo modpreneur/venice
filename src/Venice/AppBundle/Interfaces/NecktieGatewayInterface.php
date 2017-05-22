@@ -8,8 +8,8 @@
 namespace Venice\AppBundle\Interfaces;
 
 use Symfony\Component\HttpFoundation\Cookie;
-use Venice\AppBundle\Entity\Interfaces\UserInterface;
 use Venice\AppBundle\Entity\ProductAccess;
+use Venice\AppBundle\Entity\User;
 use Venice\AppBundle\Exceptions\ExpiredRefreshTokenException;
 use Venice\AppBundle\Exceptions\UnsuccessfulNecktieResponseException;
 
@@ -24,7 +24,7 @@ interface NecktieGatewayInterface extends GatewayInterface
      * @param bool $createNewUser
      * @param bool $persistNewUser
      *
-     * @return UserInterface|null
+     * @return User|null
      *
      * @throws UnsuccessfulNecktieResponseException
      */
@@ -36,21 +36,21 @@ interface NecktieGatewayInterface extends GatewayInterface
     public function getStateCookie();
 
     /**
-     * @param UserInterface $user
+     * @param User $user
      *
      * @throws ExpiredRefreshTokenException
      */
-    public function refreshAccessToken(UserInterface $user);
+    public function refreshAccessToken(User $user);
 
     /**
-     * @param UserInterface $user
+     * @param User $user
      *
      * @throws ExpiredRefreshTokenException
      */
-    public function refreshAccessTokenIfNeeded(UserInterface $user);
+    public function refreshAccessTokenIfNeeded(User $user);
 
     /**
-     * @param UserInterface $user
+     * @param User $user
      * @param int $billingPlanNecktieId
      *
      * @return bool|int
@@ -60,10 +60,10 @@ interface NecktieGatewayInterface extends GatewayInterface
      * @throws \RuntimeException
      * @throws \Exception
      */
-    public function createTrialProductAccess(UserInterface $user, int $billingPlanNecktieId);
+    public function createTrialProductAccess(User $user, int $billingPlanNecktieId);
 
     /**
-     * @param UserInterface $user
+     * @param User $user
      * @param int $productAccessNecktieId
      * @return bool|null|ProductAccess
      * @throws \Venice\AppBundle\Exceptions\ExpiredRefreshTokenException
@@ -72,6 +72,6 @@ interface NecktieGatewayInterface extends GatewayInterface
      * @throws \RuntimeException
      * @throws \Exception
      */
-    public function getProductAccess(UserInterface $user, int $productAccessNecktieId);
+    public function getProductAccess(User $user, int $productAccessNecktieId);
 
 }

@@ -10,18 +10,17 @@ namespace Venice\AppBundle\Entity\Product;
 use Cocur\Slugify\Slugify;
 use Doctrine\Common\Collections\ArrayCollection;
 use Trinity\Component\EntityCore\Entity\BaseProduct;
-use Venice\AppBundle\Entity\Interfaces\BlogArticleInterface;
-use Venice\AppBundle\Entity\Interfaces\ContentInterface;
-use Venice\AppBundle\Entity\Interfaces\ContentProductInterface;
-use Venice\AppBundle\Entity\Interfaces\ProductAccessInterface;
-use Venice\AppBundle\Entity\Interfaces\ProductInterface;
-use Venice\AppBundle\Entity\Interfaces\UserInterface;
+use Venice\AppBundle\Entity\BlogArticle;
+use Venice\AppBundle\Entity\Content\Content;
 use JMS\Serializer\Annotation as Serializer;
+use Venice\AppBundle\Entity\ContentProduct;
+use Venice\AppBundle\Entity\ProductAccess;
+use Venice\AppBundle\Entity\User;
 
 /**
  * Class BaseProduct.
  */
-abstract class Product extends BaseProduct implements ProductInterface
+abstract class Product extends BaseProduct
 {
     public const ASC = 'adc';
 
@@ -80,6 +79,9 @@ abstract class Product extends BaseProduct implements ProductInterface
      */
     abstract public function getType();
 
+    /**
+     * Product constructor.
+     */
     public function __construct()
     {
         parent::__construct();
@@ -173,7 +175,7 @@ abstract class Product extends BaseProduct implements ProductInterface
     /**
      * @param bool $enabled
      *
-     * @return ProductInterface
+     * @return Product
      */
     public function setEnabled($enabled)
     {
@@ -193,7 +195,7 @@ abstract class Product extends BaseProduct implements ProductInterface
     /**
      * @param int $orderNumber
      *
-     * @return ProductInterface
+     * @return Product
      */
     public function setOrderNumber($orderNumber)
     {
@@ -211,11 +213,11 @@ abstract class Product extends BaseProduct implements ProductInterface
     }
 
     /**
-     * @param ProductAccessInterface $productAccess
+     * @param ProductAccess $productAccess
      *
      * @return $this
      */
-    public function addProductAccess(ProductAccessInterface $productAccess)
+    public function addProductAccess(ProductAccess $productAccess)
     {
         if (!$this->productAccesses->contains($productAccess)) {
             $this->productAccesses->add($productAccess);
@@ -225,11 +227,11 @@ abstract class Product extends BaseProduct implements ProductInterface
     }
 
     /**
-     * @param ProductAccessInterface $productAccess
+     * @param ProductAccess $productAccess
      *
      * @return $this
      */
-    public function removeProductAccess(ProductAccessInterface $productAccess)
+    public function removeProductAccess(ProductAccess $productAccess)
     {
         $this->productAccesses->remove($productAccess);
 
@@ -245,11 +247,11 @@ abstract class Product extends BaseProduct implements ProductInterface
     }
 
     /**
-     * @param ContentProductInterface $contentProduct
+     * @param ContentProduct $contentProduct
      *
      * @return $this
      */
-    public function addContentProduct(ContentProductInterface $contentProduct)
+    public function addContentProduct(ContentProduct $contentProduct)
     {
         if (!$this->contentProducts->contains($contentProduct)) {
             $this->contentProducts->add($contentProduct);
@@ -259,11 +261,11 @@ abstract class Product extends BaseProduct implements ProductInterface
     }
 
     /**
-     * @param ContentProductInterface $contentProduct
+     * @param ContentProduct $contentProduct
      *
      * @return $this
      */
-    public function removeContentProduct(ContentProductInterface $contentProduct)
+    public function removeContentProduct(ContentProduct $contentProduct)
     {
         $this->contentProducts->remove($contentProduct);
 
@@ -277,7 +279,7 @@ abstract class Product extends BaseProduct implements ProductInterface
      *                     Venice\AppBundle\\Entity\\Product\\StandardProduct, ...
      * @param array $args
      *
-     * @return ProductInterface
+     * @return Product
      */
     public static function createProductByType($type, array $args = [])
     {
@@ -291,7 +293,7 @@ abstract class Product extends BaseProduct implements ProductInterface
      *
      * @param string $type Could be formatted like HtmlContent, Mp3Content, Venice\AppBundle\\Entity\Content\PdfContent
      *
-     * @return ContentInterface
+     * @return Content
      */
     public static function createProductClassByType($type)
     {
@@ -316,7 +318,7 @@ abstract class Product extends BaseProduct implements ProductInterface
      *
      * @param string $sort
      *
-     * @return ContentInterface[]
+     * @return Content[]
      */
     public function getAllContent($sort = self::NONE)
     {
@@ -328,7 +330,7 @@ abstract class Product extends BaseProduct implements ProductInterface
             usort($contentProducts, [$this, 'compare']);
         }
 
-        /** @var ContentProductInterface $contentProduct */
+        /** @var ContentProduct $contentProduct */
         foreach ($contentProducts as $contentProduct) {
             $content[] = $contentProduct->getContent();
         }
@@ -338,12 +340,12 @@ abstract class Product extends BaseProduct implements ProductInterface
 
 
     /**
-     * @param ContentProductInterface $cp1
-     * @param ContentProductInterface $cp2
+     * @param ContentProduct $cp1
+     * @param ContentProduct $cp2
      *
      * @return bool
      */
-    public function compare(ContentProductInterface $cp1, ContentProductInterface $cp2)
+    public function compare(ContentProduct $cp1, ContentProduct $cp2)
     {
         if ($cp1->getOrderNumber() === $cp2->getOrderNumber()) {
             return 0;
@@ -366,7 +368,7 @@ abstract class Product extends BaseProduct implements ProductInterface
     {
         $content = [];
 
-        /** @var ContentProductInterface $contentProduct */
+        /** @var ContentProduct $contentProduct */
         foreach ($this->contentProducts as $contentProduct) {
             if ($contentProduct->getContent()->getType() === $type) {
                 $content[] = $contentProduct->getContent();
@@ -379,11 +381,11 @@ abstract class Product extends BaseProduct implements ProductInterface
     /**
      * Get all available content without information about delay and order.
      *
-     * @param UserInterface $user
+     * @param User $user
      *
-     * @return ContentInterface[]
+     * @return Content[]
      */
-    public function getAllAvailableContent(UserInterface $user)
+    public function getAllAvailableContent(User $user)
     {
         $content = [];
 
@@ -397,12 +399,12 @@ abstract class Product extends BaseProduct implements ProductInterface
     /**
      * Get all available content by type without information about delay and order.
      *
-     * @param UserInterface $user
+     * @param User $user
      * @param string $type Type of the content (html, text, video, mp3, ...)
      *
-     * @return ContentInterface[]
+     * @return Content[]
      */
-    public function getAvailableContentByType(UserInterface $user, $type)
+    public function getAvailableContentByType(User $user, $type)
     {
         $content = [];
 
@@ -418,11 +420,11 @@ abstract class Product extends BaseProduct implements ProductInterface
     /**
      * Get all available ContentProducts. Check if the user has access to the content.
      *
-     * @param UserInterface $user
+     * @param User $user
      *
-     * @return ContentProductInterface[]
+     * @return ContentProduct[]
      */
-    public function getAvailableContentProducts(UserInterface $user)
+    public function getAvailableContentProducts(User $user)
     {
         $contentProducts = [];
 
@@ -430,7 +432,7 @@ abstract class Product extends BaseProduct implements ProductInterface
             return [];
         }
 
-        /** @var ContentProductInterface $contentProduct */
+        /** @var ContentProduct $contentProduct */
         foreach ($this->contentProducts as $contentProduct) {
             if ($contentProduct->isAvailableFor($user, true)) {
                 $contentProducts[] = $contentProduct;
@@ -474,7 +476,7 @@ abstract class Product extends BaseProduct implements ProductInterface
         $lastDelay = $this->contentProducts[0];
 
         //Group the content products
-        /** @var ContentProductInterface $contentProduct */
+        /** @var ContentProduct $contentProduct */
         foreach ($this->contentProducts as $contentProduct) {
             if ($lastDelay === $contentProduct->getDelay()) {
                 $content[$index][] = $contentProduct;
@@ -498,11 +500,11 @@ abstract class Product extends BaseProduct implements ProductInterface
     }
 
     /**
-     * @param BlogArticleInterface $blogArticle
+     * @param BlogArticle $blogArticle
      *
      * @return $this
      */
-    public function addBlogArticle(BlogArticleInterface $blogArticle)
+    public function addBlogArticle(BlogArticle $blogArticle)
     {
         if (!$this->articles->contains($blogArticle)) {
             $blogArticle->addProduct($this);
@@ -513,11 +515,11 @@ abstract class Product extends BaseProduct implements ProductInterface
     }
 
     /**
-     * @param BlogArticleInterface $blogArticle
+     * @param BlogArticle $blogArticle
      *
      * @return $this
      */
-    public function removeBlogArticle(BlogArticleInterface $blogArticle)
+    public function removeBlogArticle(BlogArticle $blogArticle)
     {
         $this->articles->remove($blogArticle);
         $blogArticle->removeProduct($this);

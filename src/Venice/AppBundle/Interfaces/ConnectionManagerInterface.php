@@ -8,10 +8,10 @@
 namespace Venice\AppBundle\Interfaces;
 
 use Venice\AppBundle\Entity\BillingPlan;
-use Venice\AppBundle\Entity\Interfaces\InvoiceInterface;
-use Venice\AppBundle\Entity\Interfaces\StandardProductInterface;
-use Venice\AppBundle\Entity\Interfaces\UserInterface;
+use Venice\AppBundle\Entity\Order;
+use Venice\AppBundle\Entity\Product\StandardProduct;
 use Venice\AppBundle\Entity\ProductAccess;
+use Venice\AppBundle\Entity\User;
 use Venice\AppBundle\Exceptions\ExpiredRefreshTokenException;
 
 interface ConnectionManagerInterface
@@ -27,42 +27,42 @@ interface ConnectionManagerInterface
     /**
      * Update product accesses for given user.
      *
-     * @param UserInterface $user
+     * @param User $user
      *
      * @throws ExpiredRefreshTokenException Should be catched in a event listener listening kernel.exception.
      *
      * @return ProductAccess[]
      */
-    public function updateProductAccesses(UserInterface $user);
+    public function updateProductAccesses(User $user);
 
     /**
      * Get invoices for given user.
      *
-     * @param UserInterface $user
+     * @param User $user
      *
      * @throws ExpiredRefreshTokenException Should be catched in a event listener listening kernel.exception.
      *
-     * @return InvoiceInterface[]
+     * @return Order[]
      */
-    public function getInvoices(UserInterface $user);
+    public function getInvoices(User $user);
 
     /**
      * Get billing plan by id.
      *
-     * @param UserInterface $user
+     * @param User $user
      * @param      $id
      *
      * @return BillingPlan
      */
-    public function getBillingPlan(UserInterface $user, $id);
+    public function getBillingPlan(User $user, $id);
 
     /**
      * Get all billing plans for given product.
      *
-     * @param UserInterface $user
-     * @param StandardProductInterface $product
+     * @param User $user
+     * @param StandardProduct $product
      *
-     * @return \Venice\AppBundle\Entity\BillingPlan[]
+     * @return BillingPlan[]
      */
-    public function getBillingPlans(UserInterface $user, StandardProductInterface $product);
+    public function getBillingPlans(User $user, StandardProduct $product);
 }

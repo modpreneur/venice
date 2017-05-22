@@ -10,14 +10,12 @@ namespace Venice\AppBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Trinity\Component\Core\Interfaces\EntityInterface;
-use Venice\AppBundle\Entity\Interfaces\BlogArticleInterface;
-use Venice\AppBundle\Entity\Interfaces\TagInterface;
 use JMS\Serializer\Annotation as Serializer;
 
 /**
  * Class Tag.
  */
-class Tag implements TagInterface
+class Tag
 {
     /**
      * @var int
@@ -59,7 +57,7 @@ class Tag implements TagInterface
     /**
      * @param string $name
      *
-     * @return TagInterface
+     * @return Tag
      */
     public function setName(string $name)
     {
@@ -79,7 +77,7 @@ class Tag implements TagInterface
     /**
      * @param string $handle
      *
-     * @return TagInterface
+     * @return Tag
      */
     public function setHandle(string $handle)
     {
@@ -97,11 +95,11 @@ class Tag implements TagInterface
     }
 
     /**
-     * @param BlogArticleInterface $blogArticle
+     * @param BlogArticle $blogArticle
      *
      * @return $this
      */
-    public function addBlogArticle(BlogArticleInterface $blogArticle)
+    public function addBlogArticle(BlogArticle $blogArticle)
     {
         if (!$this->blogArticles->contains($blogArticle)) {
             $this->blogArticles->add($blogArticle);
@@ -111,11 +109,11 @@ class Tag implements TagInterface
     }
 
     /**
-     * @param BlogArticleInterface $blogArticle
+     * @param BlogArticle $blogArticle
      *
      * @return $this
      */
-    public function removeBlogArticle(BlogArticleInterface $blogArticle)
+    public function removeBlogArticle(BlogArticle $blogArticle)
     {
         $this->blogArticles->remove($blogArticle);
 
@@ -141,7 +139,7 @@ class Tag implements TagInterface
      */
     public function addTo(EntityInterface $entity)
     {
-        if ($entity instanceof BlogArticleInterface) {
+        if ($entity instanceof BlogArticle) {
             $this->blogArticles->add($entity);
         } else {
             throw new \InvalidArgumentException(
@@ -163,7 +161,7 @@ class Tag implements TagInterface
      */
     public function removeFrom(EntityInterface $entity)
     {
-        if ($entity instanceof BlogArticleInterface) {
+        if ($entity instanceof BlogArticle) {
             $this->blogArticles->remove($entity);
         } else {
             throw new \InvalidArgumentException(

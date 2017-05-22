@@ -22,7 +22,6 @@ use Trinity\NotificationBundle\Event\BeforeNotificationBatchProcessEvent;
 use Trinity\NotificationBundle\Event\ChangesDoneEvent;
 use Trinity\NotificationBundle\Services\EntityAliasTranslator;
 use Venice\AppBundle\Entity\BillingPlan;
-use Venice\AppBundle\Entity\Interfaces\StandardProductInterface;
 use Venice\AppBundle\Entity\PaySystemVendor;
 use Venice\AppBundle\Entity\Product\StandardProduct;
 use Venice\AppBundle\Services\EntityOverrideHandler;
@@ -95,7 +94,7 @@ class NotificationListener
                 /* @var $entity BillingPlan */
                 $entity->setPrice($this->priceStringGenerator->generateFullPriceStr($entity));
             } elseif ($this->entityOverrideHandler->isInstanceOf($entity, StandardProduct::class)) {
-                /* @var $entity StandardProductInterface */
+                /* @var $entity StandardProduct */
                 $entity->setPurchasable(true);
             } elseif ($this->entityOverrideHandler->isInstanceOf($entity, PaySystemVendor::class)) {
                 // if there is no default vendor, set this one
@@ -110,8 +109,6 @@ class NotificationListener
             }
 
             $this->entityManager->persist($entity);
-            $this->logger->error('CUSTOM ERROR: NECKID:'. $entity->getNecktieId().' CLASSNAME: '.get_class($entity));
-            //todo: this could cause errors while persisting e.g. user with product access
 
             try {
                 $this->entityManager->flush();
@@ -192,7 +189,7 @@ class NotificationListener
 
         if ($this->entityOverrideHandler->isInstanceOf($entityClass, StandardProduct::class)) {
             $this->logger->info('Read SynchronizationStoppedMessage about product '.$entityClass.' with id:'.$entityId);
-            /** @var StandardProductInterface $product */
+            /** @var StandardProduct $product */
             $product = $this->entityManager->find($entityClass, $entityId);
             $product->setPurchasable(false);
             $this->persistEntity($product);

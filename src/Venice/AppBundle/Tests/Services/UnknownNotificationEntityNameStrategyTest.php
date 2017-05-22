@@ -112,7 +112,7 @@ class UnknownNotificationEntityNameStrategyTest extends BaseTest
     protected function setMocks()
     {
         $this->entityManagerMock->expects($this->exactly(2))->method('getRepository')
-            ->withConsecutive(['Venice\AppBundle\Entity\Product\StandardProduct'], ['Venice\AppBundle\Entity\BillingPlan'])
+            ->withConsecutive([StandardProduct::class], [BillingPlan::class])
             ->willReturnOnConsecutiveCalls($this->productRepositoryMock, $this->billingPlanRepositoryMock);
 
         $this->productRepositoryMock->expects($this->once())->method('find')
@@ -124,8 +124,8 @@ class UnknownNotificationEntityNameStrategyTest extends BaseTest
             ->willReturn($this->billingPlanMock);
 
         $this->entityOverrideHandlerMock->expects($this->exactly(2))->method('getEntityClass')
-            ->withConsecutive(['Venice\AppBundle\Entity\Product\StandardProduct'], ['Venice\AppBundle\Entity\BillingPlan'])
-            ->willReturnOnConsecutiveCalls('Venice\AppBundle\Entity\Product\StandardProduct', 'Venice\AppBundle\Entity\BillingPlan');
+            ->withConsecutive([StandardProduct::class], [BillingPlan::class])
+            ->willReturnOnConsecutiveCalls(StandardProduct::class, BillingPlan::class);
     }
 
 }

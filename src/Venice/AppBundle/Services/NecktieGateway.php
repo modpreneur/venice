@@ -14,7 +14,6 @@ use GuzzleHttp\Exception\ClientException;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\Routing\RouterInterface;
-use Venice\AppBundle\Entity\Interfaces\UserInterface;
 use Venice\AppBundle\Entity\Product\StandardProduct;
 use Venice\AppBundle\Entity\ProductAccess;
 use Venice\AppBundle\Entity\User;
@@ -195,7 +194,7 @@ class NecktieGateway implements NecktieGatewayInterface
      * @param bool $createNewUser
      * @param bool $persistNewUser
      *
-     * @return UserInterface|null
+     * @return User|null
      *
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \RuntimeException
@@ -237,7 +236,7 @@ class NecktieGateway implements NecktieGatewayInterface
     /**
      * Check if a product with given id exists in necktie.
      *
-     * @param UserInterface $user
+     * @param User $user
      * @param $necktieId
      *
      * @return bool
@@ -248,7 +247,7 @@ class NecktieGateway implements NecktieGatewayInterface
      * @throws \Exception
      * @throws UnsuccessfulNecktieResponseException
      */
-    public function productExists(UserInterface $user, $necktieId)
+    public function productExists(User $user, $necktieId)
     {
         $this->refreshAccessTokenIfNeeded($user);
         $necktieUrl = str_replace('{id}', $necktieId, self::NECKTIE_PRODUCT_URI);
@@ -269,7 +268,7 @@ class NecktieGateway implements NecktieGatewayInterface
     /**
      * Update product accesses for given user.
      *
-     * @param UserInterface $user
+     * @param User $user
      *
      * @throws UnsuccessfulNecktieResponseException
      *
@@ -280,7 +279,7 @@ class NecktieGateway implements NecktieGatewayInterface
      * @throws \Venice\AppBundle\Exceptions\ExpiredRefreshTokenException
      * @throws \Exception
      */
-    public function updateProductAccesses(UserInterface $user)
+    public function updateProductAccesses(User $user)
     {
         $this->refreshAccessTokenIfNeeded($user);
         $givenProductAccesses = [];
@@ -349,7 +348,7 @@ class NecktieGateway implements NecktieGatewayInterface
 
 
     /**
-     * @param UserInterface $user
+     * @param User $user
      * @param int $productAccessNecktieId
      *
      * @return bool|null|ProductAccess
@@ -359,7 +358,7 @@ class NecktieGateway implements NecktieGatewayInterface
      * @throws \RuntimeException
      * @throws \Exception
      */
-    public function getProductAccess(UserInterface $user, int $productAccessNecktieId)
+    public function getProductAccess(User $user, int $productAccessNecktieId)
     {
         $necktieUrl = str_replace('{id}', $productAccessNecktieId, self::NECKTIE_GET_PRODUCT_ACCESS);
         $this->refreshAccessTokenIfNeeded($user);
@@ -405,7 +404,7 @@ class NecktieGateway implements NecktieGatewayInterface
 
 
     /**
-     * @param UserInterface $user
+     * @param User $user
      *
      * @return array
      *
@@ -415,7 +414,7 @@ class NecktieGateway implements NecktieGatewayInterface
      * @throws \Exception
      * @throws UnsuccessfulNecktieResponseException
      */
-    public function getOrders(UserInterface $user)
+    public function getOrders(User $user)
     {
         $this->refreshAccessTokenIfNeeded($user);
         $resp = $this->connector->getResponse(
@@ -440,7 +439,7 @@ class NecktieGateway implements NecktieGatewayInterface
 
 
     /**
-     * @param UserInterface $user
+     * @param User $user
      * @param array $newsletters
      *
      * @return array
@@ -450,7 +449,7 @@ class NecktieGateway implements NecktieGatewayInterface
      * @throws \Exception
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function updateNewsletters(UserInterface $user, array $newsletters = [])
+    public function updateNewsletters(User $user, array $newsletters = [])
     {
         $this->refreshAccessTokenIfNeeded($user);
         $stat = [];
@@ -500,7 +499,7 @@ class NecktieGateway implements NecktieGatewayInterface
      * @throws \Venice\AppBundle\Exceptions\ExpiredRefreshTokenException
      * @throws \Venice\AppBundle\Exceptions\UnsuccessfulNecktieResponseException
      */
-    public function getNewsletters(UserInterface $user)
+    public function getNewsletters(User $user)
     {
         $this->refreshAccessTokenIfNeeded($user);
 
@@ -570,7 +569,7 @@ class NecktieGateway implements NecktieGatewayInterface
 
 
     /**
-     * @param UserInterface $user
+     * @param User $user
      *
      * @throws ExpiredRefreshTokenException
      * @throws \Exception
@@ -578,7 +577,7 @@ class NecktieGateway implements NecktieGatewayInterface
      * @throws \RuntimeException
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function refreshAccessToken(UserInterface $user)
+    public function refreshAccessToken(User $user)
     {
         $response = json_decode(
             $this->connector->getResponse(
@@ -628,7 +627,7 @@ class NecktieGateway implements NecktieGatewayInterface
 
 
     /**
-     * @param UserInterface $user
+     * @param User $user
      *
      * @throws ExpiredRefreshTokenException
      * @throws \Exception
@@ -636,7 +635,7 @@ class NecktieGateway implements NecktieGatewayInterface
      * @throws \RuntimeException
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function refreshAccessTokenIfNeeded(UserInterface $user): void
+    public function refreshAccessTokenIfNeeded(User $user): void
     {
         $dateDiff = $user->getLastToken()->getValidTo()->diff(new \DateTime());
         // if the access token is expired or will expire in 10 minutes
@@ -648,7 +647,7 @@ class NecktieGateway implements NecktieGatewayInterface
 
 
     /**
-     * @param UserInterface $user
+     * @param User $user
      * @param int $billingPlanNecktieId
      *
      * @return bool|int
@@ -658,7 +657,7 @@ class NecktieGateway implements NecktieGatewayInterface
      * @throws \RuntimeException
      * @throws \Exception
      */
-    public function createTrialProductAccess(UserInterface $user, int $billingPlanNecktieId)
+    public function createTrialProductAccess(User $user, int $billingPlanNecktieId)
     {
         $this->refreshAccessTokenIfNeeded($user);
 
@@ -754,7 +753,7 @@ class NecktieGateway implements NecktieGatewayInterface
      * @param $userInfo
      * @param $persist
      *
-     * @return UserInterface
+     * @return User
      */
     protected function createNewUser($userInfo, $persist)
     {

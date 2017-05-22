@@ -10,13 +10,12 @@ namespace Venice\AppBundle\Entity;
 
 use Cocur\Slugify\Slugify;
 use Doctrine\Common\Collections\ArrayCollection;
-use Venice\AppBundle\Entity\Interfaces\CategoryInterface;
 use JMS\Serializer\Annotation as Serializer;
 
 /**
  * Class Category.
  */
-class Category implements CategoryInterface
+class Category
 {
     /**
      * @var int
@@ -66,7 +65,7 @@ class Category implements CategoryInterface
     /**
      * @param string $name
      *
-     * @return CategoryInterface
+     * @return Category
      */
     public function setName(string $name)
     {
@@ -122,7 +121,7 @@ class Category implements CategoryInterface
     /**
      * @param string $handle
      *
-     * @return CategoryInterface
+     * @return Category
      */
     public function setHandle($handle)
     {

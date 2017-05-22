@@ -7,12 +7,11 @@ use Trinity\Component\EntityCore\Entity\BasePaySystem;
 use Trinity\Component\EntityCore\Entity\BasePaySystemVendor;
 use Trinity\NotificationBundle\Annotations as N;
 use Trinity\NotificationBundle\Entity\NotificationEntityInterface;
-use Venice\AppBundle\Entity\Interfaces\PaySystemInterface;
 
 /**
  * Class PaySystem
  */
-class PaySystem extends BasePaySystem implements NotificationEntityInterface, PaySystemInterface
+class PaySystem extends BasePaySystem implements NotificationEntityInterface
 {
     /**
      * @var int

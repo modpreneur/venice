@@ -2,9 +2,9 @@
 
 namespace Venice\AppBundle\Services;
 
-use Venice\AppBundle\Entity\Interfaces\ProductInterface;
-use Venice\AppBundle\Entity\Interfaces\UserInterface;
+use Venice\AppBundle\Entity\Product\Product;
 use Venice\AppBundle\Entity\ProductAccess;
+use Venice\AppBundle\Entity\User;
 
 /**
  * Class UserAccessService
@@ -28,16 +28,16 @@ class UserAccessService
     }
 
     /**
-     * @param UserInterface $user
-     * @param ProductInterface $product
+     * @param User $user
+     * @param Product $product
      * @param \DateTime $fromDate
      * @param \DateTime|null $toDate
      * @param null $necktieId
-     * @return null|object|\Venice\AppBundle\Entity\Interfaces\ProductAccessInterface
+     * @return null|object|ProductAccess
      */
     public function giveAccessToProduct(
-        UserInterface $user,
-        ProductInterface $product,
+        User $user,
+        Product $product,
         \DateTime $fromDate,
         \DateTime $toDate = null,
         $necktieId = null

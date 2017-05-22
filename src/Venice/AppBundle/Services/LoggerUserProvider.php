@@ -38,7 +38,7 @@ class LoggerUserProvider implements UserProviderInterface
      *
      * @return \Trinity\Component\Core\Interfaces\UserInterface
      */
-    public function getUserById(int $userId)
+    public function getUserById(int $userId) : UserInterface
     {
         /** @var UserInterface $user */
         $user = $this->doctrineRegistry->getEntityManager()->getRepository(

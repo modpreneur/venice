@@ -7,7 +7,7 @@
  */
 namespace Venice\AppBundle\Interfaces;
 
-use Venice\AppBundle\Entity\Interfaces\OAuthTokenInterface;
+use Venice\AppBundle\Entity\OAuthToken;
 
 interface NecktieGatewayHelperInterface
 {
@@ -23,7 +23,7 @@ interface NecktieGatewayHelperInterface
      *
      * @param $array array
      *
-     * @return OAuthTokenInterface|null
+     * @return OAuthToken|null
      */
     public function createOAuthTokenFromArray(array $array);
 

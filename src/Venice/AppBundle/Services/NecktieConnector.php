@@ -12,7 +12,7 @@ use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\ServerException;
 use Psr\Http\Message\MessageInterface;
-use Venice\AppBundle\Entity\Interfaces\UserInterface;
+use Venice\AppBundle\Entity\User;
 use Venice\AppBundle\Exceptions\UnsuccessfulNecktieResponseException;
 
 class NecktieConnector
@@ -51,7 +51,7 @@ class NecktieConnector
     }
 
     /**
-     * @param UserInterface $user
+     * @param User $user
      * @param $method string
      * @param $uri string
      * @param array $data
@@ -66,7 +66,7 @@ class NecktieConnector
      * @throws \Exception
      */
     public function getResponse(
-        UserInterface $user = null,
+        User $user = null,
         string $method,
         string $uri,
         array $data = [],
@@ -116,14 +116,14 @@ class NecktieConnector
     /**
      * Get User's access token or provided access token.
      *
-     * @param UserInterface $user
+     * @param User $user
      * @param string $accessTokenString
      *
      * @return mixed
      *
      * @throws \Exception
      */
-    protected function getAccessToken(UserInterface $user = null, string $accessTokenString = null)
+    protected function getAccessToken(User $user = null, string $accessTokenString = null)
     {
         if ($user !== null) {
             $usersAccessToken = $user->getLastAccessToken();

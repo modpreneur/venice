@@ -10,13 +10,12 @@ namespace Venice\AppBundle\Entity\Content;
 use Cocur\Slugify\Slugify;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
-use Venice\AppBundle\Entity\Interfaces\GroupContentInterface;
 use JMS\Serializer\Annotation as Serializer;
 
 /**
  * Class GroupContent.
  */
-class GroupContent extends Content implements GroupContentInterface
+class GroupContent extends Content
 {
     const TYPE = 'group';
 
@@ -70,6 +69,9 @@ class GroupContent extends Content implements GroupContentInterface
         }
     }
 
+    /**
+     * GroupContent constructor.
+     */
     public function __construct()
     {
         parent::__construct();
@@ -85,6 +87,9 @@ class GroupContent extends Content implements GroupContentInterface
         return $this->items;
     }
 
+    /**
+     * @param $items
+     */
     public function setItems($items)
     {
         $this->items = $items;

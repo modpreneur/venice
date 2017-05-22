@@ -2,6 +2,7 @@
 
 namespace Venice\AppBundle\Services;
 
+use Trinity\Component\Core\Interfaces\EntityInterface;
 use Venice\AppBundle\Interfaces\ConfiguratorInterface;
 
 /**
@@ -27,14 +28,14 @@ class EntityFormMatcher
     /**
      * Get the appropriate form for given entity.
      *
-     * @param object|string $entity
+     * @param EntityInterface|string $entity
      *
      * @return string
      *
      * @throws \LogicException
      */
     public function getFormClassForEntity($entity)
-    {
+    { //todo: refactor to two methods
         if (is_object($entity)) {
             $entityClass = $this->getEntityClass($entity);
         } elseif (class_exists($entity)) {

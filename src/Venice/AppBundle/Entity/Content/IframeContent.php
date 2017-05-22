@@ -7,12 +7,10 @@
  */
 namespace Venice\AppBundle\Entity\Content;
 
-use Venice\AppBundle\Entity\Interfaces\IframeContentInterface;
-
 /**
  * Class IFrameContent.
  */
-class IframeContent extends Content implements IframeContentInterface
+class IframeContent extends Content
 {
     const TYPE = 'iframe';
 
@@ -32,7 +30,7 @@ class IframeContent extends Content implements IframeContentInterface
     /**
      * @param string $html
      *
-     * @return IframeContentInterface
+     * @return IframeContent
      */
     public function setHtml($html)
     {

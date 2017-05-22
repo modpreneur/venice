@@ -8,11 +8,9 @@
 namespace Venice\AppBundle\Entity\Content;
 
 use Trinity\Component\Core\Interfaces\EntityInterface;
-use Venice\AppBundle\Entity\Interfaces\ContentInterface;
-use Venice\AppBundle\Entity\Interfaces\GroupContentInterface;
-use Venice\AppBundle\Entity\Interfaces\ProductInterface;
-use Venice\AppBundle\Entity\Interfaces\UserInterface;
 use JMS\Serializer\Annotation as Serializer;
+use Venice\AppBundle\Entity\Product\Product;
+use Venice\AppBundle\Entity\User;
 
 /**
  * Class ContentInGroup.
@@ -25,13 +23,13 @@ class ContentInGroup implements EntityInterface
     protected $id;
 
     /**
-     * @var GroupContentInterface
+     * @var GroupContent
      * @Serializer\Exclude()
      */
     protected $group;
 
     /**
-     * @var ContentInterface
+     * @var Content
      * @Serializer\Exclude()
      */
     protected $content;
@@ -46,6 +44,9 @@ class ContentInGroup implements EntityInterface
      */
     protected $orderNumber;
 
+    /**
+     * ContentInGroup constructor.
+     */
     public function __construct()
     {
         $this->delay = 0;
@@ -61,7 +62,7 @@ class ContentInGroup implements EntityInterface
     }
 
     /**
-     * @return GroupContentInterface
+     * @return GroupContent
      */
     public function getGroup()
     {
@@ -69,7 +70,7 @@ class ContentInGroup implements EntityInterface
     }
 
     /**
-     * @param GroupContentInterface $group
+     * @param GroupContent $group
      *
      * @return ContentInGroup
      */
@@ -81,7 +82,7 @@ class ContentInGroup implements EntityInterface
     }
 
     /**
-     * @return ContentInterface
+     * @return Content
      */
     public function getContent()
     {
@@ -89,7 +90,7 @@ class ContentInGroup implements EntityInterface
     }
 
     /**
-     * @param ContentInterface $content
+     * @param Content $content
      *
      * @return ContentInGroup
      */
@@ -143,13 +144,13 @@ class ContentInGroup implements EntityInterface
     /**
      * Check if the given user has access to this ContentInGroup.
      *
-     * @param UserInterface $user
-     * @param ProductInterface $product The Product which is associated with the GroupContent
+     * @param User $user
+     * @param Product $product The Product which is associated with the GroupContent
      * @param bool $checkAccessToProduct Check access to product?
      *
      * @return bool true - the user has access to the parent Product and the delay of this ContentInGroup + delay < now
      */
-    public function isAvailableFor(UserInterface $user, ProductInterface $product, $checkAccessToProduct = true)
+    public function isAvailableFor(User $user, Product $product, $checkAccessToProduct = true)
     {
         $now = new \DateTime();
 

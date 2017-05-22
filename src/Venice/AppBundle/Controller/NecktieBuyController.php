@@ -11,8 +11,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Venice\AppBundle\Entity\Interfaces\UserInterface;
 use Venice\AppBundle\Entity\Product\StandardProduct;
+use Venice\AppBundle\Entity\User;
 
 /**
  * Class NecktieBuyController.
@@ -88,7 +88,7 @@ class NecktieBuyController extends Controller
             throw new \LogicException('Can not buy product '.$product->getName().' as it is not purchasable.');
         }
 
-        /** @var UserInterface $user */
+        /** @var User $user */
         $user = $this->getUser();
         $this->get('venice.app.necktie_gateway')->refreshAccessToken($user);
 
@@ -111,7 +111,7 @@ class NecktieBuyController extends Controller
         } elseif ($paySystem === 'Braintree') {
             $paySystemUrlPart = 'braintree/buy';
         } else {
-            $this->get('logger')->emergency("Can not buy product");
+            $this->get('logger')->emergency('Can not buy product');
             throw new NotFoundHttpException('Unsupported pay system: '.$paySystem);
         }
 

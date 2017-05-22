@@ -2,6 +2,7 @@
 
 namespace Venice\AppBundle\Services;
 
+use Trinity\Component\Core\Interfaces\EntityInterface;
 use Venice\AppBundle\Interfaces\ConfiguratorInterface;
 
 /**
@@ -40,9 +41,9 @@ class EntityOverrideHandler
      * @param string $entityClass
      * @param array  $constructorArgs
      *
-     * @return object
+     * @return EntityInterface
      */
-    public function getEntityInstance(string $entityClass, array $constructorArgs = [])
+    public function getEntityInstance(string $entityClass, array $constructorArgs = []): EntityInterface
     {
         $class = $this->getEntityClass($entityClass);
 

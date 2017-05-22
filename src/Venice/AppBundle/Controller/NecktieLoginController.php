@@ -13,8 +13,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Venice\AppBundle\Entity\Interfaces\OAuthTokenInterface;
-use Venice\AppBundle\Entity\Interfaces\UserInterface;
+use Venice\AppBundle\Entity\User;
+use Venice\AppBundle\Entity\OAuthToken;
 use Venice\AppBundle\Event\AppEvents;
 use Venice\AppBundle\Event\NecktieLoginSuccessfulEvent;
 use Venice\AppBundle\Exceptions\UnsuccessfulNecktieResponseException;
@@ -164,9 +164,9 @@ class NecktieLoginController extends Controller
      *
      * @param NecktieGateway $necktieGateway
      * @param Request $request
-     * @param OAuthTokenInterface $necktieToken
+     * @param OAuthToken $necktieToken
      *
-     * @return UserInterface|null
+     * @return User|null
      *
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \RuntimeException
@@ -174,7 +174,7 @@ class NecktieLoginController extends Controller
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      * @throws \Exception
      */
-    protected function getAndLoginUser(NecktieGateway $necktieGateway, Request $request, OAuthTokenInterface $necktieToken)
+    protected function getAndLoginUser(NecktieGateway $necktieGateway, Request $request, OAuthToken $necktieToken)
     {
         $user = $necktieGateway->getUserByAccessToken($request->query->get('access_token'), true);
 
@@ -217,7 +217,7 @@ class NecktieLoginController extends Controller
      * @param $request
      * @param $necktieGateway
      *
-     * @return OAuthTokenInterface|null
+     * @return OAuthToken|null
      */
     protected function getAccessTokenFromRequest(NecktieGateway $necktieGateway, Request $request)
     {

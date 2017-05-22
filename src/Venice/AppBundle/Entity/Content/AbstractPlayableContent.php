@@ -5,15 +5,13 @@
  * Date: 04.10.15
  * Time: 12:51.
  */
-namespace Venice\AppBundle\Entity\Content;
 
-use Symfony\Component\Validator\Constraints as Assert;
-use Venice\AppBundle\Entity\Interfaces\AbstractPlayableContentInterface;
+namespace Venice\AppBundle\Entity\Content;
 
 /**
  * Class AbstractPlayable.
  */
-abstract class AbstractPlayableContent extends Content implements AbstractPlayableContentInterface
+abstract class AbstractPlayableContent extends Content
 {
     /**
      * @var int Duration(length) in seconds.

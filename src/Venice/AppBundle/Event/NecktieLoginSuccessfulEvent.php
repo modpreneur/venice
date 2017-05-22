@@ -8,22 +8,22 @@
 namespace Venice\AppBundle\Event;
 
 use Symfony\Component\EventDispatcher\Event;
-use Venice\AppBundle\Entity\Interfaces\UserInterface;
+use Venice\AppBundle\Entity\User;
 
 /**
  * {@inheritdoc}
  */
 class NecktieLoginSuccessfulEvent extends Event
 {
-    /** @var UserInterface */
+    /** @var User */
     protected $user;
 
     /**
      * NecktieLoginSuccessfulEvent constructor.
      *
-     * @param UserInterface $user
+     * @param User $user
      */
-    public function __construct(UserInterface $user)
+    public function __construct(User $user)
     {
         $this->user = $user;
     }

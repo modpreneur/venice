@@ -7,8 +7,8 @@
  */
 namespace Venice\AppBundle\Interfaces;
 
-use Venice\AppBundle\Entity\Interfaces\UserInterface;
 use Venice\AppBundle\Entity\ProductAccess;
+use Venice\AppBundle\Entity\User;
 
 interface GatewayInterface
 {
@@ -18,25 +18,25 @@ interface GatewayInterface
     public function getLoginUrl();
 
     /**
-     * @param UserInterface $user
+     * @param User $user
      *
      * @return ProductAccess[]
      */
-    public function updateProductAccesses(UserInterface $user);
+    public function updateProductAccesses(User $user);
 
     /**
-     * @param UserInterface $user
+     * @param User $user
      *
      * @return array
      */
-    public function getOrders(UserInterface $user);
+    public function getOrders(User $user);
 
     /** todo
-     * @param UserInterface $user
+     * @param User $user
      *
      * @return mixed
      */
-    public function getNewsletters(UserInterface $user);
+    public function getNewsletters(User $user);
 
 //    /**
 //     * Get billing plan by id

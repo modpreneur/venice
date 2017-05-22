@@ -5,9 +5,10 @@
  * Date: 17.01.16
  * Time: 11:59.
  */
+
 namespace Venice\FrontBundle\Twig;
 
-use Venice\AppBundle\Entity\Interfaces\ContentInterface;
+use Venice\AppBundle\Entity\Content\Content;
 
 /**
  * Class RenderDefaultContentTemplateExtension.
@@ -34,10 +35,10 @@ class RenderDefaultContentTemplateExtension extends \Twig_Extension
         ];
     }
 
-    public function renderDefault(\Twig_Environment $twig, ContentInterface $content)
+    public function renderDefault(\Twig_Environment $twig, Content $content)
     {
         return $twig->render(
-            'VeniceFrontBundle:Content:'.$content->getType().'Default.html.twig',
+            'VeniceFrontBundle:Content:' . $content->getType() . 'Default.html.twig',
             ['content' => $content]
         );
     }

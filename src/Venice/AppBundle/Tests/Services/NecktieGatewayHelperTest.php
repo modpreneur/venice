@@ -120,7 +120,7 @@ class NecktieGatewayHelperTest extends BaseTest
 
     public function testIsResponseOkCallsAllMethods()
     {
-        $helperMock = $this->getMockBuilder("Venice\AppBundle\\Services\\NecktieGatewayHelper")
+        $helperMock = $this->getMockBuilder(NecktieGatewayHelper::class)
             // Mock only those methods
             ->setMethods(
                 [

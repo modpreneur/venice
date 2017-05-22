@@ -7,12 +7,10 @@
  */
 namespace Venice\AppBundle\Entity\Content;
 
-use Venice\AppBundle\Entity\Interfaces\Mp3ContentInterface;
-
 /**
  * Class Mp3Content.
  */
-class Mp3Content extends AbstractPlayableContent implements Mp3ContentInterface
+class Mp3Content extends AbstractPlayableContent
 {
     const TYPE = 'mp3';
 

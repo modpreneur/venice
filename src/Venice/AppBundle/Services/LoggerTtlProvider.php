@@ -33,7 +33,7 @@ class LoggerTtlProvider implements LoggerTtlProviderInterface
      * @throws \Trinity\Bundle\SettingsBundle\Exception\PropertyNotExistsException
      * @throws PropertyNotExistsException
      */
-    public function getTtlForType(string $typeName)
+    public function getTtlForType(string $typeName): int
     {
         //you can set different ttl for each typeName, but for now let us KISS
         return $this->settingsManager->get('logger_ttl');

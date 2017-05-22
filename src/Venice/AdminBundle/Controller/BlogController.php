@@ -15,6 +15,6 @@ class BlogController extends BaseAdminController
             ->addRouteItem('Blog', 'admin_blog_tabs');
 
 
-        return $this->render("@VeniceAdmin/Blog/tabs.html.twig");
+        return $this->render('@VeniceAdmin/Blog/tabs.html.twig');
     }
 }

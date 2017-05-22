@@ -11,10 +11,7 @@ namespace Venice\AppBundle\Entity;
 use Cocur\Slugify\Slugify;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
-use Venice\AppBundle\Entity\Interfaces\BlogArticleInterface;
-use Venice\AppBundle\Entity\Interfaces\CategoryInterface;
-use Venice\AppBundle\Entity\Interfaces\ProductInterface;
-use Venice\AppBundle\Entity\Interfaces\UserInterface;
+use Venice\AppBundle\Entity\Product\Product;
 use Venice\AppBundle\Traits\Taggable;
 use Venice\AppBundle\Traits\Timestampable;
 use JMS\Serializer\Annotation as Serializer;
@@ -22,7 +19,7 @@ use JMS\Serializer\Annotation as Serializer;
 /**
  * Class BlogArticle.
  */
-class BlogArticle implements BlogArticleInterface
+class BlogArticle
 {
     use Timestampable;
     use Taggable;
@@ -48,7 +45,7 @@ class BlogArticle implements BlogArticleInterface
     protected $handle;
 
     /**
-     * @var UserInterface
+     * @var User
      * @Serializer\Exclude()
      */
     protected $publisher;
@@ -129,7 +126,7 @@ class BlogArticle implements BlogArticleInterface
     /**
      * Get publisher.
      *
-     * @return UserInterface
+     * @return User
      */
     public function getPublisher()
     {
@@ -139,11 +136,11 @@ class BlogArticle implements BlogArticleInterface
     /**
      * Set publisher.
      *
-     * @param UserInterface $publisher
+     * @param User $publisher
      *
-     * @return BlogArticleInterface
+     * @return BlogArticle
      */
-    public function setPublisher(UserInterface $publisher)
+    public function setPublisher(User $publisher)
     {
         $this->publisher = $publisher;
 
@@ -165,7 +162,7 @@ class BlogArticle implements BlogArticleInterface
      *
      * @param DateTime $dateToPublish
      *
-     * @return BlogArticleInterface
+     * @return BlogArticle
      */
     public function setDateToPublish(DateTime $dateToPublish)
     {
@@ -189,7 +186,7 @@ class BlogArticle implements BlogArticleInterface
      *
      * @param string $title
      *
-     * @return BlogArticleInterface
+     * @return BlogArticle
      */
     public function setTitle($title)
     {
@@ -215,7 +212,7 @@ class BlogArticle implements BlogArticleInterface
      *
      * @param string $content
      *
-     * @return BlogArticleInterface
+     * @return BlogArticle
      */
     public function setContent($content)
     {
@@ -286,11 +283,11 @@ class BlogArticle implements BlogArticleInterface
     }
 
     /**
-     * @param ProductInterface $product
+     * @param Product $product
      *
-     * @return BlogArticleInterface
+     * @return BlogArticle
      */
-    public function addProduct(ProductInterface $product)
+    public function addProduct(Product $product)
     {
         if (!$this->products->contains($product)) {
             $product->addBlogArticle($this);
@@ -301,11 +298,11 @@ class BlogArticle implements BlogArticleInterface
     }
 
     /**
-     * @param ProductInterface $product
+     * @param Product $product
      *
-     * @return BlogArticleInterface
+     * @return BlogArticle
      */
-    public function removeProduct(ProductInterface $product)
+    public function removeProduct(Product $product)
     {
         $this->products->remove($product);
         $product->removeBlogArticle($this);
@@ -322,11 +319,11 @@ class BlogArticle implements BlogArticleInterface
     }
 
     /**
-     * @param CategoryInterface $category
+     * @param Category $category
      *
-     * @return BlogArticleInterface
+     * @return BlogArticle
      */
-    public function addCategory(CategoryInterface $category)
+    public function addCategory(Category $category)
     {
         if (!$this->categories->contains($category)) {
             $this->categories->add($category);
@@ -337,11 +334,11 @@ class BlogArticle implements BlogArticleInterface
     }
 
     /**
-     * @param CategoryInterface $category
+     * @param Category $category
      *
-     * @return BlogArticleInterface
+     * @return BlogArticle
      */
-    public function removeCategory(CategoryInterface $category)
+    public function removeCategory(Category $category)
     {
         $this->categories->remove($category);
         $category->removeBlogArticle($this);

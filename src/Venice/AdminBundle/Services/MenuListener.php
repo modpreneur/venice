@@ -81,7 +81,7 @@ class MenuListener
         $loggerMenuItem->addChild('Exception log', ['uri' => $lUri . '#tab1']);
         $loggerMenuItem->addChild('Ipn log', ['uri' => $lUri . '#tab3']);
         $loggerMenuItem->addChild('Entity action log', ['uri' => $lUri . '#tab4']);
-        $loggerMenuItem->addChild('Access log', ['uri' => $lUri . "#tab5"]);
+        $loggerMenuItem->addChild('Access log', ['uri' => $lUri . '#tab5']);
         $loggerMenuItem->addChild('Payment error log', ['uri' => $lUri . '#tab6']);
         $loggerMenuItem->addChild('Ban log', ['uri' => $lUri . '#tab7']);
         $loggerMenuItem->addChild('Message log', ['uri' => $lUri . '#tab8']);

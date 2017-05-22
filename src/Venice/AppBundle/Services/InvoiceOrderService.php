@@ -7,7 +7,7 @@ use Venice\AppBundle\Entity\Order;
 /**
  * Class InvoiceOrderService
  *
- * This service should answer the questing: if the user has bought the product, which order it was in it?
+ * This service should answer the question: if the user has bought the product, which order it was in it?
  * If the product has not been bought, the answer is 0
  *
  * Example:

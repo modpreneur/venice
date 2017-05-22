@@ -13,7 +13,6 @@ use Trinity\Component\Core\Interfaces\ClientInterface;
 use Trinity\NotificationBundle\Annotations as N;
 use Trinity\NotificationBundle\Entity\NotificationEntityInterface;
 use Venice\AppBundle\Entity\BillingPlan;
-use Venice\AppBundle\Entity\Interfaces\StandardProductInterface;
 use JMS\Serializer\Annotation as Serializer;
 
 /**
@@ -24,7 +23,7 @@ use JMS\Serializer\Annotation as Serializer;
  *
  * Class StandardProduct
  */
-class StandardProduct extends Product implements NotificationEntityInterface, StandardProductInterface
+class StandardProduct extends Product implements NotificationEntityInterface
 {
     const TYPE = 'standard';
 
@@ -94,7 +93,7 @@ class StandardProduct extends Product implements NotificationEntityInterface, St
     /**
      * @param int $necktieId
      *
-     * @return StandardProductInterface
+     * @return StandardProduct
      */
     public function setNecktieId($necktieId)
     {

@@ -7,12 +7,10 @@
  */
 namespace Venice\AppBundle\Entity\Content;
 
-use Venice\AppBundle\Entity\Interfaces\HtmlContentInterface;
-
 /**
  * Class HtmlContent.
  */
-class HtmlContent extends Content implements HtmlContentInterface
+class HtmlContent extends Content
 {
     const TYPE = 'html';
 
@@ -42,7 +40,7 @@ class HtmlContent extends Content implements HtmlContentInterface
     /**
      * @param string $html
      *
-     * @return HtmlContentInterface
+     * @return HtmlContent
      */
     public function setHtml($html)
     {

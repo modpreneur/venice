@@ -7,14 +7,14 @@
  */
 namespace Venice\AppBundle\Entity;
 
-use Venice\AppBundle\Entity\Interfaces\OAuthTokenInterface;
+use Trinity\Component\Core\Interfaces\EntityInterface;
 use Venice\AppBundle\Traits\Timestampable;
 use JMS\Serializer\Annotation as Serializer;
 
 /**
  * Class OAuthToken.
  */
-class OAuthToken implements OAuthTokenInterface
+class OAuthToken implements EntityInterface
 {
     use Timestampable;
 
@@ -75,7 +75,7 @@ class OAuthToken implements OAuthTokenInterface
     /**
      * @param string $accessToken
      *
-     * @return OAuthTokenInterface
+     * @return OAuthToken
      */
     public function setAccessToken($accessToken)
     {
@@ -95,7 +95,7 @@ class OAuthToken implements OAuthTokenInterface
     /**
      * @param string $refreshToken
      *
-     * @return OAuthTokenInterface
+     * @return OAuthToken
      */
     public function setRefreshToken($refreshToken)
     {
@@ -123,7 +123,7 @@ class OAuthToken implements OAuthTokenInterface
     /**
      * @param \DateTime $validTo
      *
-     * @return OAuthTokenInterface
+     * @return OAuthToken
      */
     public function setValidTo(\DateTime $validTo)
     {
@@ -137,7 +137,7 @@ class OAuthToken implements OAuthTokenInterface
      *
      * @param $lifetime
      *
-     * @return OAuthTokenInterface
+     * @return OAuthToken
      */
     public function setValidToByLifetime($lifetime)
     {
@@ -160,7 +160,7 @@ class OAuthToken implements OAuthTokenInterface
     /**
      * @param string $scope
      *
-     * @return OAuthTokenInterface
+     * @return OAuthToken
      */
     public function setScope($scope)
     {
@@ -180,12 +180,20 @@ class OAuthToken implements OAuthTokenInterface
     /**
      * @param mixed $user
      *
-     * @return OAuthTokenInterface
+     * @return OAuthToken
      */
     public function setUser($user)
     {
         $this->user = $user;
 
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->accessToken;
     }
 }

@@ -7,12 +7,10 @@
  */
 namespace Venice\AppBundle\Entity\Content;
 
-use Venice\AppBundle\Entity\Interfaces\PdfContentInterface;
-
 /**
  * Class PdfContent.
  */
-class PdfContent extends Content implements PdfContentInterface
+class PdfContent extends Content
 {
     const TYPE = 'pdf';
 

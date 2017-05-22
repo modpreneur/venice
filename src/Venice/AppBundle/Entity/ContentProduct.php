@@ -10,16 +10,14 @@ namespace Venice\AppBundle\Entity;
 use DateTime;
 use JMS\Serializer\Annotation as Serializer;
 use Trinity\Component\Core\Interfaces\EntityInterface;
-use Venice\AppBundle\Entity\Interfaces\ContentInterface;
-use Venice\AppBundle\Entity\Interfaces\ContentProductInterface;
-use Venice\AppBundle\Entity\Interfaces\ProductInterface;
-use Venice\AppBundle\Entity\Interfaces\UserInterface;
+use Venice\AppBundle\Entity\Content\Content;
+use Venice\AppBundle\Entity\Product\Product;
 use Venice\AppBundle\Traits\Timestampable;
 
 /**
  * Class ContentProduct.
  */
-class ContentProduct implements EntityInterface, ContentProductInterface
+class ContentProduct implements EntityInterface
 {
     use Timestampable;
 
@@ -29,13 +27,13 @@ class ContentProduct implements EntityInterface, ContentProductInterface
     protected $id;
 
     /**
-     * @var ContentInterface
+     * @var Content
      * @Serializer\Exclude()
      */
     protected $content;
 
     /**
-     * @var ProductInterface
+     * @var Product
      * @Serializer\Exclude()
      */
     protected $product;
@@ -68,7 +66,7 @@ class ContentProduct implements EntityInterface, ContentProductInterface
     }
 
     /**
-     * @return ContentInterface
+     * @return Content
      */
     public function getContent()
     {
@@ -76,9 +74,9 @@ class ContentProduct implements EntityInterface, ContentProductInterface
     }
 
     /**
-     * @param ContentInterface $content
+     * @param Content $content
      *
-     * @return ContentProductInterface
+     * @return ContentProduct
      */
     public function setContent($content)
     {
@@ -88,7 +86,7 @@ class ContentProduct implements EntityInterface, ContentProductInterface
     }
 
     /**
-     * @return ProductInterface
+     * @return Product
      */
     public function getProduct()
     {
@@ -96,9 +94,9 @@ class ContentProduct implements EntityInterface, ContentProductInterface
     }
 
     /**
-     * @param ProductInterface $product
+     * @param Product $product
      *
-     * @return ContentProductInterface
+     * @return ContentProduct
      */
     public function setProduct($product)
     {
@@ -118,7 +116,7 @@ class ContentProduct implements EntityInterface, ContentProductInterface
     /**
      * @param int $delay delay in hours
      *
-     * @return ContentProductInterface
+     * @return ContentProduct
      */
     public function setDelay($delay)
     {
@@ -138,7 +136,7 @@ class ContentProduct implements EntityInterface, ContentProductInterface
     /**
      * @param int $orderNumber
      *
-     * @return ContentProductInterface
+     * @return ContentProduct
      */
     public function setOrderNumber($orderNumber)
     {
@@ -150,12 +148,12 @@ class ContentProduct implements EntityInterface, ContentProductInterface
     /**
      * Check if the given user has access to this contentProduct.
      *
-     * @param UserInterface $user
+     * @param User $user
      * @param bool $checkAccessToProduct Check access to product
      *
      * @return bool true - the user has access to the parent product and the delay of this contentProduct + delay < now
      */
-    public function isAvailableFor(UserInterface $user, $checkAccessToProduct = true)
+    public function isAvailableFor(User $user, $checkAccessToProduct = true)
     {
         $product = $this->getProduct();
         $now = new \DateTime();
@@ -181,21 +179,21 @@ class ContentProduct implements EntityInterface, ContentProductInterface
     }
 
     /**
-     * @param UserInterface $user
+     * @param User $user
      *
      * @return DateTime|null
      */
-    public function willBeAvailableOn(UserInterface $user)
+    public function willBeAvailableOn(User $user)
     {
         if ($this->isAvailableFor($user)) {
-            // 0 hours to access
-            return new \DateInterval('PT0H');
+            //already available
+            return new \DateTime('now');
         }
 
         $productAccess = $user->getProductAccess($this->product);
 
         if (!$productAccess) {
-            return;
+            return null;
         }
 
         // Clone product access Datetime object to avoid weird errors.

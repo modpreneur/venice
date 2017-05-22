@@ -17,7 +17,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Venice\AppBundle\Entity\Content\Content;
 use Venice\AppBundle\Entity\Content\ContentInGroup;
 use Venice\AppBundle\Entity\Content\GroupContent;
-use Venice\AppBundle\Entity\Interfaces\GroupContentInterface;
 use Venice\AppBundle\Form\BaseType;
 use Venice\AppBundle\Form\DataTransformer\EntityToNumberTransformer;
 
@@ -105,11 +104,11 @@ class ContentInGroupType extends BaseType
     /**
      * Get query builder function to query entities from database.
      *
-     * @param GroupContentInterface $groupContent
+     * @param GroupContent $groupContent
      *
      * @return \Closure
      */
-    protected function getQueryBuilderFunction(GroupContentInterface $groupContent = null)
+    protected function getQueryBuilderFunction(GroupContent $groupContent = null)
     {
         // If the contentGroup entity contains data
         // Get all ContentGroups but the given group - do not allow circular relations

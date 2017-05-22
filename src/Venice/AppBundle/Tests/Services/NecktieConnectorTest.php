@@ -9,6 +9,7 @@ namespace Venice\AppBundle\Tests\Services;
 
 use Venice\AppBundle\Entity\OAuthToken;
 use Venice\AppBundle\Entity\User;
+use Venice\AppBundle\Exceptions\UnsuccessfulNecktieResponseException;
 use Venice\AppBundle\Services\NecktieConnector;
 use Venice\AppBundle\Tests\BaseTest;
 use GuzzleHttp\Client;
@@ -66,7 +67,7 @@ class NecktieConnectorTest extends BaseTest
 
     public function testSetBaseUri()
     {
-        $connectorMock = $this->getMockBuilder("Venice\AppBundle\\Services\\NecktieConnector")
+        $connectorMock = $this->getMockBuilder(NecktieConnector::class)
             //do not mock any method
             ->setMethods(null)
             ->getMock();
@@ -83,7 +84,7 @@ class NecktieConnectorTest extends BaseTest
 
     public function testCreateRequest()
     {
-        $clientMock = $this->getMockBuilder('GuzzleHttp\\Client')
+        $clientMock = $this->getMockBuilder(Client::class)
             ->getMock();
 
         $method = 'get';
@@ -103,9 +104,9 @@ class NecktieConnectorTest extends BaseTest
     /**
      * @dataProvider providerTestGetResponseWithoutException
      */
-    public function testGetResponseWithoutException($input = [], $expectedOutput)
+    public function testGetResponseWithoutException(array $input = [], $expectedOutput)
     {
-        list($guzzleResponseMock, $user, $method, $uri, $data, $accessToken, $sendAsJson) = $input;
+        [$guzzleResponseMock, $user, $method, $uri, $data, $accessToken, $sendAsJson] = $input;
 
         $response = $this->getResponse($guzzleResponseMock, $user, $method, $uri, $data, $accessToken, $sendAsJson);
 
@@ -114,11 +115,11 @@ class NecktieConnectorTest extends BaseTest
 
     /**
      * @dataProvider providerTestGetResponseWithException
-     * @expectedException Venice\AppBundle\Exceptions\UnsuccessfulNecktieResponseException
+     * @expectedException UnsuccessfulNecktieResponseException
      */
-    public function testGetResponseWithServerException($input = [], $expectedOutput)
+    public function testGetResponseWithServerException(array $input = [], $expectedOutput)
     {
-        list($guzzleResponseMock, $user, $method, $uri, $data, $accessToken, $sendAsJson) = $input;
+        [$guzzleResponseMock, $user, $method, $uri, $data, $accessToken, $sendAsJson] = $input;
 
         $response = $this->getResponse($guzzleResponseMock, $user, $method, $uri, $data, $accessToken, $sendAsJson);
 
@@ -129,7 +130,7 @@ class NecktieConnectorTest extends BaseTest
     {
         $connector = new NecktieConnector();
 
-        $connectorMock = $this->getMockBuilder("Venice\AppBundle\\Services\\NecktieConnector")
+        $connectorMock = $this->getMockBuilder(NecktieConnector::class)
             ->setMethods(['getAccessToken', 'prepareOptions'])
             ->getMock();
 

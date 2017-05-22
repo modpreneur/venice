@@ -3,7 +3,7 @@
 namespace Venice\AppBundle\Traits;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Venice\AppBundle\Entity\Interfaces\TagInterface;
+use Venice\AppBundle\Entity\Tag;
 
 /**
  * Trait Taggable.
@@ -11,12 +11,12 @@ use Venice\AppBundle\Entity\Interfaces\TagInterface;
 trait Taggable
 {
     /**
-     * @var ArrayCollection<TagInterface>
+     * @var ArrayCollection<Tag>
      */
     protected $tags;
 
     /**
-     * @return ArrayCollection<TagInterface>
+     * @return ArrayCollection<Tag>
      */
     public function getTags()
     {
@@ -24,11 +24,11 @@ trait Taggable
     }
 
     /**
-     * @param TagInterface $tag
+     * @param Tag $tag
      *
      * @return $this
      */
-    public function addTag(TagInterface $tag)
+    public function addTag(Tag $tag)
     {
         if (!$this->tags->contains($tag)) {
             $this->tags->add($tag);
@@ -39,11 +39,11 @@ trait Taggable
     }
 
     /**
-     * @param TagInterface $tag
+     * @param Tag $tag
      *
      * @return $this
      */
-    public function removeTag(TagInterface $tag)
+    public function removeTag(Tag $tag)
     {
         $this->tags->remove($tag);
         $tag->removeFrom($this);

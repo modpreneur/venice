@@ -8,10 +8,11 @@
 namespace Venice\AppBundle\Tests\Services;
 
 use Venice\AppBundle\Entity\OAuthToken;
-use Venice\AppBundle\Entity\Product\ProductRepository;
+use Venice\AppBundle\Entity\Repositories\ProductRepository;
 use Venice\AppBundle\Entity\Product\StandardProduct;
 use Venice\AppBundle\Entity\Repositories\UserRepository;
 use Venice\AppBundle\Entity\User;
+use Venice\AppBundle\Exceptions\ExpiredRefreshTokenException;
 use Venice\AppBundle\Services\NecktieConnector;
 use Venice\AppBundle\Services\NecktieGateway;
 use Venice\AppBundle\Services\NecktieGatewayHelper;
@@ -186,7 +187,7 @@ class NecktieGatewayTest extends BaseTest
     }
 
     /**
-     * @expectedException Venice\AppBundle\Exceptions\ExpiredRefreshTokenException
+     * @expectedException ExpiredRefreshTokenException
      */
     public function testRefreshAccessTokenExpiredTokenResponse()
     {

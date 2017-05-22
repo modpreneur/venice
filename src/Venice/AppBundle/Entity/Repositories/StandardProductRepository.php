@@ -3,9 +3,8 @@
 namespace Venice\AppBundle\Entity\Repositories;
 
 use Trinity\NotificationBundle\Interfaces\NotificationEntityRepositoryInterface;
-use Venice\AppBundle\Entity\Interfaces\ContentInterface;
-use Venice\AppBundle\Entity\Interfaces\ProductInterface;
-use Venice\AppBundle\Entity\Interfaces\StandardProductInterface;
+use Venice\AppBundle\Entity\Content\Content;
+use Venice\AppBundle\Entity\Product\Product;
 use Venice\AppBundle\Entity\Product\StandardProduct;
 
 /**
@@ -18,7 +17,7 @@ class StandardProductRepository extends ProductRepository implements Notificatio
      *
      * @param string[] $criteria format: array('user' => <user_id>, 'name' => <name>)
      *
-     * @return array|ContentInterface[]|ProductInterface[]|StandardProductInterface[]
+     * @return array|Content[]|Product[]|StandardProduct[]
      */
     public function findByUniqueCriteria(array $criteria)
     {
@@ -34,7 +33,7 @@ class StandardProductRepository extends ProductRepository implements Notificatio
      *
      * @param $id
      *
-     * @return ProductInterface|null
+     * @return Product|null
      *
      * @throws \Doctrine\ORM\NonUniqueResultException
      */

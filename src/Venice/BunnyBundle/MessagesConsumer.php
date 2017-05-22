@@ -18,7 +18,7 @@ use Trinity\Bundle\MessagesBundle\Event\UnpackMessageEvent;
  *
  * //todo: hardcoded for flofit
  * @Consumer(
- *     queue="client_1",
+ *     queue="client_3",
  *     maxMessages=100,
  *     maxSeconds=600.0,
  *     prefetchCount=1,

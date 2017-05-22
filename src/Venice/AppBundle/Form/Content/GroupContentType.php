@@ -12,7 +12,6 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Venice\AppBundle\Entity\Content\GroupContent;
-use Venice\AppBundle\Entity\Interfaces\GroupContentInterface;
 use Venice\AppBundle\Form\Collection\CollectionType;
 
 /**
@@ -20,7 +19,7 @@ use Venice\AppBundle\Form\Collection\CollectionType;
  */
 class GroupContentType extends ContentType
 {
-    /** @var GroupContentInterface */
+    /** @var GroupContent */
     protected $groupContent;
 
     /**

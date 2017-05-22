@@ -7,12 +7,10 @@
  */
 namespace Venice\AppBundle\Entity\Content;
 
-use Venice\AppBundle\Entity\Interfaces\VideoContentInterface;
-
 /**
  * Class VideoContent.
  */
-class VideoContent extends AbstractPlayableContent implements VideoContentInterface
+class VideoContent extends AbstractPlayableContent
 {
     const TYPE = 'video';
 

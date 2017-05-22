@@ -8,6 +8,7 @@
 namespace Venice\FrontBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Venice\AppBundle\Entity\Content\GroupContent;
 
 /**
  * Class GroupController.
