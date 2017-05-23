@@ -5,6 +5,7 @@
  * Date: 21.05.16
  * Time: 21:20.
  */
+
 namespace Venice\AppBundle\EventListener;
 
 use Doctrine\ORM\EntityManagerInterface;
@@ -110,12 +111,12 @@ class NotificationListener
 
             $this->entityManager->persist($entity);
 
-            try {
-                $this->entityManager->flush();
-            } catch (\Exception $exception) {
-                $this->entityManager = $this->doctrine->resetManager();
-            }
+            //flush the manager for each entity
+            $this->flushEntityManager();
         }
+
+        //flush it in the end - when there was only notification with delete, this flushes the entity deletion
+        $this->flushEntityManager();
 
         $this->entityManager->clear();
     }
@@ -177,6 +178,18 @@ class NotificationListener
     }
 
     /**
+     * Flush the entity manager and reset it on a exception
+     */
+    protected function flushEntityManager(): void
+    {
+        try {
+            $this->entityManager->flush();
+        } catch (\Exception $exception) {
+            $this->entityManager = $this->doctrine->resetManager();
+        }
+    }
+
+    /**
      * @param SynchronizationStoppedMessage $message
      *
      * @throws \Trinity\NotificationBundle\Exception\EntityAliasNotFoundException
@@ -188,13 +201,13 @@ class NotificationListener
         $entityId = $message->getEntityId();
 
         if ($this->entityOverrideHandler->isInstanceOf($entityClass, StandardProduct::class)) {
-            $this->logger->info('Read SynchronizationStoppedMessage about product '.$entityClass.' with id:'.$entityId);
+            $this->logger->info('Read SynchronizationStoppedMessage about product ' . $entityClass . ' with id:' . $entityId);
             /** @var StandardProduct $product */
             $product = $this->entityManager->find($entityClass, $entityId);
             $product->setPurchasable(false);
             $this->persistEntity($product);
         } else {
-            $this->logger->error('Read SynchronizationStoppedMessage about entity '.$entityClass.' with id:'.$entityId);
+            $this->logger->error('Read SynchronizationStoppedMessage about entity ' . $entityClass . ' with id:' . $entityId);
         }
     }
 

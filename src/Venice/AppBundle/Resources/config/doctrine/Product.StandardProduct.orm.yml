@@ -35,7 +35,6 @@ Venice\AppBundle\Entity\Product\StandardProduct:
         necktieDefaultBillingPlan:
             targetEntity: Venice\AppBundle\Entity\BillingPlan
             cascade:
-                - remove
                 - persist
             fetch: LAZY
             joinColumns:
@@ -47,7 +46,6 @@ Venice\AppBundle\Entity\Product\StandardProduct:
         veniceDefaultBillingPlan:
             targetEntity: Venice\AppBundle\Entity\BillingPlan
             cascade:
-                - remove
                 - persist
             fetch: LAZY
             joinColumns:

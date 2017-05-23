@@ -49,9 +49,6 @@ Venice\AppBundle\Entity\PaySystem:
     oneToOne:
         defaultVendor:
             targetEntity: Venice\AppBundle\Entity\PaySystemVendor
-            cascade:
-                - remove
-                - persist
             fetch: LAZY
             mappedBy: null
             inversedBy: null
