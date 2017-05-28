@@ -13,7 +13,7 @@ use Venice\AppBundle\Entity\Product\StandardProduct;
 use Venice\AppBundle\Entity\Repositories\UserRepository;
 use Venice\AppBundle\Entity\User;
 use Venice\AppBundle\Exceptions\ExpiredRefreshTokenException;
-use Venice\AppBundle\Services\NecktieConnector;
+use Venice\AppBundle\Services\HttpConnector;
 use Venice\AppBundle\Services\NecktieGateway;
 use Venice\AppBundle\Services\NecktieGatewayHelper;
 use Venice\AppBundle\Tests\BaseTest;
@@ -60,7 +60,7 @@ class NecktieGatewayTest extends BaseTest
             ->getMock();
 
         $this->connectorMock = $this
-            ->getMockBuilder(NecktieConnector::class)
+            ->getMockBuilder(HttpConnector::class)
             ->disableOriginalConstructor()
             ->getMock();
 

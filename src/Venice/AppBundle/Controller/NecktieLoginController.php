@@ -5,13 +5,15 @@
  * Date: 08.10.15
  * Time: 10:11.
  */
+
 namespace Venice\AppBundle\Controller;
 
+use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Cookie;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Venice\AppBundle\Entity\User;
 use Venice\AppBundle\Entity\OAuthToken;
@@ -19,13 +21,59 @@ use Venice\AppBundle\Event\AppEvents;
 use Venice\AppBundle\Event\NecktieLoginSuccessfulEvent;
 use Venice\AppBundle\Exceptions\UnsuccessfulNecktieResponseException;
 use Venice\AppBundle\Services\NecktieGateway;
+use Venice\AppBundle\Services\NecktieLoginCookieService;
+use Venice\AppBundle\Services\NecktieLoginProcessHelper;
 
 /**
  * Class NecktieLoginController.
+ *
+ * @Route(service="venice.app.necktie_login_controller")
  */
-class NecktieLoginController extends Controller
+class NecktieLoginController
 {
     const REQUESTED_URL_COOKIE_NAME = 'ru';
+    const STATE_COOKIE_NAME = 'state';
+
+    /**
+     * @var NecktieLoginCookieService
+     */
+    protected $cookieService;
+
+    /**
+     * @var NecktieLoginProcessHelper
+     */
+    protected $helper;
+
+    /**
+     * todo: use NecktieGatewayInterface
+     * @var NecktieGateway
+     */
+    protected $gateway;
+
+    /**
+     * @var EntityManagerInterface
+     */
+    protected $entityManager;
+
+    /**
+     * NecktieLoginController constructor.
+     * @param NecktieLoginCookieService $cookieService
+     * @param NecktieLoginProcessHelper $helper
+     * @param NecktieGateway $gateway
+     * @param EntityManagerInterface $entityManager
+     */
+    public function __construct(
+        NecktieLoginCookieService $cookieService,
+        NecktieLoginProcessHelper $helper,
+        NecktieGateway $gateway,
+        EntityManagerInterface $entityManager
+    ) {
+        $this->cookieService = $cookieService;
+        $this->helper = $helper;
+        $this->gateway = $gateway;
+        $this->entityManager = $entityManager;
+    }
+
 
     /**
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
@@ -35,21 +83,24 @@ class NecktieLoginController extends Controller
      * @throws \Symfony\Component\Routing\Exception\InvalidParameterException
      * @throws \InvalidArgumentException
      */
-    public function redirectToNecktieLoginAction()
+    public function redirectToNecktieLoginAction(Request $request): RedirectResponse
     {
-        $necktieGateway = $this->getGateway();
+        $stateCookie = $this->cookieService->createStateCookie(self::STATE_COOKIE_NAME);
 
-        $url = $necktieGateway->getLoginUrl();
-        $cookie = $necktieGateway->getStateCookie();
+        $response = $this->redirect($this->helper->getLoginUrl($stateCookie));
 
-        $response = $this->redirect($url);
-        $response->headers->setCookie($cookie);
+        //set the state cookie
+        $response->headers->setCookie($stateCookie);
 
-        //get the original requested url
-        foreach ($this->get('session')->all() as $sessionName => $sessionValue) {
-            if (strpos($sessionName, 'target_path') !== false) {
-                $response->headers->setCookie(new Cookie(self::REQUESTED_URL_COOKIE_NAME, $sessionValue));
-                break;
+        //create and set the redirect url cookie
+        if ($request->getSession() !== null) {
+            $redirectUrlCookie = $this->cookieService->createRedirectUrlCookie(
+                $request->getSession(),
+                self::REQUESTED_URL_COOKIE_NAME
+            );
+
+            if ($redirectUrlCookie !== null) {
+                $response->headers->setCookie($redirectUrlCookie);
             }
         }
 
@@ -71,18 +122,18 @@ class NecktieLoginController extends Controller
      * @throws \InvalidArgumentException
      * @throws UnsuccessfulNecktieResponseException
      */
-    public function processNecktieLoginResponseAction(Request $request)
+    public function processNecktieLoginResponseAction(Request $request): Response
     {
-        /** @var NecktieGateway $necktieGateway */
-        $necktieGateway = $this->getGateway();
-        $entityManager = $this->getDoctrine()->getManager();
+        $this->cookieService->validateStateCookie(
+            $request->cookies->get(self::STATE_COOKIE_NAME),
+            $request->get('state', '')
+        );
 
-        $this->validateCookie($necktieGateway, $request);
+        $necktieToken = $this->getAccessTokenFromRequest($request);
 
-        $necktieToken = $this->getAccessTokenFromRequest($necktieGateway, $request);
-
-        if (!$necktieToken) {
+        if ($necktieToken === null) {
             $this->get('logger')->addEmergency('Could not get token from necktie response while trying to login user');
+
             //todo: Display proper error page
             return new Response('Could not log in. Please report it to the support.');
         }
@@ -90,25 +141,25 @@ class NecktieLoginController extends Controller
         $user = null;
 
         try {
-            $user = $this->getAndLoginUser($necktieGateway, $request, $necktieToken);
+            $user = $this->getAndLoginUser($request, $necktieToken);
         } catch (UnsuccessfulNecktieResponseException $e) {
-            throw new UnsuccessfulNecktieResponseException('Could not get user from necktie.'.$e->getMessage());
+            throw new UnsuccessfulNecktieResponseException('Could not get user from necktie. ' . $e->getMessage(), $e);
         }
 
         try {
-            $this->performNecktieCalls($necktieGateway, $user);
+            $this->performNecktieCalls($user);
         } catch (UnsuccessfulNecktieResponseException $e) {
             //necktie requests failed
             //try to refresh access token and perform requests again
-            $necktieGateway->refreshAccessToken($user);
+            $this->gateway->refreshAccessToken($user);
 
-            $this->performNecktieCalls($necktieGateway, $user);
+            $this->performNecktieCalls($user);
         }
 
         $this->dispatchSuccessfulLoginEvent($user);
 
-        $entityManager->persist($user);
-        $entityManager->flush();
+        $this->entityManager->persist($user);
+        $this->entityManager->flush();
 
         return $this->createResponse($request);
     }
@@ -118,17 +169,16 @@ class NecktieLoginController extends Controller
      *
      * @param Request $request
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return RedirectResponse
      */
-    public function createResponse(Request $request)
+    protected function createResponse(Request $request): RedirectResponse
     {
         if ($request->cookies->has(self::REQUESTED_URL_COOKIE_NAME)) {
-            $redirectUrl = $request->cookies->get(self::REQUESTED_URL_COOKIE_NAME);
-            $serverHost = parse_url($request->server->get('HTTP_HOST'), PHP_URL_HOST);
-            $cookieHost = parse_url($redirectUrl, PHP_URL_HOST);
+            $redirectUrlCookieValue = $request->cookies->get(self::REQUESTED_URL_COOKIE_NAME);
+            $serverHost = $request->server->get('HTTP_HOST');
 
-            if ($serverHost === $cookieHost) {
-                return $this->redirect($redirectUrl);
+            if ($this->cookieService->validateRedirectUrlCookie($redirectUrlCookieValue, $serverHost)) {
+                return $this->redirect($redirectUrlCookieValue);
             }
         }
 
@@ -147,9 +197,9 @@ class NecktieLoginController extends Controller
      * @throws \LogicException
      * @throws \InvalidArgumentException
      */
-    protected function performNecktieCalls(NecktieGateway $necktieGateway, $user)
+    protected function performNecktieCalls($user): void
     {
-        $givenAccesses = $necktieGateway->updateProductAccesses($user);
+        $givenAccesses = $this->gateway->updateProductAccesses($user);
         $entityManager = $this->getDoctrine()->getManager();
 
         foreach ($givenAccesses as $givenAccess) {
@@ -166,7 +216,7 @@ class NecktieLoginController extends Controller
      * @param Request $request
      * @param OAuthToken $necktieToken
      *
-     * @return User|null
+     * @return User
      *
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \RuntimeException
@@ -174,9 +224,9 @@ class NecktieLoginController extends Controller
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      * @throws \Exception
      */
-    protected function getAndLoginUser(NecktieGateway $necktieGateway, Request $request, OAuthToken $necktieToken)
+    protected function getAndLoginUser(Request $request, OAuthToken $necktieToken): User
     {
-        $user = $necktieGateway->getUserByAccessToken($request->query->get('access_token'), true);
+        $user = $this->gateway->getUserByAccessToken($request->query->get('access_token'), true);
 
         if ($user === null) {
             throw new NotFoundHttpException('User not found!');
@@ -190,38 +240,18 @@ class NecktieLoginController extends Controller
         return $user;
     }
 
-    /**
-     * Validate cookie and it's value with the "state" parameter from query string.
-     *
-     * @param NecktieGateway $necktieGateway
-     * @param Request        $request
-     *
-     * @throws \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException
-     */
-    protected function validateCookie(NecktieGateway $necktieGateway, Request $request)
-    {
-        $cookieValue = $request->cookies->get($necktieGateway::STATE_COOKIE_NAME);
-
-        if (!is_string($cookieValue)) {
-            throw new AccessDeniedHttpException('Could not load value from a cookie');
-        }
-
-        if ($cookieValue !== $request->get('state')) {
-            throw new AccessDeniedHttpException('Invalid state value');
-        }
-    }
 
     /**
      * Get OAuthToken or null from request.
      *
      * @param $request
-     * @param $necktieGateway
      *
      * @return OAuthToken|null
      */
-    protected function getAccessTokenFromRequest(NecktieGateway $necktieGateway, Request $request)
+    protected function getAccessTokenFromRequest(Request $request)
     {
-        return $necktieGateway->getHelper()->createOAuthTokenFromArray($request->query->all());
+        //todo:!
+        return $this->gateway->getHelper()->createOAuthTokenFromArray($request->query->all());
     }
 
     /**
@@ -242,6 +272,9 @@ class NecktieLoginController extends Controller
         return $this->get('venice.app.necktie_gateway');
     }
 
+    /**
+     * @param $user
+     */
     protected function dispatchSuccessfulLoginEvent($user)
     {
         $this->get('event_dispatcher')

@@ -12,10 +12,10 @@ use Venice\AppBundle\Entity\User;
 
 interface GatewayInterface
 {
-    /**
-     * @return string
-     */
-    public function getLoginUrl();
+//    /**
+//     * @return string
+//     */
+//    public function getLoginUrl();
 
     /**
      * @param User $user
@@ -37,26 +37,4 @@ interface GatewayInterface
      * @return mixed
      */
     public function getNewsletters(User $user);
-
-//    /**
-//     * Get billing plan by id
-//     *
-//     * @param User $user
-//     * @param      $id
-//     *
-//     * @return BillingPlan
-//     */
-//    public function getBillingPlan(User $user, $id);
-//
-//
-//    /**
-//     * Get all billing plans.
-//     *
-//     * @param User            $user
-//     *
-//     * @param StandardProduct $product
-//     *
-//     * @return \Venice\AppBundle\Entity\BillingPlan[]
-//     */
-//    public function getBillingPlans(User $user, StandardProduct $product);
 }

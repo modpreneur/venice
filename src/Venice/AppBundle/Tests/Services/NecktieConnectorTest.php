@@ -10,7 +10,7 @@ namespace Venice\AppBundle\Tests\Services;
 use Venice\AppBundle\Entity\OAuthToken;
 use Venice\AppBundle\Entity\User;
 use Venice\AppBundle\Exceptions\UnsuccessfulNecktieResponseException;
-use Venice\AppBundle\Services\NecktieConnector;
+use Venice\AppBundle\Services\HttpConnector;
 use Venice\AppBundle\Tests\BaseTest;
 use GuzzleHttp\Client;
 use GuzzleHttp\Handler\MockHandler;
@@ -22,7 +22,7 @@ class NecktieConnectorTest extends BaseTest
 {
     public function testGetAccessTokenFromUserWhichHasToken()
     {
-        $connector = new NecktieConnector();
+        $connector = new HttpConnector();
 
         $user = new User();
         $token = (new OAuthToken())->setAccessToken('accessToken');
@@ -37,7 +37,7 @@ class NecktieConnectorTest extends BaseTest
      */
     public function testGetAccessTokenFromUserWhoHasNoToken()
     {
-        $connector = new NecktieConnector();
+        $connector = new HttpConnector();
 
         $user = new User();
         $accessToken = null;
@@ -47,7 +47,7 @@ class NecktieConnectorTest extends BaseTest
 
     public function testGetAccessTokenFromUserWhoHasNoTokenButAccessTokenStringIsPresent()
     {
-        $connector = new NecktieConnector();
+        $connector = new HttpConnector();
 
         $user = new User();
         $accessToken = 'accessTokenString';
@@ -60,14 +60,14 @@ class NecktieConnectorTest extends BaseTest
      */
     public function testPrepareOptions($input, $expectedOutput)
     {
-        $connector = new NecktieConnector();
+        $connector = new HttpConnector();
 
         $this->assertEquals($expectedOutput, $this->invokeMethod($connector, 'prepareOptions', $input));
     }
 
     public function testSetBaseUri()
     {
-        $connectorMock = $this->getMockBuilder(NecktieConnector::class)
+        $connectorMock = $this->getMockBuilder(HttpConnector::class)
             //do not mock any method
             ->setMethods(null)
             ->getMock();
@@ -95,7 +95,7 @@ class NecktieConnectorTest extends BaseTest
             ->method('request')
             ->with($method, $uri, $options);
 
-        $connector = new NecktieConnector();
+        $connector = new HttpConnector();
         $connector->setClient($clientMock);
 
         $this->invokeMethod($connector, 'createRequest', [$method, $uri, $options]);
@@ -128,9 +128,9 @@ class NecktieConnectorTest extends BaseTest
 
     protected function getResponse($guzzleResponseMock, $user, $method, $uri, $data, $accessToken, $sendAsJson)
     {
-        $connector = new NecktieConnector();
+        $connector = new HttpConnector();
 
-        $connectorMock = $this->getMockBuilder(NecktieConnector::class)
+        $connectorMock = $this->getMockBuilder(HttpConnector::class)
             ->setMethods(['getAccessToken', 'prepareOptions'])
             ->getMock();
 

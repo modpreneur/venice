@@ -15,7 +15,7 @@ use Psr\Http\Message\MessageInterface;
 use Venice\AppBundle\Entity\User;
 use Venice\AppBundle\Exceptions\UnsuccessfulNecktieResponseException;
 
-class NecktieConnector
+class HttpConnector
 {
     /** @var  ClientInterface */
     protected $client;

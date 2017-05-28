@@ -1,5 +1,15 @@
 services:
 
+    # CONTROLLERS#
+
+    venice.app.necktie_login_controller:
+        class: Venice\AppBundle\Controller\NecktieLoginController
+        arguments:
+            - "@venice.app.necktie_login_cookie_service"
+            - "@venice.app.necktie_login_process_helper"
+            - "@venice.app.necktie_gateway"
+            - "@doctrine.orm.entity_manager"
+
     # SERVICES #
 
     venice.app.app_logic:
@@ -44,7 +54,7 @@ services:
             - "@doctrine.orm.entity_manager"
             - "@router"
             - "@venice.app.necktie_gateway_helper"
-            - "@venice.app.necktie_connector"
+            - "@Tagvenice.app.http_connector"
             - "@venice.app.entity_override_handler"
             - "@monolog.logger"
             - "@venice.app.user_access_service"
@@ -57,8 +67,20 @@ services:
     necktie:
         alias: venice.app.necktie_gateway
 
-    venice.app.necktie_connector:
-        class: Venice\AppBundle\Services\NecktieConnector
+    venice.app.necktie_login_cookie_service:
+        class: Venice\AppBundle\Services\NecktieLoginCookieService
+
+    venice.app.necktie_login_process_helper:
+        class: Venice\AppBundle\Services\NecktieLoginProcessHelper
+        arguments:
+            - "@router"
+            - "%necktie_url%"
+            - "%necktie_client_id%"
+            - "%necktie_client_secret%"
+            - "%login_response_route%"
+
+    venice.app.http_connector:
+        class: Venice\AppBundle\Services\HttpConnector
 
     venice.app.necktie_gateway_helper:
         class: Venice\AppBundle\Services\NecktieGatewayHelper

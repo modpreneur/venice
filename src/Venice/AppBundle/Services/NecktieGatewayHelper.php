@@ -15,6 +15,9 @@ use Venice\AppBundle\Entity\OrderItem;
 use Venice\AppBundle\Interfaces\NecktieGatewayHelperInterface;
 
 /**
+ * todo: refactor to 2 services - NecktieResponseMapper - mapps arrays to entities
+ *                              - NecktieResponseValidator - checks mostly oauth errors
+ *
  * Class NecktieGatewayHelper
  * @package Venice\AppBundle\Services
  */

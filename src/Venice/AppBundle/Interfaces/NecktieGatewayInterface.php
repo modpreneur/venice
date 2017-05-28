@@ -19,7 +19,6 @@ interface NecktieGatewayInterface extends GatewayInterface
      * Call necktie and get User entity.
      * This method should be typically called only in the login process.
      *
-     *
      * @param string $accessToken
      * @param bool $createNewUser
      * @param bool $persistNewUser
@@ -30,10 +29,10 @@ interface NecktieGatewayInterface extends GatewayInterface
      */
     public function getUserByAccessToken(string $accessToken, bool $createNewUser = false, bool $persistNewUser = true);
 
-    /**
-     * @return Cookie
-     */
-    public function getStateCookie();
+//    /**
+//     * @return Cookie
+//     */
+//    public function getStateCookie();
 
     /**
      * @param User $user

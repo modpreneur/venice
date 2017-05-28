@@ -42,7 +42,6 @@ class NecktieGateway implements NecktieGatewayInterface
     const NECKTIE_USER_NEWSLETTER_LIST_SUBSCRIBE = 'api/v1/user/newsletters/list/{id}';
     const NECKTIE_USER_NEWSLETTER_LIST_UNSUBSCRIBE = 'api/v1/user/newsletters/list/{id}';
     const NECKTIE_NEWSLETTER_LIST = 'api/v1/newsletters/lists';
-    const STATE_COOKIE_NAME = 'state';
 
     /**
      * @var EntityManagerInterface
@@ -75,7 +74,7 @@ class NecktieGateway implements NecktieGatewayInterface
     protected $stateCookie;
 
     /**
-     * @var NecktieConnector
+     * @var HttpConnector
      */
     protected $connector;
 
@@ -116,7 +115,7 @@ class NecktieGateway implements NecktieGatewayInterface
      * @param EntityManagerInterface $entityManager
      * @param RouterInterface $router
      * @param NecktieGatewayHelperInterface $helper
-     * @param NecktieConnector $connector
+     * @param HttpConnector $connector
      * @param EntityOverrideHandler $entityOverrideHandler
      * @param LoggerInterface $logger
      * @param UserAccessService $accessService
@@ -129,7 +128,7 @@ class NecktieGateway implements NecktieGatewayInterface
         EntityManagerInterface $entityManager,
         RouterInterface $router,
         NecktieGatewayHelperInterface $helper,
-        NecktieConnector $connector,
+        HttpConnector $connector,
         EntityOverrideHandler $entityOverrideHandler,
         LoggerInterface $logger,
         UserAccessService $accessService,
@@ -150,39 +149,6 @@ class NecktieGateway implements NecktieGatewayInterface
         $this->necktieClientSecret = $necktieClientSecret;
         $this->loginResponseRoute = $loginResponseRoute;
         $this->setClientBaseUri();
-    }
-
-
-    /**
-     * Do not use for redirecting to login form! Redirect to "login_route" route instead!
-     *
-     * @internal
-     *
-     * @return string
-     *
-     * @throws \Symfony\Component\Routing\Exception\RouteNotFoundException
-     * @throws \Symfony\Component\Routing\Exception\MissingMandatoryParametersException
-     * @throws \Symfony\Component\Routing\Exception\InvalidParameterException
-     */
-    public function getLoginUrl()
-    {
-        $necktieUrl = $this->necktieUrl . self::NECKTIE_OAUTH_AUTH_URI;
-        $this->stateCookie = $this->createStateCookie();
-        $router = $this->router;
-        $queryParameters = [
-            'client_id' => $this->necktieClientId,
-            'client_secret' => $this->necktieClientSecret,
-            'redirect_uri' => $this->router->generate(
-                $this->loginResponseRoute,
-                [],
-                $router::ABSOLUTE_URL
-            ),
-            'grant_type' => 'trusted_authorization',
-            'state' => $this->stateCookie->getValue(),
-        ];
-        $queryParametersString = http_build_query($queryParameters);
-
-        return $necktieUrl . '?' . $queryParametersString;
     }
 
 
@@ -560,15 +526,6 @@ class NecktieGateway implements NecktieGatewayInterface
 
 
     /**
-     * @return mixed
-     */
-    public function getStateCookie()
-    {
-        return $this->stateCookie;
-    }
-
-
-    /**
      * @param User $user
      *
      * @throws ExpiredRefreshTokenException
@@ -697,58 +654,6 @@ class NecktieGateway implements NecktieGatewayInterface
         return $response['productAccessId'];
     }
 
-
-//    /**
-//     * Get billing plan by id
-//     *
-//     * @param User $user
-//     * @param      $id
-//     *
-//     * @return BillingPlan
-//     */
-//    public function getBillingPlan(User $user, $id)
-//    {
-//        $this->refreshAccessTokenIfNeeded($user);
-//
-//        $necktieUrl = str_replace("{id}", $id, self::NECKTIE_BILLING_PLAN_URI);
-//
-//        $response = $this->connector->getResponse($user, "GET", $necktieUrl);
-//
-//        if (is_array($response) && array_key_exists("billing plan", $response)) {
-//            return $this->helper->getBillingPlanFromResponse($response["billing plan"]);
-//        }
-//
-//        return null;
-//    }
-//    /**
-//     * Get billing all billing plans for given product.
-//     *
-//     * @param User $user
-//     * @param StandardProduct $product
-//     *
-//     * @return BillingPlan[]
-//     * @throws UnsuccessfulNecktieResponseException
-//     */
-//    public function getBillingPlans(User $user, StandardProduct $product)
-//    {
-//        $this->refreshAccessTokenIfNeeded($user);
-//
-//        $necktieUrl = str_replace("{productId}", $product->getNecktieId(), self::NECKTIE_PRODUCT_BILLING_PLANS_URI);
-//        $response = $this->connector->getResponse($user, "GET", $necktieUrl);
-//        $billingPlans = [];
-//
-//        if (is_array($response) && array_key_exists("billing plans", $response)) {
-//            foreach ($response["billing plans"] as $billingPlanArray) {
-//                $billingPlans[] = $this->helper->getBillingPlanFromResponse($billingPlanArray);
-//            }
-//
-//            return $billingPlans;
-//        }
-//
-//        return null;
-//    }
-
-
     /**
      * @param $userInfo
      * @param $persist
@@ -778,15 +683,5 @@ class NecktieGateway implements NecktieGatewayInterface
             $this->necktieUrl .= '/';
         }
         $this->connector->setBaseUri($this->necktieUrl);
-    }
-
-
-    /**
-     * @return Cookie
-     * @throws \InvalidArgumentException
-     */
-    protected function createStateCookie() : Cookie
-    {
-        return new Cookie(self::STATE_COOKIE_NAME, hash('sha256', mt_rand() + time()));
     }
 }
