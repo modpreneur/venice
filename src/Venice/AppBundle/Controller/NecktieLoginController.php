@@ -9,17 +9,20 @@
 namespace Venice\AppBundle\Controller;
 
 use Doctrine\ORM\EntityManagerInterface;
+use FOS\UserBundle\Security\LoginManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Venice\AppBundle\Entity\User;
 use Venice\AppBundle\Entity\OAuthToken;
+use Venice\AppBundle\Entity\User;
 use Venice\AppBundle\Event\AppEvents;
 use Venice\AppBundle\Event\NecktieLoginSuccessfulEvent;
 use Venice\AppBundle\Exceptions\UnsuccessfulNecktieResponseException;
+use Venice\AppBundle\Interfaces\NecktieGatewayInterface;
 use Venice\AppBundle\Services\NecktieGateway;
 use Venice\AppBundle\Services\NecktieLoginCookieService;
 use Venice\AppBundle\Services\NecktieLoginProcessHelper;
@@ -29,7 +32,7 @@ use Venice\AppBundle\Services\NecktieLoginProcessHelper;
  *
  * @Route(service="venice.app.necktie_login_controller")
  */
-class NecktieLoginController
+class NecktieLoginController extends Controller
 {
     const REQUESTED_URL_COOKIE_NAME = 'ru';
     const STATE_COOKIE_NAME = 'state';
@@ -45,8 +48,7 @@ class NecktieLoginController
     protected $helper;
 
     /**
-     * todo: use NecktieGatewayInterface
-     * @var NecktieGateway
+     * @var NecktieGatewayInterface
      */
     protected $gateway;
 
@@ -54,6 +56,16 @@ class NecktieLoginController
      * @var EntityManagerInterface
      */
     protected $entityManager;
+
+    /**
+     * @var LoginManager
+     */
+    protected $loginManager;
+
+    /**
+     * @var EventDispatcherInterface
+     */
+    protected $eventDispatcher;
 
     /**
      * NecktieLoginController constructor.
@@ -135,7 +147,7 @@ class NecktieLoginController
             $this->get('logger')->addEmergency('Could not get token from necktie response while trying to login user');
 
             //todo: Display proper error page
-            return new Response('Could not log in. Please report it to the support.');
+            return new Response('Could not log in.', 500);
         }
 
         $user = null;
@@ -149,8 +161,7 @@ class NecktieLoginController
         try {
             $this->performNecktieCalls($user);
         } catch (UnsuccessfulNecktieResponseException $e) {
-            //necktie requests failed
-            //try to refresh access token and perform requests again
+            //necktie requests failed, try to refresh access token and perform requests again
             $this->gateway->refreshAccessToken($user);
 
             $this->performNecktieCalls($user);
@@ -186,7 +197,6 @@ class NecktieLoginController
     }
 
     /**
-     * @param NecktieGateway $necktieGateway
      * @param                $user
      *
      * @throws \Venice\AppBundle\Exceptions\UnsuccessfulNecktieResponseException
@@ -212,7 +222,6 @@ class NecktieLoginController
     /**
      * Get user from necktie by access token and log him in.
      *
-     * @param NecktieGateway $necktieGateway
      * @param Request $request
      * @param OAuthToken $necktieToken
      *
@@ -232,7 +241,7 @@ class NecktieLoginController
             throw new NotFoundHttpException('User not found!');
         }
 
-        $this->getLoginManager()->logInUser('main', $user);
+        $this->loginManager->logInUser('main', $user);
 
         $necktieToken->setUser($user);
         $user->addOAuthToken($necktieToken);
@@ -255,29 +264,11 @@ class NecktieLoginController
     }
 
     /**
-     * Get login manager.
-     *
-     * @return \FOS\UserBundle\Security\LoginManager
-     */
-    protected function getLoginManager()
-    {
-        return $this->get('fos_user.security.login_manager');
-    }
-
-    /**
-     * @return NecktieGateway
-     */
-    protected function getGateway()
-    {
-        return $this->get('venice.app.necktie_gateway');
-    }
-
-    /**
      * @param $user
      */
     protected function dispatchSuccessfulLoginEvent($user)
     {
-        $this->get('event_dispatcher')
+        $this->eventDispatcher
             ->dispatch(AppEvents::NECKTIE_LOGIN_SUCCESSFUL, new NecktieLoginSuccessfulEvent($user));
     }
 }

@@ -1,15 +1,5 @@
 services:
 
-    # CONTROLLERS#
-
-    venice.app.necktie_login_controller:
-        class: Venice\AppBundle\Controller\NecktieLoginController
-        arguments:
-            - "@venice.app.necktie_login_cookie_service"
-            - "@venice.app.necktie_login_process_helper"
-            - "@venice.app.necktie_gateway"
-            - "@doctrine.orm.entity_manager"
-
     # SERVICES #
 
     venice.app.app_logic:

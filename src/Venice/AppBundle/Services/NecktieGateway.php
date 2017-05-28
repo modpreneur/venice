@@ -19,7 +19,6 @@ use Venice\AppBundle\Entity\ProductAccess;
 use Venice\AppBundle\Entity\User;
 use Venice\AppBundle\Exceptions\ExpiredRefreshTokenException;
 use Venice\AppBundle\Exceptions\UnsuccessfulNecktieResponseException;
-use Venice\AppBundle\Interfaces\NecktieGatewayHelperInterface;
 use Venice\AppBundle\Interfaces\NecktieGatewayInterface;
 
 /**
@@ -114,7 +113,7 @@ class NecktieGateway implements NecktieGatewayInterface
      *
      * @param EntityManagerInterface $entityManager
      * @param RouterInterface $router
-     * @param NecktieGatewayHelperInterface $helper
+     * @param NecktieGatewayHelper $helper
      * @param HttpConnector $connector
      * @param EntityOverrideHandler $entityOverrideHandler
      * @param LoggerInterface $logger
@@ -127,7 +126,7 @@ class NecktieGateway implements NecktieGatewayInterface
     public function __construct(
         EntityManagerInterface $entityManager,
         RouterInterface $router,
-        NecktieGatewayHelperInterface $helper,
+        NecktieGatewayHelper $helper,
         HttpConnector $connector,
         EntityOverrideHandler $entityOverrideHandler,
         LoggerInterface $logger,
