@@ -8,24 +8,23 @@
 
 namespace Venice\AppBundle\Controller;
 
-use Doctrine\ORM\EntityManagerInterface;
-use FOS\UserBundle\Security\LoginManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Venice\AppBundle\Entity\OAuthToken;
-use Venice\AppBundle\Entity\User;
 use Venice\AppBundle\Event\AppEvents;
 use Venice\AppBundle\Event\NecktieLoginSuccessfulEvent;
 use Venice\AppBundle\Exceptions\UnsuccessfulNecktieResponseException;
-use Venice\AppBundle\Interfaces\NecktieGatewayInterface;
-use Venice\AppBundle\Services\NecktieGateway;
-use Venice\AppBundle\Services\NecktieLoginCookieService;
-use Venice\AppBundle\Services\NecktieLoginProcessHelper;
+
+//use Venice\AppBundle\Interfaces\NecktieGatewayInterface;
+//use Venice\AppBundle\Services\NecktieGateway;
+//use Venice\AppBundle\Services\NecktieLoginCookieService;
+//use Venice\AppBundle\Services\NecktieLoginProcessHelper;
+//use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+//use Doctrine\ORM\EntityManagerInterface;
+//use FOS\UserBundle\Security\LoginManager;
 
 /**
  * Class NecktieLoginController.
@@ -37,54 +36,55 @@ class NecktieLoginController extends Controller
     const REQUESTED_URL_COOKIE_NAME = 'ru';
     const STATE_COOKIE_NAME = 'state';
 
-    /**
-     * @var NecktieLoginCookieService
-     */
-    protected $cookieService;
+//todo: waiting for Symfony 3.3... http://m.memegen.com/3qs3c0.jpg
+//    /**
+//     * @var NecktieLoginCookieService
+//     */
+//    protected $cookieService;
+//
+//    /**
+//     * @var NecktieLoginProcessHelper
+//     */
+//    protected $helper;
+//
+//    /**
+//     * @var NecktieGatewayInterface
+//     */
+//    protected $gateway;
+//
+//    /**
+//     * @var EntityManagerInterface
+//     */
+//    protected $entityManager;
+//
+//    /**
+//     * @var LoginManager
+//     */
+//    protected $loginManager;
+//
+//    /**
+//     * @var EventDispatcherInterface
+//     */
+//    protected $eventDispatcher;
 
-    /**
-     * @var NecktieLoginProcessHelper
-     */
-    protected $helper;
-
-    /**
-     * @var NecktieGatewayInterface
-     */
-    protected $gateway;
-
-    /**
-     * @var EntityManagerInterface
-     */
-    protected $entityManager;
-
-    /**
-     * @var LoginManager
-     */
-    protected $loginManager;
-
-    /**
-     * @var EventDispatcherInterface
-     */
-    protected $eventDispatcher;
-
-    /**
-     * NecktieLoginController constructor.
-     * @param NecktieLoginCookieService $cookieService
-     * @param NecktieLoginProcessHelper $helper
-     * @param NecktieGateway $gateway
-     * @param EntityManagerInterface $entityManager
-     */
-    public function __construct(
-        NecktieLoginCookieService $cookieService,
-        NecktieLoginProcessHelper $helper,
-        NecktieGateway $gateway,
-        EntityManagerInterface $entityManager
-    ) {
-        $this->cookieService = $cookieService;
-        $this->helper = $helper;
-        $this->gateway = $gateway;
-        $this->entityManager = $entityManager;
-    }
+//    /**
+//     * NecktieLoginController constructor.
+//     * @param NecktieLoginCookieService $cookieService
+//     * @param NecktieLoginProcessHelper $helper
+//     * @param NecktieGateway $gateway
+//     * @param EntityManagerInterface $entityManager
+//     */
+//    public function __construct(
+//        NecktieLoginCookieService $cookieService,
+//        NecktieLoginProcessHelper $helper,
+//        NecktieGateway $gateway,
+//        EntityManagerInterface $entityManager
+//    ) {
+//        $this->cookieService = $cookieService;
+//        $this->helper = $helper;
+//        $this->gateway = $gateway;
+//        $this->entityManager = $entityManager;
+//    }
 
 
     /**
@@ -97,16 +97,17 @@ class NecktieLoginController extends Controller
      */
     public function redirectToNecktieLoginAction(Request $request): RedirectResponse
     {
-        $stateCookie = $this->cookieService->createStateCookie(self::STATE_COOKIE_NAME);
+        $stateCookie = $this->get('venice.app.necktie_login_cookie_service')
+            ->createStateCookie(self::STATE_COOKIE_NAME);
 
-        $response = $this->redirect($this->helper->getLoginUrl($stateCookie));
+        $response = $this->redirect($this->get('venice.app.necktie_login_process_helper')->getLoginUrl($stateCookie));
 
         //set the state cookie
         $response->headers->setCookie($stateCookie);
 
         //create and set the redirect url cookie
         if ($request->getSession() !== null) {
-            $redirectUrlCookie = $this->cookieService->createRedirectUrlCookie(
+            $redirectUrlCookie = $this->get('venice.app.necktie_login_cookie_service')->createRedirectUrlCookie(
                 $request->getSession(),
                 self::REQUESTED_URL_COOKIE_NAME
             );
@@ -136,7 +137,7 @@ class NecktieLoginController extends Controller
      */
     public function processNecktieLoginResponseAction(Request $request): Response
     {
-        $this->cookieService->validateStateCookie(
+        $this->get('venice.app.necktie_login_cookie_service')->validateStateCookie(
             $request->cookies->get(self::STATE_COOKIE_NAME),
             $request->get('state', '')
         );
@@ -153,7 +154,7 @@ class NecktieLoginController extends Controller
         $user = null;
 
         try {
-            $user = $this->getAndLoginUser($request, $necktieToken);
+            $user = $this->get('venice.app.necktie_login_process_helper')->getAndLoginUser($request, $necktieToken);
         } catch (UnsuccessfulNecktieResponseException $e) {
             throw new UnsuccessfulNecktieResponseException('Could not get user from necktie. ' . $e->getMessage(), $e);
         }
@@ -162,15 +163,16 @@ class NecktieLoginController extends Controller
             $this->performNecktieCalls($user);
         } catch (UnsuccessfulNecktieResponseException $e) {
             //necktie requests failed, try to refresh access token and perform requests again
-            $this->gateway->refreshAccessToken($user);
+            $this->get('venice.app.necktie_gateway')->refreshAccessToken($user);
 
             $this->performNecktieCalls($user);
         }
 
         $this->dispatchSuccessfulLoginEvent($user);
 
-        $this->entityManager->persist($user);
-        $this->entityManager->flush();
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($user);
+        $entityManager->flush();
 
         return $this->createResponse($request);
     }
@@ -188,7 +190,9 @@ class NecktieLoginController extends Controller
             $redirectUrlCookieValue = $request->cookies->get(self::REQUESTED_URL_COOKIE_NAME);
             $serverHost = $request->server->get('HTTP_HOST');
 
-            if ($this->cookieService->validateRedirectUrlCookie($redirectUrlCookieValue, $serverHost)) {
+            if ($this->get('venice.app.necktie_login_cookie_service')
+                ->validateRedirectUrlCookie($redirectUrlCookieValue, $serverHost)
+            ) {
                 return $this->redirect($redirectUrlCookieValue);
             }
         }
@@ -209,7 +213,7 @@ class NecktieLoginController extends Controller
      */
     protected function performNecktieCalls($user): void
     {
-        $givenAccesses = $this->gateway->updateProductAccesses($user);
+        $givenAccesses = $this->get('venice.app.necktie_gateway')->updateProductAccesses($user);
         $entityManager = $this->getDoctrine()->getManager();
 
         foreach ($givenAccesses as $givenAccess) {
@@ -219,35 +223,6 @@ class NecktieLoginController extends Controller
         $entityManager->flush();
     }
 
-    /**
-     * Get user from necktie by access token and log him in.
-     *
-     * @param Request $request
-     * @param OAuthToken $necktieToken
-     *
-     * @return User
-     *
-     * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws \RuntimeException
-     * @throws \Venice\AppBundle\Exceptions\UnsuccessfulNecktieResponseException
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
-     * @throws \Exception
-     */
-    protected function getAndLoginUser(Request $request, OAuthToken $necktieToken): User
-    {
-        $user = $this->gateway->getUserByAccessToken($request->query->get('access_token'), true);
-
-        if ($user === null) {
-            throw new NotFoundHttpException('User not found!');
-        }
-
-        $this->loginManager->logInUser('main', $user);
-
-        $necktieToken->setUser($user);
-        $user->addOAuthToken($necktieToken);
-
-        return $user;
-    }
 
 
     /**
@@ -260,7 +235,7 @@ class NecktieLoginController extends Controller
     protected function getAccessTokenFromRequest(Request $request)
     {
         //todo:!
-        return $this->gateway->getHelper()->createOAuthTokenFromArray($request->query->all());
+        return $this->get('venice.app.necktie_gateway')->getHelper()->createOAuthTokenFromArray($request->query->all());
     }
 
     /**
@@ -268,7 +243,7 @@ class NecktieLoginController extends Controller
      */
     protected function dispatchSuccessfulLoginEvent($user)
     {
-        $this->eventDispatcher
+        $this->get('event_dispatcher')
             ->dispatch(AppEvents::NECKTIE_LOGIN_SUCCESSFUL, new NecktieLoginSuccessfulEvent($user));
     }
 }

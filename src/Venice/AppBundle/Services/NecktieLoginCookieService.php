@@ -23,17 +23,15 @@ class NecktieLoginCookieService
     }
 
     /**
-     * Validate cookie and it's value with the "state" string.
+     * Validate cookie's value with the "state" string.
      *
-     * @param Cookie $cookie Cookie containing the state string.
+     * @param string $cookieValue The state string from a cookie.
      * @param string $state The state string from the request.
      *
      * @throws \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException When the cookie is invalid
      */
-    public function validateStateCookie(Cookie $cookie, string $state): void
+    public function validateStateCookie(string $cookieValue, string $state): void
     {
-        $cookieValue = $cookie->getValue();
-
         if (!\is_string($cookieValue)) {
             throw new AccessDeniedHttpException('Could not load value from a cookie');
         }

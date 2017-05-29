@@ -44,7 +44,7 @@ services:
             - "@doctrine.orm.entity_manager"
             - "@router"
             - "@venice.app.necktie_gateway_helper"
-            - "@Tagvenice.app.http_connector"
+            - "@venice.app.http_connector"
             - "@venice.app.entity_override_handler"
             - "@monolog.logger"
             - "@venice.app.user_access_service"
