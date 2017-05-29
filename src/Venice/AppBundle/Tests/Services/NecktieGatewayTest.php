@@ -15,7 +15,7 @@ use Venice\AppBundle\Entity\User;
 use Venice\AppBundle\Exceptions\ExpiredRefreshTokenException;
 use Venice\AppBundle\Services\HttpConnector;
 use Venice\AppBundle\Services\NecktieGateway;
-use Venice\AppBundle\Services\NecktieGatewayHelper;
+use Venice\AppBundle\Services\NecktieResponseValidator;
 use Venice\AppBundle\Tests\BaseTest;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Cookie;
@@ -70,7 +70,7 @@ class NecktieGatewayTest extends BaseTest
             ->getMock();
 
         $this->helperMock = $this
-            ->getMockBuilder(NecktieGatewayHelper::class)
+            ->getMockBuilder(NecktieResponseValidator::class)
             ->disableOriginalConstructor()
             ->getMock();
 

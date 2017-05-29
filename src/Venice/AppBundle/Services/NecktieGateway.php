@@ -13,8 +13,7 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\Cookie;
-use Symfony\Component\Routing\RouterInterface;
-use Venice\AppBundle\Entity\Product\StandardProduct;
+use Venice\AppBundle\Entity\Order;
 use Venice\AppBundle\Entity\ProductAccess;
 use Venice\AppBundle\Entity\User;
 use Venice\AppBundle\Exceptions\ExpiredRefreshTokenException;
@@ -48,14 +47,14 @@ class NecktieGateway implements NecktieGatewayInterface
     protected $entityManager;
 
     /**
-     * @var RouterInterface
+     * @var NecktieResponseValidator
      */
-    protected $router;
+    protected $responseValidator;
 
     /**
-     * @var NecktieGatewayHelper
+     * @var NecktieEntityMapper
      */
-    protected $helper;
+    protected $entityMapper;
 
     /**
      * @var EntityOverrideHandler
@@ -112,41 +111,39 @@ class NecktieGateway implements NecktieGatewayInterface
      * NecktieGateway constructor.
      *
      * @param EntityManagerInterface $entityManager
-     * @param RouterInterface $router
-     * @param NecktieGatewayHelper $helper
+     * @param NecktieResponseValidator $validator
+     * @param NecktieEntityMapper $mapper
      * @param HttpConnector $connector
      * @param EntityOverrideHandler $entityOverrideHandler
      * @param LoggerInterface $logger
      * @param UserAccessService $accessService
-     * @param string|null $necktieUrl
-     * @param string|null $necktieClientId
-     * @param string|null $necktieClientSecret
-     * @param string|null $loginResponseRoute
+     * @param string $necktieUrl
+     * @param string $necktieClientId
+     * @param string $necktieClientSecret
      */
     public function __construct(
         EntityManagerInterface $entityManager,
-        RouterInterface $router,
-        NecktieGatewayHelper $helper,
+        NecktieResponseValidator $validator,
+        NecktieEntityMapper $mapper,
         HttpConnector $connector,
         EntityOverrideHandler $entityOverrideHandler,
         LoggerInterface $logger,
         UserAccessService $accessService,
-        string $necktieUrl = null,
-        string $necktieClientId = null,
-        string $necktieClientSecret = null,
-        string $loginResponseRoute = null
+        string $necktieUrl,
+        string $necktieClientId,
+        string $necktieClientSecret
     ) {
         $this->entityManager = $entityManager;
-        $this->router = $router;
-        $this->helper = $helper;
+        $this->responseValidator = $validator;
         $this->connector = $connector;
         $this->entityOverrideHandler = $entityOverrideHandler;
         $this->logger = $logger;
+        $this->entityMapper = $mapper;
         $this->userAccessService = $accessService;
         $this->necktieUrl = $necktieUrl;
         $this->necktieClientId = $necktieClientId;
         $this->necktieClientSecret = $necktieClientSecret;
-        $this->loginResponseRoute = $loginResponseRoute;
+
         $this->setClientBaseUri();
     }
 
@@ -166,9 +163,12 @@ class NecktieGateway implements NecktieGatewayInterface
      * @throws UnsuccessfulNecktieResponseException
      * @throws \Exception
      */
-    public function getUserByAccessToken(string $accessToken, bool $createNewUser = false, bool $persistNewUser = true)
-    {
-        $responseData = json_decode(
+    public function getUserByAccessToken(
+        string $accessToken,
+        bool $createNewUser = false,
+        bool $persistNewUser = true
+    ): ?User {
+        $responseData = \json_decode(
             $this->connector->getResponse(
                 null,
                 'GET',
@@ -178,11 +178,13 @@ class NecktieGateway implements NecktieGatewayInterface
             ),
             true
         );
-        if (!is_array($responseData)) {
-            return;
+        if (!\is_array($responseData)) {
+            return null;
         }
-        $userInfo = $this->helper->getUserInfoFromNecktieProfileResponse($responseData);
-        if (is_array($userInfo) && array_key_exists('username', $userInfo)) {
+        $userInfo = $this->entityMapper->getUserInfoFromNecktieProfileResponse($responseData);
+
+        if (\array_key_exists('username', $userInfo)) {
+            /** @var User $user */
             $user = $this
                 ->entityManager
                 ->getRepository($this->entityOverrideHandler->getEntityClass(User::class))
@@ -191,10 +193,12 @@ class NecktieGateway implements NecktieGatewayInterface
                 );
             if ($user) {
                 return $user;
-            } elseif ($createNewUser) {
+            } elseif ($createNewUser === true) {
                 return $this->createNewUser($userInfo, $persistNewUser);
             }
         }
+
+        return null;
     }
 
 
@@ -212,10 +216,11 @@ class NecktieGateway implements NecktieGatewayInterface
      * @throws \Exception
      * @throws UnsuccessfulNecktieResponseException
      */
-    public function productExists(User $user, $necktieId)
+    public function productExists(User $user, $necktieId): bool
     {
         $this->refreshAccessTokenIfNeeded($user);
-        $necktieUrl = str_replace('{id}', $necktieId, self::NECKTIE_PRODUCT_URI);
+        $necktieUrl = \str_replace('{id}', $necktieId, self::NECKTIE_PRODUCT_URI);
+
         try {
             $response = $this->connector->getResponse($user, 'GET', $necktieUrl);
             if (!$response) {
@@ -226,6 +231,7 @@ class NecktieGateway implements NecktieGatewayInterface
         } catch (UnsuccessfulNecktieResponseException $e) {
             return false;
         }
+
         return true;
     }
 
@@ -237,75 +243,35 @@ class NecktieGateway implements NecktieGatewayInterface
      *
      * @throws UnsuccessfulNecktieResponseException
      *
-     * @return \Venice\AppBundle\Entity\ProductAccess[]
+     * @return \Venice\AppBundle\Entity\ProductAccess[] All user's product accesses.
      *
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \RuntimeException
      * @throws \Venice\AppBundle\Exceptions\ExpiredRefreshTokenException
      * @throws \Exception
      */
-    public function updateProductAccesses(User $user)
+    public function updateProductAccesses(User $user): array
     {
         $this->refreshAccessTokenIfNeeded($user);
         $givenProductAccesses = [];
-        $response = json_decode(
+        $response = \json_decode(
             $this
                 ->connector
                 ->getResponse($user, 'GET', self::NECKTIE_PRODUCT_ACCESSES_URI),
             true
         );
 
-        if (!is_array($response)) {
-            return [];
-        }
+        foreach ($this->entityMapper->getProductAccesses($response) as $access) {
+            //note that the $access variable does not contain an instance which should get outsde of the method
+            //it serves only as a container for the data
 
-        if (!array_key_exists('productAccesses', $response)) {
-            return [];
-        }
-
-        if (!is_array($response['productAccesses'])) {
-            return [];
-        }
-
-        foreach ($response['productAccesses'] as $productAccess) {
-            if (is_array($productAccess)
-                && array_key_exists('product', $productAccess)
-                && array_key_exists('from_date', $productAccess)
-            ) {
-                $dateTo = null;
-                $product = $this
-                    ->entityManager
-                    ->getRepository(StandardProduct::class)
-                    ->findOneBy(
-                        ['necktieId' => $productAccess['product']]
-                    );
-
-                if (!$product) {
-                    continue;
-                }
-
-                $dateFrom = \DateTime::createFromFormat(\DateTime::W3C, $productAccess['from_date']);
-                if (array_key_exists('to_date', $productAccess)) {
-                    $dateTo = \DateTime::createFromFormat(\DateTime::W3C, $productAccess['to_date']);
-                }
-
-                if (!($dateFrom instanceof \DateTime)) {
-                    continue;
-                }
-
-                if (!($dateTo instanceof \DateTime)) {
-                    $dateTo = null;
-                }
-
-                //todo: @JakubFajkus refactor to the service
-                $givenProductAccesses[] = $this->userAccessService->giveAccessToProduct(
-                    $user,
-                    $product,
-                    $dateFrom,
-                    $dateTo,
-                    $productAccess['id']
-                );
-            }
+            $givenProductAccesses[] = $this->userAccessService->giveAccessToProduct(
+                $user,
+                $access->getProduct(),
+                $access->getFromDate(),
+                $access->getToDate(),
+                $access->getNecktieId()
+            );
         }
 
         return $givenProductAccesses;
@@ -316,24 +282,26 @@ class NecktieGateway implements NecktieGatewayInterface
      * @param User $user
      * @param int $productAccessNecktieId
      *
-     * @return bool|null|ProductAccess
+     * @return ProductAccess|null
+     *
      * @throws \Venice\AppBundle\Exceptions\ExpiredRefreshTokenException
      * @throws \Venice\AppBundle\Exceptions\UnsuccessfulNecktieResponseException
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \RuntimeException
      * @throws \Exception
      */
-    public function getProductAccess(User $user, int $productAccessNecktieId)
+    public function getProductAccess(User $user, int $productAccessNecktieId): ?ProductAccess
     {
-        $necktieUrl = str_replace('{id}', $productAccessNecktieId, self::NECKTIE_GET_PRODUCT_ACCESS);
+        $necktieUrl = \str_replace('{id}', $productAccessNecktieId, self::NECKTIE_GET_PRODUCT_ACCESS);
         $this->refreshAccessTokenIfNeeded($user);
+
         try {
             $resp = $this->connector->getResponse(
                 $user,
                 'GET',
                 $necktieUrl
             );
-            $response = json_decode(
+            $response = \json_decode(
                 $resp,
                 true
             );
@@ -342,27 +310,20 @@ class NecktieGateway implements NecktieGatewayInterface
             return null;
         }
 
-        if (!is_array($response) || !array_key_exists('product access', $response)) {
+        if (!\is_array($response) || !\array_key_exists('product access', $response)) {
             $this->logger->error(
                 'Invalid response from necktie uri' . self::NECKTIE_CREATE_TRIAL_PRODUCT_ACCESS,
                 [$resp, $response]
             );
-            return false;
+            return null;
         }
 
-        $accessData = $response['product access'];
-        $product = $this
-            ->entityManager
-            ->getRepository(StandardProduct::class)
-            ->findOneBy(['necktieId' => $accessData['product']]);
-        $access = $this->entityOverrideHandler->getEntityInstance(ProductAccess::class);
-        $access->setProduct($product);
-        $fromDate = \DateTime::createFromFormat(\DateTime::W3C, $accessData['from_date']);
-        $access->setFromDate($fromDate);
-        $toDate = \DateTime::createFromFormat(\DateTime::W3C, $accessData['to_date']);
-        $access->setToDate($toDate);
-        $access->setUser($user);
-        $access->setNecktieId($accessData['id']);
+
+        $access = $this->entityMapper->getProductAccess($response);
+
+        if ($access !== null) {
+            $access->setUser($user);
+        }
 
         return $access;
     }
@@ -371,7 +332,7 @@ class NecktieGateway implements NecktieGatewayInterface
     /**
      * @param User $user
      *
-     * @return array
+     * @return Order[]
      *
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \RuntimeException
@@ -379,7 +340,7 @@ class NecktieGateway implements NecktieGatewayInterface
      * @throws \Exception
      * @throws UnsuccessfulNecktieResponseException
      */
-    public function getOrders(User $user)
+    public function getOrders(User $user): array
     {
         $this->refreshAccessTokenIfNeeded($user);
         $resp = $this->connector->getResponse(
@@ -389,17 +350,12 @@ class NecktieGateway implements NecktieGatewayInterface
             ['withItems' => true]
         );
 
-        $response = json_decode(
+        $response = \json_decode(
             $resp,
             true
         );
 
-//        dump($resp, $response);
-        if (!is_array($response) || !array_key_exists('orders', $response)) {
-            return [];
-        }
-
-        return $this->helper->getOrdersFromNecktieResponse($response);
+        return $this->entityMapper->getOrders($response);
     }
 
 
@@ -408,13 +364,14 @@ class NecktieGateway implements NecktieGatewayInterface
      * @param array $newsletters
      *
      * @return array
+     *
      * @throws \Venice\AppBundle\Exceptions\UnsuccessfulNecktieResponseException
      * @throws \Venice\AppBundle\Exceptions\ExpiredRefreshTokenException
      * @throws \RuntimeException
      * @throws \Exception
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function updateNewsletters(User $user, array $newsletters = [])
+    public function updateNewsletters(User $user, array $newsletters = []): array
     {
         $this->refreshAccessTokenIfNeeded($user);
         $stat = [];
@@ -422,25 +379,25 @@ class NecktieGateway implements NecktieGatewayInterface
         try {
             foreach ($newsletters as $newsletter) {
                 if ($newsletter['isSubscribed'] === true) {
-                    $url = str_replace(
+                    $url = \str_replace(
                         '{id}',
                         $newsletter['listId'],
                         self::NECKTIE_USER_NEWSLETTER_LIST_SUBSCRIBE
                     );
 
-                    $stat[] = json_decode($this->connector->getResponse(
+                    $stat[] = \json_decode($this->connector->getResponse(
                         $user,
                         'POST',
                         $url
                     ), true);
                 } else {
-                    $url = str_replace(
+                    $url = \str_replace(
                         '{id}',
                         $newsletter['listId'],
                         self::NECKTIE_USER_NEWSLETTER_LIST_UNSUBSCRIBE
                     );
 
-                    $stat[] = json_decode($this->connector->getResponse(
+                    $stat[] = \json_decode($this->connector->getResponse(
                         $user,
                         'DELETE',
                         $url
@@ -457,70 +414,75 @@ class NecktieGateway implements NecktieGatewayInterface
 
 
     /**
-     * {@inheritdoc}
+     * @param User $user
+     *
+     * @return array
+     *
      * @throws \Exception
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \RuntimeException
      * @throws \Venice\AppBundle\Exceptions\ExpiredRefreshTokenException
      * @throws \Venice\AppBundle\Exceptions\UnsuccessfulNecktieResponseException
      */
-    public function getNewsletters(User $user)
+    public function getNewsletters(User $user): array
     {
         $this->refreshAccessTokenIfNeeded($user);
 
         try {
-            $resp = $this->connector->getResponse(
+            $allNewslettersResponse = $this->connector->getResponse(
                 $user,
                 'GET',
                 self::NECKTIE_NEWSLETTER_LIST
             );
 
-            $newsletters = json_decode(
-                $resp,
-                true
-            );
-
-            $resp = $this->connector->getResponse(
+            $userNewslettersResponse = $this->connector->getResponse(
                 $user,
                 'GET',
                 self::NECKTIE_USER_NEWSLETTER_LIST
             );
 
-            $userNewsletters = json_decode(
-                $resp,
-                true
-            )['data'];
 
-            $lists = [];
-
-            // ... need refactor.
-            foreach ($newsletters as $name => $items) {
-                foreach ($items as $key => $value) {
-                    $isSubscribed = false;
-
-                    if (isset($userNewsletters[$name])) {
-                        foreach ($userNewsletters[$name] as $id) {
-                            if ($id === $key) {
-                                $isSubscribed = true;
-                            }
-                        }
-                    }
-
-                    $lists[] = [
-                        'listId' => $key,
-                        'title' => $value,
-                        'isSubscribed' => $isSubscribed
-                    ];
-                }
-            }
-
-            return $lists;
 
         } catch (UnsuccessfulNecktieResponseException $exception) {
             $this->logger->error($exception->getMessage());
 
-            return null;
+            return [];
         }
+
+        $newsletters = \json_decode(
+            $allNewslettersResponse,
+            true
+        );
+
+        $userNewsletters = \json_decode(
+            $userNewslettersResponse,
+            true
+        )['data'];
+
+        $lists = [];
+
+        // todo: needs refactoring
+        foreach ($newsletters as $name => $items) {
+            foreach ($items as $key => $value) {
+                $isSubscribed = false;
+
+                if (isset($userNewsletters[$name])) {
+                    foreach ($userNewsletters[$name] as $id) {
+                        if ($id === $key) {
+                            $isSubscribed = true;
+                        }
+                    }
+                }
+
+                $lists[] = [
+                    'listId' => $key,
+                    'title' => $value,
+                    'isSubscribed' => $isSubscribed
+                ];
+            }
+        }
+
+        return $lists;
     }
 
 
@@ -533,9 +495,9 @@ class NecktieGateway implements NecktieGatewayInterface
      * @throws \RuntimeException
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function refreshAccessToken(User $user)
+    public function refreshAccessToken(User $user): void
     {
-        $response = json_decode(
+        $response = \json_decode(
             $this->connector->getResponse(
                 $user,
                 'POST',
@@ -556,9 +518,9 @@ class NecktieGateway implements NecktieGatewayInterface
             throw new \Exception('Could not get token from response.');
         }
 
-        if (!$this->helper->isRefreshTokenExpiredResponse($response)) {
-            $token = $this->helper->createOAuthTokenFromArray($response);
-            if ($token) {
+        if (!$this->responseValidator->isRefreshTokenExpiredResponse($response)) {
+            $token = $this->entityMapper->createOAuthTokenFromArray($response);
+            if ($token !== null) {
                 $user->addOAuthToken($token);
                 $token->setUser($user);
                 $this->entityManager->persist($user);
@@ -572,16 +534,6 @@ class NecktieGateway implements NecktieGatewayInterface
         }
     }
 
-
-    /**
-     * @return NecktieGatewayHelper
-     */
-    public function getHelper()
-    {
-        return $this->helper;
-    }
-
-
     /**
      * @param User $user
      *
@@ -593,10 +545,14 @@ class NecktieGateway implements NecktieGatewayInterface
      */
     public function refreshAccessTokenIfNeeded(User $user): void
     {
-        $dateDiff = $user->getLastToken()->getValidTo()->diff(new \DateTime());
-        // if the access token is expired or will expire in 10 minutes
-        // @note: m = months, i = minutes. Really English?
-        if (($dateDiff->h < 1 && $dateDiff->i < 10) || !$user->isLastAccessTokenValid()) {
+        if ($user->getLastToken() !== null) {
+            $dateDiff = $user->getLastToken()->getValidTo()->diff(new \DateTime());
+            // if the access token is expired or will expire in 10 minutes
+            // @note: m = months, i = minutes. Really English(and PHP)?
+            if (($dateDiff->h < 1 && $dateDiff->i < 10) || !$user->isLastAccessTokenValid()) {
+                $this->refreshAccessToken($user);
+            }
+        } else {
             $this->refreshAccessToken($user);
         }
     }
@@ -606,18 +562,18 @@ class NecktieGateway implements NecktieGatewayInterface
      * @param User $user
      * @param int $billingPlanNecktieId
      *
-     * @return bool|int
+     * @return ProductAccess|null
      * @throws \Venice\AppBundle\Exceptions\ExpiredRefreshTokenException
      * @throws \Venice\AppBundle\Exceptions\UnsuccessfulNecktieResponseException
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \RuntimeException
      * @throws \Exception
      */
-    public function createTrialProductAccess(User $user, int $billingPlanNecktieId)
+    public function createTrialProductAccess(User $user, int $billingPlanNecktieId): ?ProductAccess
     {
         $this->refreshAccessTokenIfNeeded($user);
 
-        $necktieUrl = str_replace(
+        $necktieUrl = \str_replace(
             '{id}',
             $billingPlanNecktieId,
             self::NECKTIE_CREATE_TRIAL_PRODUCT_ACCESS
@@ -630,7 +586,7 @@ class NecktieGateway implements NecktieGatewayInterface
                 $necktieUrl
             );
             
-            $response = json_decode(
+            $response = \json_decode(
                 $resp,
                 true
             );
@@ -639,18 +595,18 @@ class NecktieGateway implements NecktieGatewayInterface
         } catch (UnsuccessfulNecktieResponseException $exception) {
             $this->logger->error($exception->getMessage());
             
-            return false;
+            return null;
         }
-        if (!is_array($response) || !array_key_exists('productAccessId', $response)) {
+        if (!\is_array($response) || !\array_key_exists('productAccessId', $response)) {
             $this->logger->error(
                 'Invalid response from necktie uri' . self::NECKTIE_CREATE_TRIAL_PRODUCT_ACCESS,
                 $response
             );
             
-            return false;
+            return null;
         }
 
-        return $response['productAccessId'];
+        return $this->getProductAccess($user, $response['productAccessId']);
     }
 
     /**
@@ -659,13 +615,15 @@ class NecktieGateway implements NecktieGatewayInterface
      *
      * @return User
      */
-    protected function createNewUser($userInfo, $persist)
+    protected function createNewUser($userInfo, $persist): User
     {
         /** @var User $user */
         $user = $this->entityOverrideHandler->getEntityInstance(User::class);
+
         $user->setUsername($userInfo['username'])
             ->setEmail($userInfo['email'])
             ->setNecktieId($userInfo['id']);
+
         if ($persist) {
             $this->entityManager->persist($user);
             $this->entityManager->flush();
@@ -675,12 +633,11 @@ class NecktieGateway implements NecktieGatewayInterface
     }
 
 
-    protected function setClientBaseUri()
+    /**
+     * Set url to the connector
+     */
+    protected function setClientBaseUri(): void
     {
-        // Add slash to the end of the url
-        if (substr($this->necktieUrl, -1) !== '/') {
-            $this->necktieUrl .= '/';
-        }
         $this->connector->setBaseUri($this->necktieUrl);
     }
 }

@@ -9,7 +9,7 @@ namespace Venice\AppBundle\Tests\Services;
 
 use Venice\AppBundle\Entity\Order;
 use Venice\AppBundle\Entity\OAuthToken;
-use Venice\AppBundle\Services\NecktieGatewayHelper;
+use Venice\AppBundle\Services\NecktieResponseValidator;
 use Venice\AppBundle\Tests\BaseTest;
 
 /**
@@ -20,7 +20,7 @@ class NecktieGatewayHelperTest extends BaseTest
     const ACCESS_TOKEN = 'ZTcxZDNmYjU1ZTQ2NWExYmQ0YTRmMDBiZGJmZDEyOTBkNzhiYWQyNWQxM2UyZTMzMjQwMzY5OGRlODVhNzAwNw';
     const REFRESH_TOKEN = 'ODBmZGRlZDUwYjRjY2Q2MGZjYjI0YWFmOTJmZTdhYTMxNDg4ZjRjN2UzNWYzMTQ3ZGMyNGZjZGFjZDNjMjhlZg';
 
-    /** @var  NecktieGatewayHelper */
+    /** @var  NecktieResponseValidator */
     protected $helper;
 
     /**
@@ -28,7 +28,7 @@ class NecktieGatewayHelperTest extends BaseTest
      */
     public function setUp()
     {
-        $this->helper = new NecktieGatewayHelper();
+        $this->helper = new NecktieResponseValidator();
     }
 
     /**
@@ -120,7 +120,7 @@ class NecktieGatewayHelperTest extends BaseTest
 
     public function testIsResponseOkCallsAllMethods()
     {
-        $helperMock = $this->getMockBuilder(NecktieGatewayHelper::class)
+        $helperMock = $this->getMockBuilder(NecktieResponseValidator::class)
             // Mock only those methods
             ->setMethods(
                 [

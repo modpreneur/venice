@@ -145,6 +145,7 @@ class ContentController extends BaseAdminController
 
         $formOptions = [];
 
+        /** @var Content $content */
         $content = $this->getEntityOverrideHandler()->getEntityInstance(VideoContent::class);
 
         $form = $this->getFormCreator()
@@ -521,6 +522,7 @@ class ContentController extends BaseAdminController
             try {
                 // First, remove all associations of the group
                 if ($this->getEntityOverrideHandler()->isInstanceOf($content, GroupContent::class)) {
+                    /** @var GroupContent $content */
                     /** @var ContentInGroup $item */
                     foreach ($content->getItems() as $item) {
                         $entityManager->remove($item);
@@ -658,6 +660,7 @@ class ContentController extends BaseAdminController
      */
     public function contentProductCreateAction(Request $request)
     {
+        /** @var ContentProduct $contentProduct */
         $contentProduct = $this->getEntityOverrideHandler()->getEntityInstance(ContentProduct::class);
 
         $form = $this->getFormCreator()

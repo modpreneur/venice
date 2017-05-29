@@ -32,7 +32,7 @@ class UserAccessService
      * @param Product $product
      * @param \DateTime $fromDate
      * @param \DateTime|null $toDate
-     * @param null $necktieId
+     * @param int|null $necktieId
      * @return null|object|ProductAccess
      */
     public function giveAccessToProduct(
@@ -40,9 +40,8 @@ class UserAccessService
         Product $product,
         \DateTime $fromDate,
         \DateTime $toDate = null,
-        $necktieId = null
-    )
-    {
+        ?int $necktieId = null
+    ) {
         $productAccess = $user->getProductAccess($product);
         $now = new \DateTime('now');
 

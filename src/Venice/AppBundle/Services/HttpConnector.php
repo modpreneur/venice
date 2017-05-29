@@ -15,6 +15,9 @@ use Psr\Http\Message\MessageInterface;
 use Venice\AppBundle\Entity\User;
 use Venice\AppBundle\Exceptions\UnsuccessfulNecktieResponseException;
 
+/**
+ * Class HttpConnector
+ */
 class HttpConnector
 {
     /** @var  ClientInterface */
@@ -45,6 +48,11 @@ class HttpConnector
      */
     public function setBaseUri(string $baseUri)
     {
+        // Add slash to the end of the url
+        if (\substr($baseUri, -1) !== '/') {
+            $baseUri .= '/';
+        }
+
         $client = new Client(['base_uri' => $baseUri]);
 
         $this->setClient($client);

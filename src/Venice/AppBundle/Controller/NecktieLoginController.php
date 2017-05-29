@@ -154,9 +154,16 @@ class NecktieLoginController extends Controller
         $user = null;
 
         try {
-            $user = $this->get('venice.app.necktie_login_process_helper')->getAndLoginUser($request, $necktieToken);
+            $user = $this->get('venice.app.necktie_login_process_helper')->getAndLoginUser(
+                $request->get('access_token'),
+                $necktieToken
+            );
         } catch (UnsuccessfulNecktieResponseException $e) {
-            throw new UnsuccessfulNecktieResponseException('Could not get user from necktie. ' . $e->getMessage(), $e);
+            throw new UnsuccessfulNecktieResponseException(
+                'Could not get user from necktie. ' . $e->getMessage(),
+                0,
+                $e
+            );
         }
 
         try {
@@ -235,7 +242,7 @@ class NecktieLoginController extends Controller
     protected function getAccessTokenFromRequest(Request $request)
     {
         //todo:!
-        return $this->get('venice.app.necktie_gateway')->getHelper()->createOAuthTokenFromArray($request->query->all());
+        return $this->get('venice.app.necktie_entity_mapper')->createOAuthTokenFromArray($request->query->all());
     }
 
     /**

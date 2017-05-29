@@ -35,11 +35,11 @@ class GroupContent extends Content
      */
     public function validate(ExecutionContextInterface $context)
     {
+        /** @var ContentInGroup[] $items */
         $items = array_values($this->items->toArray()); //reindex the array
 
         $count = $this->items->count(); //2
         //the for cycle is used for better indexing
-        /* @noinspection ForeachInvariantsInspection */
         for ($i = 0; $i < $count; ++$i) {
             if ($items[$i]->getContent() && $this->id == $items[$i]->getContent()->getId()) {
                 $context

@@ -178,6 +178,7 @@ class BlogArticleController extends BaseAdminController
     public function createAction(Request $request)
     {
         $entityManager = $this->getEntityManager();
+        /** @var BlogArticle $blogArticle */
         $blogArticle = $this->getEntityOverrideHandler()->getEntityInstance(BlogArticle::class);
 
         $form = $this

@@ -38,12 +38,21 @@ services:
         arguments:
             - "%venice.app.entity_override%"
 
+    venice.app.necktie_entity_mapper:
+        class: Venice\AppBundle\Services\NecktieEntityMapper
+        arguments:
+            - '@venice.app.entity_override_handler'
+            - '@doctrine.orm.entity_manager'
+
+    venice.app.necktie_response_validator:
+        class: Venice\AppBundle\Services\NecktieResponseValidator
+
     venice.app.necktie_gateway:
         class: Venice\AppBundle\Services\NecktieGateway
         arguments:
             - "@doctrine.orm.entity_manager"
-            - "@router"
-            - "@venice.app.necktie_gateway_helper"
+            - "@venice.app.necktie_response_validator"
+            - "@venice.app.necktie_entity_mapper"
             - "@venice.app.http_connector"
             - "@venice.app.entity_override_handler"
             - "@monolog.logger"
@@ -51,7 +60,6 @@ services:
             - "%necktie_url%"
             - "%necktie_client_id%"
             - "%necktie_client_secret%"
-            - "%login_response_route%"
 
 #    todo: Remove
     necktie:
@@ -64,6 +72,8 @@ services:
         class: Venice\AppBundle\Services\NecktieLoginProcessHelper
         arguments:
             - "@router"
+            - "@venice.app.necktie_gateway"
+            - "@fos_user.security.login_manager"
             - "%necktie_url%"
             - "%necktie_client_id%"
             - "%necktie_client_secret%"
@@ -71,12 +81,6 @@ services:
 
     venice.app.http_connector:
         class: Venice\AppBundle\Services\HttpConnector
-
-    venice.app.necktie_gateway_helper:
-        class: Venice\AppBundle\Services\NecktieGatewayHelper
-        arguments:
-            - "@doctrine.orm.entity_manager"
-            - "@venice.app.entity_override_handler"
 
     venice.app.form_error_serializer:
         class: Venice\AppBundle\Services\FormErrorSerializer

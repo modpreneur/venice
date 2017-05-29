@@ -64,7 +64,7 @@ class FormErrorSerializer
         $flattenedArray = [];
         foreach ($array as $key => $value) {
             if (is_array($value)) {
-                $flattenedArray = array_merge(
+                $flattenedArray = \array_merge(
                     $flattenedArray,
                     $this->arrayFlatten(
                         $value,
